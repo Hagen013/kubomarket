@@ -1,0 +1,179 @@
+@import 'node_modules/sass-mq/mq';
+
+$mq-breakpoints: (
+    mobile:  480px,
+    tablet:  750px,
+    desktop: 970px,
+    wide:    1170px
+    );
+    
+//-->     PLUGINS     <--//
+//@import 'plugins/jquery.fancybox.min';
+//-->     END PLUGINS     <--//
+
+//-->    CORE     <--//
+@import 'core/*';
+//-->    END CORE <--//
+    
+//-->     MISCELLANEOUS     <--//
+// ВНИМАНИЕ ! ИМПОРТИРУЮТСЯ СНАЧАЛО САМЫЕ ПРОСТЫЕ БЛОКИ
+// БЛОКИ КОТОРЫЕ ИСПОЛЬЗУЮТ ДРУГИЕ БЛОКИ ДОЛЖНЫ ИМПОРТИРОВАТЬСЯ ПОСЛЕ НИХ
+@import 'blocks/link/*';
+@import 'blocks/ribbon/ribbon';
+@import 'blocks/sales-box/*';
+@import 'blocks/price/price';
+@import 'blocks/old-price/old-price';
+@import 'blocks/icon/*';
+@import 'blocks/link-counter/link-counter';
+@import 'blocks/button/*';
+@import 'blocks/input/input';
+@import 'blocks/breadcrumbs/breadcrumbs';
+@import 'blocks/purchase-button/purchase-button';
+@import 'blocks/interaction-area/interaction-area';
+@import 'blocks/subscribe-box/*';
+@import 'blocks/private-data/*';
+@import 'blocks/search-list/*';
+@import 'blocks/tiles/*';
+@import 'blocks/overlay-disabled/*';
+@import 'blocks/checkbox/*';
+//-->   END MISCELLANEOUS   <--//
+
+//-->    TYPOGRAPHY    <--//
+@import '../fonts_build/PFDinDisplayPro-Reg/PFDinDisplayPro-Reg';
+@import '../fonts_build/PFDinDisplayPro-Bold/PFDinDisplayPro-Bold';
+@import '../fonts_build/PFDinDisplayPro-Light/PFDinDisplayPro-Light';
+//-->    END TYPOGRAPHY    <--//
+
+
+//-->   HEADER   <--//
+@import 'blocks/header-top/*';
+@import 'blocks/header-middle/*';
+@import 'blocks/header-bottom/*';
+//-->   END HEADER   <--//
+
+
+//-->     FOOTER     <--//
+@import 'blocks/footer-top/footer-top';
+@import 'blocks/footer-middle/*';
+@import 'blocks/footer-bottom/footer-bottom';
+//-->   END FOOTER   <--//
+
+//-->    CATALOG   <--//
+@import 'blocks/catalog/*';
+//-->   END CATALOG   <--//
+
+//-->     ITEM-GALLERY     <--//
+@import 'blocks/item-gallery/*';
+//-->   END ITEM-GALLERY   <--//
+
+//-->     SORTING     <--//
+@import 'blocks/sorting/*';
+//-->   END SORTING   <--//
+
+//-->     CATALOG-ITEM     <--//
+@import 'blocks/catalog-item/*';
+//-->   END CATALOG-ITEM   <--//
+
+//-->     PRODUCT-CARD     <--//
+@import 'blocks/product-card/*';
+//-->   END PRODUCT-CARD   <--//
+
+//-->     FILTER-ITEM     <--//
+@import 'blocks/filter-item/*';
+//-->   END FILTER-ITEM   <--//
+
+//-->     SIDENAV     <--//
+@import 'blocks/sidenav/*';
+//-->   END SIDENAV   <--//
+
+//-->     V-NAV     <--//
+@import 'blocks/v-nav/*';
+//-->   END V-NAV   <--//
+
+//-->     TABLE     <--//
+@import 'blocks/table/*';
+//-->   END TABLE   <--//
+
+//-->     LIST     <--//
+@import 'blocks/list/*';
+@import 'blocks/text-list/*';
+//-->   END LIST   <--//
+
+//-->     LOGIN     <--//
+@import 'blocks/login/*';
+//-->   END LOGIN   <--//
+
+//-->     LOGIN     <--//
+@import 'blocks/registration/*';
+//-->   END LOGIN   <--//
+
+//-->     INFOPAGE     <--//
+@import 'blocks/infopage/*';
+//-->   END INFOPAGE   <--//
+
+//-->     INFOPAGE     <--//
+@import 'blocks/contacts/*';
+@import 'blocks/fx-table/*';
+//-->   END INFOPAGE   <--//
+
+//   _____          _____ _______ 
+//  / ____|   /\   |  __ \__   __|
+// | |       /  \  | |__) | | |   
+// | |      / /\ \ |  _  /  | |   
+// | |____ / ____ \| | \ \  | |   
+//  \_____/_/    \_\_|  \_\ |_|   
+                              
+//-->     CART     <--//
+@import 'blocks/cart/*';
+//-->   END CART   <--//
+
+//-->     CART-ITEM     <--//
+@import 'blocks/cart-item/*';
+//-->   END CART-ITEM   <--//
+
+//-->     CART-PAYMENT     <--//
+@import 'blocks/cart-payment/*';
+//-->   END CART-PAYMENT   <--//
+
+//-->     ROUTING     <--//
+@import 'blocks/routing/*';
+//-->   END ROUTING   <--//
+
+//-->     COUNTER     <--//
+@import 'blocks/counter/counter';
+//-->   END COUNTER   <--//
+
+//-->     DELIVERY-COURIER     <--//
+@import 'blocks/delivery-courier/*';
+//-->   END DELIVERY-COURIER   <--//
+
+//-->     DELIVERY-COURIER     <--//
+@import 'blocks/delivery-points/*';
+//-->   END DELIVERY-COURIER   <--//
+
+
+//-->     MODAL     <--//
+@import 'blocks/modal/*';
+//-->   END MODAL   <--//
+
+//-->     PAGINATION     <--//
+@import 'blocks/pagination/*';
+//-->   END PAGINATION   <--//
+
+//-->     ADDED-TO-CART-MODAL     <--//
+@import 'blocks/added-to-cart-modal/*';
+//-->   END ADDED-TO-CART-MODAL   <--//
+
+.login_div {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    h3 {
+        margin-bottom: 10px;
+    }
+    .login_div_block {
+        margin: 5px;
+    }
+}

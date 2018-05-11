@@ -1,0 +1,28 @@
+{% extends "mail_templates/base.html" %} {
+
+{% block content %}
+<table width="600" cellspacing="0" cellpadding="0" border="0" align="center" style="max-width:600px; width:100%;padding: 10px;">
+    <tr style="background: #ffffff;">
+        <td>
+            <p><b>
+                {% if  order.data["customer"]["name"] %}
+                    {{ order.data["customer"]["name"] }},
+                {% else %}
+                    Уважаемый Клиент,
+                {% endif %}
+            </b></p>
+            <p>Мы приняли ваш заказ c номером <b>{{ order.pk }}</b>. Мы свяжемся с вами в ближайшее время.</p>
+        </td>
+    </tr>
+    <tr><td><p><span></span></p></td></tr>
+    {% include "mail_templates/order_contents.html" %}
+    <tr><td><p><span></span></p></td></tr>
+    <tr>
+        <td>
+            <p>
+                За большей информацией обращайтесь по телефону.
+            </p>
+        </td>
+    </tr>    
+</table>
+{% endblock content %}

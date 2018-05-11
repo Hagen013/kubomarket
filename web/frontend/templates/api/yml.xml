@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<yml_catalog date="{{date}}">
+  <shop>
+    <name>kubomarket</name>
+    <company>ООО "ГРАНД-РИТЕЙЛ"</company>
+    <url>http://kubomarket.ru</url>
+    
+    <currencies>
+      <currency id="RUR" rate="1"/>
+    </currencies>
+    
+    <categories>
+      {#% for c in categories %}
+        <category id="{{c.id}}" 
+                {% if c.parent %}
+                  parentId="{{c.parent.id}}"
+                {% endif %}
+        >{{c.title}}
+        </category>
+      {% endfor %#}
+        <category id="1">UNDEFINED</category>
+        <category id="2">SUITCASE</category>
+        <category id="3">BAG</category>
+        <category id="4">BACKPACK</category>
+        <category id="5">PURSE</category>
+        <category id="6">BAG__FREE</category>
+        <category id="7">BACKPACK__FREE</category>
+        <category id="8">PURSE__FREE</category>
+
+    </categories>
+
+    <offers>
+      {% for p in products %}
+        <offer id="{{p.id}}" available="{{p.is_in_stock|lower}}">
+
+            <url>http:{{p.absolute_url}}</url>
+            <price>{{p.price}}</price>
+            <currencyId>RUR</currencyId>
+            {% if p.product_type %}
+            <categoryId>{{ p.yml_product_type }}</categoryId>
+            {% else %}
+            <categoryId>1</categoryId>
+            {% endif %}
+            {% if p.has_image %}
+            <picture>http://kubomarket.ru{{p.image.url}}</picture>
+            {% endif %}
+            {% for photo in p.additional_images[:9] %}
+            {% if photo.has_image %}
+            <picture>http://kubomarket.ru{{photo.image.url}}</picture>
+            {% endif %}
+            {% endfor %}
+            <delivery>true</delivery>
+            <name>{{p.name}}</name>
+            <vendor>{{p.vendor}}</vendor>
+            <model>{{p.model}}</model>
+            {% if p.description %}
+            <description>{{p.description}}</description>
+            {% endif %}
+            <manufacturer_warranty>true</manufacturer_warranty>
+            
+            {% for key, values_list in p.attributes.items() %}
+                {% for value in values_list %}
+                <param name="{{key}}">{{value.name}}</param>
+                {% endfor %}
+            {% endfor %}
+
+        </offer>
+      {% endfor %}
+    </offers>
+  </shop>
+</yml_catalog>
+

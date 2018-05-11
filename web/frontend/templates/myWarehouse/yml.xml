@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<yml_catalog date="{{date}}">
+  <shop>
+    <name>kubomarket</name>
+    <company>ООО "ГРАНД-РИТЕЙЛ"</company>
+    <url>http://kubomarket.ru</url>
+    
+    <currencies>
+      <currency id="RUR" rate="1"/>
+    </currencies>
+    
+    <categories>
+        <category id="1">CUBES</category>
+    </categories>
+
+    <offers>
+      {% for p in cubes %}
+        <offer id="{{p.id}}" available="{{p.is_in_stock|lower}}">
+            <categoryId>1</categoryId>
+            <currencyId>RUR</currencyId>
+            <delivery>true</delivery>
+
+            <name>{{p.name}}</name>
+            <vendor>{{p.vendor}}</vendor>
+            <price>{{p.price}}</price>
+            <vendorCode>{{p.vendor_code}}</vendorCode>
+            <purchase_price>{{p.purchase_price}}</purchase_price>
+            <url>http://kubomarket.ru{{p.get_absolute_url()}}</url>
+
+        </offer>
+      {% endfor %}
+    </offers>
+  </shop>
+</yml_catalog>
+

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% with last_crumb='Страница оплаты' %}
+        {% include 'blocks/breadcrumbs.html' %}
+    {% endwith %}
+
+    <div class="content-area">  
+        <h1 style="margin: 20px 0px;">
+            Страница оплаты
+        </h1>
+        <p style="margin-bottom: 10px;">
+            Для оплаты заказа с номером {{ order.id }} нажмите на кнопку "ОПЛАТИТЬ ЗАКАЗ" ниже.
+        </p>
+        <p style="margin-bottom: 10px;">
+            Содержимое заказа:                            <div class="clearfix"></div>                            
+            
+            <div style="max-width: 820px;">
+                
+                {% for _, item in order.data["cart"]["items"].items() %}    
+                    <div class="cart-item">
+                        <div class="cart-item__img-wrap">
+                            <a class="cart-item__link-overlay" href="{{ item.url }}">
+                                <img class="cart-item__img" src="{{ item.image }}">
+                            </a>                            <div class="clearfix"></div>                            
+                            
+                        </div>
+                        <div class="cart-item__info">
+                                <div class="clearfix"></div>                            
+                                <div class="cart-item__title-area">
+                                <div class="cart-item__name-wrap">
+                                    <a href="{{ item['url'] }}" class="cart-item__name">
+                                        {{ item["name"] }}
+                                    </a>                            <div class="clearfix"></div>                            
+                                    
+                                </div>
+                                <div class="cart-item__code-wrap">
+                                    <a href="{{ item['url'] }}" class="cart-item__code">
+                                    </a>
+                                </div>                            <div class="clearfix"></div>                            
+                                
+                            </div>
+                            <div class="cart-item__price-area">
+                                    <div class="cart-item__price-single" v-if="quantity > 1">
+                                        {% if item["quantity"] %}
+                                            {{ item["price"] }} ₽ × {{ item["quantity"] }}
+                                        {% endif %}                                        
+                                    </div>
+                                <div class="price cart-item__price">
+                                    {{ item["total_price"] }} ₽
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                {% endfor %}                
+
+                <div class="clearfix"></div>                                            
+            </div>
+        </p>
+        <p>
+            <div style="display: flex;max-width: 820px;height: 50px;align-items: center;">                
+                <div style="width: 120px;text-align: center;">
+                    Доставка:
+                </div>
+                <div style="    color: #717c86; font-size: 18px; padding: 15px;flex: 1 1;text-align: center;">
+                    
+                        {% if order.data["delivery"]["mod"]["type"] %}
+                        {{ order.beautify_delivery_mod }}
+                    {% else %}
+                        Способ доставки не выбран.
+                    {% endif %}                </div>
+                <div style="margin-left: auto;margin-right: 100px;">
+                    <div class="price" style="font-size: 24px;">
+                        {% if order.data["delivery"]["mod"]["price"] %}
+                            <b>{{ order.data["delivery"]["mod"]["price"] }} ₽</b>            
+                        {% else %}
+                            <b> - </b>
+                        {% endif %}                    </div>            
+                </div>
+            </div>
+        </p>
+        <p>
+            <div style="max-width: 820px;">            
+            <div class="cart-item"  style="border: none;">
+                <div class="cart-item__img-wrap" style="display: none;">
+                </div>
+                <div class="cart-item__info">
+                    <div class="cart-item__price-area">
+                        <span style="color:#b4c2cc; font-size:1.2em;">
+                            И того: 
+                        </span>
+                        <div class="price cart-item__price">
+                            {{ order.total_price }} ₽                             <div class="clearfix"></div>                                                            
+                        </div>
+                        <div class="clearfix"></div>                            
+                    </div>
+                </div>
+                <div class="clearfix"></div>                                                
+            </div>
+            </div>    
+        </p>
+        <p style="margin-bottom:10px;">
+            Оплата заказа:
+        </p>
+        <p>            
+            <FORM style="max-width: 820px;width: 100%;" ACTION="{{ assist['API_URL'] }}" METHOD="POST">
+                <INPUT  TYPE="HIDDEN" NAME="Merchant_ID"   VALUE="{{ assist['Merchant_ID'] }}">
+                <INPUT  TYPE="HIDDEN" NAME="OrderNumber"   VALUE="{{ assist['OrderNumber'] }}">
+                <INPUT  TYPE="HIDDEN" NAME="OrderAmount"   VALUE="{{ assist['OrderAmount'] }}">
+                <INPUT  TYPE="HIDDEN" NAME="OrderCurrency" VALUE="RUB">
+                <INPUT  TYPE="HIDDEN" NAME="FirstName"     VALUE="{{ assist['FirstName']   }}">
+                <INPUT  TYPE="HIDDEN" NAME="Email"         VALUE="{{ assist['Email']       }}">
+                <BUTTON TYPE="SUBMIT" formmethod="POST" style="height: 40px; padding:10px; color: #ffffff; background: #2074ba;border: none; cursor: pointer; margin:auto;">
+                    <b>ОПЛАТИТЬ ЗАКАЗ</b>
+                </BUTTON>
+            </FORM>
+        </p>
+        <p style="margin-bottom:20px;"></p>
+    </div>
+{% endblock content %}
+
+{% block script %}
+{{ super() }}
+<script src="{{ static('js/index_7ad8135.js') }}"></script>
+{% endblock script %}

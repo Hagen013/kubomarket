@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% with last_crumb="Вход" %}
+        {% include 'blocks/breadcrumbs.html' %}
+    {% endwith %}
+    <style>
+        .form {
+            margin: 0px auto 10px auto;
+            width: 260px;
+        }
+    </style>
+    <div class="content-area" style="text-align: center;">
+        <div class="login_div">
+            <h3>
+                Добро пожаловать, {{ user.username }}
+            </h3>
+            <p>
+                Вы можете привязать к вашему аккаунту:
+            </p>
+            <br/>
+            <div class="footer-middle__social-media__icons">
+                    <a class="icon icon_social-media icon_social-media-google footer-middle__icon float-item" href="{{ url('social:begin', args=['google-oauth2']) }}"></a>
+                    <a class="icon icon_social-media icon_social-media-vk footer-middle__icon float-item" href="{{ url('social:begin', args=['vk-oauth2']) }}"></a>
+                    <a class="icon icon_social-media icon_social-media-odn footer-middle__icon float-item" href="{{ url('social:begin', args=['odnoklassniki-oauth2']) }}"></a>      
+                    <a class="icon icon_social-media icon_social-media-yandex footer-middle__icon float-item" href="{{ url('social:begin', args=['yandex-oauth2']) }}"></a>
+                    <a class="icon icon_social-media icon_social-media-mailru footer-middle__icon float-item" href="{{ url('social:begin', args=['mailru-oauth2']) }}"></a>
+            </div>
+            <div class="clearfix"></div> 
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block script %}
+    {{ super() }}
+    <!--script src="{{ static('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script-->    
+    <script src="{{ static('js/index_7ad8135.js') }}" type="text/javascript"></script>
+{% endblock script %}

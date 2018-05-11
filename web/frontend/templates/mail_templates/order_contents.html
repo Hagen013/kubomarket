@@ -1,0 +1,53 @@
+<tr style="background: #ffffff;">
+    <td>
+        <p><b>Содержимое заказа:</b></p>
+        <table cellspacing="0" cellpadding="0" align="center" style="width:100%;">
+            {% for _, item in order.data["cart"]["items"].items() %}
+            <tr style="height:100px;">
+                <td style="width:20%;">
+                    <img src="http://kubomarket.ru{{ item['image'] }}" alt="Картинка" width="100%">
+                </td>
+                <td style="width:40%;padding: 10px;color: #717c86;">
+                    {{ item["name"] }}
+                </td>
+                <td style="width:20%;">
+                    {% if item["quantity"] > 1 %}
+                        {{ item["price"] }} ₽ × {{ item["quantity"] }}
+                    {% endif %}
+                </td>
+                <td style="width:20%;color:#00a16d;font-size: 1.2em;">
+                    <b> {{ item["total_price"] }} ₽<b>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>  
+        <table cellspacing="0" cellpadding="0" align="center" style="width:100%;">
+            <tr>
+                <td style="width:30%;" ><b>Cпособ доставки:</b></td>
+                <td style="width:50%;">
+                    {% if order.data["delivery"]["mod"]["type"] %}
+                        {{ order.beautify_delivery_mod }}
+                    {% else %}
+                        Способ доставки не выбран.
+                    {% endif %}
+                </td>
+                <td style="width:20%;color:#00a16d;font-size: 1.2em;">
+                    {% if order.data["delivery"]["mod"]["price"] %}
+                        <b>{{ order.data["delivery"]["mod"]["price"] }} ₽</b>            
+                    {% else %}
+                        <b> - </b>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+        <table cellspacing="0" cellpadding="0" align="center" style="width:100%;">
+            <tr>
+                <td style="width:30%;" ><b>Итого:</b></td>
+                <td style="width:50%;"><span></span></td>
+                <td style="width:20%;color:#00a16d;font-size: 1.2em;">
+                    <b>{{ order.total_price }} ₽</b>            
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>

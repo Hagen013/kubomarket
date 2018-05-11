@@ -1,0 +1,305 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% with last_crumb='Контакты' %}
+    {% include 'blocks/breadcrumbs.html' %}
+{% endwith %}
+
+<div class="content-area infopage">
+    <div class="infopage__title">
+        Контакты
+    </div>
+    <div class="contacts">
+        <div class="contacts__block">
+            <p class="bold">Заказы на сайте принимаются круглосуточно</p>
+            <p>Также вы можете связаться с нашими менеджерами ежедневно с 10:00 до 20:00 по телефонам:</p>
+            <div class="fx-table fx-table__3-column">
+                <div class="fx-table__row fx-table__row_header">
+                    <div class="fx-table__cell">
+                        Регион
+                    </div>
+                    <div class="fx-table__cell">
+                        Контактный телефон
+                    </div>
+                    <div class="fx-table__cell">
+                        Электронная почта
+                    </div>
+                </div>
+                <div class="fx-table__row">
+                    <div class="fx-table__cell fx-table__cell fx-table__cell_first">
+                        Москва
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:74956680985">+7 (495) 668-09-85</a> <br> <a class="link_blue" href="tel:74959845150">+7 (495) 984-51-50</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="mailto:clientservice@presidentwatches.ru">clientservice@presidentwatches.ru</a> <br> <a class="link_blue" href="mailto:clientservice@presidentwatches.ru">spam@presidentwatches.ru</a> <br> <a class="link_blue" href="mailto:wtf@presidentwatches.ru">wtf@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Санкт-Петербург
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">+7 (812) 309-84-63</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="mailto:spb@presidentwatches.ru">spb@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Краснодар
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">+7 (861) 203-45-69</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="mailto:spb@presidentwatches.ru">krasnodar@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Екатеринбург
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">+7 (343) 318-24-95</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="mailto:spb@presidentwatches.ru">ekb@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Новосибирск
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">+7 (383) 280-43-71</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="mailto:spb@presidentwatches.ru">nsk@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Нижний Новгород
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">+7 (831) 429-17-47</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="mailto:spb@presidentwatches.ru">nn@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row">
+                    <div class="fx-table__cell">
+                        Единый по России
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">8 (800) 200-7456</a>
+                    </div>
+                    <div class="fx-table__cell">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contacts__block">
+            <div class="contacts__block-title">
+                Центральный офис в Москве:
+            </div>
+            <p>м. Кожуховская, ул. Южнопортовая 5с1</p>
+            <p>Телефон <a class="link_blue" href="tel:74959845150">+7 (495) 984-51-50</a></p>
+            <div class="contacts__map" id="js-contacts__map">
+            </div>
+        </div>
+        <div class="contacts__block">
+            <div class="contacts__block-title">
+                Офисы в России
+            </div>
+            <div class="fx-table fx-table__4-column">
+                <div class="fx-table__row fx-table__row_header">
+                    <div class="fx-table__cell">
+                        Регион
+                    </div>
+                    <div class="fx-table__cell">
+                        Контактный телефон
+                    </div>
+                    <div class="fx-table__cell">
+                        Адрес
+                    </div>
+                    <div class="fx-table__cell contacts__mail">
+                        Электронная почта
+                    </div>
+                </div>
+                <div class="fx-table__row">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Москва
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:74956680985">+7 (495) 668-09-85</a> <br> <a class="link_blue" href="tel:74959845150">+7 (495) 984-51-50</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        115088, м. Кожуховская, ул. Южнопортовая 5с1
+                    </div>
+                    <div class="fx-table__cell contacts__mail">
+                        <a class="link_blue" href="mailto:clientservice@presidentwatches.ru">clientservice@presidentwatches.ru</a> <br> <a class="link_blue" href="mailto:clientservice@presidentwatches.ru">spam@presidentwatches.ru</a> <br> <a class="link_blue" href="mailto:wtf@presidentwatches.ru">wtf@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row fx-table__row_4-column">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Санкт-Петербург
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">+7 (812) 309-84-63</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        195267, г. Санкт-Петербург, ул. пр-т Просвещения д. 80, корп. 2, лит. А
+                    </div>
+                    <div class="fx-table__cell contacts__mail">
+                        <a class="link_blue" href="mailto:spb@presidentwatches.ru">spb@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row fx-table__row_4-column">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Краснодар
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">+7 (861) 203-45-69</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        350004, г.Краснодар, ул. Кожевенная, д. 54/2
+                    </div>
+                    <div class="fx-table__cell contacts__mail">
+                        <a class="link_blue" href="mailto:spb@presidentwatches.ru">krasnodar@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row fx-table__row_4-column">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Екатеринбург
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">+7 (343) 318-24-95</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        620146, Екатеринбург, ул. Амундсена, 63, ТЦ Гранат	
+                    </div>
+                    <div class="fx-table__cell contacts__mail">
+                        <a class="link_blue" href="mailto:spb@presidentwatches.ru">ekb@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row fx-table__row_4-column">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Новосибирск
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">+7 (383) 280-43-71</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        630088, г. Новосибирск, ул.Зорге, 1а
+                    </div>
+                    <div class="fx-table__cell contacts__mail">
+                        <a class="link_blue" href="mailto:spb@presidentwatches.ru">nsk@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row fx-table__row_4-column">
+                    <div class="fx-table__cell fx-table__cell_first">
+                        Нижний Новгород
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">+7 (831) 429-17-47</a>
+                    </div>
+                    <div class="fx-table__cell">
+                        603093, г. Нижний Новгород, ул.Родионова, 26
+                    </div>
+                    <div class="fx-table__cell contacts__mail">
+                        <a class="link_blue" href="mailto:spb@presidentwatches.ru">nn@presidentwatches.ru</a>
+                    </div>
+                </div>
+                <div class="fx-table__row fx-table__row_4-column">
+                    <div class="fx-table__cell">
+                        Единый по России
+                    </div>
+                    <div class="fx-table__cell">
+                        <a class="link_blue" href="tel:78123098463">8 (800) 200-7456</a>
+                    </div>
+                    <div class="fx-table__cell">
+                    </div>
+                    <div class="fx-table__cell contacts__mail">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contacts__block">
+            <div class="contacts__block-title">
+                Юридическая информация
+            </div>
+            <table class="infopage__table">
+                    <tr>
+                        <td>
+                        Полное наименование
+                        </td>
+                        <td>
+                        Общество с ограниченной ответственностью «АВАНГАРД-РИТЕЙЛ»
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        ИНН
+                        </td>
+                        <td>
+                        7722374086
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        ОГРН
+                        </td>
+                        <td>
+                        1167746813156
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        Адрес (место нахождения)
+                        </td>
+                        <td>
+                        Юридический адрес: 111024, Москва, ул. Авиамоторная дом 50 стр 2
+                        </td>
+                    </tr>
+                </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+    {{ super() }}
+    <script src="{{ static('js/index_7ad8135.js') }}"></script>    
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+	<script type="text/javascript">
+    var myMap;
+
+    function zzinit(){     
+        myMap = new ymaps.Map("js-contacts__map", {
+            center: [55.707618, 37.688467],
+            zoom: 16,
+            controls: ['zoomControl']
+        });
+
+        myPlacemark = new ymaps.Placemark([55.707618, 37.688467], { 
+            hintContent: 'м. Кожуховская, ул. Южнопортовая 5с1, Москва, Россия', 
+            balloonContent: 'м. Кожуховская, ул. Южнопортовая 5с1, Москва, Россия',
+            preset: 'islands#greenDotIconWithCaption', 
+        });
+
+        myMap.geoObjects.add(myPlacemark);
+    }
+
+    ymaps.ready(zzinit);
+
+	</script>
+
+{% endblock script%}

@@ -1,0 +1,7 @@
+-r base.txt
+
+Pillow==4.2.1
+
+docker_compose==1.15.0
+
+psycopg2==2.7.3.2

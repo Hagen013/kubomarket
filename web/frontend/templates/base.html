@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<!-- МЕТА ТАЙТЛ/ДЕСКРИПШН/КЕЙВОРДС -->
+	<title>{% block meta_title %}KUBOMARKET{% endblock %}</title>
+	<meta name="description" content="{% block meta_description %}KUBOMARKET.RU{% endblock %}">
+	<meta name="keywords" content="{% block meta_keywords %}{% endblock %}" />
+	<meta name="google-site-verification" content="zRZMkobveiQPMAT8eal38j7WwA_U9WOqIiV2WqR33cw" />
+	{% block meta_aditional_data %}
+	{% endblock meta_aditional_data %}
+	<!---->
+	{% block css %}
+    <link rel="stylesheet" href="{{ static('css/styles.css') }}" />
+	{% endblock css %}
+	{% block script_head %}
+	{% endblock script_head %}
+	<!-- Google Tag Manager (noscript) -->
+	<noscript>
+	<iframe 
+	src="https://www.googletagmanager.com/ns.html?id=GTM-TTJPLV2"
+	height="0" 
+	width="0" 
+	style="display:none;visibility:hidden">
+	</iframe>
+	</noscript>
+	<!-- End Google Tag Manager (noscript) -->
+</head>
+
+
+<body>
+	<!-- Google Tag Manager -->
+	<script>
+	</script>
+	<!-- End Google Tag Manager -->
+	<div class="page-content-wrapper">
+		{% block header %}
+		{% endblock header %}
+
+		{% block content %}
+		{% endblock content %}
+	</div>
+
+	{% block footer %}
+	{% endblock footer %}
+
+	{% block modal %}
+	{% endblock modal %}
+
+	{% block script %}
+    	<script src="{{ static('js/common.js') }}"></script>
+	{% endblock script %}	
+</body>
+</html>

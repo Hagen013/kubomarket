@@ -1,0 +1,14 @@
+version: '2'
+services:
+  dev_geo:
+    hostname: dev_geo
+    build:
+      context: ../
+      dockerfile: compose/geo/Dockerfile
+    env_file:
+      - ../env/geo
+    ports:
+      - "8282:8282"
+    extra_hosts:
+      - "db:192.168.0.133"
+    restart: unless-stopped

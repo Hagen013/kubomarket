@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    
+	{% block css %}
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">	
+    {% endblock css %}
+    
+	{% block script_head %}
+	{% endblock script_head %}
+</head>
+
+
+<body>
+
+    <div id="app-container">
+        <app>
+        </app>
+    </div>
+
+	<style>
+	.page-title{
+		padding: 32px 16px 16px 16px;
+	}
+	.fade {
+		opacity: 1 !important;
+		transition: opacity 1s
+	}
+	.fade-fast, .fadeFast {
+		opacity: 1 !important;
+		transition: opacity 0.2s
+	}
+	.fade-fast-enter-active, .fade-fast-leave-active{
+		transition: opacity 0.2s
+	}
+	.fade-enter-active, .fade-leave-active{
+		transition: opacity 1s
+	}
+	.fade-enter, .fade-leave-to, 
+	.fade-fast-enter, .fade-fast-leave-to  {
+		opacity: 0
+	}
+	</style>
+
+	{% block script %}
+	<script src="{{ static('js/md_admin.js') }}"></script>
+	{% endblock script %}	
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% with last_crumb="Корина" %}
+        {% include 'blocks/breadcrumbs.html' %}
+    {% endwith %}
+
+    <div class="cart-wrapper">
+        <div id="js-cart"></div>
+    </div>
+{% endblock content %}
+    
+{% block  script_head %}
+    {{ super() }}
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+{% endblock  script_head %}
+
+
+{% block script %}
+    {{ super() }}
+    <script src="{{ static('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>    
+    <script src="{{ static('js/cart_7ad8135.js') }}" type="text/javascript"></script>
+{% endblock script %}

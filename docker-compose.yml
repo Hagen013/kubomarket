@@ -1,0 +1,136 @@
+version: "2"
+
+services:
+  # NGINX
+  nginx:
+    image: graphmarket/nginx_cube:latest
+    restart: unless-stopped
+    hostname: nginx
+    build:
+      context: .
+      dockerfile: ./compose/nginx_cube/Dockerfile
+    ports:
+      - "80:80"
+      - "8282:8282"
+    volumes:
+      - /var/graph_market:/media
+    links:
+      - web_cube:web_cube
+      - geo:geo
+      - geo_flower:geo_flower
+      - web_flower_cube:web_flower_cube
+    depends_on:
+      - web_cube
+      - geo
+  # WEB
+  web_cube:
+    image: graphmarket/web_cube:latest
+    restart: unless-stopped
+    hostname: web_cube
+    build:
+      context: .
+      dockerfile: ./compose/web_cube/Dockerfile
+    env_file:
+      - env/web
+    volumes:
+      - /var/graph_market:/var/graph_market
+    links:
+      - rabbit:rabbit
+      - redis:redis
+      - elasticsearch:elasticsearch
+    depends_on:
+      - rabbit
+      - redis
+      - elasticsearch
+  # WEB_CELERY
+  web_celery_cube:
+    image: graphmarket/web_celery_cube:latest
+    restart: unless-stopped
+    hostname: web_celery_cube
+    build:
+      context: .
+      dockerfile: ./compose/web_celery_cube/Dockerfile
+    env_file:
+      - env/web_cube
+    volumes:
+      - /var/graph_market:/var/graph_market
+    links:
+      - rabbit:rabbit
+      - redis:redis
+    depends_on:
+      - rabbit
+      - redis
+      - elasticsearch
+  # WEB_FLOWER
+  web_flower_cube:
+    image: graphmarket/web_flower_cube:latest
+    restart: unless-stopped
+    hostname: web_celery_cube
+    build:
+      context: .
+      dockerfile: ./compose/web_flower_cube/Dockerfile
+    env_file:
+      - env/web
+    links:
+      - rabbit
+      - redis
+    depends_on:
+      - web_celery_cube
+      - rabbit
+      - redis
+  # ELASTICSEARCH
+  elasticsearch:
+    image: graphmarket/elasticsearch:latest
+    restart: unless-stopped
+    hostname: elasticsearch
+    volumes:
+      - /var/graph_market:/var/graph_market
+  # GEO
+  geo:
+    image: graphmarket/geo:latest
+    restart: unless-stopped
+    hostname: geo
+    env_file:
+      - env/geo
+  # GEO_CELERY
+  geo_celery:
+    image: graphmarket/geo_celery:latest
+    restart: unless-stopped
+    hostname: geo_celery
+    env_file:
+      - env/geo
+    volumes:
+      - /var/graph_market:/var/graph_market
+    links:
+      - rabbit:rabbit
+      - redis:redis
+    depends_on:
+      - rabbit
+      - redis
+  # GEO_FLOWER
+  geo_flower:
+    image: graphmarket/geo_flower:latest
+    restart: unless-stopped
+    hostname: geo_celery
+    env_file:
+      - env/geo
+    links:
+      - rabbit
+      - redis
+    depends_on:
+      - geo_celery
+      - rabbit
+      - redis
+  # RABBITMQ
+  rabbit:
+    image: rabbitmq:3.6.11-management
+    restart: unless-stopped
+    hostname: rabbit
+    volumes:
+      - "./env/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:rw"
+      - "./env/rabbit_definitions.json:/etc/rabbitmq/definitions.json:rw"
+  # REDIS
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    hostname: redis

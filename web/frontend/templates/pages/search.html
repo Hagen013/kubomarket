@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="content-area">
+        <div class="catalog">
+            <div class="catalog__title-area">
+                <h1 class="catalog__title">
+                Результаты поиска по запросу: {{ query }}
+                </h1>
+            </div>
+        </div>
+        <div class="item-gallery item-gallery_search">
+            {% for item in products %}
+                <div class="catalog-item catalog-item_showcase animated float-item">
+                {% if item.is_sale %}
+                <div class="ribbon ribbon_purple">
+                    <div class="ribbon__content">
+                    Скидка
+                    </div>
+                </div>
+                {% elif item.is_new_product %}
+                <div class="ribbon ribbon_blue">
+                    <div class="ribbon__content">
+                    Новинка!
+                    </div>
+                </div>
+                {% else %}
+                <div class="ribbon ribbon_olive">
+                    <div class="ribbon__content">
+                    В наличии
+                    </div>
+                </div>
+                {% endif %}
+                <a class="catalog-item__link-overlay" href="{{ url('product', kwargs={'slug':item.slug}) }}">
+                </a>
+                <div class="catalog-item__image-wrapper">
+                    {% if item.image %}
+                    <img class="catalog-item__image" src="{{ item.image.url }}" alt="{{ item.title }}">
+                    {% endif %}
+                </div>
+                <div class="catalog-item__name-area">
+                    <div class="catalog-item__name">
+                    <a href="{{ url('product', kwargs={'slug':item.slug}) }}">{{ item.name }}</a>
+                    </div>
+                    <div class="catalog-item__code">
+                    Артикул: {{ item.public_id }}
+                    </div>
+                </div>
+                <div class="catalog-item__price-area">
+                    <div class="catalog-item__price float-item">
+                    {{ item.price }} ₽
+                    </div>
+                    {% if item.price <= item.old_price %}
+                    <div class="catalog-item__old-price float-item-right">
+                    {{ item.old_price }} ₽
+                    </div>
+                    {% endif %}
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="clearfix">
+        </div>
+    </div>
+        {% if is_paginated %}
+        <div class="pagination pagination_search">
+            <div class="pagination__pages">
+                {% if page_obj.has_previous()  %}
+                    <div class="pagination__item pagination__arrow pagination__arrow_left float-item">
+                        <a href="./?{{ url_replace(querystring=request.GET, kwargs={'page':page_obj.previous_page_number()}) }}"></a>
+                    </div>
+                {% else %}
+                    <div class="pagination__item pagination__item_disabled pagination__arrow pagination__arrow_left-disable float-item">
+                    </div>
+                {% endif %}
+                {% for num in page_obj.page_range %}
+                    {% if not num %}
+                    <div class="pagination__item pagination__item_disabled float-item">
+                    ...
+                    </div>
+                    {% else %}
+                        {% if num == page_obj.number %}
+                        <div class="pagination__item pagination__item_active float-item">
+                            {{ num }}
+                        </div>
+                        {% else %}
+                        <div class="pagination__item float-item">
+                            <a href="./?{{ url_replace(querystring=request.GET, kwargs={'page':num}) }}">{{ num }}</a>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next() %}
+                    <div class="pagination__item pagination__arrow pagination__arrow_right float-item">
+                        <a href="./?{{ url_replace(querystring=request.GET, kwargs={'page':page_obj.next_page_number()}) }}"></a>
+                    </div>
+                {% else %}
+                    <div class="pagination__item pagination__item_disabled pagination__arrow pagination__arrow_right-disable float-item">
+                    </div>
+                {% endif %}
+                <div class="clearfix"></div>
+            </div>
+            {# 
+            <div class="pagination__ajax">
+                Показать ещё
+            </div>
+            #}
+            <div class="clearfix"></div>
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock content %}
+
+{% block script %}
+    {{ super() }}
+    <script src="{{ static('js/catalog_7ad8135.js') }}"></script>
+{% endblock script %}
