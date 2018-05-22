@@ -37,6 +37,7 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
 ]
+
 THIRD_PARTY_APPS = [
     'django_extensions',
     'polymorphic',

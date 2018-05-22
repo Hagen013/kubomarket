@@ -1,0 +1,77 @@
+<div class="side-menu" 
+    id="side-menu"
+    :class="{ sideMenu_visible: isVisible }"
+    :class="{ sideMenu__hidden: !isVisible}"
+>
+    <div class="side-menu__overlay" @click="hideSideMenu">
+    </div>
+    <div class="side-menu__content" id="side-menu__content">
+        <div class="side-menu__auth-area">
+            <div class="button_round side-menu__close"
+                @click="hideSideMenu"
+            >
+                <i class="icon icon_close"></i>
+            </div>
+        </div>
+        <div class="side-menu__delimeter"></div>
+        <ul class="side-menu__list">
+            <li class="side-menu__list-item">
+                <a class="side-menu__list-link"
+                    @click="showNavMenu"
+                >
+                    <i class="button__icon icon icon_list"></i>
+                    КАТАЛОГ
+                </a>
+            </li>
+            <li class="side-menu__list-item">
+                <a class="side-menu__list-link"
+                    href="#"
+                >
+                    <i class="button__icon icon icon_rouble"></i>
+                    ДОСТАВКА И ОПЛАТА
+                </a>
+            </li>
+            <li class="side-menu__list-item">
+                <a class="side-menu__list-link"
+                    href="#"
+                >
+                    <i class="button__icon icon icon_help-outline"></i>
+                    КОНТАКТЫ
+                </a>
+            </li>
+            <li class="side-menu__list-item">
+                <a class="side-menu__list-link"
+                    href="#"
+                >
+                    <i class="button__icon icon icon_help-outline"></i>
+                    ВОПРОСЫ И ПОМОЩЬ
+                </a>
+            </li>
+            <div class="side-menu__delimeter"></div>
+            <li class="side-menu__list-item">
+                <a class="side-menu__list-link"
+                    href="#"
+                >
+                    <i class="button__icon icon icon_help-outline"></i>
+                    Ваш город: Москва
+                </a>
+            </li>
+            <li class="side-menu__list-item">
+                <a class="side-menu__list-link"
+                    href="#"
+                >
+                    <i class="button__icon icon icon_help-outline"></i>
+                    Москва
+                </a>
+            </li>
+            <li class="side-menu__list-item">
+                <a class="side-menu__list-link"
+                    href="#"
+                >
+                    <i class="button__icon icon icon_help-outline"></i>
+                    Что с моим заказом?
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

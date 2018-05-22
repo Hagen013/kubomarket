@@ -1,0 +1,89 @@
+.nav-menu {
+    position: fixed;
+    top: 100%;
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    transition: transform 300ms ease-out;
+    background: $white;
+    will-change: transform;
+    z-index: 20000;
+}
+
+
+.nav-menu__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 74px;
+    width: 100%;
+    padding: 12px 16px;
+    text-align: center;
+}
+
+.nav-menu__control {
+    display: flex;
+}
+
+.nav-menu__content {
+    overflow: auto;
+}
+
+.nav-menu__title {
+    display: inline-block;
+    overflow: hidden;
+    margin-top: 0;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: ms(1);
+    line-height: 24px;
+    flex-grow: 1;
+}
+
+.nav-menu__list {
+    z-index: 100;
+}
+
+.nav-menu__list-item {
+    height: 48px;
+    width: 100%;
+    user-select: none;
+    cursor: pointer;
+}
+
+.nav-menu__list-link {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    padding: 0px 16px 0px 16px;
+    color: $text-black;
+    line-height: 48px;
+    transition-duration: .2s;
+    transition-property: background;
+    transition-timing-function: cubic-bezier();
+    border-top: 1px solid rgba(0,0,0,.1);
+    &:hover {
+        background: rgba(0,0,0,0.05);
+    }
+}
+
+.nav-menu-slide {
+    position: fixed;
+    top: 0;
+    left: 0;
+    //margin-left: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    transition: transform 300ms ease-out;
+    background: $white;
+    will-change: transform;
+    z-index: 20000;
+}

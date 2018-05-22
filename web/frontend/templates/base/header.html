@@ -1,0 +1,99 @@
+<div class="header" id="header">
+    <div class="header__top">
+        <div class="content-area">
+            <div class="header__city-choice">
+                <span>
+                    Ваш город:
+                </span>
+                <a class="header__city-link">
+                    Комсомольск-на-Амуре
+                    <i class="icon icon_chevron-down header__city-icon"></i>
+                </a>
+            </div>
+            <nav class="header__nav">
+                <a class="header__nav-link"
+                    href="#"
+                >
+                    Вопросы
+                </a>
+                <a class="header__nav-link"
+                    href="#"
+                >
+                    Доставка и оплата
+                </a>
+                <a class="header__nav-link"
+                    href="#"
+                >
+                    Контакты
+                </a>
+                <a class="header__nav-link"
+                    href="#"
+                >
+                    Где мой заказ
+                </a>
+            </nav>
+        </div>
+    </div>
+    <div class="header__middle">
+        <div class="content-area content_area_mb">
+            <div class="header__logo-wrap">
+                <a class="header__logo-link" href="/">
+                    <img class="logo header__logo" src="{{ static('/img/logo/logo.png') }}">
+                </a>
+            </div>
+            <div class="header__phone-wrap">
+                <i class="icon icon_phone-yellow header__phone-icon"></i>
+                <div class="header__phones">
+                    <div class="header__phone">
+                    8 (812) 207-15-73
+                    </div>
+                    <div class="header__phones-delimeter">
+                        /
+                    </div>
+                    <div class="header__phone">
+                    8 (812) 207-15-73
+                    </div>
+                </div>
+            </div>
+            <div class="header__profile">
+                <a class="header__profile-link header__enter"
+                    href="#"
+                >
+                    Вход
+                </a>
+                /
+                <a class="header__profile-link header__registration"
+                    href="#"
+                >
+                    Регистрация
+                </a>
+            </div>
+            <div class="header__mobile-controls">
+                <div class="button_round" v-if="!mobileMenuIsVisible"
+                    @click="showMobileMenu"
+                >
+                    <span class="icon icon_menu"></span>
+                </div>
+                <div class="button_round"
+                >
+                    <span class="icon icon_cart"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header__bottom">
+        <div class="content-area">
+            <div class="header__catalog">
+                {% include "base/desktop-menu.html" %}
+            </div>
+            <div class="header__search-box">
+                <input class="header__search-input"
+                    placeholder="Поиск"
+                >
+                <div class="header__search-button">
+                    <i class="icon icon_search"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

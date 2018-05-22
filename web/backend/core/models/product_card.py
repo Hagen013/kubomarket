@@ -11,7 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
 from django.conf import settings
 
-from polymorphic.models import PolymorphicModel
+#from polymorphic.models import PolymorphicModel
 from polymorphic.managers import PolymorphicManager
 
 
@@ -31,10 +31,10 @@ class PublicProductCardManager(PolymorphicManager):
             filter(is_in_stock=True)
 
 
-class ProductCard(PolymorphicModel, OfferPage, Image, Weighable, Dimensional):
+class ProductCard(OfferPage, Image, Weighable, Dimensional):
 
     class Meta:
-        # abstract = True
+        abstract = True
         pass
 
     # Custom managers

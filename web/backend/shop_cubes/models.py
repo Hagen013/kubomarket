@@ -1,7 +1,7 @@
 from math import inf
 
 from django.db import models
-from django_hosts.resolvers import reverse
+from django.urls import reverse
 
 from mptt.models import TreeForeignKey
 
@@ -139,12 +139,12 @@ class CubesProductCard(ProductCard):
         return self.public_id_prefix + str(self.id)
 
     def get_meta_title(self):
-        return "{0} — купить недорого в интернет-магазине PresidentCubes".format(
+        return "{0} — купить кубики Рубика недорого в интернет-магазине PresidentCubes".format(
             self.name
         )
 
     def get_meta_description(self):
-        return "{0} купить в интернет-магазине сумок и рюкзаков PresidentCubes. \
+        return "{0} купить в интернет-магазине кубиков Рубика kubomarket. \
     Недорогие цены, обширный каталог товаров от производителей. Доставка по Москве и России. \
     ".format(
             self.name
@@ -313,7 +313,7 @@ class CubesCategoryNode(CategoryNode):
     )
 
     def get_absolute_url(self):
-        return reverse('category', kwargs={'url': self.url}, host='Cubes')
+        return reverse('category', kwargs={'url': self.url})
 
     def get_meta_title(self):
         return "Купить {0}{1} — недорого в интернет-магазине PresidentCubes".format(

@@ -11,22 +11,26 @@ import geo from './modules/geo.js';
 import delivery from './modules/delivery.js';
 import customer from './modules/customer.js';
 import admin from './modules/admin.js';
-import facetes from './modules/facetes.js';
 import payment from './modules/payment.js';
+
+// Новые 
+import mobileMenu from './modules/mobileMenu'
+import mobileCatalog from './modules/mobileCatalog'
 
 export default new Vuex.Store({
     modules: {
         showModalCallback: showModal,
         showModalCityChoice: showModal,
         showOverlay: showModal,
-
         geo: geo,
         cart: cart,
         delivery: delivery,
         customer: customer,
         admin: admin,
-        facetes: facetes,
-        payment: payment
+        payment: payment,
+
+        mobileMenu: mobileMenu,
+        mobileCatalog: mobileCatalog,
     },
     actions: {
         changeLocation({ commit, state, dispatch, }, payload) {

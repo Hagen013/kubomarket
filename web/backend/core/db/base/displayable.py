@@ -38,18 +38,7 @@ class Displayable(models.Model):
     public = DisplayableManager()
 
     # Adresses fields
-    slug = models.CharField(
-        verbose_name="Слаг",
-        max_length=1024,
-        unique=True,
-        validators=[
-            RegexValidator(
-                regex=r'^[-_a-z\d]+$',
-                message='slug valid error',
-            )
-        ]
-    )
-
+    slug = DisplayableURLField()
     url = DisplayableURLField()
 
     def get_url(self):

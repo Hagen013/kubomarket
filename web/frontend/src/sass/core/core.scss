@@ -1,3 +1,7 @@
+body {
+  font-family: 'Roboto Slab', serif;
+}
+
 // content-area --------------------------------------------------------------
 // ужимает контент по ширине
 .content-area {
@@ -15,157 +19,53 @@
     }
 }
 
-
-.content-area_tight {
-  padding: 0px 15px 0px 15px;
-}
-
-.content-area_index {
-  padding: 0px 0px 50px 0px;
-}
-
-// Click-disabled 
-// необходим для выбранного элемента, которому нужно убрать курсор с кликом
-.click_disabled {
-  cursor: default !important;
-}
-
-
-// float ---------------------------------------------------------------------
-// общая логика работы с флоат элементами
-.clearfix {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
-}
-
-@mixin clearfix {
-  &:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
+.content-area_mb {
+  width: 100%;
+  @include mq($from: desktop, $until: wide) {
+    width: 970px;
+    margin: 0 auto;
   }
-}
-
-.float-item {
-  float: left;
-}
-
-.float-item-right {
-  float: right;
+  @include mq($from: wide) {
+    width: 1170px;
+    margin: 0 auto;
+  }
 }
 
 // page ----------------------------------------------------------------------
 // глобальные элементы, глобальный каркас
 // прижимание футера
-.page-content-wrapper {
-  margin-bottom: -600px;
-  min-height: 100%;
+.page__content {
+  height: 100%;
+  width: 100%;
+  transition: transform 300ms ease-out;
+  will-change: transform;
+}
 
-  @include mq($from: tablet, $until: desktop) {
-    margin-bottom: -500px;
-  }
-  @include mq($from: desktop) {
-    margin-bottom: -340px;
-  }
+.page__content-top {
+  margin-bottom: -180px;
+  min-height: 100%;
 
   &::after {
     content: '';
     display: block;
-    height: 600px;
-
-    @include mq($from: tablet, $until: desktop) {
-      height: 500px;
-    }
-    @include mq($from: desktop) {
-      height: 340px;
-    }
+    height: 180px;
   }
 }
 
-.page-footer {
-  height: 600px;
-
-  @include mq($from: tablet, $until: desktop) {
-    height: 500px;
-  }
-  @include mq($from: desktop) {
-    height: 340px;
-  }
+.page__footer {
+  height: 180px;
 }
 
-// colored -------------------------------------------------------------------
-// миксины и цвета необходимы для задания уникального цвета или фона
-.market-yellow {
-  color: $market-yellow;
-}
-
-// часть в шаблоне встечается
-.wrapper_grey {
-  background: $light-grey;
-}
-
-.wrapper_blue {
-  background: $market-blue;
-}
-
-// typographic ---------------------------------------------------------------
-// шрифты и миксины для шрифтов
-.bold {
-  font-family: PFDinDisplayPro-Bold !important;
-}
-
-.light {
-  font-family: PFDinDisplayPro-Light !important;
-}
-
-.regular {
-  font-family: PFDinDisplayPro-Regular !important;
-}
-
-@mixin bold() {
-  font-family: PFDinDisplayPro-Bold !important;
-}
-
-@mixin light() {
-  font-family: PFDinDisplayPro-Light !important;
-}
-
-@mixin regular() {
-  font-family: PFDinDisplayPro-Regular !important;
+@mixin bold {
+  font-weight: 900;
 }
 
 
-// Скролинг
 
-.green_scrollbar{
-  overflow-y: scroll;
 
-  &::-webkit-scrollbar-track {
-    background-color: #ebf2f7;
-  }
-  &::-webkit-scrollbar {
-    width: 15px;
-    background-color: #ebf2f7;
-  }
-  &::-webkit-scrollbar-thumb {
-    width: 15px;
-    background-color: #18a36b;
-  }
-}
 
-.page-overlay-mask {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  height: 100%;
-  width: 100%;
-  z-index: 900;
-  background: rgba(0,0,0,0.3);
-}
+
+
+
+
+

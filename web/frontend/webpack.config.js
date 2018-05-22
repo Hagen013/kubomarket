@@ -8,10 +8,10 @@ module.exports = {
 
   entry: {
     scripts: './scripts.js',
-    index: './index-page.js',
-    catalog: "./category-page.js",
-    product: "./product-page.js",
-    cart: "./cart-page.js",
+    indexPage: './indexPage.js',
+    catalog: "./categoryPage.js",
+    product: "./productPage.js",
+    cart: "./cartPage.js",
     admin: './admin.js',
     md_admin: './md-admin.js',
     login: './login.js'

@@ -1,0 +1,112 @@
+$footer-top-height: 130px;
+$footer-bottom-height: 50px;
+
+
+.footer {
+
+}
+
+.footer__top {
+    position: relative;
+    height: $footer-top-height;
+    width: 100%;
+    background: $green;
+}
+
+.footer__bottom {
+    height: $footer-bottom-height;
+    width: 100%;
+    color: white;
+    background: $green-deep;
+    font-size: 14px;
+    text-align: center;
+    line-height: $footer-bottom-height;
+}
+
+.footer__logo-wrap {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer__columns {
+    display: flex;
+    height: $footer-top-height;
+}
+
+.footer__column {
+    height: 100%;
+}
+
+.footer__column_1 {
+    width: 278px;
+}
+
+.footer__column_2 {
+    width: 332px;
+}
+
+.footer__nav-link {
+    color: $white;
+    transition-duration: .2s;
+    transition-property: color, border;
+    &:hover {
+        border-bottom: 2px solid $yellow;
+    }
+    &:focus {
+        border-bottom: 2px solid $yellow;
+    }
+}
+
+.footer__nav {
+    display: flex;
+}
+
+.footer__nav-item {
+    margin-top: 16px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.footer__nav-semicolumn {
+    height: 100%;
+    padding: 16px;
+}
+
+.footer__contacts {
+    color: $white;
+    @include bold();
+}
+
+.footer__contacts {
+    font-size: 18px;
+    position: relative;
+    padding: 32px 16px 32px 32px;
+}
+
+.footer__phone-icon {
+    display: block;
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    top: 40px;
+    left: 0px;
+}
+
+.footer__social-list {
+    display: flex;
+    padding: 0px 0px 0px 48px;
+    height: 100%;
+    width: 348px;
+    align-items: center;
+}
+
+.footer__social-item {
+    height: 40px;
+    width: 40px;
+    margin-left: 10px;
+    background: $white;
+    border-radius: 20px;
+}

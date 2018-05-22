@@ -12,6 +12,7 @@
 	{% endblock meta_aditional_data %}
 	<!---->
 	{% block css %}
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
     <link rel="stylesheet" href="{{ static('css/styles.css') }}" />
 	{% endblock css %}
 	{% block script_head %}
@@ -29,21 +30,34 @@
 </head>
 
 
-<body>
+<body class="page">
 	<!-- Google Tag Manager -->
 	<script>
 	</script>
 	<!-- End Google Tag Manager -->
-	<div class="page-content-wrapper">
-		{% block header %}
-		{% endblock header %}
 
-		{% block content %}
-		{% endblock content %}
+
+	<div class="page__content" id="main">
+		<div class="page__content-top">
+			{% block header %}
+				{% include "base/header.html" %}
+			{% endblock header %}
+
+			{% block content %}
+			{% endblock content %}
+		</div>
+
+		{% block footer %}
+			<div class="page__footer">
+				{% include "base/footer.html" %}
+			</div>
+		{% endblock footer %}
 	</div>
 
-	{% block footer %}
-	{% endblock footer %}
+	{% block mobile_navigation %}
+		{% include "base/side-menu.html" %}
+		{% include "base/nav-menu.html" %}
+	{% endblock mobile_navigation %}
 
 	{% block modal %}
 	{% endblock modal %}
