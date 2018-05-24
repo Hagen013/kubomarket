@@ -7,21 +7,25 @@
 #}
 
 <div class="breadcrumbs">
-    <div class="content-area breadcrumbs__wrapper">
-        <a class="link link_arrow-grey breadcrumbs__item" href="/">Главная</a>
+    <div class="content-area_mb">
+    <div class="breadcrumbs__wrapper">
+        <a class="link breadcrumbs__item" href="/">Главная</a>
+        <span class="breadcrumbs__delimeter">—</span>
         {% if breadcrumbs %}
             {% if view %}
                 {% for crumb in breadcrumbs %}
-                    <a class="link link_arrow-grey breadcrumbs__item" href="{{ url(view, args=[crumb.url]) }}">{{ crumb.title }}</a>
+                    <a class="link breadcrumbs__item" href="{{ url(view, args=[crumb.url]) }}">{{ crumb.title }}</a>
+                    <span class="breadcrumbs__delimeter">—</span>
                 {% endfor %}
             {% else %}
                {% for crumb in breadcrumbs %}
-                    <a class="link link_arrow-grey breadcrumbs__item" href="/{{ crumb.url }}">{{ crumb.title }}</a>
+                    <a class="link breadcrumbs__item" href="/{{ crumb.url }}">{{ crumb.title }}</a>
                 {% endfor %}
             {% endif %}
         {% endif %}
         {% if last_crumb %}
-            <a class="link link_disabled breadcrumbs__item">{{ last_crumb }}</a>
+            <a class="link link_disabled breadcrumbs__item breadcrumbs__item_last">{{ last_crumb }}</a>
         {% endif %}
+    </div>
     </div>
 </div>

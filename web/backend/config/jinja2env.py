@@ -1,8 +1,7 @@
 import json
 
 from django.contrib.staticfiles.storage import staticfiles_storage
-# from django.core.urlresolvers import reverse
-from django_hosts.resolvers import reverse
+from django.core.urlresolvers import reverse
 from urllib.parse import urlencode
 
 from jinja2 import Environment

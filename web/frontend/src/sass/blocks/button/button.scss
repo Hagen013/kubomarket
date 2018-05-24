@@ -16,3 +16,24 @@
         background: rgba(0,0,0,0.1);
     }
 }
+
+.button {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0px 16px;
+    border-radius: 22px;
+    @include bold();
+}
+
+.button_ghost {
+    color: #11aff1;
+    background: $white;
+    border: 2px solid #f8f8f7;
+    transition: color, border-color, .2s;
+    &:hover {
+        color: $white;
+        background: #11aff1;
+        border-color: $blue;
+    }
+}

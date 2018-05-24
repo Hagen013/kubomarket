@@ -6,6 +6,7 @@ $header-bottom-height: 60px;
     display: none;
     height: $header-top-height;
     background: #fcfcfb;
+    font-size: 14px;
     .content-area {
         display: flex;
         justify-content: space-between;
@@ -25,6 +26,9 @@ $header-bottom-height: 60px;
     width: 360px;
     padding: 0px 16px 0px 16px;
     line-height: $header-top-height;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .header__middle {
@@ -48,8 +52,11 @@ $header-bottom-height: 60px;
 }
 
 .header__nav-link {
-    margin-left: 70px;
+    margin-left: 50px;
     color: $text-black;
+    @include mq($from: wide) {
+        margin-left: 70px;
+    }
 }
 
 
@@ -91,11 +98,12 @@ $header-bottom-height: 60px;
 }
 
 .header__logo-wrap {
-    padding-top: 20px;
+    padding: 20px 16px 16px 16px;
 }
 
 .header__catalog {
     height: 100%;
+    width: 678px;
     justify-content: space-between;
     color: $white;
     line-height: $header-bottom-height;
@@ -141,6 +149,7 @@ $header-bottom-height: 60px;
     left: 0px;
     top: $header-bottom-height;
     background: white;
+    z-index: 2000;
     box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
 }
 
@@ -210,17 +219,28 @@ input.header__search-input {
 
 .header__phones {
     display: flex;
+    flex-direction: column;
     font-size: 20px;
     @include bold();
+    @include mq($from: tablet) {
+        flex-direction: row;
+    }
 }
 
 .header__phone {
-
+    font-size: 12px;
+    @include mq($from: mobile) {
+        font-size: 16px;
+    }
 }
 
 .header__phones-delimeter {
+    display: none;
     margin: 0px 8px 0px 8px;
     color: $green-light;
+    @include mq($from: tablet) {
+        display: block;
+    }
 }
 
 .header__profile-link {
@@ -259,14 +279,29 @@ input.header__search-input {
 }
 
 .header__submenu-title-link {
-    display: block;
+    display: flex;
     height: 100%;
     width: 100%;
+    justify-content: center;
+    align-items: center;
     color: $white;
     transition-duration: .2s;
     transition-property: background;
     &:hover {
         background: $green-deep;
+    }
+    .icon {
+        margin-left: 8px;
+    }
+}
+
+.header__submenu-title-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: normal;
+    @include mq($from: desktop, $until: wide) {
+        max-width: 120px;
     }
 }
 
@@ -286,4 +321,18 @@ input.header__search-input {
 	flex-direction: column;
 	height: 100%; 
     flex-wrap: wrap;
+}
+
+.logo_sm {
+    display: block;
+    @include mq($from: tablet) {
+        display: none;
+    }
+}
+
+.logo_bg {
+    display: none;
+    @include mq($from: tablet) {
+        display: block;
+    } 
 }

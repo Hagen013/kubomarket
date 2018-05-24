@@ -1,112 +1,142 @@
-$footer-top-height: 130px;
-$footer-bottom-height: 50px;
-
-
 .footer {
+    height: 230px;
+    width: 100%;
+    @include mq($from: tablet, $until: desktop) {
+        height: 150px;
+    }
+    @include mq($from: desktop) {
+        height: 180px;
+    }
+    color: $white;
+}
 
+.footer__content-area {
+    height: 100%;
+    flex-direction: column;
+    @include mq($from: tablet) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 .footer__top {
     position: relative;
-    height: $footer-top-height;
+    height: 180px;
     width: 100%;
     background: $green;
+    @include mq($from: tablet, $until: desktop) {
+        height: 100px;
+    }
+    @include mq($from: desktop) {
+        height: 130px;
+    }
 }
 
 .footer__bottom {
-    height: $footer-bottom-height;
+    height: 50px;
     width: 100%;
-    color: white;
     background: $green-deep;
-    font-size: 14px;
     text-align: center;
-    line-height: $footer-bottom-height;
+    line-height: 50px;
 }
 
-.footer__logo-wrap {
+.footer__nav {
+    padding-top: 16px;
+    height: 80px;
+    width: 320px;
     display: flex;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-}
-
-.footer__columns {
-    display: flex;
-    height: $footer-top-height;
-}
-
-.footer__column {
-    height: 100%;
-}
-
-.footer__column_1 {
-    width: 278px;
-}
-
-.footer__column_2 {
-    width: 332px;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .footer__nav-link {
     color: $white;
-    transition-duration: .2s;
-    transition-property: color, border;
     &:hover {
         border-bottom: 2px solid $yellow;
     }
-    &:focus {
-        border-bottom: 2px solid $yellow;
-    }
-}
-
-.footer__nav {
-    display: flex;
 }
 
 .footer__nav-item {
-    margin-top: 16px;
+    height: 50%;
+    padding: 4px;
+}
+
+.footer__items {
     width: 100%;
-    font-size: 14px;
+    @include mq($from: tablet, $until: desktop) {
+        width: 345px;
+    }
 }
 
-.footer__nav-semicolumn {
-    height: 100%;
-    padding: 16px;
+.footer__nav-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.footer__contacts {
-    color: $white;
-    @include bold();
-}
-
-.footer__contacts {
-    font-size: 18px;
+.footer__contacts-wrap {
     position: relative;
-    padding: 32px 16px 32px 32px;
+    display: flex;
+    height: 50px;
+    width: 320px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    @include bold();
+    @include mq($from: tablet) {
+        height: 100%;
+    }
+    @include mq($from: tablet, $until: desktop) {
+        width: 188px;
+        flex-direction: column;
+    }
 }
 
 .footer__phone-icon {
     display: block;
-    height: 24px;
-    width: 24px;
     position: absolute;
-    top: 40px;
-    left: 0px;
+    height: 16px;
+    width: 16px;
+    top: 18px;
+    left: 8px;
+    @include mq($from: tablet) {
+        top: 40px;
+    }
 }
 
-.footer__social-list {
+.footer__social-wrap {
     display: flex;
-    padding: 0px 0px 0px 48px;
-    height: 100%;
-    width: 348px;
+    height: 50px;
+    width: 320px;
+    justify-content: center;
     align-items: center;
+    margin: 0 auto;
 }
 
-.footer__social-item {
-    height: 40px;
-    width: 40px;
-    margin-left: 10px;
+.footer__social-link {
+    height: 36px;
+    width: 36px;
+    border-radius: 18px;
+    margin-right: 12px;
     background: $white;
-    border-radius: 20px;
+}
+
+.footer__social {
+    @include mq($from: tablet, $until: desktop) {
+        display: none;
+    }
+}
+
+.foooter__logo-wrap {
+    display: none;
+    height: 100%;
+    @include mq($from: tablet) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    @include mq($from: tablet, $until: desktop) {
+        width: 125px;
+    }
 }

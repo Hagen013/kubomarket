@@ -9,7 +9,7 @@ module.exports = {
   entry: {
     scripts: './scripts.js',
     indexPage: './indexPage.js',
-    catalog: "./categoryPage.js",
+    categoryPage: "./categoryPage.js",
     product: "./productPage.js",
     cart: "./cartPage.js",
     admin: './admin.js',

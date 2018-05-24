@@ -91,7 +91,7 @@ class CubesProductCardAttributeValueRelation(ProductCardAttributeValueRelation):
 
 
 class CubesProductAdditionalImage(ProductAditionalImage):
-    upload_image_to = 'images/Cubes_additional'
+    upload_image_to = 'images/cubes_additional'
 
     product = models.ForeignKey(
         'CubesProductCard',
@@ -113,7 +113,7 @@ class CubesProductCard(ProductCard):
 
     public_id_prefix = 'b-247-'
 
-    upload_image_to = 'images/Cubes'
+    upload_image_to = 'images/cubes'
 
     attribute_values = models.ManyToManyField(
         attributevalue_class,
@@ -136,7 +136,11 @@ class CubesProductCard(ProductCard):
 
     @disallowed_before_creation
     def get_public_id(self):
-        return self.public_id_prefix + str(self.id)
+        return self.vendor_code.split('-')[-1]
+
+    @property
+    def public_id(self):
+        return self.get_public_id()
 
     def get_meta_title(self):
         return "{0} — купить кубики Рубика недорого в интернет-магазине PresidentCubes".format(

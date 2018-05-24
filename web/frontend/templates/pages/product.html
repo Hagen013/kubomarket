@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block css %} 
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('css/jquery.fancybox.min.css') }}" type="text/css" media="screen" /> 
+{% endblock css %} 
+
+{% block content %}
+
+{% with view='shop:category', breadcrumbs=category.truncated_breadcrumbs[:-1], last_crumb=category.truncated_breadcrumbs[-1].title %}
+    {% include 'blocks/breadcrumbs.html' %}
+{% endwith %}
+
+<div class="product-page">
+
+    <div class="content-area_mb product-page__title-area">
+        <h1 class="title product-page__title">{{product.name}}</h1>
+        <div class="product-page__code">Код товара: {{product.public_id}}</div>
+    </div>
+
+    <div class="content-area_mb product-page__content">
+        <div class="product-page__img-area">
+            <div class="product-page__main-img-wrap">
+                <transition name="fade-fast">
+                    <a class="photo-gallery__main-img-item photo-gallery__main-img-item_first"
+                        data-fancybox="gallery"
+                        href="{{ product.image.url }}"
+                        v-show="currentImageKey == 0"
+                    >
+                        <img class="photo-gallery__main-img" src="{{ product.image.url }}">
+                    </a>
+                </transition> 
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock content %}
+
+
+{% block meta_title %} 
+{{ product.meta_title }} 
+{% endblock meta_title %} 
+
+{% block meta_description %} 
+{{ product.meta_description }} 
+{% endblock meta_description %} 
+
+{% block meta_keywords %} 
+{{ product.meta_keywords }} 
+{% endblock meta_keywords %}

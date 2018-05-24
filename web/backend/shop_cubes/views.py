@@ -51,6 +51,28 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
         return context
 
 
+class CubesProductPageView(TemplateView):
+
+    template_name = 'pages/product.html'
+
+    def get(self, request, slug, *args, **kwargs):
+        self.product = self.get_product(slug)
+        return super(CubesProductPageView, self).get(self, request, *args, **kwargs)
+
+    def get_product(self, slug):
+        try:
+            return CubesProductCard.objects.get(slug=slug)
+        except CubesProductCard.DoesNotExist:
+            raise Http404
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(CubesProductPageView, self).get_context_data(**kwargs)
+        context['product'] = self.product
+        context['category'] = CubesCategoryNode.public.\
+            get_by_product(self.product)
+        return context
+
+
 
 
 

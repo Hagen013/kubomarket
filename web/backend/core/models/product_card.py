@@ -3,7 +3,7 @@ import json
 import random
 import math
 
-from django.db.models import Max
+from django.db.models import Max, Manager
 from django.db import models
 from django.db import IntegrityError
 from django.core.validators import RegexValidator
@@ -12,7 +12,7 @@ from django.core.files import File
 from django.conf import settings
 
 #from polymorphic.models import PolymorphicModel
-from polymorphic.managers import PolymorphicManager
+#from polymorphic.managers import PolymorphicManager
 
 
 from ..db.shop import OfferIdentifier
@@ -24,7 +24,7 @@ from ..utils import disallowed_before_creation, DisallowedBeforeCreationExceptio
     md5_file_checksum
 
 
-class PublicProductCardManager(PolymorphicManager):
+class PublicProductCardManager(Manager):
 
     def get_queryset(self):
         return super(PublicProductCardManager, self).get_queryset().\
@@ -38,7 +38,6 @@ class ProductCard(OfferPage, Image, Weighable, Dimensional):
         pass
 
     # Custom managers
-    objects = PolymorphicManager()
     public = PublicProductCardManager()
 
     # KEY-CLASSES

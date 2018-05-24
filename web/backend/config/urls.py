@@ -10,6 +10,7 @@ from api.urls import urls_api
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^md-admin/', include('md_admin.urls', namespace='md-admin')),
+    url(r'^controls/', include('controls.urls', namespace='controls')),
     url(r'^api/', include(urls_api, namespace='api')),
     url(r'^', include('shop_cubes.urls', namespace='shop'))
 ]
@@ -24,7 +25,8 @@ if settings.DEBUG:
     ]
     if 'debug_toolbar' in settings.INSTALLED_APPS:
         import debug_toolbar
+        from django.conf.urls.static import static
 
         urlpatterns += [
             url(r'^__debug__/', include(debug_toolbar.urls)),
-        ]
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

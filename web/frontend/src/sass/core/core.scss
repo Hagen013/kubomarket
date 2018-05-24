@@ -20,7 +20,10 @@ body {
 }
 
 .content-area_mb {
-  width: 100%;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	padding: 0px 16px;
   @include mq($from: desktop, $until: wide) {
     width: 970px;
     margin: 0 auto;
@@ -35,26 +38,45 @@ body {
 // глобальные элементы, глобальный каркас
 // прижимание футера
 .page__content {
-  height: 100%;
-  width: 100%;
-  transition: transform 300ms ease-out;
-  will-change: transform;
+	height: 100%;
+	width: 100%;
+	min-width: 320px;
+	transition: transform 300ms ease-out;
+	will-change: transform;
 }
 
 .page__content-top {
-  margin-bottom: -180px;
-  min-height: 100%;
-
-  &::after {
-    content: '';
-    display: block;
-    height: 180px;
-  }
+	margin-bottom: -230px;
+	min-height: 100%;
+	&:after {
+		content: "";
+		display: block;
+		height: 230px;
+	}
+	@include mq($from: tablet, $until: desktop) {
+		margin-bottom: -150px;
+		&:after {
+			height: 150px;
+		}
+	}
+	@include mq($from: desktop) {
+		margin-bottom: -180px;
+		&:after {
+			height: 180px;
+		}
+	}
 }
 
 .page__footer {
-  height: 180px;
+	height: 230px;
+	@include mq($from: tablet, $until: desktop) {
+		height: 150px;
+	}
+	@include mq($from: desktop) {
+		height: 180px;
+	}
 }
+
 
 @mixin bold {
   font-weight: 900;

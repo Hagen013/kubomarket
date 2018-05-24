@@ -24,7 +24,7 @@ INSTALLED_APPS += ('debug_toolbar', )
 
 INTERNAL_IPS = ['127.0.0.1']
 
-MEDIA_ROOT = str(ROOT_DIR.path('MEDIA_ROOT/'))
+MEDIA_ROOT = str(ROOT_DIR.path('MEDIA_ROOT_CUBES/'))
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'

@@ -7,5 +7,8 @@ import footer from './blocks/footer'
 import mobileMenu from './blocks/mobileMenu/'
 import mobileCatalog from './blocks/mobileCatalog/'
 
+// Page-specific
+import Catalog from './blocks/catalog/'
+
 //store.dispatch('geo/initGeo');
 store.dispatch('initAll');

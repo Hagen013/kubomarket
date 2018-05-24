@@ -1,0 +1,25 @@
+.breadcrumbs {
+    height: 50px;
+    padding: 14px 0px 14px 0px;
+    background: #fcfcfb;
+}
+
+.breadcrumbs__item {
+    color: $text-grey;
+    user-select: none;
+    &:hover {
+        color: $green;
+    }
+}
+
+.breadcrumbs__item_last {
+    color: $text-black !important;
+    &:hover {
+        color: $text-black;
+    }
+}
+
+.breadcrumbs__delimeter {
+    display: inline-block;
+    color: $text-grey;
+}

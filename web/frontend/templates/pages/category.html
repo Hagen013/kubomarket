@@ -1,8 +1,102 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="content-area">
-    <h1>{{category.title}}</h1>
+
+{% with view='shop:category', breadcrumbs=category.truncated_breadcrumbs[:-1], last_crumb=category.truncated_breadcrumbs[-1].title %}
+    {% include 'blocks/breadcrumbs.html' %}
+{% endwith %}
+
+<div class="content-area_mb">
+    <h1 class="title">{{category.title}}</h1>
+</div>
+
+<div class="content-area_mb">
+
+    <div class="catalog" id="catalog">
+        <div class="catalog__left">
+            <div class="catalog__nav">
+            {% include "base/catalog-sidenav.html" %}
+            </div>
+        </div>
+        <div class="catalog__right">
+            <div class="gallery catalog__gallery">
+                {% for product in products %}
+                <div class="product-card catalog__item">
+                    <div class="product-card__img-wrap">
+                        <img class="product-card__img" src="{{ product.thumbnail.url }}" alt="{{ product.title }}">
+                        <a class="product-card__link-overlay" href="/product/{{product.slug}}"></a>
+                    </div>
+                    <div class="product-card__content">
+                        <div class="product-card__price">
+                            {{product.price}} ₽
+                        </div>
+                        <a class="product-card__name" href="#">
+                            {{product.name}}
+                        </a>
+                        <div class="product-card__interaction-area">
+                            <a class="button button_ghost product_card__details"
+                                href="/product/{{product.slug}}"
+                            >
+                                подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            {% block pagination %}
+            {% if is_paginated %}
+            <div class="pagination">
+                <div class="pagination__pages">
+                    {% if page_obj.has_previous()  %}
+                        <div class="pagination__item pagination__arrow pagination__arrow_left">
+                            <a href="./?{{ url_replace(querystring=request.GET, kwargs={'page':page_obj.previous_page_number()}) }}">
+                                <i class="icon icon_chevron-left"></i>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="pagination__item pagination__item_disabled pagination__arrow pagination__arrow_left-disable">
+                            <i class="icon icon_chevron-left"></i>
+                        </div>
+                    {% endif %}
+                    {% for num in page_obj.page_range %}
+                        {% if not num %}
+                        <div class="pagination__item pagination__page pagination__item_disabled">
+                        ...
+                        </div>
+                        {% else %}
+                            {% if num == page_obj.number %}
+                            <div class="pagination__item pagination__page pagination__item_active">
+                                {{ num }}
+                            </div>
+                            {% else %}
+                            <div class="pagination__item pagination__page">
+                                <a href="./?{{ url_replace(querystring=request.GET, kwargs={'page':num}) }}">{{ num }}</a>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next() %}
+                        <div class="pagination__item pagination__arrow pagination__arrow_right">
+                            <a href="./?{{ url_replace(querystring=request.GET, kwargs={'page':page_obj.next_page_number()}) }}">
+                                <i class="icon icon_chevron-right"></i>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="pagination__item pagination__item_disabled pagination__arrow pagination__arrow_right-disable">
+                            <i class="icon icon_chevron-right"></i>
+                        </div>
+                    {% endif %}
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            {% endif %}
+            {% endblock pagination %}
+
+        </div>
+    </div>
 </div>
 {% endblock content %}
 
