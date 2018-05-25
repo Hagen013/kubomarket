@@ -1,32 +1,208 @@
 .product-page__title {
     text-align: center;
-    @include mq($from: desktop) {
+    @include mq($from: tablet) {
         text-align: left;
     }
 }
 
 .product-page__title-area {
     flex-direction: column;
-    @include mq($from: desktop) {
-        flex-direction: row;
-    }
 }
 
 .product-page__code {
+    padding: 0px 0px 16px 0px;
     text-align: center;
     color: $text-grey_dark;
+    @include mq($from: tablet) {
+        text-align: left;
+    }
 }
 
 
-.product-page__img-area {
+.product-page__gallery-wrap {
+    position: relative;
     width: 290px;
-    height: 220px;
     margin: 0 auto;
+    @include mq($from: tablet, $until: desktop) {
+        width: 750px;
+        margin-bottom: 32px;
+    }
+    @include mq($from: desktop, $until: wide) {
+        width: 950px;
+        margin-bottom: 32px;
+    }
+    @include mq($from: wide) {
+        width: 662px;
+        margin: 0px;
+    }
 }
 
-.product-page__main-img-wrap {
-    height: 100%;
+.photo-gallery__modifications-track {
+    display: flex;
+}
+
+.product-page__purchase-info-area {
     width: 100%;
-    text-align: center;
+    padding: 0px 15px;
+    background: $creme;
+    @include mq($from: wide) {
+        height: 390px;
+        width: 443px;
+    }
 }
 
+.product-page__purchase-info-area {
+    background: $creme;
+}
+
+.product-page__delivery {
+    height: 255px;
+    @include mq($from: tablet) {
+        height: 140px;
+    }
+    @include mq($from: wide) {
+        height: 220px;
+    }
+}
+
+.product-page__interaction-area {
+    position: relative;
+    width: 290px;
+    margin: 0 auto;
+    @include mq($from: tablet) {
+        display: flex;
+        height: 105px;
+        padding: 0px 15px;
+        justify-content: space-between;
+        align-items: center;
+    }
+    @include mq($from: tablet, $until: desktop) {
+        width: 750px;
+    }
+    @include mq($from: desktop, $until: wide) {
+        width: 970px;
+    }
+    @include mq($from: wide) {
+        display: block;
+        padding: 0px;
+        height: 170px;
+        width: 100%;
+    }
+}
+
+.product-page__availability {
+    float: left;
+    height: 50px;
+    width: 185px;
+    line-height: 50px;
+    color: $text-grey_dark;
+    @include mq($from: wide) {
+        width: 100%;
+    }
+}
+
+.product-page__price {
+    height: 50px;
+    width: 105px;
+    float: left;
+    font-size: 24px;
+    text-align: right;
+    line-height: 50px;
+    color: $green;
+    @include bold();
+    @include mq($from: tablet) {
+        width: auto;
+    }
+    @include mq($from: wide) {
+        width: 107px;
+        text-align: left;
+        float: left;
+    }
+}
+
+.product-page__add-to-cart {
+    height: 50px;
+    width: 290px;
+    float: left;
+    line-height: 50px;
+    text-align: center;
+    color: $white;
+    background: $blue;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background .2s;
+    @include bold();
+    &:hover {
+        background: darken($blue, 5);
+    }
+    @include mq($from: tablet) {
+        width: 185px;
+    }
+    @include mq($from: desktop) {
+        width: 306px;
+    }
+}
+
+.product-page__purchase {
+    color: $blue;
+    text-decoration: underline;
+    user-select: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color .2s;
+    @include bold();
+    &:hover {
+        color: darken($blue, 15);
+    }
+}
+
+.product-page__purchase-wrap {
+    height: 50px;
+    width: 290px;
+    float: left;
+    line-height: 50px;
+    text-align: center;
+    @include mq($from: tablet) {
+        float: none;
+        width: 165px;
+    }
+    @include mq($from: tablet, $until: wide) {
+        text-align: right;
+    }
+    @include mq($from: wide) {
+        position: absolute;
+        bottom: 14px;
+        right: 72px;
+    }
+}
+
+.product-page__description-area {
+    width: 290px;
+    margin: 0 auto;
+    padding: 0px 15px;
+    @include mq($from: tablet) {
+        width: 750px;
+    }
+    @include mq($from: desktop) {
+        width: 970px;
+    }
+    @include mq($from: wide) {
+        width: 1170px;
+    }
+}
+
+.product-page__description-title {
+    height: 78px;
+    line-height: 78px;
+    font-size: 24px;
+    color: $text-black;
+}
+
+.product-page__content {
+    @include mq($from: wide) {
+        width: 1170px;
+        padding: 0px 15px;
+        margin: 0 auto;
+        display: flex;
+    }
+}

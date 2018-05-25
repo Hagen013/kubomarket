@@ -35,9 +35,14 @@
 .footer__bottom {
     height: 50px;
     width: 100%;
+    padding: 0px 15px;
     background: $green-deep;
     text-align: center;
     line-height: 50px;
+    @include mq($from: tablet, $until: desktop) {
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 .footer__nav {
@@ -47,6 +52,9 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    @include mq($from: desktop) {
+        padding-top: 0px;
+    }
 }
 
 .footer__nav-link {
@@ -63,7 +71,7 @@
 
 .footer__items {
     width: 100%;
-    @include mq($from: tablet, $until: desktop) {
+    @include mq($from: tablet) {
         width: 345px;
     }
 }
@@ -73,6 +81,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    @include mq($from: desktop) {
+        height: 100%;
+    }
 }
 
 .footer__contacts-wrap {
@@ -87,7 +98,7 @@
     @include mq($from: tablet) {
         height: 100%;
     }
-    @include mq($from: tablet, $until: desktop) {
+    @include mq($from: tablet) {
         width: 188px;
         flex-direction: column;
     }
@@ -103,6 +114,9 @@
     @include mq($from: tablet) {
         top: 40px;
     }
+    @include mq($from: desktop) {
+        top: 56px;
+    }
 }
 
 .footer__social-wrap {
@@ -112,6 +126,9 @@
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    @include mq($from: desktop) {
+        height: 100%;
+    }
 }
 
 .footer__social-link {
@@ -123,20 +140,51 @@
 }
 
 .footer__social {
-    @include mq($from: tablet, $until: desktop) {
+    @include mq($from: tablet) {
         display: none;
     }
 }
 
-.foooter__logo-wrap {
+.footer__logo-wrap {
     display: none;
     height: 100%;
     @include mq($from: tablet) {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
     }
+    @include mq($from: tablet) {
+        width: 130px;
+    }
+    @include mq($from: wide) {
+        width: 250px;
+    }
+}
+
+.footer__bottom-social {
+    display: none;
     @include mq($from: tablet, $until: desktop) {
-        width: 125px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.footer__logo_sm {
+    @include mq($from: wide) {
+        display: none;
+    }
+}
+
+.footer__logo_bg {
+    display: none;
+    @include mq($from: wide) {
+        display: block;
+    }
+}
+
+.footer__social_desktop {
+    display: none;
+    @include mq($from: desktop) {
+        display: block;
     }
 }

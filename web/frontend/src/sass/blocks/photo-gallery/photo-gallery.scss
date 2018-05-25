@@ -1,4 +1,111 @@
+
+
+.photo-gallery__main-img-wrap {
+    height: 220px;
+    width: 290px;
+    text-align: center;
+    border: 3px solid #f8f8f7;
+    @include mq($from: tablet) {
+        height: 390px;
+    }
+    @include mq($from: tablet, $until: desktop) {
+        width: 560px;
+    }
+    @include mq($from: desktop, $until: wide) {
+        width: 778px;
+    }
+    @include mq($from: wide) {
+        width: 474px;
+    }
+}
+
+.photo-gallery {
+
+}
+
 .photo-gallery__main-img {
     height: 100%;
     margin: 0 auto;
+}
+
+.photo-gallery__modifications {
+    height: 189px;
+    @include mq($from: tablet) {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        height: 390px;
+    }
+}
+
+.photo-gallery__modifications-track {
+    display: block;
+    height: 100px;
+    width: 2000px;
+    @include mq($from: tablet) {
+        width: 100px;
+        height: 2000px;
+        margin: 0 auto;
+    }
+}
+
+.photo-gallery__modifications-list {
+    height: 120px;
+    width: 290px;
+    padding: 8px 0px 8px 0px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    @include mq($from: tablet) {
+        height: 337px;
+        overflow-x: hidden;
+        overflow-y: scroll;  
+    }
+    @include mq($from: tablet, $until: desktop) {
+        width: 190px;
+    }
+    @include mq($from: desktop, $until: wide) {
+        width: 162px;
+    }
+    @include mq($from: wide) {
+        width: 189px;
+    }
+}
+
+.photo-gallery__modification {
+    display: block;
+    height: 100px;
+    width: 100px;
+    float: left;
+    border: 2px solid white;
+    transition: border .2s;
+    text-align: center;
+    &:hover {
+        border: 2px solid $green;
+    }
+    @include mq($from: tablet) {
+        float: none;
+    }
+}
+
+.photo-gallery__modification-img {
+    height: 100%;
+    width: auto;
+}
+
+.photo-gallery__modifications-title {
+    padding: 16px 0px 16px 0px;
+    color: $text-grey_dark;
+    @include bold();
+    @include mq($from: tablet) {
+        padding: 8px 16px 16px 16px;
+    }
+}
+
+.photo-gallery__nav {
+    display: none;
+    @include mq($from: wide) {
+        display: block;
+        width: 100%;
+        height: 100px;
+    }
 }
