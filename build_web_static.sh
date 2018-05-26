@@ -15,8 +15,8 @@ echo 'yes' | python3.5 manage.py collectstatic --settings=config.settings.produc
 deactivate;
 cd ../../;
 # STATIC_PRODUCTION TO NGINX STATIC
-rm -rf ./compose/nginx/static_production;
-cp -r ./web/frontend/static_production ./compose/nginx/;
+rm -rf ./compose/nginx_cube/static_production;
+cp -r ./web/frontend/static_production ./compose/nginx_cube/;
 # ADD HASH TO STATIC FILE NAMES IN 
 # STATIC FILES AND IN TEMPLATES
 hash_suffix="$(date | md5sum | cut -c1-7)"
@@ -25,16 +25,16 @@ echo "HASH_SUFFIX=${hash_suffix}"
 TEMPLATES_PATH="$(cd ./web/frontend/templates && pwd && cd ../..)"
 echo "TEMPLATES_PATH=${TEMPLATES_PATH}"
 # STATIC FILES
-cd ./compose/nginx/static_production
+cd ./compose/nginx_cube/static_production
 STATIC_FILE_PATHS=(
     "css/styles.css"
-    "js/cart.js"
-    "js/catalog.js"
-    "js/common.js"
-    "js/index.js"
-    "js/product.js"
-    "js/scripts.js"
-    "js/admin.js"
+    # "js/cart.js"
+    # "js/catalog.js"
+    # "js/common.js"
+    # "js/index.js"
+    # "js/product.js"
+    # "js/scripts.js"
+    # "js/admin.js"
 )
 
 # REPLACE STATIC FILES AND TEMPLATES
