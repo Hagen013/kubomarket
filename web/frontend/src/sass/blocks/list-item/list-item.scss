@@ -1,0 +1,12 @@
+.list-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-item__key {
+    color: $text-grey_dark;
+}
+
+.list-item__value {
+    color: $text-black;
+}

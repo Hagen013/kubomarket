@@ -300,11 +300,12 @@ def process_uploaded_attrs_file(path):
                             attribute=attribute,
                             attribute_type=attribute.attribute_type,
                             slug=slug,
-                            name=name,
+                            name=value_name,
                             _int_value=int_value
                         )
                         try:
                             value.full_clean()
+                            value.save()
                         except ValidationError:
                             print("Integer AttributeValue with slug: {slug} is not valid".format(
                                 slug=slug

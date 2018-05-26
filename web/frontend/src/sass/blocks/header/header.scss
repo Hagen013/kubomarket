@@ -90,6 +90,9 @@ $header-bottom-height: 60px;
     .icon {
         color: $green-deep;
     }
+    @include mq($from: desktop) {
+        display: none;
+    }
 }
 
 
@@ -194,7 +197,7 @@ input.header__search-input {
 }
 
 .header__nav-link {
-    transition: .2s;
+    transition: color, border .2s;
     &:hover {
         color: $text-grey;
         border-bottom: 2px solid $yellow;
@@ -232,6 +235,9 @@ input.header__search-input {
     @include mq($from: mobile) {
         font-size: 16px;
     }
+    @include mq($from: desktop) {
+        font-size: 24px;
+    }
 }
 
 .header__phones-delimeter {
@@ -240,6 +246,9 @@ input.header__search-input {
     color: $green-light;
     @include mq($from: tablet) {
         display: block;
+    }
+    @include mq($from: desktop) {
+        font-size: 24px;
     }
 }
 

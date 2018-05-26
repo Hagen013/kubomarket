@@ -85,15 +85,28 @@
             <div class="product-page__description-title">
                 Характеристики
             </div>
-            <div class="product-page__attributes-list">
-            </div>
+            <ul class="product-page__attributes-list">
+                {% for key, values in product.attributes.items() %}
+                <li class="list-item">
+                    <div class="list-item__key">
+                        {{key}}
+                    </div>
+                    <div class="list-item__value">
+                        {{ values|map(attribute='name')|join(', ') }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
         <div class="product-page__description">
+            {% if product.description|length > 0 %}
             <div class="product-page__description-title">
                 Описание
             </div>
             <div class="product-page__description-content">
             </div>
+            {% else %}
+            {% endif %}
         </div>
     </div>
 
