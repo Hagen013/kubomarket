@@ -17,8 +17,8 @@ RUN apk add --update --no-cache bash
 
 # COPY ENTRYPOINT AND CODE
 COPY  web /web
-COPY  compose/web/uwsgi.ini uwsgi.ini
-COPY  compose/web/entrypoint.sh entrypoint.sh
+COPY  compose/web_cube/uwsgi.ini uwsgi.ini
+COPY  compose/web_cube/entrypoint.sh entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

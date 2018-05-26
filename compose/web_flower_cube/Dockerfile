@@ -16,7 +16,7 @@ RUN apk add --update --no-cache bash
 
 # COPY ENTRYPOINT AND CODE
 COPY web /web
-COPY  compose/web_flower/entrypoint.sh entrypoint.sh
+COPY  compose/web_flower_cube/entrypoint.sh entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

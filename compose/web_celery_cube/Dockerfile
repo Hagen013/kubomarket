@@ -14,7 +14,7 @@ RUN apk add --update --no-cache bash
 
 # COPY ENTRYPOINT AND CODE
 COPY  web /web
-COPY  compose/web_celery/entrypoint.sh entrypoint.sh
+COPY  compose/web_celery_cube/entrypoint.sh entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
