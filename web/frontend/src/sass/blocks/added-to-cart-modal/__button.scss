@@ -1,0 +1,13 @@
+.added-to-cart-modal__button {
+    width: 135px;
+    margin-right: 15px;
+    display: block;
+    padding: 12px 0px 12px 0px;
+    font-size: 13px;
+    @include bold();
+}
+
+.added-to-cart-modal__button_last {
+    margin-right: 0px;
+}
+

@@ -1,0 +1,23 @@
+.modal__city-choice-wrap {
+    margin-top: 20px;
+    font-size: 18px; //width: 420px;
+    @include mq($from: tablet) {
+        //width: 690px !important;
+        height: 450px;
+        overflow: auto;
+        overflow-x: hidden;
+    }
+    &_default {}
+    &_search {}
+    &_search::-webkit-scrollbar-track {
+        background-color: #ebf2f7;
+    }
+    &_search::-webkit-scrollbar {
+        width: 15px;
+        background-color: #ebf2f7;
+    }
+    &_search::-webkit-scrollbar-thumb {
+        width: 15px;
+        background-color: #18a36b;
+    }
+}

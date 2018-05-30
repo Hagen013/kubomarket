@@ -1,0 +1,12 @@
+.modal__city-choice-content {
+    width: 480px !important;
+    height: 100%;
+    top: 0px !important;
+    overflow-y: scroll;
+    @include mq($from: tablet) {
+        width: 750px !important;
+        top: 110px !important;
+        height: 650px !important;
+        overflow: auto;
+    }
+}

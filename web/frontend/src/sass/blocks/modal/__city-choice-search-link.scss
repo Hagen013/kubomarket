@@ -1,0 +1,14 @@
+
+.modal__city-choice-search-link:nth-child(even) {
+    background: white;
+}
+
+.modal__city-choice-search-link {
+    padding: 8px 0px;
+    border-bottom: 1px solid #a5abaf;
+    width: auto;
+    background: #f9fcfe;
+    @include mq($from: tablet) {
+        width: 690px;
+    }
+}

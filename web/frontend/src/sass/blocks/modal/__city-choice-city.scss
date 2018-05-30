@@ -1,0 +1,10 @@
+.modal__city-choice-city {
+    padding-bottom: 7px;
+    @include mq($from: tablet) {
+        float: left;
+        width: 150px !important;
+        top: 110px !important;
+        margin-left: 22px; //margin-right: 11px;
+        line-height: 19px;
+    }
+}

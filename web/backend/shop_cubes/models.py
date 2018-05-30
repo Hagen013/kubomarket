@@ -132,7 +132,7 @@ class CubesProductCard(ProductCard):
 
     def get_absolute_url(self):
 
-        return reverse('product', kwargs={'slug': self.slug}, host="Cubes")
+        return reverse('shop:product', kwargs={'slug': self.slug})
 
     @disallowed_before_creation
     def get_public_id(self):
@@ -317,7 +317,7 @@ class CubesCategoryNode(CategoryNode):
     )
 
     def get_absolute_url(self):
-        return reverse('category', kwargs={'url': self.url})
+        return reverse('shop:category', kwargs={'url': self.url})
 
     def get_meta_title(self):
         return "Купить {0}{1} — недорого в интернет-магазине PresidentCubes".format(

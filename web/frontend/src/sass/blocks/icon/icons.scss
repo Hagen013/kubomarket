@@ -141,3 +141,11 @@
 @mixin icon_login {
     background-image: url('../img/icon/login.png'); 
 }
+
+.icon_close-blue {
+    background-image: url('../img/icon/close_blue.svg');
+}
+
+@mixin icon_close-blue {
+    background-image: url('../img/icon/close_blue.svg');
+}

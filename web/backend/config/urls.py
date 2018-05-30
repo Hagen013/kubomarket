@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^md-admin/', include('md_admin.urls', namespace='md-admin')),
     url(r'^controls/', include('controls.urls', namespace='controls')),
+    url(r'^cart/', include('cart.urls', namespace='cart')),
     url(r'^api/', include(urls_api, namespace='api')),
     url(r'^', include('shop_cubes.urls', namespace='shop'))
 ]

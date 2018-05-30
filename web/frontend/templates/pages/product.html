@@ -11,7 +11,38 @@
     {% include 'blocks/breadcrumbs.html' %}
 {% endwith %}
 
-<div class="product-page">
+<div class="product-page" id="product-page"
+    offer_identifier="{{product.offer_identifier}}" 
+    is_in_stock="{{product.is_in_stock}}"
+
+    delivery_data="{{to_json(product.data_for_delivery)}}" 
+>
+
+    <added-to-cart-modal 
+    v-if="showAddedToCartModal" 
+    @close="showAddedToCartModal = false"
+    name="{{product.name | replace("'","")}}"
+    price="{{product.price}}"
+    img="{{product.thumbnail.url}}"
+    >
+    </added-to-cart-modal>
+
+    <div v-if="showEditForm">
+        <edit-form
+            uuid="{{product.vendor_code}}"
+            name="{{product.name | replace("'","")}}"
+            price={{product.price}}
+            slug="{{product.slug}}"
+            id="{{product.id}}"
+            url="{{ url('shop:product', kwargs={'slug':product.slug}) }}"
+            :height="{{product.height}}"
+            :width="{{product.width}}"
+            :depth="{{product.length}}"
+            :weight="{{product.weigh}}"
+            v-on:edit-form-close="showEditForm=false"
+        >
+        </edit-form>
+    </div>
 
     <div class="content-area_mb product-page__title-area">
         <h1 class="title product-page__title">{{product.name}}</h1>
@@ -22,14 +53,33 @@
         <div class="product-page__gallery-wrap">
             <div class="photo-gallery product-page__gallery">
                 <div class="photo-gallery__main-img-wrap">
-                    <img class="photo-gallery__main-img" src="{{ product.image.url }}">
+                    <transition name="fade-fast">
+                        <a class="photo-gallery__main-img-item photo-gallery__main-img-item_first"
+                            data-fancybox="gallery"
+                            href="{{ product.image.url }}"
+                            v-show="currentImageKey == 0"
+                        >
+                            <img class="photo-gallery__main-img" src="{{ product.image.url }}">
+                        </a>
+                    </transition>
+                    {% for photo in product.additional_images %}
+                    <transition name="fade-fast">
+                        <a class="photo-gallery__main-img-item"
+                            data-fancybox="gallery"
+                            href="{{ photo.image.url }}"
+                            v-show="currentImageKey == {{ loop.index }}"
+                        >
+                            <img class="photo-gallery__main-img" src="{{ photo.thumbnail.url }}">
+                        </a>
+                    </transition>
+                    {% endfor %}
                 </div>
                 {% if product.modifications|length > 0 %}
                 <div class="photo-gallery__modifications">
                     <div class="photo-gallery__modifications-title">
                         Выберите цвет:
                     </div>
-                    <div class="photo-gallery__modifications-list">
+                    <div class="photo-gallery__modifications-list green_scrollbar">
                         <div class="photo-gallery__modifications-track">
                             {% for modification in product.modifications %}
                             <a class="photo-gallery__modification" href="/product/{{modification.slug}}">
@@ -44,7 +94,29 @@
             </div>
             <div class="photo-gallery__nav">
                 <div class="photo-gallery__nav-list">
-                    <div class="photo-gallery__nav-track">
+                    <div class="photo-gallery__control photo-gallery__control_left"
+                        @click="prevSlide"
+                    >
+                        <i class="icon icon_chevron-left"></i>
+                    </div>
+                    <div class="photo-gallery__control photo-gallery__control_right"
+                        @click="nextSlide"
+                    >
+                        <i class="icon icon_chevron-right"></i>
+                    </div>
+                    <div class="photo-gallery__nav-track" id="photo-gallery__nav-track">
+                        <nav-item :image_key=0 :active_key='currentImageKey' v-on:selected='changeImage'>
+                            <div class="photo-gallery__nav-item">
+                                <img src="{{ product.thumbnail.url }}">
+                            </div>
+                        </nav-item>
+                        {% for photo in product.additional_images %}
+                        <nav-item :image_key={{ loop.index }} :active_key='currentImageKey' v-on:selected='changeImage'>
+                            <div class="photo-gallery__nav-item">
+                                <img src="{{ photo.thumbnail.url }}">
+                            </div>
+                        </nav-item>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -66,14 +138,29 @@
                 <div class="product-page__price">
                     {{product.price}} ₽
                 </div>
-                <div class="product-page__add-to-cart">
+                {% if product.is_in_stock %}
+                <div class="product-page__add-to-cart"
+                    @click="addOfferToCart"
+                >
                     В КОРЗИНУ
                 </div>
-                <div class="product-page__purchase-wrap">
+                <div class="product-page__purchase-wrap"
+                    @click="isShowModalCallback=true"
+                >
                     <a class="product-page__purchase">
                         КУПИТЬ В ОДИН КЛИК
                     </a>
                 </div>
+                {% else %}
+                <div class="product-page__add-to-cart product-page__add-to-cart_disabled">
+                    В КОРЗИНУ
+                </div>
+                <div class="product-page__purchase-wrap product-page__purchase-wrap_disabled">
+                    <a class="product-page__purchase">
+                        КУПИТЬ В ОДИН КЛИК
+                    </a>
+                </div>
+                {% endif %}
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -120,6 +207,13 @@
 
 {% block script %}
     {{ super() }}
+    <script src="{{ static('js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ static('js/jquery.fancybox.min.js') }}"></script>
+    <script src="{{ static('js/productPage.js') }}"></script>
+    <script type="text/javascript">
+        $("[data-fancybox]").fancybox({
+        });
+    </script>
 {% endblock script %}
 
 {% block meta_title %} 
