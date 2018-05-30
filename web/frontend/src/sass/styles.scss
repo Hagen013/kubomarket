@@ -45,12 +45,15 @@ $mq-breakpoints: (
 @import "blocks/sorting/*";
 @import "blocks/pagination/*";
 @import "blocks/title/*";
+@import "blocks/price/*";
 @import "blocks/product-page/*";
 @import "blocks/modal/*";
 @import "blocks/photo-gallery/*";
 @import "blocks/list-item/*";
 @import "blocks/added-to-cart-modal/*";
 @import "blocks/cart/*";
+@import "blocks/cart-item/*";
+
 
 .slide-enter-active, .slide-leave-active{
     transition: .3s;

@@ -173,7 +173,7 @@ input.header__search-input {
     }
 }
 
-::placeholder {
+input.header__search-input::placeholder {
     color: $white;
     opacity: 1; /* Firefox */
 }

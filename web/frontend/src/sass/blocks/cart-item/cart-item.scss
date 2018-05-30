@@ -1,0 +1,137 @@
+.cart-item {
+    position: relative;
+    border-top: 1px solid $border;
+}
+
+.cart-item__img-wrap {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    height: 50px;
+    width: 50px;
+    @include mq($from: tablet) {
+        position: relative;
+    }
+}
+
+.cart-item__img {
+    height: 100%;
+    width: auto;
+}
+
+.cart-item__delete {
+    display: flex;
+    height: 20px;
+    width: 20px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    right: 5px;
+    color: $red;
+    font-size: 18px;
+    @include mq($from: tablet) {
+        position: relative;
+        float: right;
+        top: 0px;
+        right: 0px;
+        margin-left: 15px;
+    }
+}
+
+.cart-item__name {
+    color: $text-black;
+    transition: color .2s;
+    @include bold();
+    &:hover {
+        color: $green;
+    }
+}
+
+.cart-item__price {
+    color: $green;
+    font-size: 22px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include bold();
+    @include mq($from: tablet) {
+        width: 84px;
+        text-align: right;
+    }
+}
+
+.cart-item__name-wrap {
+    display: flex;
+    height: 60px;
+    padding: 0px 15px 0px 60px;
+    align-items: center;
+    overflow: hidden;
+    @include mq($from: tablet) {
+        padding: 0px 15px;
+        width: 390px;
+    }
+}
+
+.cart-item__interaction-area {
+    display: flex;
+    align-items: center;
+    margin-left: 32px;
+    @include mq($from: tablet) {
+        margin-left: 0px;
+    }
+}
+
+.cart-item__input-box {
+    height: 40px;
+    width: 60px;
+}
+
+.cart-item__input {
+    height: 100%;
+    width: 100%;
+    border: 2px solid $border;
+    border-radius: 18px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.cart-item__counter-button {
+    display: flex;
+    height: 20px;
+    width: 20px;
+    margin: 0px 8px;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    @include bold();
+}
+
+.cart-item__counter-button_dec {
+    color: $red;
+}
+
+.cart-item__counter-button_inc {
+    color: $blue;
+}
+
+.cart-item__purchase-info {
+    display: flex;
+    height: 76px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    @include mq($from: tablet) {
+        width: 220px;
+        justify-content: space-between;
+        margin-left: auto;
+    }
+}
+
+.cart-item__content {
+    @include mq($from: tablet) {
+        display: flex;
+        align-items: center;
+    }
+}
