@@ -12,22 +12,22 @@
             </div>
             <nav class="header__nav">
                 <a class="header__nav-link"
-                    href="#"
+                    href="/faq/"
                 >
                     Вопросы
                 </a>
                 <a class="header__nav-link"
-                    href="#"
+                    href="/delivery-and-payment/"
                 >
                     Доставка и оплата
                 </a>
                 <a class="header__nav-link"
-                    href="#"
+                    href="/contacts/"
                 >
                     Контакты
                 </a>
                 <a class="header__nav-link"
-                    href="#"
+                    href="/check-order/"
                 >
                     Где мой заказ
                 </a>
@@ -70,15 +70,25 @@
                 </a>
             </div>
             <div class="header__mobile-controls">
-                <div class="button_round" v-if="!mobileMenuIsVisible"
+                <div class="button_round header__mobile-menu-button" v-if="!mobileMenuIsVisible"
                     @click="showMobileMenu"
                 >
                     <span class="icon icon_menu"></span>
                 </div>
-                <div class="button_round"
+                <a class="header__cart-button button_round"
+                    href="/cart/"
                 >
                     <span class="icon icon_cart"></span>
-                </div>
+                    {% raw %}
+                    <transition name="fade-fast">
+                    <div class="header__cart-counter"
+                        :class="{ header__cartCounter_visible : cartTotalQuantity > 0 }"
+                    >
+                        {{cartTotalQuantity}}
+                    </div>
+                    </transition>
+                    {% endraw %}
+                </a>
             </div>
         </div>
     </div>

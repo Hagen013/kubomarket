@@ -82,6 +82,7 @@ $header-bottom-height: 60px;
 
 
 .header__mobile-controls {
+    position: relative;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -89,9 +90,6 @@ $header-bottom-height: 60px;
     color: $green;
     .icon {
         color: $green-deep;
-    }
-    @include mq($from: desktop) {
-        display: none;
     }
 }
 
@@ -236,7 +234,7 @@ input.header__search-input::placeholder {
         font-size: 16px;
     }
     @include mq($from: desktop) {
-        font-size: 24px;
+        font-size: 22px;
     }
 }
 
@@ -344,4 +342,38 @@ input.header__search-input::placeholder {
     @include mq($from: tablet) {
         display: block;
     } 
+}
+
+.header__mobile-menu-button {
+    @include mq($from: desktop) {
+        display: none !important;
+    }
+}
+
+.header__cart-button {
+    background: $border;
+    overflow: visible;
+}
+
+.header__cart-counter {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 16px;
+    width: 16px;
+    top: 28px;
+    right: 0px;
+    color: $white;
+    background: $red;
+    border-radius: 8px;
+    font-size: 10px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity .2s;
+    will-change: opacity;
+}
+
+.header__cartCounter_visible {
+    opacity: 1;
 }

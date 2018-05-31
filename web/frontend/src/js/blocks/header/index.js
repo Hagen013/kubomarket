@@ -12,7 +12,16 @@ var header = new Vue({
     computed: {
         mobileMenuIsVisible() {
             return this.$store.state.mobileMenu.active
-        }
+        },
+        isShowModalCityChoice(){
+            return this.$store.state.showModalCityChoice.isShowModal;
+        },
+        isCartReady(){
+            return this.$store.state.cart.isDataInited;            
+        },
+        cartTotalQuantity(){
+             return this.$store.state.cart.items_quantiy;
+        },
     },
     methods: {
         showMobileMenu() {
