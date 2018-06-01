@@ -103,5 +103,11 @@ body {
   }
 }
 
+.green {
+  color: $green;
+}
 
+.bold {
+  @include bold();
+}
 

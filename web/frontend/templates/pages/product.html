@@ -115,6 +115,24 @@
 
         <div class="product-page__purchase-info-area">
             <div class="product-page__delivery">
+                {% raw %}
+                <div class="product-page__city-choice-wrap">
+                    <div class="product-page__city-choice">
+                        <div class="product-page__city-choice-caption">
+                            Доставка в городе:
+                        </div>
+                        <a class="product-page__city-link"
+                            :class="{ productPage__cityLink_visible : isDeliveryDataInited }"
+                        >
+                            {{cityName}}
+                            <i class="icon icon_chevron-down product-page__city-choice-icon"></i>
+                        </a>
+                    </div>
+                </div>
+                {% endraw %}
+                <transition name="fade-fast">
+                    <delivery v-if="isDeliveryDataInited"></delivery>
+                </transition>
             </div>
             <div class="product-page__interaction-area">
                 {% if product.is_in_stock %}

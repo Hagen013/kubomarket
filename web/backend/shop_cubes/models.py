@@ -159,33 +159,15 @@ class CubesProductCard(ProductCard):
 
     @disallowed_before_creation
     def get_product_type(self):
-        tips_values = sorted(self.attribute_values.filter(attribute__key='tip'),
-                             key=lambda x: {'chemodany': 1,
-                                            'sumki': 2,
-                                            'ryukzaki': 3,
-                                            'meshki': 4,
-                                            'koshelki': 5,
-                                            'penaly': 6}.get(x.value, inf)
-                             )
-        if len(tips_values):
-            return {
-                "chemodany": "SUITCASE",
-                "sumki": "BAG",
-                "meshki": "BAG",
-                "ryukzaki": "BACKPACK",
-                "koshelki": "PURSE",
-                "penaly": "PURSE",
-            }.get(tips_values[0].value, "")
-        else:
-            return ""
+        return "CUBE"
 
     @property
     def yml_product_type(self):
-        if (self.product_type in {"BAG", "BACKPACK", "PURSE"}) and \
+        if (self.product_type in {"BAG", "CUBE", "PURSE"}) and \
                 (self.price - self.purchase_price >= 2000):
             return {
                 "BAG": 6,
-                "BACKPACK": 7,
+                "CUBE": 7,
                 "PURSE": 8
             }[self.product_type]
 
@@ -194,7 +176,7 @@ class CubesProductCard(ProductCard):
             return {
                 "SUITCASE": 2,
                     "BAG": 3,
-                    "BACKPACK": 4,
+                    "CUBE": 4,
                     "PURSE": 5
             }[self.product_type]
 

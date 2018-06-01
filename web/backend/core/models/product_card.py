@@ -74,7 +74,7 @@ class ProductCard(OfferPage, Image, Weighable, Dimensional):
         max_length=128,
         choices=(
             ("", "Не задано"),
-            ("BACKPACK", "BACKPACK"),
+            ("CUBE", "CUBE"),
             ("BAG", "BAG"),
             ("SUITCASE", "SUITCASE"),
             ("PURSE", "PURSE")

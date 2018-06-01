@@ -352,10 +352,7 @@ class DeliveryDelay(models.Model):
         max_length=128,
         choices=(
             ("", "Не задано"),
-            ("BACKPACK", "BACKPACK"),
-            ("BAG", "BAG"),
-            ("SUITCASE", "SUITCASE"),
-            ("PURSE", "PURSE")
+            ("CUBE", "CUBE")
         ),
         default="",
         blank=True,

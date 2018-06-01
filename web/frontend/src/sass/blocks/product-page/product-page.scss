@@ -57,6 +57,7 @@
 
 .product-page__delivery {
     height: 255px;
+    font-size: 15px;
     @include mq($from: tablet) {
         height: 140px;
     }
@@ -71,7 +72,7 @@
     margin: 0 auto;
     @include mq($from: tablet) {
         display: flex;
-        height: 105px;
+        height: 95px;
         padding: 0px 15px;
         justify-content: space-between;
         align-items: center;
@@ -215,4 +216,84 @@
     flex-grow: 1;
     margin-bottom: 2px;
     border-bottom: 1px solid #f1efeb;
+}
+
+.product-page__delivery-types {
+    height: 185px;
+    width: 320px;
+    margin: 0 auto;
+    padding: 0px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @include mq($from: tablet) {
+        width: 750px;
+    }
+    @include mq($from: tablet, $until: wide) {
+        flex-direction: row;
+        height: 70px;
+    }
+    @include mq($from: desktop) {
+        width: 970px;
+    }
+    @include mq($from: wide) {
+        width: 1170px;
+    }
+}
+
+.product-page__delivery-type {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+}
+
+.product-page__delivery-icon {
+    height: 30px;
+    width: 30px;
+    margin-right: 15px;
+}
+
+.product-page__city-choice-wrap {
+    width: 320px;
+    margin: 0 auto;
+    @include mq($from: tablet) {
+        width: 750px;
+    }
+}
+
+.product-page__city-choice {
+    height: 70px;
+    padding: 15px 15px;
+    @include mq($from: tablet, $until: wide) {
+        display: flex;
+        padding: 22px 15px;
+    }
+}
+
+.product-page__city-link {
+    display: block;
+    padding: 0px;
+    color: $blue;
+    transition: color, border, opacity .2s;
+    border-bottom: 2px dotted $blue;
+    opacity: 0;
+    will-change: opacity;
+    user-select: none;
+    cursor: pointer;
+    @include bold();
+    &:hover {
+        border-bottom: 2px solid $blue;
+    }
+}
+
+.productPage__cityLink_visible {
+    opacity: 1;
+}
+
+.product-page__city-choice-caption {
+    margin-right: 15px;
+}
+
+.product-page__delivery-type-title {
+    color: $text-grey_dark;
 }

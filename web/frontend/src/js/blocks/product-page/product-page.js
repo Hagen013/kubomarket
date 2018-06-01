@@ -4,9 +4,9 @@ import store from '../../store'
 
 //Components
 import navItem from './__nav-item.vue'
-import deliveryInner from './__delivery-inner.vue'
 import purchaseModal from '../added-to-cart-modal/purchase-modal.vue'
 
+import delivery from './components/delivery.vue'
 import modalCallback from './__modal-callback.vue'
 
 
@@ -19,7 +19,7 @@ var productCard = new Vue({
     store,
     components: {
         'nav-item': navItem,
-        'delivery-inner': deliveryInner,
+        'delivery': delivery,
         'purchase-modal': purchaseModal,
         editForm,
         modalCallback
@@ -45,16 +45,6 @@ var productCard = new Vue({
     computed: {
         navTrackMaxOffset() {
             return (this.thumbnailsNumber - 3) * -150;
-            // switch (this.currentDisplayMode) {
-            //     case "mobile":
-            //         return (this.thumbnailsNumber - 4) * -100;
-            //     case "tablet":
-            //         return (this.thumbnailsNumber - 7) * -100;
-            //     case "desktop":
-            //         return (this.thumbnailsNumber - 4) * -100;
-            //     case "wide":
-            //         return (this.thumbnailsNumber - 4) * -100;
-            // }
         },
         navPrevIsActive() {
             if (this.currentTrackOffset < 0) {
@@ -244,6 +234,9 @@ var productCard = new Vue({
                     'product': this.productDeliveryData
                 }).then(
                 (response)=>{
+                    console.log("SUCCESS");
+                    console.log(this.productDeliveryData);
+                    console.log(response.body);
                     this.deliveryData=response.body;
                 },
                 (response)=>{

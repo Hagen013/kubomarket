@@ -18,7 +18,7 @@ from delivery.models import (SdekCityList,
 
 class DeliveryController():
     PRODUCT_TYPES = [
-        "BACKPACK",
+        "CUBE",
         "BAG",
         "SUITCASE",
         "PURSE"
@@ -181,7 +181,7 @@ class DeliveryController():
     @property
     def pick_point_points(self):
         if self.pick_point_city:
-            if self.product_type in {"BAG", "BACKPACK", "PURSE"}:
+            if self.product_type in {"CUBE", "BAG", "PURSE"}:
                 return DeliveryPickPoint.objects.filter(city=self.pick_point_city)
             elif self.product_type in {"SUITCASE"}:
                 if self.dimensions:
@@ -248,7 +248,7 @@ class DeliveryController():
 
         # ЕСЛИ НЕТ СДЕКА ТО НЕТ
         # СУМКИ, РЮКЗАКИ, КОШЕЛЬКИ
-        if self.product_type in {"BAG", "BACKPACK", "PURSE"}:
+        if self.product_type in {"CUBE", "BAG", "PURSE"}:
             if self.margin >= 2000:
                 # СДЕК И БЕСПЛАТНО
                 result = delivery_data_getter(weigh=1)
@@ -279,7 +279,7 @@ class DeliveryController():
     def _get_pick_point_delivery_data(self, one_pick_point_point=None):
         if one_pick_point_point is None:
             one_pick_point_point = self.pick_point_points[0]
-        if self.product_type in {"BAG", "BACKPACK", "PURSE", }:
+        if self.product_type in {"CUBE", "BAG", "PURSE", }:
             return one_pick_point_point.get_delivery_data(weigh=self.weigh or 1)
         elif self.product_type in {"SUITCASE", }:
             if self.weigh:
@@ -305,7 +305,7 @@ class DeliveryController():
             'time_max': 7,
         }
         # СУМКИ, РЮКЗАКИ, КОШЕЛЬКИ, ЧЕМОДАНЫ
-        if self.product_type in {"BAG", "BACKPACK", "PURSE", "SUITCASE"}:
+        if self.product_type in {"CUBE", "BAG", "PURSE", "SUITCASE"}:
             if self.margin >= 2000:
                 # СТАНДАРТНЫЙ И БЕСПЛАТНО
                 result['price'] = 0
