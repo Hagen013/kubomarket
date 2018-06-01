@@ -33,10 +33,10 @@ var header = new Vue({
         showMobileMenu() {
             this.$store.commit("mobileMenu/show");
         },
-        hideModalCityChoice() {
+        hideCityChoiceModal() {
             this.$store.commit('showModalCityChoice/hide');
         },
-        showModalCityChoice() {
+        showCityChoiceModal() {
             this.$store.commit('showModalCityChoice/show');
         },
     }

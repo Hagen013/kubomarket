@@ -1,8 +1,8 @@
 <template>
-    <div class="purchase-modal"
+    <div class="modal"
         @click.self="$emit('close')"
     >
-        <div class="purchase-modal__content">
+        <div class="modal__content">
             <div class="purchase-modal__close button_round"
                 @click="$emit('close')"
             >

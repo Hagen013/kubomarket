@@ -198,18 +198,16 @@
 
 {% block modal %}
     {{ super() }}
-    <div class="modal-controller" id="modal-controller">
-        <transition name="fade-fast">
-            <purchase-modal
-            name="{{escape_quotes(product.name)}}"
-            price="{{product.price}}"
-            img="{{product.thumbnail.url}}"
-            v-if="purchaseModalIsActive"
-            v-on:close="closePurchaseModal"
-            >
-            </purchase-modal>
-        </transition>
-    </div>
+    <transition name="fade-fast">
+        <purchase-modal
+        name="{{escape_quotes(product.name)}}"
+        price="{{product.price}}"
+        img="{{product.thumbnail.url}}"
+        v-if="purchaseModalIsActive"
+        v-on:close="closePurchaseModal"
+        >
+        </purchase-modal>
+    </transition>
 {% endblock modal %}
 
 

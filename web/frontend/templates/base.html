@@ -59,8 +59,15 @@
 		{% include "base/nav-menu.html" %}
 	{% endblock mobile_navigation %}
 
+	<div class="modal-controller" id="modal-controller">
 	{% block modal %}
+	<city-choice-modal
+		v-if="cityChoiceModalIsActive"
+		v-on:close="closeCityChoiceModal"
+	>
+	</city-choice-modal>
 	{% endblock modal %}
+	</div>
 
 	{% block script %}
     	<script src="{{ static('js/common.js') }}"></script>

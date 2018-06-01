@@ -1,4 +1,4 @@
-.purchase-modal {
+.modal {
     position: fixed;
     display: flex;
     justify-content: center;
@@ -11,7 +11,7 @@
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-.purchase-modal__content {
+.modal__content {
     position: relative;
     padding: 15px;
     background: $white;
@@ -92,4 +92,115 @@
 .purchase-modal__img {
     height: 100%;
     width: auto;
+}
+
+.city-choice-modal__input-box {
+    height: 40px;
+    width: 100%;
+}
+
+.modal__input {
+    height: 100%;
+    width: 100%;
+    padding: 0px 15px;
+    border-radius: 20px;
+    border: 2px solid $border;
+}
+
+.city-choice-modal__input {
+    padding-right: 30px;
+}
+
+.city-choice-modal__search-icon {
+    top: 9px;
+    right: 10px;
+    position: absolute;
+}
+
+.input-box {
+    position: relative;
+}
+
+.city-choice-modal__close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.city-choice-modal__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 36px;
+}
+
+
+.city-choice-modal__city-item {
+    line-height: 30px;
+    @include mq($from: tablet) {
+        width: 145px;
+        white-space: nowrap;
+    }
+}
+
+.city-choice-modal__city-item_wide {
+    padding: 8px 0px;
+    width: 100% !important;
+}
+
+.city-choice-modal__city-link {
+    user-select: none;
+    cursor: pointer;
+    &:hover {
+        color: $green;
+        text-decoration: underline;
+    }
+}
+
+.city-choice-modal {
+    align-items: unset !important;
+}
+
+.city-choice-modal__content {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    min-height: 300px;
+    overflow: hidden;
+    width: 320px;
+    @include mq($from: tablet) {
+        width: 750px;
+        margin: auto;
+    }
+}
+
+.city-choice-modal__city-list {
+    overflow-y: scroll;
+    max-height: 80%;
+    margin: 15px 0px;
+    @include mq($from: tablet) {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        height: 450px;
+        max-height: 80%;
+        width: 100%;
+    }
+}
+
+.city-choice-modal__city-list_wide {
+    display: block !important;
+}
+
+.city-choice-modal__error-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    margin-top: 60px;
+    @include bold();
+    @include mq($from: tablet) {
+        height: 450px;
+        margin: 0px;
+        font-size: 24px;
+    }    
 }
