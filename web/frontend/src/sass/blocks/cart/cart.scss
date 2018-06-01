@@ -53,6 +53,10 @@
     font-size: 12px;
     border-bottom: 2px dotted $red;
     cursor: pointer;
+    user-select: none;
+    &:hover {
+        color: lighten($red, 15)
+    }
 }
 
 .cart__items {
@@ -125,7 +129,7 @@
     padding: 0px 15px;
     border-top: 1px solid $border;
     @include mq($from: tablet) {
-        padding: 0px 40px 0px 15px;
+        padding: 0px 58px 0px 15px;
     }
 }
 

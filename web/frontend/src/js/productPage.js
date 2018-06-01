@@ -10,6 +10,8 @@ import mobileCatalog from './blocks/mobileCatalog/'
 
 // Specific
 import productPage from './blocks/product-page/product-page.js';
+import modalController from './blocks/modalController/index.js';
 
 //store.dispatch('geo/initGeo');
 store.dispatch('initAll');
+

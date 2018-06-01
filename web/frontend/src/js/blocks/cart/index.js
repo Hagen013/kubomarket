@@ -114,5 +114,18 @@ var Cart = new Vue({
                 }
             );
         }
+    },
+    methods: {
+        cartitempost(offer_identifier, quantity) {
+            console.log("posting", offer_identifier);
+            this.$store.dispatch('setQuantityInCart', { offer_identifier, quantity });
+        },
+        cartitemdelete(offer_identifier) {
+            console.log("deleting"+offer_identifier);
+            this.$store.dispatch('deleteFromCart', { offer_identifier });
+        },
+        clear() {
+            this.$store.dispatch('clearCart');
+        }
     }
 });

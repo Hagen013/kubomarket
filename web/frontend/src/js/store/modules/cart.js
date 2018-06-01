@@ -96,6 +96,19 @@ export default {
                 );
             });
         },
+        clear({commit, state, dispatch}) {
+            return new Promise((resolve, reject) => {
+                Vue.http.delete(`/api/cart/items/`).then(
+                    response => {
+                        dispatch('syncCart').then(resolve, reject);
+                    },
+                    response => {
+                        console.error(`Can not delete items`);
+                        dispatch('syncCart').then(reject, reject);
+                    }
+                );
+            });
+        },
         setQuantity({commit, state, dispatch}, payload) {
             return new Promise((resolve, reject) => {
                 Vue.http.post(`/api/cart/items/${payload.offer_identifier}/`, { quantity: payload.quantity }).then(

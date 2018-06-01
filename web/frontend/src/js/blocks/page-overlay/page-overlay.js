@@ -1,4 +1,6 @@
 import { Vue } from '../../vue.js';
+import store from '../../store'
+
 import pageOverlay from './__page-overlay.vue';
 
 

@@ -20,9 +20,12 @@
 .button {
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 40px;
     padding: 0px 16px;
     border-radius: 22px;
+    user-select: none;
+    cursor: pointer;
     @include bold();
 }
 

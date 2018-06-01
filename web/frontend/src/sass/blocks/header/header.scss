@@ -185,13 +185,18 @@ input.header__search-input::placeholder {
     margin-left: 16px;
     color: $text-grey;
     border-bottom: 2px dotted $green;
-    transition-duration: .2s;
-    transition-property: color, border;
+    opacity: 0;
+    will-change: opacity;
+    transition: .2s;
     cursor: pointer;
     &:hover {
         color: $green;
         border-bottom: 2px solid $green;
     }
+}
+
+.header__cityLink_ready {
+    opacity: 1;
 }
 
 .header__nav-link {

@@ -22,6 +22,7 @@ export default new Vuex.Store({
         showModalCallback: showModal,
         showModalCityChoice: showModal,
         showOverlay: showModal,
+        showPurchaseModal: showModal,
         geo: geo,
         cart: cart,
         delivery: delivery,
@@ -67,6 +68,11 @@ export default new Vuex.Store({
         },
         setQuantityInCart({ commit, state, dispatch }, payload) {
             dispatch('cart/setQuantity', payload).then(
+                () => { dispatch('delivery/syncDelivery') }
+            )
+        },
+        clearCart({ commit, state, dispatch }) {
+            dispatch('cart/clear').then(
                 () => { dispatch('delivery/syncDelivery') }
             )
         },

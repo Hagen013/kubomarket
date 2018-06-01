@@ -11,7 +11,9 @@
             </div>
             <div class="cart-item__purchase-info">
                 <div class="cart-item__interaction-area">
-                    <div class="cart-item__counter-button cart-item__counter-button_dec">
+                    <div class="cart-item__counter-button cart-item__counter-button_dec"
+                        @click="quantityMinus"
+                    >
                         -
                     </div>
                     <div class="cart-item__input-box">
@@ -25,7 +27,9 @@
                             @keyup.down="quantityMinus"
                         >
                     </div>
-                    <div class="cart-item__counter-button cart-item__counter-button_inc">
+                    <div class="cart-item__counter-button cart-item__counter-button_inc"
+                        @click="quantityPlus"
+                    >
                         +
                     </div>
                 </div>
@@ -33,7 +37,9 @@
                     {{total_price}} ₽
                 </div>
             </div>
-            <div class="cart-item__delete">
+            <div class="cart-item__delete"
+                @click="$emit('cartitemdelete', offer_identifier)"
+            >
                 <i class="icon icon_close"></i>
             </div>
         </div>
@@ -64,7 +70,7 @@ export default {
     },
     methods: {
         changeQuantity: debounce(function () {
-            this.$parent.$emit("cartItemPost",
+            this.$emit("cartitempost",
                 this.offer_identifier,
                 this.quantity);
         }, 1000),

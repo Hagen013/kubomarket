@@ -18,19 +18,10 @@
     delivery_data="{{to_json(product.data_for_delivery)}}" 
 >
 
-    <added-to-cart-modal 
-    v-if="showAddedToCartModal" 
-    @close="showAddedToCartModal = false"
-    name="{{product.name | replace("'","")}}"
-    price="{{product.price}}"
-    img="{{product.thumbnail.url}}"
-    >
-    </added-to-cart-modal>
-
     <div v-if="showEditForm">
         <edit-form
             uuid="{{product.vendor_code}}"
-            name="{{product.name | replace("'","")}}"
+            name="{{escape_quotes(product.name)}}"
             price={{product.price}}
             slug="{{product.slug}}"
             id="{{product.id}}"
@@ -142,6 +133,7 @@
                 <div class="product-page__add-to-cart"
                     @click="addOfferToCart"
                 >
+                    <i class="icon icon_cart"></i>
                     В КОРЗИНУ
                 </div>
                 <div class="product-page__purchase-wrap"
@@ -204,6 +196,22 @@
 
 {% endblock content %}
 
+{% block modal %}
+    {{ super() }}
+    <div class="modal-controller" id="modal-controller">
+        <transition name="fade-fast">
+            <purchase-modal
+            name="{{escape_quotes(product.name)}}"
+            price="{{product.price}}"
+            img="{{product.thumbnail.url}}"
+            v-if="purchaseModalIsActive"
+            v-on:close="closePurchaseModal"
+            >
+            </purchase-modal>
+        </transition>
+    </div>
+{% endblock modal %}
+
 
 {% block script %}
     {{ super() }}
@@ -218,11 +226,11 @@
 
 {% block meta_title %} 
 {{ product.meta_title }} 
-{% endblock meta_title %} 
+{% endblock meta_title %}
 
 {% block meta_description %} 
 {{ product.meta_description }} 
-{% endblock meta_description %} 
+{% endblock meta_description %}
 
 {% block meta_keywords %} 
 {{ product.meta_keywords }} 

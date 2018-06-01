@@ -22,10 +22,22 @@ var header = new Vue({
         cartTotalQuantity(){
              return this.$store.state.cart.items_quantiy;
         },
+        isGeoReady() {
+            return this.$store.state.geo.isDataInited;
+        },
+        cityName() {
+            return this.$store.state.geo.city;
+        },
     },
     methods: {
         showMobileMenu() {
             this.$store.commit("mobileMenu/show");
-        }
+        },
+        hideModalCityChoice() {
+            this.$store.commit('showModalCityChoice/hide');
+        },
+        showModalCityChoice() {
+            this.$store.commit('showModalCityChoice/show');
+        },
     }
 });

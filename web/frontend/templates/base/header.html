@@ -5,10 +5,15 @@
                 <span>
                     Ваш город:
                 </span>
-                <a class="header__city-link">
-                    Комсомольск-на-Амуре
+                {% raw %}
+                <a class="header__city-link"
+                    :class="{ header__cityLink_ready : isGeoReady }"
+                    @click="showCityChoiceModal"
+                >
+                    {{cityName}}
                     <i class="icon icon_chevron-down header__city-icon"></i>
                 </a>
+                {% endraw %}
             </div>
             <nav class="header__nav">
                 <a class="header__nav-link"
@@ -27,7 +32,7 @@
                     Контакты
                 </a>
                 <a class="header__nav-link"
-                    href="/check-order/"
+                    href="/order-check/"
                 >
                     Где мой заказ
                 </a>
@@ -58,13 +63,13 @@
             </div>
             <div class="header__profile">
                 <a class="header__profile-link header__enter"
-                    href="#"
+                    href="/login/"
                 >
                     Вход
                 </a>
                 /
                 <a class="header__profile-link header__registration"
-                    href="#"
+                    href="/registration/"
                 >
                     Регистрация
                 </a>

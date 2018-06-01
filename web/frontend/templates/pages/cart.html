@@ -22,7 +22,9 @@
                         <div class="cart__subtitle">
                             Ваши товары
                         </div>
-                        <div class="cart__items-clear">
+                        <div class="cart__items-clear"
+                            @click="clear"
+                        >
                             Удалить все 
                             <i class="icon icon_close"></i>
                         </div>
@@ -37,7 +39,10 @@
                         :init_quantity="item.quantity" 
                         :price="item.price" 
                         :total_price="item.total_price" 
-                        ></cart-item>
+                        v-on:cartitempost=cartitempost
+                        v-on:cartitemdelete=cartitemdelete
+                        >
+                        </cart-item>
                         {% endraw %}
                     </div>
                     {% raw %}

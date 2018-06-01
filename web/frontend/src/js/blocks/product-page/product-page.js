@@ -5,7 +5,7 @@ import store from '../../store'
 //Components
 import navItem from './__nav-item.vue'
 import deliveryInner from './__delivery-inner.vue'
-import addedToCartModal from '../added-to-cart-modal/added-to-cart-modal.vue'
+import purchaseModal from '../added-to-cart-modal/purchase-modal.vue'
 
 import modalCallback from './__modal-callback.vue'
 
@@ -20,7 +20,7 @@ var productCard = new Vue({
     components: {
         'nav-item': navItem,
         'delivery-inner': deliveryInner,
-        'added-to-cart-modal' : addedToCartModal,
+        'purchase-modal': purchaseModal,
         editForm,
         modalCallback
     },
@@ -83,19 +83,6 @@ var productCard = new Vue({
         isDeliveryDataInited() {
             return this.$store.state.geo.isDataInited && this.deliveryData !== undefined;
         }
-        // addOfferToCart() {
-        //     if (this.is_in_stock) {
-        //         this.$http.put(
-        //             `/api/cart/items/${this.offer_identifier}/`)
-        //             .then(response => {
-        //                 this.showAddedToCartModal = true;
-        //                 this.$store.dispatch('cart/items/syncCart');
-        //             });
-        //     } else {
-        //         console.log("addOfferToCart disable");
-        //     }
-        // },
-
     },
     created: function () {
         // Initializing
@@ -221,11 +208,7 @@ var productCard = new Vue({
         addOfferToCart() {
             if (this.is_in_stock) {
                 this.$store.dispatch('addToCart', {offer_identifier:this.offer_identifier});
-                this.showAddedToCartModal = true;
-                // this.$store.dispatch('addToCart', {offer_identifier:this.offer_identifier}).this(
-                //     ()=>{},
-                //     ()=>{console.error('Error in adding to cart');}
-                // );
+                this.$store.commit("showPurchaseModal/show");
                 
             } else {
                 console.log("addOfferToCart disable");
