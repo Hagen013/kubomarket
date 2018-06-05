@@ -13,84 +13,10 @@
         </div>
 
         <transition name="fade-fast">
-        <div class="content-area_mb cart__items-content-area"
-            v-if="isCartItemsDataReady"
-        >
-            <div class="cart__content">
-                <div class="cart__items-wrap">
-                    <div class="cart__title-area">
-                        <div class="cart__subtitle">
-                            Ваши товары
-                        </div>
-                        <div class="cart__items-clear"
-                            @click="clear"
-                        >
-                            Удалить все 
-                            <i class="icon icon_close"></i>
-                        </div>
-                    </div>
-                    <div class="cart__items">
-                        {% raw %}
-                        <cart-item v-for="item in sortedCartItemsArray" :key="item.offer_identifier" 
-                        :offer_identifier="item.offer_identifier" 
-                        :name="item.name" 
-                        :url="item.url" 
-                        :image="item.image" 
-                        :init_quantity="item.quantity" 
-                        :price="item.price" 
-                        :total_price="item.total_price" 
-                        v-on:cartitempost=cartitempost
-                        v-on:cartitemdelete=cartitemdelete
-                        >
-                        </cart-item>
-                        {% endraw %}
-                    </div>
-                    {% raw %}
-                    <div class="cart__summary">
-                        <div class="cart__summary-quanity">
-                            {{totalCartItemsDeepQuantity}} товаров(a)
-                        </div>
-                        <div class="cart__summary-price price">
-                            {{totalCartItemsPrice}} ₽
-                        </div>
-                    </div>
-                    {% endraw %}
-                </div>
-
-                <div class="cart__delivery-wrap">
-                    <div class="cart__title-area">
-                        <div class="cart__subtitle">
-                            Оформление заказа
-                        </div>
-                    </div>
-                    <div class="cart__delivery-content">
-                        <div class="cart__personal-info">
-                            <div class="cart__subtitle cart__personal-info-title">
-                                Контактное лицо
-                            </div>
-                            <div class="cart__form">
-                                <div class="cart__form-input-box">
-                                    <input class="input cart__input" placeholder="Имя">
-                                </div>
-                                <div class="cart__form-input-box">
-                                    <input class="input cart__input" placeholder="Почта">
-                                </div>
-                                <div class="cart__form-input-box">
-                                    <input class="input cart__input" placeholder="Телефон">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cart__submit-wrap">
-                            <button class="button button_blue cart__submit-button">
-                                ОФОРМИТЬ ЗАКАЗ
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+            <cart>
+            </cart>
         </transition>
+
 
     </div>
 

@@ -93,12 +93,14 @@
 
 .product-page__availability {
     float: left;
+    display: flex;
+    align-items: center;
     height: 50px;
     width: 185px;
-    line-height: 50px;
     color: $text-grey_dark;
     @include mq($from: wide) {
         width: 100%;
+        padding: 0px 15px;
     }
 }
 
@@ -116,8 +118,10 @@
     }
     @include mq($from: wide) {
         width: 107px;
+        margin-top: 15px;
         text-align: left;
         float: left;
+        padding-left: 15px;
     }
 }
 
@@ -141,6 +145,9 @@
     }
     @include mq($from: desktop) {
         width: 306px;
+    }
+    @include mq($from: wide) {
+        margin-top: 15px;
     }
 }
 
@@ -172,7 +179,7 @@
     }
     @include mq($from: wide) {
         position: absolute;
-        bottom: 14px;
+        bottom: 8px;
         right: 72px;
     }
 }
@@ -205,6 +212,7 @@
         padding: 0px 15px;
         margin: 0 auto;
         display: flex;
+        justify-content: space-between;
     }
 }
 
@@ -237,7 +245,8 @@
         width: 970px;
     }
     @include mq($from: wide) {
-        width: 1170px;
+        height: 170px;
+        width: 100%;
     }
 }
 
@@ -253,47 +262,54 @@
     margin-right: 15px;
 }
 
-.product-page__city-choice-wrap {
-    width: 320px;
-    margin: 0 auto;
-    @include mq($from: tablet) {
-        width: 750px;
-    }
-}
-
-.product-page__city-choice {
-    height: 70px;
-    padding: 15px 15px;
-    @include mq($from: tablet, $until: wide) {
-        display: flex;
-        padding: 22px 15px;
-    }
-}
-
 .product-page__city-link {
-    display: block;
+    width: auto;
     padding: 0px;
-    color: $blue;
-    transition: color, border, opacity .2s;
-    border-bottom: 2px dotted $blue;
     opacity: 0;
     will-change: opacity;
-    user-select: none;
-    cursor: pointer;
-    @include bold();
-    &:hover {
-        border-bottom: 2px solid $blue;
-    }
 }
 
 .productPage__cityLink_visible {
     opacity: 1;
 }
 
-.product-page__city-choice-caption {
-    margin-right: 15px;
-}
-
 .product-page__delivery-type-title {
     color: $text-grey_dark;
+}
+
+.product-page__city-choice-wrap {
+    width: 320px;
+    margin: 0 auto;
+    @include mq($from: tablet, $until: desktop) {
+        width: 750px;
+    }
+    @include mq($from: desktop, $until: wide) {
+        width: 970px;
+    }
+    @include mq($from: wide) {
+        width: 100%;
+    }
+}
+
+.product-page__city-choice {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    padding: 0px 15px;
+    @include mq($from: wide) {
+        height: 50px;
+    }
+}
+
+.product-page__city-choice-content {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    @include mq($from: tablet) {
+        display: flex;
+    }
+}
+
+.product-page__city-choice-caption {
+    margin-right: 15px;
 }

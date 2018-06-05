@@ -19,7 +19,6 @@ export default {
     state: {
         isDataInited: false,
         data: {},
-
         isModSelected: false,
         mod: {
             type: null,

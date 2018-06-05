@@ -234,7 +234,6 @@ var productCard = new Vue({
                     'product': this.productDeliveryData
                 }).then(
                 (response)=>{
-                    console.log("SUCCESS");
                     console.log(this.productDeliveryData);
                     console.log(response.body);
                     this.deliveryData=response.body;
@@ -245,6 +244,12 @@ var productCard = new Vue({
             } else {
                 console.log('kladr not inited');
             }
-        }
+        },
+        hideCityChoiceModal() {
+            this.$store.commit('showModalCityChoice/hide');
+        },
+        showCityChoiceModal() {
+            this.$store.commit('showModalCityChoice/show');
+        },
     }
 })

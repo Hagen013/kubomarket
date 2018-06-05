@@ -118,15 +118,18 @@
                 {% raw %}
                 <div class="product-page__city-choice-wrap">
                     <div class="product-page__city-choice">
-                        <div class="product-page__city-choice-caption">
-                            Доставка в городе:
+                        <div class="product-page__city-choice-content">
+                            <div class="product-page__city-choice-caption">
+                                Доставка в городе:
+                            </div>
+                            <a class="product-page__city-link link_city"
+                                :class="{ productPage__cityLink_visible : isDeliveryDataInited }"
+                                @click="showCityChoiceModal"
+                            >
+                                {{cityName}}
+                                <i class="icon icon_chevron-down product-page__city-choice-icon"></i>
+                            </a>
                         </div>
-                        <a class="product-page__city-link"
-                            :class="{ productPage__cityLink_visible : isDeliveryDataInited }"
-                        >
-                            {{cityName}}
-                            <i class="icon icon_chevron-down product-page__city-choice-icon"></i>
-                        </a>
                     </div>
                 </div>
                 {% endraw %}
@@ -137,7 +140,8 @@
             <div class="product-page__interaction-area">
                 {% if product.is_in_stock %}
                 <div class="product-page__availability">
-                Есть в наличии
+                    <i class="icon icon_delivery-availability product-page__delivery-icon"></i>
+                    Есть в наличии
                 </div>
                 {% else %}
                 <div class="product-page__availability">

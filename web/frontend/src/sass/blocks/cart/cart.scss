@@ -136,3 +136,71 @@
 .cart__summary-price {
     font-size: 24px;
 }
+
+.cart__delivery-menu-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @include mq($from: tablet) {
+        flex-direction: row;
+    }
+}
+
+.cart__delivery-menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 0px 8px;
+    color: $text-grey_dark;
+    font-size: 14px;
+    user-select: none;
+    border: 2px solid $border;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: border .2s;
+    &:hover {
+        background: $border;
+    }
+    @include mq($from: tablet) {
+        width: 31%;
+        justify-content: center;
+        margin: 0px;
+    }
+}
+
+.cart__deliveryMenuItem_active {
+    background: $border;
+    cursor: default;
+}
+
+.cart__delivery-menu {
+
+}
+
+.cart__city-choice {
+    padding: 15px 0px;
+}
+
+.cart__city-choice-icon {
+    font-size: 12px;
+}
+
+.cart__city-choice-title {
+    @include mq($from: tablet) {
+        float: left;
+    }
+}
+
+.cart__city-choice-link {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    @include mq($from: tablet) {
+        float: left;
+        margin-left: 10px;
+    }
+}

@@ -31,9 +31,9 @@ export default {
         initGeo({ state, commit, dispatch }, payload) {
             return new Promise((resolve, reject) => {
                     console.log('initGeo');
-                    if(!state.isDataInited){
+                    if(!state.isDataInited) {
                         return dispatch('getKladr');
-                    }else{
+                    } else {
                         console.log('Geo already inited');
                         resolve();
                     }
@@ -42,7 +42,7 @@ export default {
         },
         getKladr({ state, commit, dispatch }, payload) {
             return new Promise((resolve, reject) => {
-                commit('notReady');                
+                commit('notReady');             
                 Vue.http.get(`${GEO_IP_HOST}/api/geo_ip/`).then(
                     response => {
                         // Колбэк на успех

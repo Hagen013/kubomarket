@@ -1,0 +1,15 @@
+.link {
+
+}
+
+.link_city {
+    color: $blue;
+    transition: color, border, opacity .2s;
+    border-bottom: 2px dotted $blue;
+    user-select: none;
+    cursor: pointer;
+    @include bold();
+    &:hover {
+        border-bottom: 2px solid $blue;
+    }
+}

@@ -77,13 +77,16 @@ export default new Vuex.Store({
             )
         },
         initAll({ commit, state, dispatch, getters }, payload) {
-            Promise.all([dispatch('cart/initCart'),
-            dispatch('geo/initGeo')
+            Promise.all([
+                dispatch('geo/initGeo'),
+                dispatch('cart/initCart'),
             ]).then(
                 () => {
+                    console.log("INIT DELIVERY");
                     dispatch('delivery/initDelivery');
                 },
                 () => {
+                    console.log("NOT INIT DELIVERY");
                     console.error('Невозможно загрузить данные о доставке');
                 }
                 )
