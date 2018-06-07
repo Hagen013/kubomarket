@@ -14,7 +14,7 @@
 
 <script>
 import { Vue } from '../../../vue.js';
-import yandexMap from '../../yandex-map/yandex-map.vue'
+import yandexMap from '../../yandexMap/yandexMap.vue'
 import store from '../../../store'
 
 

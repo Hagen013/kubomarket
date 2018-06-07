@@ -35,7 +35,7 @@
                 <!--            Пунктом выдачи старт             --> 
                 <div class="cart__delivery-menu-item"
                     :class="{ cart__deliveryMenuItem_active : currentTabKey == 1 }"
-                    @click="selectDeliveryTab(1)"
+                    @click="selectDeliveryPointsTab"
                 >
                     <div class="cart__delivery-menu-caption">
                         <div class="cart__delivery-menu-title">
@@ -117,13 +117,14 @@
 
 <script>
 import store from '../../../store'
+import yandexMap from '../../yandexMap/yandexMap.vue'
 
 export default {
   name: "delivery",
   store,
   data: (function() {
     return {
-        currentTabKey: -1
+        currentTabKey: -1,
     };
   }),
   props: [
@@ -169,6 +170,9 @@ export default {
             this.deliveryData.postal_service.time_max
         ];
     },
+    selectedPointCode() {
+        return this.selectedDeliveryMod.code;
+    }
   },
   methods: {
         hideCityChoiceModal() {
@@ -193,6 +197,10 @@ export default {
                 this.$emit("selectDeliveryMod", "postal_service");
             }
         },
+        selectDeliveryPointsTab() {
+            this.selectDeliveryTab(1);
+            this.$store.commit("deliveryMap/show");
+        }
   },
   filters: {
     priceFilter(value) {

@@ -106,7 +106,7 @@ import store from '../../../store'
 import cartItem from './cartItem.vue'
 import deliveryMenu from './deliveryMenu.vue'
 import deliveryPoints from './deliveryPoints.vue'
-import yandexMap from '../../yandex-map/yandex-map.vue'
+import yandexMap from '../../yandexMap/yandexMap.vue'
 
 
 export default {

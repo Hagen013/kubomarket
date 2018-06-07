@@ -3,6 +3,7 @@ import store from '../../store'
 
 import purchaseModal from '../added-to-cart-modal/purchase-modal.vue';
 import cityChoiceModal from '../modals/city-choice-modal.vue';
+import deliveryMap from '../modals/deliveryMap.vue';
 
 
 var modalController = new Vue({
@@ -14,7 +15,8 @@ var modalController = new Vue({
     },
     components: {
         'purchase-modal': purchaseModal,
-        'city-choice-modal': cityChoiceModal
+        'city-choice-modal': cityChoiceModal,
+        'delivery-map': deliveryMap
     },
     computed: {
         purchaseModalIsActive() {
@@ -22,6 +24,9 @@ var modalController = new Vue({
         },
         cityChoiceModalIsActive() {
             return this.$store.state.showModalCityChoice.isShowModal;
+        },
+        deliveryMapIsActive() {
+            return this.$store.state.deliveryMap.isShowModal;
         }
     },
     methods: {
@@ -36,6 +41,12 @@ var modalController = new Vue({
         },
         showCityChoiceModal() {
             this.$store.commit("showModalCityChoice/show");
+        },
+        closeDeliveryMap() {
+            this.$store.commit("deliveryMap/hide");
+        },
+        showDeliveryMap() {
+            this.$store.commit("deliveryMap/show");
         }
     }
 });

@@ -12,6 +12,7 @@ import delivery from './modules/delivery.js';
 import customer from './modules/customer.js';
 import admin from './modules/admin.js';
 import payment from './modules/payment.js';
+import deliveryMap from './modules/deliveryMap.js';
 
 // Новые 
 import mobileMenu from './modules/mobileMenu'
@@ -32,6 +33,7 @@ export default new Vuex.Store({
 
         mobileMenu: mobileMenu,
         mobileCatalog: mobileCatalog,
+        deliveryMap: deliveryMap
     },
     actions: {
         changeLocation({ commit, state, dispatch, }, payload) {
