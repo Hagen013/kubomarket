@@ -104,6 +104,10 @@ gulp.task('prod_css', function() {
 		.pipe(autoprefixer({browsers: ['last 2 version']}))
 		.pipe(gulp.dest(paths.css));
 	gulp.src('./src/css/jquery.fancybox.min.css')
+		.pipe(gulp.dest(paths.css));
+	gulp.src('./src/css/jquery.fancybox.min.css')
+		.pipe(gulp.dest(paths.css));
+	gulp.src('./src/css/jquery.fancybox.min.css')
         .pipe(gulp.dest(paths.css));
 });
 

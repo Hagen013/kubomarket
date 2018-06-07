@@ -29,6 +29,15 @@
     @include bold();
 }
 
+.button_blue {
+    color: $white;
+    background: $blue;
+    transition: .2s;
+    &:hover {
+        background: lighten($blue, 10);
+    }
+}
+
 .button_ghost {
     color: #11aff1;
     background: $white;

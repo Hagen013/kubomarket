@@ -65,6 +65,7 @@
 
 .cart__personal-info {
     border-top: 1px solid $border;
+    padding: 0px 0px 15px 0px;
 }
 
 .cart__delivery-content {
@@ -91,14 +92,6 @@
     @include mq($from: tablet) {
         width: 32%;
     }
-}
-
-.cart__input {
-    height: 100%;
-    width: 100%;
-    padding: 0px 15px;
-    border: 2px solid $border;
-    border-radius: 18px;
 }
 
 .cart__submit-wrap {
@@ -178,11 +171,13 @@
 }
 
 .cart__delivery-menu {
-
+    border-top: 1px solid $border;
 }
 
 .cart__city-choice {
-    padding: 15px 0px;
+    padding: 15px 5px;
+    font-size: 14px;
+    color: $text-grey_dark;
 }
 
 .cart__city-choice-icon {
@@ -203,4 +198,55 @@
         float: left;
         margin-left: 10px;
     }
+}
+
+.cart__delivery-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+}
+
+.cart__selected-point-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+}
+
+.cart__change-point-link {
+    margin-left: 10px;
+}
+
+.cart__change-point-link_single {
+    margin: 0px 0px 20px 0px;
+    font-size: 14px;
+}
+
+.cart__address-form {
+    padding: 15px 15px;
+}
+
+.cart__address-input {
+    height: 40px;
+}
+
+.cart__address-input-box {
+    margin-bottom: 15px;
+}
+
+.cart__address-text {
+    min-height: 120px;
+}
+
+.cart__selected-point {
+    padding: 20px 0px;
+}
+
+.cart__selected-point-address {
+    margin-bottom: 8px;
+}
+
+.cart__selected-point-price {
+    margin-bottom: 15px;
 }

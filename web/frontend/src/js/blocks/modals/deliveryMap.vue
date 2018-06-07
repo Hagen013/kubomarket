@@ -2,18 +2,22 @@
     <div class="modal delivery-map"
         @click.self="close"
     >
-        <div class="modal__content delivery-map__content" v-if="isDeliveryDataReady">
+        <div class="delivery-map__content" v-if="isDeliveryDataReady">
             <div class="content-area">
-                <div class="delivery-map__inner">
+                <div class="delivery-map__inner modal__content">
+                    <div class="delivery-map__close">
+                        <i class="icon icon_close"></i>
+                    </div>
                     <div class="delivery-map__left">
                         <div class="delivery-map__title">
                         ПУНКТЫ САМОВЫВОЗА
                         </div>
                         <div class="delivery-map__points-list-wrap">
-                            <ul class="delivery-map__points-list green_scrollbar">
+                            <ul class="delivery-map__points-list yellow_scrollbar">
                                 <li class="delivery-map__list-item"
                                     v-for="deliveryPoint in deliveryPointsList"
                                     :key=deliveryPoint.code
+                                    @click="deliverPointListSelect(deliveryPoint.code, deliveryPoint.type)"
                                 >
                                     <div class="delivery-map__list-item-adress bold">
                                         {{deliveryPoint.address}}
@@ -30,16 +34,18 @@
                     </div>
                     <div class="delivery-map__right">
                         <div class="delivery-map__map">
-                            <yandex-map 
-                            id="map" 
-                            :id-value="'map'"
-                            :points="deliveryPointsList"
-                            :selected-point-code="selectedPointCode"
-                            :cityName="cityName"
+                            <keep-alive>
+                                <yandex-map 
+                                id="map" 
+                                :id-value="'map'"
+                                :points="deliveryPointsList"
+                                :selected-point-code="selectedPointCode"
+                                :cityName="cityName"
 
-                            @pointSelected="pointSelected"
-                            >
-                            </yandex-map>
+                                @pointSelected="pointSelected"
+                                >
+                                </yandex-map>
+                            </keep-alive>
                         </div>
                     </div>
                 </div>
@@ -105,9 +111,12 @@ export default {
             this.$store.commit("deliveryMap/hide");
         },
         pointSelected({code, type}) {
-            console.log(code, type);
-            this.$emit('pointSelected', {code, type});
+            this.$store.commit('delivery/selectDeliveryPointsMod', {code, type});
+            this.close();
         },
+        deliverPointListSelect(code, type) {
+            this.pointSelected({"code": code, "type": type});
+        }
     },
     watch: {
     },

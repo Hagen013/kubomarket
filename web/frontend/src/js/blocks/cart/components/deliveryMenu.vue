@@ -70,7 +70,7 @@
                 <div class="cart__delivery-info"
                     v-if="currentTabKey == -1"
                 >
-                    <div>
+                    <div class="cart__delivery-placeholder bold">
                     Способ доставки не выбран
                     </div>
                 </div>
@@ -78,34 +78,72 @@
                 <div class="cart__delivery-info"
                     v-if="currentTabKey == 0"
                 >
-                    <div class="input-box">
-                        <input class="input cart__input"
-                            placeholder="Адрес"
+                    <div class="cart__address-form">
+                        <div class="input-box cart__address-input-box">
+                            <input class="input cart__input cart__address-input"
+                                placeholder="Адрес"
+                            >
+                        </div>
+                        <textarea class="textarea cart__address-text"
+                            placeholder="Пожелания"
                         >
+                        </textarea>
                     </div>
-                    <textarea class="textarea"
-                        placeholder="Пожелания"
-                    >
-                    </textarea>
                 </div>
 
                 <div class="cart__delivery-info"
                     v-if="currentTabKey == 1"
                 >
+                    <div class="cart__selected-point" v-if="selectedDeliveryPoint !== undefined">
+                        <div class="cart__selected-point-address bold">
+                            {{selectedDeliveryPoint.address}}
+                        </div>
+                        <div class="cart__selected-point-term green">
+                            {{[selectedDeliveryPoint.time_min, selectedDeliveryPoint.time_max] | timeFilter}}
+                        </div>
+                        <div class="cart__selected-point-price green">
+                            {{selectedDeliveryPoint.price | priceFilter}}
+                        </div>
+                        <div class="cart__change-point-link_single">
+                            <a class="link link_city"
+                                @click="reSelectDeliveryPoint"
+                            >
+                                выбрать другой пункт выдачи
+                                <i class="icon icon_chevron-down cart__city-choice-icon"></i>
+                            </a>
+                        </div>
+                        <textarea class="textarea cart__address-text"
+                            placeholder="Пожелания"
+                        >
+                        </textarea>
+                    </div>
+                    <div v-else class="cart__selected-point-placeholder-wrap">
+                        <div class="cart__selected-point-placeholder bold">
+                            Пункт выдачи не выбран,
+                            <a class="link link_city cart__change-point-link"
+                                @click="reSelectDeliveryPoint"
+                            >
+                                выбрать
+                                <i class="icon icon_chevron-down cart__city-choice-icon"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="cart__delivery-info"
                     v-if="currentTabKey == 2"
                 >
-                    <div class="input-box">
-                        <input class="input cart__input"
-                            placeholder="Адрес"
+                    <div class="cart__address-form">
+                        <div class="input-box cart__address-input-box">
+                            <input class="input cart__input cart__address-input"
+                                placeholder="Адрес"
+                            >
+                        </div>
+                        <textarea class="textarea cart__address-text"
+                            placeholder="Пожелания"
                         >
+                        </textarea>
                     </div>
-                    <textarea class="textarea"
-                        placeholder="Пожелания"
-                    >
-                    </textarea>
                 </div>
 
             </div>
@@ -199,6 +237,9 @@ export default {
         },
         selectDeliveryPointsTab() {
             this.selectDeliveryTab(1);
+            this.$store.commit("deliveryMap/show");
+        },
+        reSelectDeliveryPoint() {
             this.$store.commit("deliveryMap/show");
         }
   },

@@ -102,6 +102,7 @@ if (process.env.NODE_ENV === "production") {
     new CopyWebpackPlugin([
       { from: './jquery-3.2.1.min.js', to: "./jquery-3.2.1.min.js" },
       { from: './plugins/jquery.fancybox.min.js', to: "./jquery.fancybox.min.js" },
+      { from: './plugins/owl.carousel.min.js', to: "./owl.carousel.min.js" },
     ]),
 
     new webpack.LoaderOptionsPlugin({
@@ -116,6 +117,7 @@ if (process.env.NODE_ENV === "production") {
     new CopyWebpackPlugin([
       { from: './jquery-3.2.1.min.js', to: "./jquery-3.2.1.min.js" },
       { from: './plugins/jquery.fancybox.min.js', to: "./jquery.fancybox.min.js" },
+      { from: './plugins/owl.carousel.min.js', to: "./owl.carousel.min.js" },
     ]),
     new webpack.optimize.UglifyJsPlugin({
       comments: false,

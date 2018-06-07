@@ -70,7 +70,7 @@ export default {
                 id="js-balloone-btn"
                 js-code="${point.code}"
                 js-type="${point.type}"
-                class="button button_green bold"
+                class="button button_blue bold"
                 style="padding:0px 20px"
                 >
                 

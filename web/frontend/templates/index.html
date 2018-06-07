@@ -1,8 +1,52 @@
 {% extends "base.html" %}
 
+{% block css %} 
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('css/owl.carousel.min.css') }}" type="text/css" media="screen" /> 
+    <link rel="stylesheet" href="{{ static('css/owl.theme.default.min.css') }}" type="text/css" media="screen" /> 
+{% endblock css %} 
+
+
 {% block content %}
+
+<div class="page-slider__wrap">
+    <div class="content-area page-slide__inner">
+        <div class="page-slider">
+            <div class="owl-carousel owl-theme">
+                <a class="item page-slider__item page-slider__item_1">
+                    <img src="/static/img/slides/slide_01.png">
+                </a>
+                <a class="item page-slider__item page-slider__item_2">
+                    <img src="/static/img/slides/slide_02.png">
+                </a>
+                <a class="item page-slider__item page-slider__item_3">
+                    <img src="/static/img/slides/slide_03.png">
+                </a>
+                <a class="item page-slider__item page-slider__item_4">
+                    <img src="/static/img/slides/slide_04.png">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock content %}
 
 {% block script %}
-<script src="{{ static('js/indexPage.js') }}"></script>
+    {{ super() }}
+    <script src="{{ static('js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ static('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ static('js/indexPage.js') }}"></script>
+    <script type="text/javascript">
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: false,
+        items: 1,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true
+    })
+    </script>
 {% endblock script %}

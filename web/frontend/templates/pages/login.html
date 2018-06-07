@@ -4,37 +4,39 @@
     {% with last_crumb="Вход" %}
         {% include 'blocks/breadcrumbs.html' %}
     {% endwith %}
-    <style>
-        .form {
-            margin: 0px auto 10px auto;
-            width: 260px;
-        }
-    </style>
+
     <div class="content-area" style="text-align: center;">
         <div class="login_div">
             <div class="login_div_block">
                 <h3>
                     Вход через социальные сети 
                 </h3>
-                <div class="footer-middle__social-media__icons">
-                    <a class="icon icon_social-media icon_social-media-google footer-middle__icon float-item" href="{{ url('social:begin', args=['google-oauth2']) }}"></a>
-                    <a class="icon icon_social-media icon_social-media-vk footer-middle__icon float-item" href="{{ url('social:begin', args=['vk-oauth2']) }}"></a>
-                    <a class="icon icon_social-media icon_social-media-odn footer-middle__icon float-item" href="{{ url('social:begin', args=['odnoklassniki-oauth2']) }}"></a>      
-                    <a class="icon icon_social-media icon_social-media-yandex footer-middle__icon float-item" href="{{ url('social:begin', args=['yandex-oauth2']) }}"></a>
-                    <a class="icon icon_social-media icon_social-media-mailru footer-middle__icon float-item" href="{{ url('social:begin', args=['mailru-oauth2']) }}"></a>
+                <div class="login__social-media-wrap">
+                    <div class="login__social-media">
+                        <a class="icon icon_social-media icon_social-media-google footer-middle__icon" href="{{ url('social:begin', args=['google-oauth2']) }}"></a>
+                        <a class="icon icon_social-media icon_social-media-vk footer-middle__icon" href="{{ url('social:begin', args=['vk-oauth2']) }}"></a>
+                        <a class="icon icon_social-media icon_social-media-odn footer-middle__icon" href="{{ url('social:begin', args=['odnoklassniki-oauth2']) }}"></a>      
+                        <a class="icon icon_social-media icon_social-media-yandex footer-middle__icon" href="{{ url('social:begin', args=['yandex-oauth2']) }}"></a>
+                        <a class="icon icon_social-media icon_social-media-mailru footer-middle__icon" href="{{ url('social:begin', args=['mailru-oauth2']) }}"></a>
+                    </div>
                 </div>
-                <div class="clearfix"></div>
             </div>
             <div class="login_div_block">
                 <h3>
                     Или 
                 </h3>
-                <form method="POST" action="">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    <p class="form"><input class="input" type="text" name="email" placeholder="Email"></p>
-                    <p class="form"><input class="input" type="text" name="password" placeholder="Пароль"></p>
-                    <p class="form"><input class="button button_blue bold form" type="submit" value="Отправить"></p>            
-                </form>
+                <div class="form__wrap">
+                    <form method="POST" action="" class="form">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        <div class="input-box login__input-box">
+                            <input class="input login__input" type="text" name="email" placeholder="Email">
+                        </div>
+                        <div class="input-box login__input-box">
+                            <input class="input login__input" type="text" name="password" placeholder="Пароль">
+                        </div>
+                        <input class="button button_blue login__submit bold" type="submit" value="Отправить">
+                    </form>
+                </div>
             </div>
         </div>
     </div>

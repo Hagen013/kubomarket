@@ -55,7 +55,9 @@ $mq-breakpoints: (
 @import "blocks/cart/*";
 @import "blocks/cart-item/*";
 @import "blocks/delivery-map/*";
-
+@import "blocks/page-slider/*";
+@import "blocks/login/*";
+@import "blocks/form/*";
 
 .slide-enter-active, .slide-leave-active{
     transition: .3s;

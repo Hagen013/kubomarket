@@ -1,0 +1,31 @@
+.page-slider__wrap {
+    @include mq($from: desktop) {
+        background: #fcfcfb;
+    }
+}
+
+.page-slider {
+    width: 100%;
+    padding: 15px 0px;
+}
+
+.page-slider__item {
+    display: block;
+    width: 100%;
+}
+
+.page-slider__item_1 {
+
+}
+
+.page-slider__item_2 {
+
+}
+
+.page-slider__item_3 {
+
+}
+
+.page-slider__item_4 {
+
+}
