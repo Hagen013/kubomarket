@@ -29,7 +29,7 @@ cd ./compose/nginx_cube/static_production
 STATIC_FILE_PATHS=(
     "css/styles.css"
     "js/cartPage.js"
-    "js/catalogPage.js"
+    "js/categoryPage.js"
     "js/common.js"
     "js/indexPage.js"
     "js/productPage.js"
