@@ -28,13 +28,13 @@ echo "TEMPLATES_PATH=${TEMPLATES_PATH}"
 cd ./compose/nginx_cube/static_production
 STATIC_FILE_PATHS=(
     "css/styles.css"
-    # "js/cart.js"
-    # "js/catalog.js"
-    # "js/common.js"
-    # "js/index.js"
-    # "js/product.js"
+    "js/cartPage.js"
+    "js/catalogPage.js"
+    "js/common.js"
+    "js/indexPage.js"
+    "js/productPage.js"
     # "js/scripts.js"
-    # "js/admin.js"
+    "js/admin.js"
 )
 
 # REPLACE STATIC FILES AND TEMPLATES
