@@ -38,14 +38,13 @@ services:
       - rabbit:rabbit
       - redis:redis
       - elasticsearch:elasticsearch
-    extra_hosts:
-      - "postgres:188.246.233.239"
+      - postgres_web:postgres
     depends_on:
       - rabbit
       - redis
       - elasticsearch
-    network_mode: "host"
-
+      - postgres_web
+      - postgres_geo
   # WEB_CELERY
   web_celery_cube:
     image: graphmarket/web_celery_cube:latest
@@ -61,12 +60,13 @@ services:
     links:
       - rabbit:rabbit
       - redis:redis
-    extra_hosts:
-      - "postgres:188.246.233.239"
+      - postgres_web:postgres
     depends_on:
       - rabbit
       - redis
       - elasticsearch
+      - postgres_web
+      - postgres_geo
   # WEB_FLOWER
   web_flower_cube:
     image: graphmarket/web_flower_cube:latest
@@ -80,12 +80,13 @@ services:
     links:
       - rabbit
       - redis
-    extra_hosts:
-      - "postgres:188.246.233.239"
+      - postgres_web:postgres
     depends_on:
       - web_celery_cube
       - rabbit
       - redis
+      - postgres_web
+      - postgres_geo
   # ELASTICSEARCH
   elasticsearch:
     image: graphmarket/elasticsearch:latest
@@ -100,8 +101,11 @@ services:
     hostname: geo
     env_file:
       - env/geo
-    extra_hosts:
-      - "postgres:188.246.233.239"
+    links:
+      - postgres_geo:postgres
+    depends_on:
+      - postgres_web
+      - postgres_geo
   # GEO_CELERY
   geo_celery:
     image: graphmarket/geo_celery:latest
@@ -114,11 +118,12 @@ services:
     links:
       - rabbit:rabbit
       - redis:redis
-    extra_hosts:
-      - "postgres:188.246.233.239"
+      - postgres_geo:postgres
     depends_on:
       - rabbit
       - redis
+      - postgres_web
+      - postgres_geo
   # GEO_FLOWER
   geo_flower:
     image: graphmarket/geo_flower:latest
@@ -129,12 +134,13 @@ services:
     links:
       - rabbit
       - redis
-    extra_hosts:
-      - "postgres:188.246.233.239"
+      - postgres_geo:postgres
     depends_on:
       - geo_celery
       - rabbit
       - redis
+      - postgres_web
+      - postgres_geo
   # RABBITMQ
   rabbit:
     image: rabbitmq:3.6.11-management
@@ -148,3 +154,25 @@ services:
     image: redis:latest
     restart: unless-stopped
     hostname: redis
+  # REDIS
+
+  # Postgres WEB
+  postgres_web:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - /var/postgresql_web/data:/var/postgresql_web/data
+    env_file:
+      - env/postgres_web
+
+  # Postgres GEO
+  postgres_geo:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - /var/postgresql_geo/data:/var/postgresql_geo/data
+    env_file:
+      - env/postgres_geo
+
+
+
