@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^md-admin/', include('md_admin.urls', namespace='md-admin')),
     url(r'^controls/', include('controls.urls', namespace='controls')),
     url(r'^cart/', include('cart.urls', namespace='cart')),
+    url(r'^search/', include('search.urls', namespace='search')),
     url(r'^api/', include(urls_api, namespace='api')),
     url(r'^faq/', TemplateView.as_view(template_name="pages/infopages/faq.html")),
     url(r'^delivery-and-payment/', TemplateView.as_view(

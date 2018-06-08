@@ -130,7 +130,7 @@ class ElastiListView(TemplateView):
 
 class SearchResultsView(ElastiListView):
 
-    template_name = 'pages/search.html'
+    template_name = 'pages/searchPage.html'
     index = 'product_card'
     doc_type = 'product_card_index'
 

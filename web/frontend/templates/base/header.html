@@ -105,10 +105,19 @@
             <div class="header__search-box">
                 <input class="header__search-input"
                     placeholder="Поиск"
+                    v-model="searchQuery"
+                    v-on:keyup.enter="enterPressed"
+                    @input="searchTriggered"
                 >
                 <div class="header__search-button">
                     <i class="icon icon_search"></i>
                 </div>
+                <search-list
+                    v-if="searchListIsActive"
+                    :results_standard="resultsStandard"
+                    :results_advanced="resultsAdvanced"
+                >
+                </search-list>
             </div>
         </div>
     </div>

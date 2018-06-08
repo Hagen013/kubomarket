@@ -4,6 +4,10 @@
     padding-bottom: 64px;
 }
 
+.catalog_search {
+    flex-direction: column;
+}
+
 .catalog__gallery {
     flex-wrap: wrap;
     display: flex;

@@ -121,6 +121,7 @@ $header-bottom-height: 60px;
     position: relative;
     width: 292px;
     height: 100%;
+    z-index: 9000;
 }
 
 .header__search-input {
