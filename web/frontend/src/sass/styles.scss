@@ -59,6 +59,7 @@ $mq-breakpoints: (
 @import "blocks/login/*";
 @import "blocks/form/*";
 @import "blocks/search-list/*";
+@import "blocks/search-modal/*";
 
 .slide-enter-active, .slide-leave-active{
     transition: .3s;

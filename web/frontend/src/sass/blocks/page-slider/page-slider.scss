@@ -12,6 +12,14 @@
 .page-slider__item {
     display: block;
     width: 100%;
+    overflow: hidden;
+}
+
+.page-slide__inner {
+    max-width: 306px;
+    @include mq($from: mobile) {
+        max-width: 100%;
+    }
 }
 
 .page-slider__item_1 {

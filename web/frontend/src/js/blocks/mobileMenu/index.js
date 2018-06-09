@@ -20,6 +20,14 @@ var sideMenu = new Vue({
         showNavMenu() {
             this.$store.commit("mobileMenu/hide");
             this.$store.commit("mobileCatalog/show");
+        },
+        showCityChoiceModal() {
+            this.$store.commit('showModalCityChoice/show');
+            this.$store.commit("mobileMenu/hide");
+        },
+        showSearchModal() {
+            this.$store.commit('showSearchModal/show');
+            this.$store.commit("mobileMenu/hide");
         }
     },
     watch: {

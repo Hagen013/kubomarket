@@ -1,0 +1,52 @@
+.search-modal {
+
+}
+
+.search-modal__search-box {
+}
+
+.search-modal__content {
+    min-width: 320px;
+    padding: 15px 15px 15px 15px;
+}
+
+.search-modal__search-button {
+    position: absolute;
+    top: -3px;
+    right: 0px;
+    &:hover {
+        background: transparent !important;
+    }
+}
+
+.search-modal__close {
+    position: absolute;
+    top: -22px;
+    right: 0px;
+    height: 20px;
+    width: 20px;
+}
+
+.search-modal__search-results {
+    padding-top: 8px;
+    overflow: hidden;
+}
+
+.search-modal__result {
+    width: 100%;
+    margin-top: -1px;
+}
+
+.search-modal__result-link {
+    display: block;
+    width: 100%;
+    padding: 8px 4px;
+    font-size: 14px;
+    color: $text-black;
+    transition-duration: .2s;
+    transition-property: color, background;
+    border-top: 1px solid $border;
+    &:hover {
+        background: #eeeeee;
+    }
+}

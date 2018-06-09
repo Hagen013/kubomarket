@@ -4,6 +4,7 @@ import store from '../../store'
 import purchaseModal from '../added-to-cart-modal/purchase-modal.vue';
 import cityChoiceModal from '../modals/city-choice-modal.vue';
 import deliveryMap from '../modals/deliveryMap.vue';
+import searchModal from '../modals/searchModal.vue';
 
 
 var modalController = new Vue({
@@ -16,7 +17,8 @@ var modalController = new Vue({
     components: {
         'purchase-modal': purchaseModal,
         'city-choice-modal': cityChoiceModal,
-        'delivery-map': deliveryMap
+        'delivery-map': deliveryMap,
+        'search-modal': searchModal
     },
     computed: {
         purchaseModalIsActive() {
@@ -27,6 +29,9 @@ var modalController = new Vue({
         },
         deliveryMapIsActive() {
             return this.$store.state.deliveryMap.isShowModal;
+        },
+        searchModalIsActive() {
+            return this.$store.state.showSearchModal.isShowModal;
         }
     },
     methods: {

@@ -24,6 +24,7 @@ export default new Vuex.Store({
         showModalCityChoice: showModal,
         showOverlay: showModal,
         showPurchaseModal: showModal,
+        showSearchModal: showModal,
         geo: geo,
         cart: cart,
         delivery: delivery,

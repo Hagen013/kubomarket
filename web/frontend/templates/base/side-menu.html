@@ -25,7 +25,15 @@
             </li>
             <li class="side-menu__list-item">
                 <a class="side-menu__list-link"
-                    href="#"
+                    @click="showSearchModal"
+                >
+                    <i class="button__icon icon icon_search"></i>
+                    ПОИСК
+                </a>
+            </li>
+            <li class="side-menu__list-item">
+                <a class="side-menu__list-link"
+                    href="/delivery-and-payment/"
                 >
                     <i class="button__icon icon icon_rouble"></i>
                     ДОСТАВКА И ОПЛАТА
@@ -33,7 +41,7 @@
             </li>
             <li class="side-menu__list-item">
                 <a class="side-menu__list-link"
-                    href="#"
+                    href="/contacts/"
                 >
                     <i class="button__icon icon icon_help-outline"></i>
                     КОНТАКТЫ
@@ -41,7 +49,7 @@
             </li>
             <li class="side-menu__list-item">
                 <a class="side-menu__list-link"
-                    href="#"
+                    href="/faq/"
                 >
                     <i class="button__icon icon icon_help-outline"></i>
                     ВОПРОСЫ И ПОМОЩЬ
@@ -50,23 +58,15 @@
             <div class="side-menu__delimeter"></div>
             <li class="side-menu__list-item">
                 <a class="side-menu__list-link"
-                    href="#"
+                    @click="showCityChoiceModal"
                 >
-                    <i class="button__icon icon icon_help-outline"></i>
+                    <i class="button__icon icon icon_location side-menu__location-icon"></i>
                     Ваш город: Москва
                 </a>
             </li>
             <li class="side-menu__list-item">
                 <a class="side-menu__list-link"
-                    href="#"
-                >
-                    <i class="button__icon icon icon_help-outline"></i>
-                    Москва
-                </a>
-            </li>
-            <li class="side-menu__list-item">
-                <a class="side-menu__list-link"
-                    href="#"
+                    href="/order-check/"
                 >
                     <i class="button__icon icon icon_help-outline"></i>
                     Что с моим заказом?

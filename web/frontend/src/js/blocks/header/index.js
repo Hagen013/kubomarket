@@ -45,7 +45,7 @@ var header = new Vue({
         }
     },
     mounted() {
-        console.log("mounted");
+
     },
     methods: {
         showMobileMenu() {
