@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import vuescroll from 'vuescroll'
+Vue.use(vuescroll)
 
 import store from '../../store'
 
@@ -40,7 +42,20 @@ var productCard = new Vue({
         offer_identifier: undefined,
         is_in_stock: false,
         deliveryData: undefined,
-        productDeliveryData: undefined
+        productDeliveryData: undefined,
+        scrollOptions: {
+            vuescroll: {
+                mode: 'native',
+            },
+            bar: {
+                vBar: {
+                    keepShow: true,
+                },
+                hBar: {
+                    keepShow: true,
+                }
+            },
+        }
     },
     computed: {
         navTrackMaxOffset() {
@@ -117,7 +132,6 @@ var productCard = new Vue({
         }
     },
     methods: {
-        // Thumbnails slider
         prevSlide() {
             if (this.navPrevIsActive) {
                 this.currentTrackOffset += 150;
@@ -155,43 +169,18 @@ var productCard = new Vue({
         },
         checkMediaQueryMobile(mql) {
             if (mql.matches) {
-                //this.switchThumbGalleryToTablet();
+                this.switchThumbGalleryToTablet();
             } else {
-                // no further breakpoints 
+
             }
         },
         checkMediaQueryTablet(mql) {
             if (mql.matches) {
-                //this.switchNavToTablet();
+                this.switchNavToTablet();
             } else {
-                //this.switchNavToMobile();
+                this.switchNavToMobile();
             }
         },
-        checkMediaQueryDesktop(mql) {
-            if (mql.matches) {
-                //this.switchNavToDesktop();
-            } else {
-                //this.switchNavToTablet()
-            }
-        },
-        checkMediaQueryWide(mql) {
-            if (mql.matches) {
-                //this.switchNavToWide();
-            } else {
-                //this.switchNavToDesktop();
-            }
-        },
-        // this.currentDisplayMode switching
-        // switchNavToMobile() {
-        //     this.currentDisplayMode = 'mobile';
-        //     this.currentTrackOffset = 0;
-        //     this.setTrackToPosition();
-        // },
-        // switchNavToTablet() {
-        //     this.currentDisplayMode = 'tablet';
-        //     this.currentTrackOffset = 0;
-        //     this.setTrackToPosition();
-        // },
         showModalCityChoice() {
             this.$store.commit('showModalCityChoice/show');
         },
@@ -204,19 +193,6 @@ var productCard = new Vue({
                 console.log("addOfferToCart disable");
             }
         },
-        // switchNavToDesktop() {
-        //     this.currentDisplayMode = 'desktop';
-        //     this.currentTrackOffset = 0;
-        //     this.setTrackToPosition();
-        // },
-        // switchNavToWide() {
-        //     this.currentDisplayMode = 'wide';
-        // },
-        // setTrackToPosition() {
-        //     let track = document.getElementById('js-photo-gallery__nav-track');
-        //     this.currentTrackOffset = 0;
-        //     track.style.margin = '0px';
-        // },
         isImageActive(image_key) {
             if (this.currentImageKey == image_key) {
                 return true;
@@ -258,5 +234,11 @@ var productCard = new Vue({
         showCityChoiceModal() {
             this.$store.commit('showModalCityChoice/show');
         },
+        switchNavToMobile() {
+            console.log("switching to mobile");
+        },
+        switchNavToTablet() {
+            console.log("swithcing to tablet");
+        }
     }
 })

@@ -1,6 +1,8 @@
 import { Vue } from '../../vue.js'
 import store from '../../store'
 import debounce from 'debounce'
+import { directive as onClickOutsideDirective } from 'vue-on-click-outside'
+Vue.directive('on-click-outside', onClickOutsideDirective)
 
 import searchList from './components/searchList.vue'
 
@@ -13,6 +15,7 @@ var header = new Vue({
         "search-list": searchList
     },
     data: {
+        searchBoxIsActive: true,
         searchQuery: "",
         searchApiUrl: '/api/search/?line=',
         resultsStandard: [],
@@ -38,7 +41,7 @@ var header = new Vue({
             return this.$store.state.geo.city;
         },
         searchListIsActive() {
-            if ( this.searchQuery.length > 2 ) {
+            if ( ( this.searchQuery.length > 2 ) && (this.searchBoxIsActive === true)) {
                 return true
             }
             return false    
@@ -91,6 +94,12 @@ var header = new Vue({
         },
         handleFailedSearchRequest(response) {
 
+        },
+        setSearchBoxActive() {
+            this.searchBoxIsActive = true;
+        },
+        setSearchBoxDisabled() {
+            this.searchBoxIsActive = false;
         }
     }
 });

@@ -102,7 +102,10 @@
             <div class="header__catalog">
                 {% include "base/desktop-menu.html" %}
             </div>
-            <div class="header__search-box">
+            <div class="header__search-box"
+                @click="setSearchBoxActive"
+                v-on-click-outside="setSearchBoxDisabled"
+            >
                 <input class="header__search-input"
                     placeholder="Поиск"
                     v-model="searchQuery"

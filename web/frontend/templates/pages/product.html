@@ -48,7 +48,7 @@
                         <a class="photo-gallery__main-img-item photo-gallery__main-img-item_first"
                             data-fancybox="gallery"
                             href="{{ product.image.url }}"
-                            v-show="currentImageKey == 0"
+                            :class="{ photoGallery_mainImgItem_active : currentImageKey == 0 }"
                         >
                             <img class="photo-gallery__main-img" src="{{ product.image.url }}">
                         </a>
@@ -58,52 +58,69 @@
                         <a class="photo-gallery__main-img-item"
                             data-fancybox="gallery"
                             href="{{ photo.image.url }}"
-                            v-show="currentImageKey == {{ loop.index }}"
+                            :class="{ photoGallery_mainImgItem_active : currentImageKey == {{ loop.index }} }"
                         >
                             <img class="photo-gallery__main-img" src="{{ photo.thumbnail.url }}">
                         </a>
                     </transition>
                     {% endfor %}
                 </div>
-                {% if product.modifications|length > 0 %}
                 <div class="photo-gallery__modifications">
                     <div class="photo-gallery__modifications-title">
                         Выберите цвет:
                     </div>
-                    <div class="photo-gallery__modifications-list green_scrollbar">
-                        <div class="photo-gallery__modifications-track">
-                            {% for modification in product.modifications %}
-                            <a class="photo-gallery__modification" href="/product/{{modification.slug}}">
-                                <img class="photo-gallery__modification-img" src="{{ modification.thumbnail.url }}">
-                            </a>
-                            {% endfor %}
-                            <div class="clearfix"></div>
-                        </div>
+                    <div class="photo-gallery__modifications-list-wrap">
+                        <ul class="photo-gallery__modifications-track">
+                            <vue-scroll :ops="scrollOptions">
+                                <a class="photo-gallery__modification photo-gallery__modification_active">
+                                    <img class="photo-gallery__modification-img" src="{{ product.thumbnail.url }}">
+                                </a>
+                                {% for modification in product.modifications %}
+                                <a class="photo-gallery__modification" href="/product/{{modification.slug}}">
+                                    <img class="photo-gallery__modification-img" src="{{ modification.thumbnail.url }}">
+                                </a>
+                                {% endfor %}
+                                <div class="clearfix"></div>
+                            </vue-scroll>
+                        </ul>
                     </div>
                 </div>
-                {% endif %}
             </div>
             <div class="photo-gallery__nav">
                 <div class="photo-gallery__nav-list">
                     <div class="photo-gallery__control photo-gallery__control_left"
                         @click="prevSlide"
+                        :class="{ photoGallery_control_active : navPrevIsActive }"
                     >
                         <i class="icon icon_chevron-left"></i>
                     </div>
                     <div class="photo-gallery__control photo-gallery__control_right"
                         @click="nextSlide"
+                        :class="{ photoGallery_control_active : navNextIsActive }"
                     >
                         <i class="icon icon_chevron-right"></i>
                     </div>
                     <div class="photo-gallery__nav-track" id="photo-gallery__nav-track">
-                        <nav-item :image_key=0 :active_key='currentImageKey' v-on:selected='changeImage'>
-                            <div class="photo-gallery__nav-item">
+                        <nav-item
+                            :image_key=0
+                            :active_key='currentImageKey'
+                            v-on:selected='changeImage'
+                        >
+                            <div class="photo-gallery__nav-item"
+                                :class="{ photoGallery__navItem_active : currentImageKey == 0 }"
+                            >
                                 <img src="{{ product.thumbnail.url }}">
                             </div>
                         </nav-item>
                         {% for photo in product.additional_images %}
-                        <nav-item :image_key={{ loop.index }} :active_key='currentImageKey' v-on:selected='changeImage'>
-                            <div class="photo-gallery__nav-item">
+                        <nav-item
+                            :image_key={{ loop.index }}
+                            :active_key='currentImageKey'
+                            v-on:selected='changeImage'
+                        >
+                            <div class="photo-gallery__nav-item"
+                                :class="{ photoGallery__navItem_active : currentImageKey == {{ loop.index }} }"
+                            >
                                 <img src="{{ photo.thumbnail.url }}">
                             </div>
                         </nav-item>
