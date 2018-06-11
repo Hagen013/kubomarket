@@ -18,13 +18,11 @@ class OneProductDeliveryAPIView(APIView):
         try:
             kladr_code = request.data['kladr']
         except KeyError:
-            print("MATCH 1")
             return Response(status=400, data="required kladr field")
 
         try:
             product = request.data['product']
         except KeyError:
-            print("MATCH 2")
             return Response(status=400, data="required product field")
 
         if not(isinstance(kladr_code, str) and isinstance(product, dict)):
@@ -38,7 +36,6 @@ class OneProductDeliveryAPIView(APIView):
                 return Response(d_ctrl.get_devivery_data())
             except (TypeError, ValueError) as ex:
                 # print(ex)
-                print("MATCH 3")
                 return Response(status=400, data="Invalid parametrs")
         else:
             return Response({})

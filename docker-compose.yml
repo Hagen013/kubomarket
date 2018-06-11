@@ -95,18 +95,24 @@ services:
       - /var/graph_market:/var/graph_market
   # GEO
   geo:
-    image: graphmarket/geo:latest
+    image: graphmarket/geo_cube:latest
     restart: unless-stopped
     hostname: geo
+    build:
+      context: .
+      dockerfile: ./compose/geo/Dockerfile
     env_file:
       - env/geo
     extra_hosts:
       - "postgres:188.246.233.239"
   # GEO_CELERY
   geo_celery:
-    image: graphmarket/geo_celery:latest
+    image: graphmarket/geo_celery_cube:latest
     restart: unless-stopped
     hostname: geo_celery
+    build:
+      context: .
+      dockerfile: ./compose/geo/Dockerfile
     env_file:
       - env/geo
     volumes:
@@ -121,9 +127,12 @@ services:
       - redis
   # GEO_FLOWER
   geo_flower:
-    image: graphmarket/geo_flower:latest
+    image: graphmarket/geo_flower_cube:latest
     restart: unless-stopped
     hostname: geo_celery
+    build:
+      context: .
+      dockerfile: ./compose/geo/Dockerfile
     env_file:
       - env/geo
     links:
