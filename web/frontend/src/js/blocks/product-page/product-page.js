@@ -233,17 +233,24 @@ var productCard = new Vue({
                     'kladr': this.$store.state.geo.code,
                     'product': this.productDeliveryData
                 }).then(
-                (response)=>{
-                    console.log(this.productDeliveryData);
-                    console.log(response.body);
-                    this.deliveryData=response.body;
+                (response) => {
+                    this.handleSuccessFulDeliveryRequest(response);
                 },
-                (response)=>{
-                    this.deliveryData = {};
+                (response) => {
+                    this.handleFailedDelvieryRequest(response);
                 })
             } else {
                 console.log('kladr not inited');
             }
+        },
+        handleSuccessFulDeliveryRequest(response) {
+            console.log(this.productDeliveryData);
+            console.log(response.body);
+            this.deliveryData=response.body;
+        },
+        handleFailedDelvieryRequest(response) {
+            console.log(this.response);
+            this.deliveryData = {};
         },
         hideCityChoiceModal() {
             this.$store.commit('showModalCityChoice/hide');
