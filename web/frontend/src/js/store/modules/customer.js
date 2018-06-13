@@ -9,15 +9,7 @@ export default {
         name: "",
         phone: "",
         email: "",
-        address: {
-            building: "",
-            apartment: "",
-            street: "",
-            entrance: "",
-            floor: "",
-            pass_number: "",
-            note: ""
-        }
+        address: ""
     },
     mutations: {
         name(state, payload) {
@@ -32,21 +24,15 @@ export default {
         email(state, payload) {
             state.email = payload;
         },
+        address(state, payload) {
+            state.address = payload;
+        },
         setData(state, payload) {
             for (let prop in payload) {
                 if (prop in state) {
                     state[prop] = payload[prop];
                 } else {
                     console.error(`Error in setData - state has not ${prop} field;`);
-                }
-            }
-        },
-        setAddress(state, payload) {
-            for (let prop in payload) {
-                if (prop in state.address) {
-                    state.address[prop] = payload[prop];
-                } else {
-                    console.error(`Error in setAddress - address has not ${prop} field;`);
                 }
             }
         }

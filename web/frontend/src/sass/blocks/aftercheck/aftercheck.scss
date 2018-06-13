@@ -1,0 +1,32 @@
+.aftercheck-list {
+    margin: 20px 0;
+    display: table;
+}
+
+.aftercheck-item {
+    display: table-row;
+    height: 36px;
+}
+
+.aftercheck-name {
+    display: table-cell;
+    padding-right: 30px;
+    line-height: 36px;
+    color: #aaa;
+}
+
+.aftercheck-value {
+    display: table-cell;
+}
+
+.aftercheck-item_all {
+    .aftercheck-name {
+        color: #484848 !important;
+        border-top: 1px dotted #484848;
+    }
+    .aftercheck-value {
+        color: #484848 !important;
+        border-top: 1px dotted #484848;
+    }
+    @include bold();
+}

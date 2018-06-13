@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from cart.models import Order2
+from .models import Order2
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -13,6 +13,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'state',
             'source',
             'manager_notes',
+            'client_notes,'
             'created_at',
             'modified_at'
         )

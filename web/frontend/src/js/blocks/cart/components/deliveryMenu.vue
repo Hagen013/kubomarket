@@ -65,6 +65,9 @@
                 <!--            Почтой конец             -->
             </div>
 
+            <div class="cart__delivery-menu-list-placeholder" v-else>
+            </div>
+
             <div class="cart__delivery-outlet">
 
                 <div class="cart__delivery-info"
@@ -82,10 +85,12 @@
                         <div class="input-box cart__address-input-box">
                             <input class="input cart__input cart__address-input"
                                 placeholder="Адрес"
+                                v-model="customerAddress"
                             >
                         </div>
                         <textarea class="textarea cart__address-text"
                             placeholder="Пожелания"
+                            v-model="customerNotes"
                         >
                         </textarea>
                     </div>
@@ -114,6 +119,7 @@
                         </div>
                         <textarea class="textarea cart__address-text"
                             placeholder="Пожелания"
+                            v-model="customerNotes"
                         >
                         </textarea>
                     </div>
@@ -137,6 +143,7 @@
                         <div class="input-box cart__address-input-box">
                             <input class="input cart__input cart__address-input"
                                 placeholder="Адрес"
+                                v-model="customerAddress"
                             >
                         </div>
                         <textarea class="textarea cart__address-text"
@@ -176,7 +183,6 @@ export default {
       "isCartItemsDataNotEmpty",
       "deliveryData",
       "cityName",
-      "customerAddress",
       "selectedDeliveryMod",
       "selectedDeliveryPoint"
   ],
@@ -210,6 +216,22 @@ export default {
     },
     selectedPointCode() {
         return this.selectedDeliveryMod.code;
+    },
+    customerAddress: {
+        get() {
+            return this.$store.state.customer.address
+        },
+        set(value) {
+            this.$store.commit('customer/setData', {address:value});
+        }
+    },
+    customerNotes: {
+        get() {
+            return this.$store.state.delivery.notes
+        },
+        set(value) {
+            this.$store.commit('delivery/setNotes', value);
+        }
     }
   },
   methods: {

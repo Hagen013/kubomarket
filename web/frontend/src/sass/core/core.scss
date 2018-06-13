@@ -139,26 +139,6 @@ body {
   }
 }
 
-.input {
-    height: 100%;
-    width: 100%;
-    padding: 0px 15px;
-    border: 2px solid $border;
-    border-radius: 18px;
-    transition: .2s;
-    &:hover {
-        border-color: $blue;
-    }
-    &:focus {
-        border-color: $blue;
-    }
-}
-
-.input-box {
-    position: relative;
-    height: 40px;
-}
-
 .textarea {
     width: 100%;
     padding: 15px;

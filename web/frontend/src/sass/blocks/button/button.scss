@@ -49,3 +49,8 @@
         border-color: $blue;
     }
 }
+
+.button_disabled {
+    color: $text-grey !important;
+    background: $border !important;
+}

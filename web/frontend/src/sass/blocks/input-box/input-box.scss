@@ -1,0 +1,45 @@
+.input {
+    height: 100%;
+    width: 100%;
+    padding: 0px 15px;
+    border: 2px solid $border;
+    border-radius: 18px;
+    transition: .2s;
+    &:hover {
+        border-color: $blue;
+    }
+    &:focus {
+        border-color: $blue;
+    }
+}
+
+.input-box__placeholder {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    font-size: 14px;
+    color: $text-grey;
+}
+
+.input-box {
+    position: relative;
+    height: 40px;
+}
+
+.input_success {
+    border-color: $green !important;
+}
+
+.input_failure {
+    border-color: $red !important;
+}
+
+.input-box__placeholder_required {
+    &::after{
+        content: "*";
+        color: $red;
+        display: inline-block;
+        cursor: text;            
+    }
+    cursor: text;
+}

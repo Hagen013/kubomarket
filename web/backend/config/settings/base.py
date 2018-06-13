@@ -145,7 +145,7 @@ STATICFILES_DIRS = (
 # MAIL SETTINGS
 # ------------------------------------------------------------------------------
 # E-mail yandex
-EMAIL_HOST_USER = "info@presidentwatches.ru"
+EMAIL_HOST_USER = "info@kubomarket.ru"
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 DEFAULT_FROM_EMAIL = "KUBOMARKET<kubomarket@yandex.ru>"

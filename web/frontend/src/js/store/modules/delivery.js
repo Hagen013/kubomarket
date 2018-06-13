@@ -25,6 +25,7 @@ export default {
             code: null,
             price: null,
         },
+        notes: ""
         // необходимо в автоселект
     },
     mutations: {
@@ -41,11 +42,11 @@ export default {
             state.mod = {type: null,
                          code: null,
                          price: null}
+            state.notes = ""
         },
         getData(state, payload) {
             state.data = payload;
         },
-
         clearMod(state) {
             state.isModSelected = false;
             state.mod = {type: null,
@@ -71,6 +72,9 @@ export default {
                          code: `${payload.code}__${payload.type}`,
                          price: price !== null ? price: null};
             state.isModSelected = true;
+        },
+        setNotes(state, payload) {
+            state.notes = payload;
         }
     },
     actions: {

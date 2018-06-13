@@ -6,7 +6,7 @@ from rest_framework import generics, pagination, status
 from rest_framework.response import Response
 
 from cart.models import Order2
-from .serializers import OrderSerializer
+from cart.serializers import OrderSerializer
 
 
 class OrderAPIView(APIView):

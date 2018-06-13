@@ -40,6 +40,7 @@ $mq-breakpoints: (
 
 
 @import "blocks/breadcrumbs/*";
+@import "blocks/input-box/*";
 @import "blocks/link/*";
 @import "blocks/catalog/*";
 @import "blocks/product-card/*";
@@ -54,6 +55,7 @@ $mq-breakpoints: (
 @import "blocks/added-to-cart-modal/*";
 @import "blocks/cart/*";
 @import "blocks/cart-item/*";
+@import "blocks/aftercheck/*";
 @import "blocks/delivery-map/*";
 @import "blocks/page-slider/*";
 @import "blocks/login/*";

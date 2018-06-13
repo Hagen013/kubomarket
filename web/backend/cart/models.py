@@ -127,9 +127,16 @@ class Order2(TimeStamped):
         "required": ["geo", "customer", "delivery", "payment", "cart"],
         "additionalProperties": False,
     }
+
     manager_notes = models.TextField(
         max_length=2000,
         verbose_name='Служебные заметки',
+        blank=True
+    )
+
+    client_notes = models.TextField(
+        max_length=2000,
+        verbose_name='Пожелания',
         blank=True
     )
 

@@ -250,3 +250,45 @@
 .cart__selected-point-price {
     margin-bottom: 15px;
 }
+
+.cart__placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 250px;
+    width: 100%;
+    color: $text-grey;
+    @include bold();
+    @include mq($from: tablet) {
+        font-size: 18px;
+    }
+    p {
+        text-align: center;
+    }
+}
+
+.cart-placeholder-img-wrap {
+    padding: 30px;
+}
+
+.cart__successful-order {
+    padding: 20px;
+    h2 {
+        @include bold();
+    }
+    p {
+        margin: 15px 0px;
+    }
+    border: 2px solid $border;
+}
+
+.cart__wrap {
+    min-height: 492px;
+    width: 100%;
+}
+
+.cart__delivery-menu-list-placeholder {
+    min-height: 60px;
+    width: 100%;
+}

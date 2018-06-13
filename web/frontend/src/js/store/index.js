@@ -99,6 +99,7 @@ export default new Vuex.Store({
         orderData: (state, getters) => (source) => {
             return {
                 'source': source,
+                'client_notes': state.delivery.notes,
                 'data': {
                     "geo": {
                         "city": state.geo.city,
@@ -116,7 +117,7 @@ export default new Vuex.Store({
                         "name": state.customer.name,
                         "email": state.customer.email,
                         "phone": state.customer.phone,
-                        "address": getters["customer/fullAddress"]
+                        "address": state.customer.address,
                     },
                     "payment": {
                         "mod": state.payment.mod

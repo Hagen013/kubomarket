@@ -12,6 +12,7 @@ from cart.models import Order, OrderItem, Order2
 from core.db.shop import OfferIdentifier
 from tasks.mail_notifications import (anton_new_order_notification,
                                       client_new_order_notification)
+from cart.serializers import OrderSerializer
 
 
 class BaseCartAPIView(APIView):
@@ -119,7 +120,8 @@ class CartMakeOrderAPIView(BaseCartAPIView):
         order = Order2(
             data=order_data,
             user=user,
-            source=request.data.get('source', '')
+            source=request.data.get('source', ''),
+            client_notes=request.data.get('client_notes', '')
         )
 
         try:
@@ -128,5 +130,9 @@ class CartMakeOrderAPIView(BaseCartAPIView):
             return Response(status=400, data=e.messages)
 
         order.save()
+        serializer = OrderSerializer(order)
+
         self.cart.clear()
-        return Response()
+        return Response(
+            serializer.data
+        )
