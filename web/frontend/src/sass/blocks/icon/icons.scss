@@ -185,3 +185,159 @@
 .icon_eye  {
     background-image: url('../img/icon/eye.svg');
 }
+
+/// SOCIAL MEDIA
+
+// Вконтакте
+.icon_sm-vk {
+    background-image: url('../img/icon/sm-vk.svg');
+}
+
+.icon_sm-vk_green {
+    background-image: url('../img/icon/sm-vk.svg');
+}
+
+@mixin icon_sm-vk {
+    background-image: url('../img/icon/sm-vk.svg');
+}
+
+@mixin icon_sm-vk_green {
+    background-image: url('../img/icon/sm-vk.svg');
+}
+
+// Одноклассники
+.icon_sm-odn {
+    background-image: url('../img/icon/sm-odn.svg');
+}
+
+.icon_sm-odn_green {
+    background-image: url('../img/icon/sm-odn_green.svg');
+}
+
+@mixin icon_sm-odn {
+    background-image: url('../img/icon/sm-odn.svg');
+}
+
+@mixin icon_sm-odn_green {
+    background-image: url('../img/icon/sm-odn_green.svg');
+}
+
+
+// Goolge plus
+.icon_sm-google {
+    background-image: url('../img/icon/sm-google.svg');
+}
+
+.icon_sm-google_green {
+    background-image: url('../img/icon/sm-google_green.svg');
+}
+
+@mixin icon_sm-google {
+    background-image: url('../img/icon/sm-google.svg');
+}
+
+@mixin icon_sm-google_green {
+    background-image: url('../img/icon/sm-google_green.svg');
+}
+
+// Twitter
+.icon_sm-twitter {
+    background-image: url('../img/icon/sm-twitter.svg');
+}
+
+.icon_sm-twitter_green {
+    background-image: url('../img/icon/sm-twitter_green.svg');
+}
+
+@mixin icon_sm-twitter {
+    background-image: url('../img/icon/sm-twitter.svg');
+}
+
+@mixin icon_sm-twitter_green {
+    background-image: url('../img/icon/sm-twitter_green.svg');
+}
+
+// YouTube
+.icon_sm-youtube {
+    background-image: url('../img/icon/sm-youtube.svg');
+}
+
+.icon_sm-youtube_green {
+    background-image: url('../img/icon/sm-youtube_green.svg');
+}
+
+@mixin icon_sm-youtube {
+    background-image: url('../img/icon/sm-youtube.svg');
+}
+
+@mixin icon_sm-youtube_green {
+    background-image: url('../img/icon/sm-youtube_green.svg');
+}
+
+// Facebook
+.icon_sm-facebook {
+    background-image: url('../img/icon/sm-facebook.svg');
+}
+
+.icon_sm-facebook_green {
+    background-image: url('../img/icon/sm-facebook_green.svg');
+}
+
+@mixin icon_sm-facebook {
+    background-image: url('../img/icon/sm-facebook.svg');
+}
+
+@mixin icon_sm-facebook_green {
+    background-image: url('../img/icon/sm-facebook_green.svg');
+}
+
+// Instagram
+.icon_instagram {
+    background-image: url('../img/icon/sm-instagram.svg');
+}
+
+.icon_instagram_green {
+    background-image: url('../img/icon/sm-instagram_green.svg');
+}
+
+@mixin icon_instagram {
+    background-image: url('../img/icon/sm-instagram.svg');
+}
+
+@mixin icon_instagram_green {
+    background-image: url('../img/icon/sm-instagram_green.svg');
+}
+
+// Mail.ru
+.icon_mailru {
+    background-image: url('../img/icon/sm-mailru.svg');
+}
+
+.icon_mailru_green {
+    background-image: url('../img/icon/sm-mailru_green.svg');
+}
+
+@mixin icon_mailru {
+    background-image: url('../img/icon/sm-mailru.svg');
+}
+
+@mixin icon_mailru_green {
+    background-image: url('../img/icon/sm-mailru_green.svg');
+}
+
+// Yandex
+.icon_yandex {
+    background-image: url('../img/icon/sm-yandex.svg');
+}
+
+.icon_yandex_green {
+    background-image: url('../img/icon/sm-yandex_green.svg');
+}
+
+@mixin icon_yandex {
+    background-image: url('../img/icon/sm-yandex.svg');
+}
+
+@mixin icon_yandex_green {
+    background-image: url('../img/icon/sm-yandex_green.svg');
+}
