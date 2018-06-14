@@ -11,9 +11,89 @@
     <h1 class="title">Контакты</h1>
 </div>
 
+<div class="content-area_mb">
+    <div class="infopage__content">
+        <p>Заказы на сайте принимаются круглосуточно</p>
+        <p>Также вы можете связаться с нашими менеджерами ежедневно с 10:00 до 20:00 по телефонам:</p>
+
+        <div class="contacts__block-title">
+            Центральный офис в Москве:
+        </div>
+        <p>м. Кожуховская, ул. Южнопортовая 5с1</p>
+        <p>Телефон <a class="link_blue" href="tel:74959845150">+7 (495) 984-51-50</a></p>
+        <div class="infopage__map" id="js-contacts__map">
+        </div>
+
+
+        <div class="contacts__block">
+            <div class="contacts__block-title">
+                Юридическая информация
+            </div>
+            <table class="infopage__table">
+                    <tr>
+                        <td>
+                        Полное наименование
+                        </td>
+                        <td>
+                        Общество с ограниченной ответственностью «АВАНГАРД-РИТЕЙЛ»
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        ИНН
+                        </td>
+                        <td>
+                        7722374086
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        ОГРН
+                        </td>
+                        <td>
+                        1167746813156
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        Адрес (место нахождения)
+                        </td>
+                        <td>
+                        Юридический адрес: 111024, Москва, ул. Авиамоторная дом 50 стр 2
+                        </td>
+                    </tr>
+                </table>
+        </div>
+
+    </div>
+</div>
+
 {% endblock content %}
 
 {% block script %}
     {{ super() }}
     <script src="{{ static('js/indexPage.js') }}"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+	<script type="text/javascript">
+    var myMap;
+
+    function zzinit(){     
+        myMap = new ymaps.Map("js-contacts__map", {
+            center: [55.707618, 37.688467],
+            zoom: 16,
+            controls: ['zoomControl']
+        });
+
+        myPlacemark = new ymaps.Placemark([55.707618, 37.688467], { 
+            hintContent: 'м. Кожуховская, ул. Южнопортовая 5с1, Москва, Россия', 
+            balloonContent: 'м. Кожуховская, ул. Южнопортовая 5с1, Москва, Россия',
+            preset: 'islands#greenDotIconWithCaption', 
+        });
+
+        myMap.geoObjects.add(myPlacemark);
+    }
+
+    ymaps.ready(zzinit);
+
+	</script>
 {% endblock script%}
