@@ -1,0 +1,39 @@
+.infopage__content {
+    width: 100%;
+    padding-bottom: 100px;
+    p {
+        padding: 0px 0px 15px 0px;
+    }
+}
+
+.infopage__map {
+    height: 400px;
+    width: 100%;
+}
+
+.infopage__block {
+    padding-bottom: 24px;
+}
+
+.infopage__metro-icon {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+    margin-bottom: -5px;
+    background-size: 80%;
+}
+
+.infopage__table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    tr {
+        &:nth-child(odd) {
+            background-color: lighten($green, 63);
+        }
+    }
+    td {
+        padding: 10px 5px 10px 5px;
+    }
+}

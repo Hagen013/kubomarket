@@ -2,6 +2,10 @@
 
 }
 
+.link_blue {
+    color: $blue;
+}
+
 .link_city {
     color: $blue;
     transition: color, border, opacity .2s;
@@ -12,4 +16,8 @@
     &:hover {
         border-bottom: 2px solid $blue;
     }
+}
+
+.infopage__block {
+    
 }

@@ -60,6 +60,7 @@ $mq-breakpoints: (
 @import "blocks/delivery-map/*";
 @import "blocks/page-slider/*";
 @import "blocks/login/*";
+@import "blocks/infopage/*";
 @import "blocks/form/*";
 @import "blocks/search-list/*";
 @import "blocks/search-modal/*";
@@ -71,13 +72,4 @@ $mq-breakpoints: (
 
 .slide-enter, .slide-leave-to {
     transform: translate3d(100%,0,0);
-}
-
-.infopage__content {
-    width: 100%;
-}
-
-.infopage__map {
-    height: 400px;
-    width: 100%;
 }
