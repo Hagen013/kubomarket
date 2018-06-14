@@ -194,7 +194,7 @@
 }
 
 .icon_sm-vk_green {
-    background-image: url('../img/icon/sm-vk.svg');
+    background-image: url('../img/icon/sm-vk_green.svg');
 }
 
 @mixin icon_sm-vk {
@@ -202,7 +202,7 @@
 }
 
 @mixin icon_sm-vk_green {
-    background-image: url('../img/icon/sm-vk.svg');
+    background-image: url('../img/icon/sm-vk_green.svg');
 }
 
 // Одноклассники
@@ -292,52 +292,52 @@
 }
 
 // Instagram
-.icon_instagram {
+.icon-sm-instagram {
     background-image: url('../img/icon/sm-instagram.svg');
 }
 
-.icon_instagram_green {
+.icon-sm-instagram_green {
     background-image: url('../img/icon/sm-instagram_green.svg');
 }
 
-@mixin icon_instagram {
+@mixin icon-sm-instagram {
     background-image: url('../img/icon/sm-instagram.svg');
 }
 
-@mixin icon_instagram_green {
+@mixin icon-sm-instagram_green {
     background-image: url('../img/icon/sm-instagram_green.svg');
 }
 
 // Mail.ru
-.icon_mailru {
+.icon-sm-mailru {
     background-image: url('../img/icon/sm-mailru.svg');
 }
 
-.icon_mailru_green {
+.icon-sm-mailru_green {
     background-image: url('../img/icon/sm-mailru_green.svg');
 }
 
-@mixin icon_mailru {
+@mixin icon-sm-mailru {
     background-image: url('../img/icon/sm-mailru.svg');
 }
 
-@mixin icon_mailru_green {
+@mixin icon-sm-mailru_green {
     background-image: url('../img/icon/sm-mailru_green.svg');
 }
 
 // Yandex
-.icon_yandex {
+.icon-sm-yandex {
     background-image: url('../img/icon/sm-yandex.svg');
 }
 
-.icon_yandex_green {
+.icon-sm-yandex_green {
     background-image: url('../img/icon/sm-yandex_green.svg');
 }
 
-@mixin icon_yandex {
+@mixin icon-sm_yandex {
     background-image: url('../img/icon/sm-yandex.svg');
 }
 
-@mixin icon_yandex_green {
+@mixin icon-sm-yandex_green {
     background-image: url('../img/icon/sm-yandex_green.svg');
 }

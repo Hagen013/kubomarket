@@ -1,0 +1,70 @@
+.icon_social-media {
+    height: 36px;
+    width: 36px;
+    border-radius: 18px;
+    background-color: $white;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: background-color .2s;
+    &:hover {
+        background-color: $green-deep;
+    }
+}
+
+.icon_social-media_green {
+    background-color: $green;
+    &:hover {
+        background-color: darken($green-deep, 10);
+    }
+}
+
+.social-vk {
+    @include icon-sm-vk_green();
+    &:hover {
+        @include icon-sm-vk();
+    }
+}
+
+.social-fb {
+    @include icon-sm-facebook_green();
+    &:hover {
+        @include icon-sm-facebook();
+    }
+}
+
+.social-im {
+    @include icon-sm-instagram_green();
+    &:hover {
+        @include icon-sm-instagram();
+    }
+}
+
+.social-yt {
+    @include icon-sm-youtube_green();
+    &:hover {
+        @include icon-sm-youtube();
+    }
+}
+
+.social-gp_inv {
+    @include icon-sm-google();
+}
+
+.social-vk_inv {
+    @include icon-sm-vk();
+}
+
+.social-odn_inv {
+    @include icon-sm-odn();
+}
+
+.social-ya_inv {
+    @include icon-sm-yandex();
+}
+
+.social-mail_inv {
+    @include icon-sm-mailru();
+}
+
+
