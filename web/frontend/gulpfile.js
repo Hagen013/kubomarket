@@ -89,6 +89,12 @@ return gulp.src('./src/img/**/*.{jpg,jpeg,png,svg}')
 	.pipe(gulp.dest('./static/img/'))
 });
 
+// FAVICONS TO STATIC
+gulp.task('prod_favicons', function(){
+return gulp.src('./src/favicons/**/*.{jpg,jpeg,png,svg,ico}')
+	.pipe(gulp.dest('./static/favicons/'))
+});
+
 // FONT TO STATIC (AFTER FONTGEN)
 gulp.task('prod_font', function() {
 	return gulp.src('./src/fonts_build/**/*')
@@ -113,4 +119,4 @@ gulp.task('prod_css', function() {
 
 
 // PRODUCTION
-gulp.task('build', ['prod_css', 'prod_img', 'prod_font']);
+gulp.task('build', ['prod_css', 'prod_img', 'prod_font', 'prod_favicons']);
