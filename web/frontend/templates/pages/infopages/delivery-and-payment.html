@@ -61,12 +61,14 @@
             >
                 Ваш город:
                 <div>
+                    {% raw %}
                     <a class="link_city infopage__city-link"
                         @click="showCityChoiceModal"
                     >
                         {{cityName}}
                         <i class="icon icon_chevron-down"></i>
                     </a>
+                    {% endraw %}
                 </div>
                 ?
             </div>

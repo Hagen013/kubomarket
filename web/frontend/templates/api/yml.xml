@@ -2,7 +2,7 @@
 <yml_catalog date="{{date}}">
   <shop>
     <name>kubomarket</name>
-    <company>ООО "ГРАНД-РИТЕЙЛ"</company>
+    <company>ООО "МАЕДА ВОТЧ ГРУПП РУС"</company>
     <url>http://kubomarket.ru</url>
     
     <currencies>
@@ -10,23 +10,14 @@
     </currencies>
     
     <categories>
-      {#% for c in categories %}
+      {% for c in categories %}
         <category id="{{c.id}}" 
                 {% if c.parent %}
                   parentId="{{c.parent.id}}"
                 {% endif %}
         >{{c.title}}
         </category>
-      {% endfor %#}
-        <category id="1">UNDEFINED</category>
-        <category id="2">SUITCASE</category>
-        <category id="3">BAG</category>
-        <category id="4">BACKPACK</category>
-        <category id="5">PURSE</category>
-        <category id="6">BAG__FREE</category>
-        <category id="7">BACKPACK__FREE</category>
-        <category id="8">PURSE__FREE</category>
-
+      {% endfor %}
     </categories>
 
     <offers>
@@ -37,7 +28,7 @@
             <price>{{p.price}}</price>
             <currencyId>RUR</currencyId>
             {% if p.product_type %}
-            <categoryId>{{ p.yml_product_type }}</categoryId>
+            <categoryId>{{ get_product_category(p).id }}</categoryId>
             {% else %}
             <categoryId>1</categoryId>
             {% endif %}
