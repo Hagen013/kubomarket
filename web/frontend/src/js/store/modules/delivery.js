@@ -94,7 +94,8 @@ export default {
             commit('clearData');
             commit('clearMod');
             return new Promise((resolve, reject) => {
-                if (!getters['isCartEmpty']) {
+                console.log(getters['deliveryRequestData']);
+                if (getters['isCartEmpty']) {
                     Vue.http.post(
                         `${GEO_IP_HOST}/api/delivery/meny_products/`,
                         getters['deliveryRequestData']
@@ -132,11 +133,24 @@ export default {
         },
         deliveryRequestData: (state, getters, rootState, rootGetters) => {
             if (rootState.geo.isDataInited && rootState.cart.isDataInited) {
-                return {
-                    'kladr': rootState.geo.code,
-                    'products': Object.keys(
-                        rootState.cart.items
-                    ).map(key => rootState.cart.items[key].data_for_delivery)
+                if (rootState.cart.items_quantiy !== 0) {
+                    return {
+                        'kladr': rootState.geo.code,
+                        'products': Object.keys(
+                            rootState.cart.items
+                        ).map(key => rootState.cart.items[key].data_for_delivery)
+                    }
+                }
+                else {
+                    return {
+                        'kladr': rootState.geo.code,
+                        'products': [{
+                            price: 2000,
+                            product_type: "CUBE",
+                            purchase_price: 0,
+                            vendor: "kubomarket"
+                        }]
+                    }
                 }
             } else {
                 return undefined;

@@ -6,6 +6,10 @@
     }
 }
 
+.infopage__content_cut {
+    padding-bottom: 0px;
+}
+
 .infopage__map {
     height: 400px;
     width: 100%;
@@ -13,6 +17,10 @@
 
 .infopage__block {
     padding-bottom: 24px;
+}
+
+.infopage__wide-block {
+    width: 100%;
 }
 
 .infopage__metro-icon {
@@ -36,4 +44,129 @@
     td {
         padding: 10px 5px 10px 5px;
     }
+}
+
+.infopage__delivery-info {
+    height: 480px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0px;
+    font-size: 14px;
+    @include mq($from: mobile) {
+        height: auto;
+        flex-direction: row;
+        align-items: initial;
+    }
+}
+
+.infopage__delivery-item {
+    width: 230px;
+}
+
+.infopage__delivery-item-img-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 72px;
+}
+
+.infopage__delivery-item-content {
+    padding: 0px 12px;
+    text-align: center;
+}
+
+.infopage__wrap_grey {
+    width: 100%;
+    background: $border;
+}
+
+.infopage__city-choice-wrap {
+    padding: 20px 0px;
+    margin: 20px 0px;
+    p {
+        width: 100%;
+        padding-bottom: 15px;
+    }
+}
+
+.infopage__city-choice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: .2s;
+}
+
+.infopage__city-link {
+    margin: 0px 8px 0px 10px;
+    .icon {
+        font-size: 14px;
+    }
+}
+
+.infopage__city-button {
+    width: 120px;
+    margin-left: 15px;
+}
+
+
+.delivery-page__map {
+    height: 300px;
+    width: 100%;
+}
+
+.delivery-page-menu {
+    font-size: 12px;
+    padding: 0px;
+    .icon {
+        display: none;
+    }
+    @include mq($from: mobile) {
+        .icon {
+            display: block;
+        }
+    }
+    @include mq($from: tablet) {
+        font-size: 16px;
+    }
+}
+
+.delivery-page-menu__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    flex-grow: 1;
+    background-color: rgb(244, 244, 244);
+    border-bottom: 5px solid rgb(244, 244, 244);
+    user-select: none;
+    cursor: pointer;
+    transition-duration: .25s;
+    transition-property: border-bottom, background;
+    transition-timing-function: ease;
+    box-shadow: 0 1px 4px 0 rgba(117,117,117,.5);
+    &:hover {
+        background-color: $white;
+        border-bottom: 5px solid $white;
+    }
+}
+
+.deliveryPageMenu__item_active {
+    cursor: default;
+    border-bottom: 5px solid $green !important;
+    background-color: $white;
+    z-index: 100;
+}
+
+.delivery-page-menu__map {
+    height: 400px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.delivery-page-menu__outlet {
+    min-height: 400px;
+    padding: 15px 0px 100px 0px;
 }

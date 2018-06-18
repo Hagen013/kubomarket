@@ -198,8 +198,8 @@ export default {
           // bounds: ,
           center: res.geoObjects.get(0).geometry.getCoordinates(),
           zoom: 8,
-          controls: ['zoomControl', 'fullscreenControl']
-      
+          controls: ['zoomControl', 'fullscreenControl', 'searchControl']
+
         });
 
         self.map.events.add('sizechange',function(){
@@ -218,6 +218,7 @@ export default {
         self.Balloon = ymaps.Balloon;
 
         self.ready = true;
+        self.$emit('ready');
       });
     })
   }

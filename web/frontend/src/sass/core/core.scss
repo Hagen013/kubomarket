@@ -35,6 +35,10 @@ body {
   }
 }
 
+.content-area_mb-column {
+  flex-direction: column;
+}
+
 // page ----------------------------------------------------------------------
 // глобальные элементы, глобальный каркас
 // прижимание футера
@@ -152,4 +156,17 @@ body {
     &:focus {
         border-color: $blue;
     }
+}
+
+.grey {
+  color: $text-grey;
+}
+
+.caption {
+  font-style: italic;
+  font-size: 13px;
+}
+
+.visible {
+  opacity: 1 !important;
 }

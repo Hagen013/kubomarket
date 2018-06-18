@@ -7,13 +7,170 @@
     {% include 'blocks/breadcrumbs.html' %}
 {% endwith %}
 
-<div class="content-area_mb">
-    <h1 class="title">Доставка и оплата</h1>
+<div class="infopage infopage_delivery" id="delivery">
+    <div class="content-area_mb">
+        <div class="infopage__content infopage__content_cut">
+            <h1 class="title centered">Доставка и оплата</h1>
+            <p class="centered">Узнайте о преимуществах каждого способа доставки и выберите самый удачный</p>
+            <div class="infopage__delivery-info">
+            
+                <div class="infopage__delivery-item"
+                >
+                    <div class="infopage__delivery-item-img-wrap">
+                        <img class="infopage__delivery-item-img"
+                            src="{{ static('img/icon/delivery-date.png') }}"
+                        >
+                    </div>
+                    <div class="infopage__delivery-item-content bold">
+                        Выбор даты и времени доставки
+                    </div>
+                </div>
+
+                <div class="infopage__delivery-item"
+                >
+                    <div class="infopage__delivery-item-img-wrap">
+                        <img class="infopage__delivery-item-img"
+                            src="{{ static('img/icon/delivery-payment.png') }}"
+                        >
+                    </div>
+                    <div class="infopage__delivery-item-content bold">
+                        Оплата наличными или картой при получении
+                    </div>
+                </div>
+
+                <div class="infopage__delivery-item"
+                >
+                    <div class="infopage__delivery-item-img-wrap">
+                        <img class="infopage__delivery-item-img"
+                            src="{{ static('img/icon/delivery-car.png') }}"
+                        >
+                    </div>
+                    <div class="infopage__delivery-item-content bold">
+                        Возможность бесплатной доставки
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="infopage__wrap_grey infopage__city-choice-wrap">
+        <div class="content-area_mb content-area_mb-column">
+            <p class="centered bold">Узнать подробнее о способах, сроках и ценах доставки в вашем городе</p>
+            <div class="infopage__city-choice"
+                :class="{ visible : isGeoDataInited }"
+            >
+                Ваш город:
+                <div>
+                    <a class="link_city infopage__city-link"
+                        @click="showCityChoiceModal"
+                    >
+                        {{cityName}}
+                        <i class="icon icon_chevron-down"></i>
+                    </a>
+                </div>
+                ?
+            </div>
+        </div>
+    </div>
+
+    <div class="content-area_mb delivery-page-menu">
+        <div class="delivery-page-menu__item"
+            :class="{ deliveryPageMenu__item_active : currentTab == 0 }"
+            @click="currentTab = 0"
+        >
+            <i class="icon product-page__delivery-icon icon_delivery-point"></i>
+            Пункты выдачи
+        </div>
+        <div class="delivery-page-menu__item"
+            :class="{ deliveryPageMenu__item_active : currentTab == 1 }"
+            @click="currentTab = 1"
+        >
+            <i class="icon product-page__delivery-icon icon_delivery-courier-png"></i>
+            Курьером
+        </div>
+        <div class="delivery-page-menu__item"
+            :class="{ deliveryPageMenu__item_active : currentTab == 2 }"
+            @click="currentTab = 2"
+        >
+            <i class="icon product-page__delivery-icon icon_delivery-mail"></i>
+            Почтой России
+        </div>
+    </div>
+
+    <div class="delivery-page-menu__outlet">
+        <div class="content-area_mb" v-if="currentTab == 0">
+            <div class="delivery-page-menu__map"
+            >
+                {% raw %}
+                <span class="grey caption">*Указаны пункты выдачи для города: {{cityName}}</span>
+                {% endraw %}
+                <yandex-map 
+                    id="map" 
+                    :id-value="'map'"
+                    :points="deliveryPointsList"
+                    :selected-point-code="selectedPointCode"
+                    :cityName="cityName"
+                    v-on:ready="mapReady"
+                    v-if="mapIsAvailable"
+                    @pointSelected="pointSelected"
+                >
+                </yandex-map>
+                <transition name="fade-fast" v-else>
+                <div class="placeholder"
+                >
+                    <img class="placeholder__image" src="{{ static('/img/icon/loading.svg') }}">
+                </div>
+                </transition>
+            </div>
+        </div>
+        {% raw %}
+        <div class="delivery-page-menu__courier"
+            v-if="currentTab == 1"
+        >
+            <div class="content-area_mb" v-if="isCurierAvailable">
+                <div class="infopage__block">
+                    <p>Доставка курьером по городу: {{cityName}}</p>
+                    <p class="green bold">
+                        {{ priceCurier | priceFilter }} {{timeCurier | timeFilter}}
+                    </p>
+                </div>
+            </div>
+            <div class="content-area_mb" v-else>
+                <div class="infopage__block">
+                    <p>Доставка курьером по городу {{cityName}} к сожалению недоступна</p>
+                </div>
+            </div>
+        </div>
+        <div class="delivery-page-menu__mail"
+            v-if="currentTab == 2"
+        >
+            <div class="content-area_mb" v-if="isPostalServiceAvailable">
+                <div class="infopage__block">
+                    <p>Доставка почтой России по городу: {{cityName}}</p>
+                    <p class="green bold">
+                        {{ pricePostalService | priceFilter }} {{timePostalService | timeFilter}}
+                    </p>
+                </div>
+            </div>
+            <div class="content-area_mb" v-else>
+                <div class="infopage__block">
+                    <p>Доставка почтой по городу {{cityName}} к сожалению недоступна</p>
+                </div>
+            </div>
+        </div>
+        {% endraw %}
+    </div>
+
 </div>
 
 {% endblock content %}
 
+{% block  script_head %}
+    {{ super() }}
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+{% endblock  script_head %}
+
 {% block script %}
     {{ super() }}
-    <script src="{{ static('js/indexPage.js') }}"></script>
+    <script src="{{ static('js/deliveryPage.js') }}"></script>
 {% endblock script%}

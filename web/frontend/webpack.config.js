@@ -12,6 +12,7 @@ module.exports = {
     categoryPage: "./categoryPage.js",
     productPage: "./productPage.js",
     cartPage: "./cartPage.js",
+    deliveryPage: './deliveryPage.js',
     admin: './admin.js',
     md_admin: './md-admin.js',
     login: './login.js'
