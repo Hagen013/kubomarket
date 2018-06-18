@@ -94,29 +94,22 @@ export default {
             commit('clearData');
             commit('clearMod');
             return new Promise((resolve, reject) => {
-                console.log(getters['deliveryRequestData']);
-                if (getters['isCartEmpty']) {
-                    Vue.http.post(
-                        `${GEO_IP_HOST}/api/delivery/meny_products/`,
-                        getters['deliveryRequestData']
-                    ).then(
-                        (response) => {
-                            commit('getData', response.body);
-                            commit('ready');
-                            console.log('Delivery inited');
-                            resolve();
-                        },
-                        (response) => {
-                            commit('clearData');
-                            commit('notReady');
-                            console.log('Невозможно получить данные о доставке');
-                            reject();
-                        });
-                } else {
-                    commit('clearData');
-                    commit('ready');
-                    resolve();
-                }
+                Vue.http.post(
+                    `${GEO_IP_HOST}/api/delivery/meny_products/`,
+                    getters['deliveryRequestData']
+                ).then(
+                    (response) => {
+                        commit('getData', response.body);
+                        commit('ready');
+                        console.log('Delivery inited');
+                        resolve();
+                    },
+                    (response) => {
+                        commit('clearData');
+                        commit('notReady');
+                        console.log('Невозможно получить данные о доставке');
+                        reject();
+                    });
             });
         },
         autoSelectMod({ commit, state, dispatch, getters }) {
