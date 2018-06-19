@@ -26,7 +26,12 @@
     width: 100%;
     display: flex;
     padding: 0px !important;
+    flex-direction: column;
     border: none !important;
+    overflow: hidden;
+    @include mq($from: tablet) {
+        flex-direction: row;
+    }
 }
 
 .delivery-map__close {
@@ -46,16 +51,27 @@
 }
 
 .delivery-map__left {
-    position: relative;
-    width: 30%;
+    position: absolute;
+    height: 100px;
+    top: 0px;
+    left: 0px;
+    @include mq($from: tablet) {
+        position: relative;
+        height: auto;
+        width: 30%;
+    }
 }
 
 .delivery-map__right {
-    width: 70%;
+    padding-top: 100px;
+    @include mq($from: tablet) {
+        padding-top: 0px;
+        width: 70%;
+    }
 }
 
 .delivery-map__title {
-    display: flex;
+    display: none;
     align-items: center;
     height: 70px;
     padding: 0px 15px;
@@ -63,10 +79,19 @@
     font-size: 14px;
     background: $green;
     @include bold();
+    @include mq($from: tablet) {
+        display: flex;
+    }
 }
 
 .delivery-map__points-list {
-    overflow-y: scroll;
+    height: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+    @include mq($from: tablet) {
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
 }
 
 .delivery-map__points-list-wrap {
@@ -76,12 +101,8 @@
     padding-top: 70px;
 }
 
-.delivery-map__points-list {
-    height: 100%;
-    overflow-y: scroll;
-}
-
 .delivery-map__list-item {
+    display: inline-block;
     padding: 15px;
     font-size: 14px;
     cursor: pointer;
@@ -94,6 +115,9 @@
     &:hover {
         border: 1px solid $green;
         box-shadow: 0px 0px 20px 0px rgba(54,81,104,0.2);
+    }
+    @include mq($from: tablet) {
+        display: block;
     }
 }
 

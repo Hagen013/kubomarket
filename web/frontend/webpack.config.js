@@ -85,7 +85,7 @@ if (process.env.NODE_ENV === "production") {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": '"production"',
-      "GEO_IP_HOST": JSON.stringify("http://kubomarket.ru:8282")
+      "GEO_IP_HOST": JSON.stringify("https://kubomarket.ru:8282")
     }),
 
     new webpack.optimize.UglifyJsPlugin({
