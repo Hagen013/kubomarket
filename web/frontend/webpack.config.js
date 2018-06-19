@@ -73,7 +73,7 @@ module.exports.plugins = (module.exports.plugins || []).concat([
   new webpack.optimize.CommonsChunkPlugin({
     name: 'common',
     filename: 'common.js',
-    chunks: ['scripts', 'index', 'catalog', 'product', 'cart']
+    chunks: ['indexPage', 'categoryPage', 'productPage', 'cartPage', 'deliveryPage']
   }),
 
 ]);
