@@ -33,8 +33,8 @@ STATIC_FILE_PATHS=(
     "js/common.js"
     "js/indexPage.js"
     "js/productPage.js"
-    "deliveryPage.js",
-    "faqPage.js",
+    "js/deliveryPage.js",
+    "js/faqPage.js",
     "js/admin.js"
 )
 
