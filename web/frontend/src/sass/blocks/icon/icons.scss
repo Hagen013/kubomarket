@@ -102,7 +102,19 @@
     }
 }
 
+@mixin icon_chevron-up {
+    &:before {
+        content: $icon-chevron-up;
+    }
+}
+
 .icon_chevron-down {
+    &:before {
+        content: $icon-chevron-down;
+    }
+}
+
+@mixin icon_chevron-down {
     &:before {
         content: $icon-chevron-down;
     }
