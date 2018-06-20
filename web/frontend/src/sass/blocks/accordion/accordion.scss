@@ -4,15 +4,42 @@
 
 .accordion__item {
     margin-bottom: 16px;
+    ul {
+
+    }
+    li {
+
+    }
+    a {
+        color: $blue;
+        text-decoration: underline;
+    }
+}
+
+.accordion__item_active {
+    color: $green !important;
+    .accordion__item-title {
+        cursor: default !important;
+    }
+    .accordion__item-content {
+        display: block !important;
+    }
+    .accordion__item-icon {
+        @include icon_chevron_up();
+    }
 }
 
 .accordion__item-title {
     padding: 16px 16px;
     background: $creme;
+    user-select: none;
+    transition: color .2s;
+    cursor: pointer;
     @include bold();
 }
 
 .accordion__item-content {
+    display: none;
     padding: 16px;
     line-height: 1.5;
     font-size: 15px;
@@ -20,4 +47,12 @@
     color: $text-grey;
     background: $white;
     border: 2px solid $border;
+}
+
+.accordion__item-icon {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    font-size: 14px;
+    @include icon_chevron_down();
 }

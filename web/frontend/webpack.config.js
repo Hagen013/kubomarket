@@ -13,6 +13,7 @@ module.exports = {
     productPage: "./productPage.js",
     cartPage: "./cartPage.js",
     deliveryPage: './deliveryPage.js',
+    faqPage: './faqPage.js',
     admin: './admin.js',
     md_admin: './md-admin.js',
     login: './login.js'
@@ -73,7 +74,14 @@ module.exports.plugins = (module.exports.plugins || []).concat([
   new webpack.optimize.CommonsChunkPlugin({
     name: 'common',
     filename: 'common.js',
-    chunks: ['indexPage', 'categoryPage', 'productPage', 'cartPage', 'deliveryPage']
+    chunks: [
+        'indexPage',
+        'categoryPage',
+        'productPage',
+        'cartPage',
+        'deliveryPage',
+        'faqPage'
+      ]
   }),
 
 ]);
