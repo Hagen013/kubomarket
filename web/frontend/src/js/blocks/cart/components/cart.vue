@@ -487,6 +487,8 @@ export default {
             }
         },
         postOrder() {
+            yaCounter49316458.reachGoal('orderSend');
+            dataLayer.push({'event': 'orderSend'});
             this.$http.post('/api/cart/make_order/', this.orderData).then(
                 response => {
                     this.handleSuccessfulPostOrderRequest(response);
