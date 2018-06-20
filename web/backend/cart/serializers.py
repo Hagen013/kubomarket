@@ -13,7 +13,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'state',
             'source',
             'manager_notes',
-            'client_notes,'
+            'client_notes',
             'created_at',
             'modified_at'
         )
