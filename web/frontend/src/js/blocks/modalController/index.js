@@ -5,7 +5,9 @@ import purchaseModal from '../added-to-cart-modal/purchase-modal.vue';
 import cityChoiceModal from '../modals/city-choice-modal.vue';
 import deliveryMap from '../modals/deliveryMap.vue';
 import searchModal from '../modals/searchModal.vue';
+import pageControls from './components/pageControls.vue';
 
+const productPageEditForm = () => import('./components/productPageEditForm.vue')
 
 var modalController = new Vue({
     name: 'modal-controller',
@@ -18,7 +20,9 @@ var modalController = new Vue({
         'purchase-modal': purchaseModal,
         'city-choice-modal': cityChoiceModal,
         'delivery-map': deliveryMap,
-        'search-modal': searchModal
+        'search-modal': searchModal,
+        'page-controls': pageControls,
+        'product-page-edit-form': productPageEditForm,
     },
     computed: {
         purchaseModalIsActive() {
@@ -32,6 +36,13 @@ var modalController = new Vue({
         },
         searchModalIsActive() {
             return this.$store.state.showSearchModal.isShowModal;
+        },
+        pageControlsIsActive() {
+            return this.$store.state.showPageControls.isShowModal;
+        },
+        productPageEditFormIsActive() {
+            return false
+            //return this.$store.state.showProductPageEditForm.isShowModal;
         }
     },
     methods: {

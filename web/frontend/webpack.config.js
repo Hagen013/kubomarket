@@ -98,7 +98,7 @@ if (process.env.NODE_ENV === "production") {
 
     new webpack.optimize.UglifyJsPlugin({
       comments: false,
-      except: ['$super', '$', 'exports', 'require', 'self', 'STORE'],
+      except: ['$super', '$', 'exports', 'require', 'self', 'STORE', 'userAdminStatus'],
       compress: { warnings: false }
     }),
 
@@ -130,7 +130,7 @@ if (process.env.NODE_ENV === "production") {
     ]),
     new webpack.optimize.UglifyJsPlugin({
       comments: false,
-      except: ['$super', '$', 'exports', 'require', 'self', 'STORE'],
+      except: ['$super', '$', 'exports', 'require', 'self', 'STORE', 'userAdminStatus'],
       compress: { warnings: false }
     }),
   ]);

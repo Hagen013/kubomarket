@@ -65,11 +65,14 @@ class CubesProductPageView(TemplateView):
         except CubesProductCard.DoesNotExist:
             raise Http404
 
+    def get_user_status(self):
+        return self.request.user.is_superuser
+
     def get_context_data(self, *args, **kwargs):
         context = super(CubesProductPageView, self).get_context_data(**kwargs)
         context['product'] = self.product
-        context['category'] = CubesCategoryNode.public.\
-            get_by_product(self.product)
+        context['category'] = CubesCategoryNode.public.get_by_product(self.product)
+        context['user_status'] = self.get_user_status()
         return context
 
 

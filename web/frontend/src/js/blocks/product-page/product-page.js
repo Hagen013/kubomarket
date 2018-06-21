@@ -12,9 +12,6 @@ import delivery from './components/delivery.vue'
 import modalCallback from './__modal-callback.vue'
 
 
-const editForm = () => import('./__edit-form.vue')
-
-
 var productCard = new Vue({
     name: 'product-page',
     el: '#product-page',
@@ -23,7 +20,6 @@ var productCard = new Vue({
         'nav-item': navItem,
         'delivery': delivery,
         'purchase-modal': purchaseModal,
-        editForm,
         modalCallback
     },
     data: {
@@ -43,6 +39,7 @@ var productCard = new Vue({
         is_in_stock: false,
         deliveryData: undefined,
         productDeliveryData: undefined,
+        userStatus: 'notInited',
         scrollOptions: {
             vuescroll: {
                 mode: 'native',
@@ -112,18 +109,13 @@ var productCard = new Vue({
     mounted() {
         this.offer_identifier = this.$el.attributes['offer_identifier'].value;
         this.is_in_stock = this.$el.attributes['is_in_stock'].value == "True";
-
         // обязательные productDeliveryData
         this.productDeliveryData = JSON.parse(this.$el.attributes['delivery_data'].value);
 
         this.getDeliveryData();
 
+        this.checkUserStatus();
         this.isMounted = true;
-        this.$http.get(
-            '/api/admin/is_staff/')
-            .then(response => {
-                this.showEditControls = response.data['is_staff'];
-            });
     },
     watch: {
         kladr: function(val) {
@@ -169,16 +161,12 @@ var productCard = new Vue({
         },
         checkMediaQueryMobile(mql) {
             if (mql.matches) {
-                this.switchThumbGalleryToTablet();
             } else {
-
             }
         },
         checkMediaQueryTablet(mql) {
             if (mql.matches) {
-                this.switchNavToTablet();
             } else {
-                this.switchNavToMobile();
             }
         },
         showModalCityChoice() {
@@ -220,12 +208,9 @@ var productCard = new Vue({
             }
         },
         handleSuccessFulDeliveryRequest(response) {
-            console.log(this.productDeliveryData);
-            console.log(response.body);
             this.deliveryData=response.body;
         },
         handleFailedDelvieryRequest(response) {
-            console.log(this.response);
             this.deliveryData = {};
         },
         hideCityChoiceModal() {
@@ -235,10 +220,17 @@ var productCard = new Vue({
             this.$store.commit('showModalCityChoice/show');
         },
         switchNavToMobile() {
-            console.log("switching to mobile");
         },
         switchNavToTablet() {
-            console.log("swithcing to tablet");
+        },
+        checkUserStatus() {
+            if (userAdminStatus === true) {
+                this.userStatus = 'admin';
+                this.$store.commit('showPageControls/show');
+            }
+        },
+        confirmUserAdminStatus() {
+
         }
     }
 })

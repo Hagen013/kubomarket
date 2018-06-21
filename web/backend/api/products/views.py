@@ -64,7 +64,7 @@ class ProductCardAttributesAPIView(APIView):
         attrs = product.attributes
         items = {}
         for key, values in attrs.items():
-            items[key.id] = list(map(lambda x: {'id': x.id, 'name': x.name}, values))
+            items[key.id] = list(map(lambda x: {'id': x.id, 'name': x.name, 'value': x.value}, values))
         content = {
             'attributes': items
         }

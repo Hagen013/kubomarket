@@ -96,6 +96,7 @@ class AttributeValueSerializer(DynamicFieldsModelSerializer):
     slug = serializers.CharField()
     attribute = serializers.IntegerField(source='attribute_id')
     attribute_type = serializers.IntegerField()
+    value = serializers.CharField()
     
     class Meta:
         fields = (
@@ -103,7 +104,8 @@ class AttributeValueSerializer(DynamicFieldsModelSerializer):
             'name',
             'slug',
             'attribute',
-            'attribute_type'
+            'attribute_type',
+            'value'
         )
 
 

@@ -1,6 +1,6 @@
 <template>
-    <transition name="fade-fast">
-    <div class="edit-form">
+
+    <div class="edit-form edit-form_product">
         <div class="edit-form__title-area">
             <div class="edit-form__title">
             Редактирование товара: {{uuid}}
@@ -100,13 +100,9 @@
                                     v-on:value-changed="setDepth"
                                 >
                                 </field>
-                                <field :value="weightValue" label="Вес" :numerical="true"
-                                    v-on:value-changed="setWeight"
-                                >
-                                </field>
                             </div>
                             <div class="edit-form__dimension-img-wrap">
-                                <img src="/static/img/bags/bagpack.png">
+                                <img src="/static/img/cubes/cube.jpg">
                                 <div class="edit-form__height-label">{{heightValue}} см</div>
                                 <div class="edit-form__width-label">{{widthValue}} см</div>
                                 <div class="edit-form__depth-label">{{depthValue}} см</div>
@@ -115,6 +111,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="edit-form__attributes" v-if="attrsValuesApiResponseRecieved">
                 <div class="edit-form__title-block">
                     <div class="edit-form__headline">
@@ -137,6 +134,13 @@
                         v-on:remove-active-option="removeActiveOption"
                     >
                     </multi-choice-form>
+                    <numeric-form v-else-if="attribute.attribute_type==3"
+                        :attribute="attribute"
+                        :selected_values="attribute.selected_values"
+                        :saving_iteration="savingIteration"
+                        v-on:value-changed="changeAttributeValue"
+                    >
+                    </numeric-form>
                     <boolean-form v-else-if="attribute.attribute_type==4"
                         :attribute="attribute"
                         :selected_values="attribute.selected_values"
@@ -146,6 +150,18 @@
                     </boolean-form>
                 </div>
             </div>
+
+            <div class="edit-form__description">
+                <div class="edit-form__title-block">
+                    <div class="edit-form__headline">
+                        Описание
+                    </div>
+                </div>
+                <textarea class="edit-form__textarea"
+                    v-model="proxyDescription">
+                </textarea>
+            </div>
+
         </div>
         <images-gallery
             :id="id"
@@ -162,17 +178,18 @@
         >
         </edit-modal>
     </div>
-    </transition>
+
 </template>
 
 <script>
-    import {Vue} from '../../vue.js'
     import multiChoiceForm from './__multi-choice-form.vue'
     import choiceForm from './__choice-form.vue'
     import booleanForm from './__boolean-form.vue'
+    import numericForm from './__numeric-form.vue'
     import field from './__field.vue'
     import editModal from './__edit-modal.vue'
     import imagesGallery from './__images-gallery.vue'
+    import store from "../../../store";
 
     export default {
         name: 'edit-form',
@@ -180,17 +197,19 @@
             'multi-choice-form': multiChoiceForm,
             'choice-form': choiceForm,
             'boolean-form': booleanForm,
+            'numeric-form': numericForm,
             'field': field,
             'edit-modal': editModal,
             'images-gallery': imagesGallery
         },
+        store,
         data: () => ({
             attributes: [],
             values: {},
             productAttributes: null,
-            attrs_api_url: '/api/bags/attributes/',
+            attrs_api_url: '/api/cubes/attributes/',
             product_api_url: '/api/products/',
-            attrs_values_api_url: '/api/bags/values/',
+            attrs_values_api_url: '/api/cubes/values/',
             attrsApiResponseRecieved: false,
             productApiResponseRecieved: false,
             attrsValuesApiResponseRecieved: false,
@@ -198,7 +217,6 @@
             heightValue: 0,
             widthValue: 0,
             depthValue: 0,
-            weightValue: 0,
             mainInfoIsDisplayed: true,
             dimensionsInfoIsDisplayed: true,
             imagesGalleryStuck: false,
@@ -208,7 +226,9 @@
             serverResponse: null,
             attributesChanged: false,
             imagesChanged: false,
-            imagesSavingIteraion: 0
+            imagesSavingIteraion: 0,
+            originalDescription: "",
+            proxyDescription: ""
         }),
         props: [
             'uuid',
@@ -220,7 +240,7 @@
             'height',
             'width',
             'depth',
-            'weight'
+            'description'
         ],
         computed: {
             apiResponsesRecieved() {
@@ -228,11 +248,13 @@
             },
             dimensionsChanged() {
                 return (
-                    (Number(this.weight) != this.weightValue) ||
                     (Number(this.height) != this.heightValue) ||
                     (Number(this.width) != this.widthValue) ||
                     (Number(this.depth) != this.depthValue)
                 )
+            },
+            descriptionChanged() {
+                return this.proxyDescription === this.originalDescription
             }
         },
         created: function () {
@@ -241,11 +263,12 @@
             this.heightValue = Number(this.height);
             this.widthValue = Number(this.width);
             this.depthValue = Number(this.depth);
-            this.weightValue = Number(this.weight);
+            this.originalDescription = String(this.description);
+            this.proxyDescription = String(this.description);
         },
         methods: {
             hideEditForm() {
-                this.$emit('edit-form-close');
+                this.$store.commit("showProductPageEditForm/hide");
             },
             setDefaults() {
                 this.savingIteration += 1;
@@ -263,6 +286,7 @@
                 )
             },
             getProductAttributes() {
+                console.log(this.product_api_url);
                 this.$http.get(this.product_api_url).then(
                     response => {
                         this.productAttributes = response.body.attributes;
@@ -343,9 +367,6 @@
             setDepth(value) {
                 this.depthValue = value;
             },
-            setWeight(value) {
-                this.weightValue = value;
-            },
             toggleMainInfo() {
                 this.mainInfoIsDisplayed = !this.mainInfoIsDisplayed;
             },
@@ -372,7 +393,7 @@
                     'height': this.heightValue,
                     'width': this.widthValue,
                     'depth': this.depthValue,
-                    'weight': this.weightValue
+                    'description': this.proxyDescription
                 }
                 this.$http.put(this.product_api_url, data).then(
                     response => {
@@ -406,9 +427,6 @@
             depthValue() {
                 this.checkChanges();
             },
-            weightValue() {
-                this.checkChanges();
-            }
         }
     }
 </script>
@@ -465,6 +483,18 @@
     .edit-form__attributes {
         max-width: 852px;
         padding: 0px 16px 16px 16px;
+    }
+    .edit-form__description {
+        padding: 0px 16px 256px 16px;
+    }
+    .edit-form__textarea {
+        min-height: 400px;
+        padding: 16px;
+        width: 100%;
+        line-height: 1.5;
+        resize: vertical;
+        border: 2px solid #448aff;
+        border-radius: 4px;
     }
     .field {
         margin: 4px 0px 24px 0px;
@@ -531,9 +561,14 @@
     }
     .edit-form__dimension-img-wrap {
         position: relative;
+        height: 400px;
         width: 399px;
         padding: 16px;
         text-align: center;
+        img {
+            height: 100%;
+            width: auto;
+        }
     }
     .edit-form__height-label {
         position: absolute;

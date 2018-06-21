@@ -18,23 +18,6 @@
     delivery_data="{{to_json(product.data_for_delivery)}}" 
 >
 
-    <div v-if="showEditForm">
-        <edit-form
-            uuid="{{product.vendor_code}}"
-            name="{{escape_quotes(product.name)}}"
-            price={{product.price}}
-            slug="{{product.slug}}"
-            id="{{product.id}}"
-            url="{{ url('shop:product', kwargs={'slug':product.slug}) }}"
-            :height="{{product.height}}"
-            :width="{{product.width}}"
-            :depth="{{product.length}}"
-            :weight="{{product.weigh}}"
-            v-on:edit-form-close="showEditForm=false"
-        >
-        </edit-form>
-    </div>
-
     <div class="content-area_mb product-page__title-area">
         <h1 class="title product-page__title">{{product.name}}</h1>
         <div class="product-page__code">Код товара: {{product.public_id}}</div>
@@ -239,19 +222,42 @@
     {{ super() }}
     <transition name="fade-fast">
         <purchase-modal
-        name="{{escape_quotes(product.name)}}"
-        price="{{product.price}}"
-        img="{{product.thumbnail.url}}"
-        v-if="purchaseModalIsActive"
-        v-on:close="closePurchaseModal"
+            name="{{escape_quotes(product.name)}}"
+            price="{{product.price}}"
+            img="{{product.thumbnail.url}}"
+            v-if="purchaseModalIsActive"
+            v-on:close="closePurchaseModal"
         >
         </purchase-modal>
+    </transition>
+    <page-controls
+        v-if="pageControlsIsActive"
+    >
+    </page-controls>
+    <transition name="fade-fast">
+        <product-page-edit-form
+            uuid="{{product.vendor_code}}"
+            name="{{escape_quotes(product.name)}}"
+            price={{product.price}}
+            slug="{{product.slug}}"
+            id="{{product.id}}"
+            url="{{ url('shop:product', kwargs={'slug':product.slug}) }}"
+            :height="{{product.height}}"
+            :width="{{product.width}}"
+            :depth="{{product.length}}"
+            description="{{product.description}}"
+            v-if="productPageEditFormIsActive"
+        >
+        </product-page-edit-form>
     </transition>
 {% endblock modal %}
 
 
 {% block script %}
     {{ super() }}
+    <script type="text/javascript">
+        var userAdminStatus = {{user_status | lower}};
+    </script>
     <script src="{{ static('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ static('js/jquery.fancybox.min.js') }}"></script>
     <script src="{{ static('js/productPage.js') }}"></script>
