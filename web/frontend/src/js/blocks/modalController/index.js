@@ -41,7 +41,7 @@ var modalController = new Vue({
             return this.$store.state.showPageControls.isShowModal;
         },
         productPageEditFormIsActive() {
-            return false
+            return true
             //return this.$store.state.showProductPageEditForm.isShowModal;
         }
     },
