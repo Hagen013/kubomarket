@@ -9,7 +9,7 @@ from django.conf import settings
 from django.template.defaultfilters import slugify as dj_slugify
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-EMAIL_REPLY_TO = "clientservice@presidentwatches.ru"
+EMAIL_REPLY_TO = "clientservice@kubomarket.ru"
 
 
 class DisallowedBeforeCreationException(Exception):

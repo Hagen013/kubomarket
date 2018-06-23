@@ -24,7 +24,7 @@ def client_new_order_notification(client_email, order_id):
         title,
         text,
         to=[client_email],
-        reply_to=['info@presidentwatches.ru'],
+        reply_to=['info@kubomarket.ru'],
     )
     email.send()
 
@@ -83,7 +83,7 @@ def anton_new_order_notification(order_id,
         title,
         text,
         to=['akontuzov@mail.ru'],
-        reply_to=['info@presidentwatches.ru'],
+        reply_to=['info@kubomarket.ru'],
     )
     # print(text)
     email.send()
