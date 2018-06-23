@@ -92,5 +92,6 @@
 {% endblock content %}
 
 {% block script %}
-<script src="{{ static('js/categoryPage.js') }}"></script>
+    {{ super() }}
+    <script src="{{ static('js/categoryPage.js') }}"></script>
 {% endblock script %}
