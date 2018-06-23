@@ -151,16 +151,14 @@
                 </div>
             </div>
 
-            <div class="edit-form__description">
-                <div class="edit-form__title-block">
-                    <div class="edit-form__headline">
-                        Описание
-                    </div>
-                </div>
-                <textarea class="edit-form__textarea"
-                    v-model="proxyDescription">
-                </textarea>
-            </div>
+            <description
+                :descriptionText=proxyDescription
+                :id=id
+                :saving_iteration=savingIteration
+                :product_name=name
+                v-on:changed=changeDescription
+            >
+            </description>
 
         </div>
         <images-gallery
@@ -189,7 +187,8 @@
     import field from './__field.vue'
     import editModal from './__edit-modal.vue'
     import imagesGallery from './__images-gallery.vue'
-    import store from "../../../store";
+    import description from './__description.vue'
+    import store from "../../../store"
 
     export default {
         name: 'edit-form',
@@ -200,7 +199,8 @@
             'numeric-form': numericForm,
             'field': field,
             'edit-modal': editModal,
-            'images-gallery': imagesGallery
+            'images-gallery': imagesGallery,
+            'description': description
         },
         store,
         data: () => ({
@@ -254,7 +254,7 @@
                 )
             },
             descriptionChanged() {
-                return this.proxyDescription === this.originalDescription
+                return this.proxyDescription !== this.originalDescription
             }
         },
         created: function () {
@@ -349,6 +349,7 @@
                 this.$forceUpdate();
             },
             changeAttributeValue(attributeID, valuesList, hasChanged) {
+                console.log(valuesList);
                 for ( let i=0; i<this.attributes.length; i++ ) {
                     if ( this.attributes[i].id === attributeID ) {
                         this.attributes[i].selected_values = valuesList;
@@ -374,13 +375,14 @@
                 this.dimensionsInfoIsDisplayed = !this.dimensionsInfoIsDisplayed;
             },
             checkChanges() {
+                console.log('checking');
                 this.attributesChanged = this.attributes.some(function (currentValue, index, array) {
                     return currentValue.hasChanged
                 })
-                this.hasChanged = (this.attributesChanged || this.dimensionsChanged || this.imagesChanged);
+                this.hasChanged = (this.attributesChanged || this.dimensionsChanged || this.descriptionChanged || this.imagesChanged);
             },
             saveChanges() {
-                if (this.attributesChanged || this.dimensionsChanged) {
+                if (this.attributesChanged || this.dimensionsChanged || this.descriptionChanged) {
                     this.saveProductChanges();
                 }
                 if (this.imagesChanged) {
@@ -388,8 +390,17 @@
                 }
             },
             saveProductChanges() {
+                let attributes = this.attributes.map((currentAttribute, index, array) => {
+                    return {
+                        "attribute_type": currentAttribute.attribute_type,
+                        "id": currentAttribute.id,
+                        "key": currentAttribute.key,
+                        "name": currentAttribute.name,
+                        "selected_values": currentAttribute.selected_values,
+                    }
+                })
                 let data = {
-                    'attributes': this.attributes,
+                    'attributes': attributes,
                     'height': this.heightValue,
                     'width': this.widthValue,
                     'depth': this.depthValue,
@@ -416,6 +427,10 @@
             cancelChanges() {
                 console.log('changes cancelled');
             },
+            changeDescription(payload) {
+                this.proxyDescription = payload;
+                this.checkChanges();
+            }
         },
         watch: {
             heightValue() {
@@ -484,18 +499,6 @@
         max-width: 852px;
         padding: 0px 16px 16px 16px;
     }
-    .edit-form__description {
-        padding: 0px 16px 256px 16px;
-    }
-    .edit-form__textarea {
-        min-height: 400px;
-        padding: 16px;
-        width: 100%;
-        line-height: 1.5;
-        resize: vertical;
-        border: 2px solid #448aff;
-        border-radius: 4px;
-    }
     .field {
         margin: 4px 0px 24px 0px;
         padding: 16px 0px 0px 0px;
@@ -530,6 +533,7 @@
         flex-flow: row wrap;
     }
     .edit-form__title-block {
+        position: relative;
         display: flex;
         width: 100%;
         padding: 16px 0px 24px 0px;

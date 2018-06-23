@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db.models import Max
+from django.core.files.storage import FileSystemStorage
 
 import pandas as pd
 import numpy as np
@@ -127,3 +128,11 @@ def check_main_image_files():
         except OSError:
             instance.image = instance.image.field.default
             instance.save()
+
+
+@app.task
+def save_description_image(image_file, filename):
+    path = settings.MEDIA_STORAGE_PATH + filename
+    fs = FileSystemStorage()
+    fs.save(path, image_file)
+

@@ -12,6 +12,5 @@ import modalController from './blocks/modalController/index.js';
 // Specific
 import productPage from './blocks/product-page/product-page.js';
 
-//store.dispatch('geo/initGeo');
 store.dispatch('initAll');
 

@@ -311,5 +311,17 @@
 }
 
 .product-page__city-choice-caption {
-    margin-right: 15px;
+    margin-right: 16px;
+}
+
+.product-page__description-content {
+    text-align: justify;
+    color: $text-grey;
+    line-height: 1.5;
+    p {
+        margin-bottom: 15px;
+    }
+    img {
+        display: block;
+    }
 }

@@ -29,7 +29,6 @@
         name: 'numeric-form',
         data: () => ({
             isFocused: false,
-            dropdownIsActive: false,
             initialValue: '',
             proxyValue: '',
         }),
@@ -40,7 +39,7 @@
         ],
         created() {
             if (this.selected_values.length > 0) {
-                this.initialValue = this.selected_values[0].value;
+                this.initialValue = String(this.selected_values[0].value);
                 this.proxyValue = String(this.initialValue);
             }
         },
@@ -49,6 +48,7 @@
                 return (this.proxyValue === '')
             },
             hasChanged() {
+                return (this.initialValue !== this.proxyValue)
             }
         },
         methods: {
@@ -59,7 +59,8 @@
             changeActiveOption(optionName, index) {
             },
             changeValue() {
-                console.log('change value');
+                let valuesList = [this.proxyValue]
+                this.$emit('value-changed', this.attribute.id, valuesList, this.hasChanged);
             }
         },
         watch: {
