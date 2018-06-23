@@ -6,6 +6,8 @@ import cityChoiceModal from '../modals/city-choice-modal.vue';
 import deliveryMap from '../modals/deliveryMap.vue';
 import searchModal from '../modals/searchModal.vue';
 import pageControls from './components/pageControls.vue';
+import callbackModal from '../modals/callbackModal.vue';
+
 
 const productPageEditForm = () => import('./components/productPageEditForm.vue')
 
@@ -23,6 +25,7 @@ var modalController = new Vue({
         'search-modal': searchModal,
         'page-controls': pageControls,
         'product-page-edit-form': productPageEditForm,
+        'callback-modal': callbackModal
     },
     computed: {
         purchaseModalIsActive() {

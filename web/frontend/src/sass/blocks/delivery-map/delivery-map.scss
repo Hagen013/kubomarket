@@ -1,22 +1,29 @@
 .delivery-map__map {
-    min-height: 300px;
+    min-height: 400px;
     height: 100%;
     width: 100%;
 }
 
 .delivery-map {
-    .content-area {
+    .content-area_mb {
         height: 100%;
     }
 }
 
 .delivery-map__content {
     height: 80%;
+    width: 320px;
     padding: 0px;
     border: none;
     background: transparent;
-    .content-area {
-        padding: 0px 20px;
+    @include mq($from: mobile) {
+        width: 480px;
+    }
+    @include mq($from: tablet) {
+        width: 100%;
+        .content-area {
+            padding: 0px 20px;
+        }    
     }
 }
 
@@ -28,7 +35,6 @@
     padding: 0px !important;
     flex-direction: column;
     border: none !important;
-    overflow: hidden;
     @include mq($from: tablet) {
         flex-direction: row;
     }
@@ -63,6 +69,8 @@
 }
 
 .delivery-map__right {
+    height: 100%;
+    width: 100%;
     padding-top: 100px;
     @include mq($from: tablet) {
         padding-top: 0px;
@@ -86,7 +94,9 @@
 
 .delivery-map__points-list {
     height: 100%;
+    width: 440px;
     overflow-x: scroll;
+    overflow-y: hidden;
     white-space: nowrap;
     @include mq($from: tablet) {
         overflow-x: hidden;
@@ -98,7 +108,9 @@
     position: absolute;
     top: 0px;
     height: 100%;
-    padding-top: 70px;
+    @include mq($from: tablet) {
+        padding-top: 70px;
+    }
 }
 
 .delivery-map__list-item {
@@ -123,4 +135,17 @@
 
 .delivery-map__list-item-adress {
     margin-bottom: 8px;
+}
+
+.delivery-map__placeholder {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width:100%;
+    background: white;
+    z-index: 10000;
 }

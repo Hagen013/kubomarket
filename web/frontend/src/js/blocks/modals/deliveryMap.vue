@@ -3,9 +3,11 @@
         @click.self="close"
     >
         <div class="delivery-map__content" v-if="isDeliveryDataReady">
-            <div class="content-area">
+            <div class="content-area_mb">
                 <div class="delivery-map__inner modal__content">
-                    <div class="delivery-map__close">
+                    <div class="delivery-map__close"
+                        @click="close"
+                    >
                         <i class="icon icon_close"></i>
                     </div>
                     <div class="delivery-map__left">
@@ -41,11 +43,18 @@
                                 :points="deliveryPointsList"
                                 :selected-point-code="selectedPointCode"
                                 :cityName="cityName"
-
+                                v-on:ready="mapReady"
                                 @pointSelected="pointSelected"
                                 >
                                 </yandex-map>
                             </keep-alive>
+                            <transition name="fade-fast">
+                                <div class="delivery-map__placeholder"
+                                    v-if="!mapIsReady"
+                                >
+                                    <img class="placeholder__image" src="/static/img/icon/loading.svg">
+                                </div>
+                            </transition>
                         </div>
                     </div>
                 </div>
@@ -69,7 +78,8 @@ export default {
         return {
             showSdek: true,
             showPickPoint: true,
-            lastPoint: null
+            lastPoint: null,
+            mapIsReady: false
         }
     },
     store,
@@ -116,6 +126,9 @@ export default {
         },
         deliverPointListSelect(code, type) {
             this.pointSelected({"code": code, "type": type});
+        },
+        mapReady() {
+            this.mapIsReady = true;
         }
     },
     watch: {

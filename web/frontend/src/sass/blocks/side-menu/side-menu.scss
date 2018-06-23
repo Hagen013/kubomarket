@@ -65,6 +65,11 @@
     color: $text-black !important;
     font-size: 16px;
     line-height: 48px;
+    .icon {
+        font-size: 20px;
+        margin-right: 10px;
+        color: #989898;
+    }
 }
 
 .side-menu__list-link {
