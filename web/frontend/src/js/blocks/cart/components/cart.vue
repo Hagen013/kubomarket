@@ -489,6 +489,16 @@ export default {
         postOrder() {
             yaCounter49316458.reachGoal('orderSend');
             dataLayer.push({'event': 'orderSend'});
+            dataLayer.push({'event': 'orderConfirmed',
+                            'ecommerce': {
+                                'purchase': {
+                                    'actionField': {
+                                        'id': Math.random().toString(36).slice(2)
+                                    },
+                                    'products': this.ECProducts
+                                }
+                            }
+            });
             this.$http.post('/api/cart/make_order/', this.orderData).then(
                 response => {
                     this.handleSuccessfulPostOrderRequest(response);
