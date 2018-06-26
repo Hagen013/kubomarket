@@ -487,18 +487,8 @@ export default {
             }
         },
         postOrder() {
-            yaCounter49316458.reachGoal('orderSend');
-            dataLayer.push({'event': 'orderSend'});
-            dataLayer.push({'event': 'orderConfirmed',
-                            'ecommerce': {
-                                'purchase': {
-                                    'actionField': {
-                                        'id': Math.random().toString(36).slice(2)
-                                    },
-                                    'products': this.ECProducts
-                                }
-                            }
-            });
+            yaCounter49316458.reachGoal("orderSend");
+            dataLayer.push({"event": "orderSend"});
             this.$http.post('/api/cart/make_order/', this.orderData).then(
                 response => {
                     this.handleSuccessfulPostOrderRequest(response);
@@ -510,6 +500,17 @@ export default {
         },
         handleSuccessfulPostOrderRequest(response) {
             this.recievedOrderData = response.body;
+            dataLayer.push({"event": "orderConfirmed",
+                            "ecommerce": {
+                                "currencyCode": "RUB",
+                                "purchase": {
+                                    "actionField": {
+                                        "id": this.recievedOrderData.id
+                                    },
+                                    "products": this.ECProducts
+                                }
+                            }
+            });
             this.isOrderSended = true;
             this.isCartSubmissionInProgress = false;
             this.$store.commit('cart/clearData');
