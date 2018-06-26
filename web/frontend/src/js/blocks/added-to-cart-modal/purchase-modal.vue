@@ -8,7 +8,7 @@
             >
                 <i class="icon icon_close"></i>
             </div>
-            <div class="purchase-modal__title">
+            <div class="modal__title">
                 Товар добавлен в корзину
             </div>
             <div class="purchase-modal__offer-content">
@@ -39,8 +39,6 @@
 </template>
 
 <script>
-import MaskedInput from 'vue-masked-input'
-
 export default {
     name: 'added-to-cart-modal',
     data: function () {

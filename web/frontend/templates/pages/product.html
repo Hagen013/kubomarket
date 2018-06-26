@@ -161,7 +161,9 @@
                 <div class="product-page__purchase-wrap"
                     @click="isShowModalCallback=true"
                 >
-                    <a class="product-page__purchase">
+                    <a class="product-page__purchase"
+                        @click="showCallbackModal"
+                    >
                         КУПИТЬ В ОДИН КЛИК
                     </a>
                 </div>
@@ -250,6 +252,16 @@
             v-if="productPageEditFormIsActive"
         >
         </product-page-edit-form>
+    </transition>
+    <transition name="fade-fast">
+        <callback-modal
+            name="{{escape_quotes(product.name)}}"
+            price="{{product.price}}"
+            img="{{product.thumbnail.url}}"
+            :product-data="{id:'{{product.offer_identifier}}', price:'{{product.price}}', name:'{{escape_quotes(product.name)}}', quantity:1 }"
+            v-if="callbackModalIsActive"
+        >
+        </callback-modal>
     </transition>
 {% endblock modal %}
 

@@ -46,6 +46,9 @@ var modalController = new Vue({
         productPageEditFormIsActive() {
             //return true
             return this.$store.state.showProductPageEditForm.isShowModal;
+        },
+        callbackModalIsActive() {
+            return this.$store.state.showCallbackModal.isShowModal;
         }
     },
     methods: {
@@ -66,6 +69,9 @@ var modalController = new Vue({
         },
         showDeliveryMap() {
             this.$store.commit("deliveryMap/show");
+        },
+        showCallbackModal() {
+            this.$store.commit("showCallbackModal/show");
         }
     }
 });

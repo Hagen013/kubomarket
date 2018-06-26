@@ -24,3 +24,44 @@
 .modal-leave-active {
     opacity: 0;
 }
+
+
+.modal__title {
+    font-size: 14px;
+    @include bold();
+    @include mq($from: mobile) {
+        font-size: 20px;
+    }
+}
+
+.modal_content-inner {
+    min-width: 320px;
+}
+
+.modal__input-box {
+    margin-bottom: 10px;
+}
+
+.modal__text {
+    font-size: 13px;
+    font-style: italic;
+    margin: 10px 0px;
+}
+
+.modal___product-img-sm-wrap {
+    height: 200px;
+    width: 100%;
+    text-align: center;
+    img {
+        height: 100%;
+        width: auto;
+    }
+}
+
+.modal__product-title-sm  {
+    text-align: center;
+}
+
+.modal__product-sm {
+    padding: 8px 0px;
+}

@@ -23,7 +23,6 @@
 
 <script>
 import modal from '../../core/modal.vue'
-import MaskedInput from 'vue-masked-input'
 
 export default {
     name: 'added-to-cart-modal',

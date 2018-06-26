@@ -181,6 +181,10 @@ var productCard = new Vue({
                 console.log("addOfferToCart disable");
             }
         },
+        showCallbackModal() {
+            console.log('pidar');
+            this.$store.commit("showCallbackModal/show");
+        },
         isImageActive(image_key) {
             if (this.currentImageKey == image_key) {
                 return true;

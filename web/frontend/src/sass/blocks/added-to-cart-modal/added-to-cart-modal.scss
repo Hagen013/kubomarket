@@ -29,14 +29,6 @@
     }
 }
 
-.purchase-modal__title {
-    font-size: 14px;
-    @include bold();
-    @include mq($from: mobile) {
-        font-size: 20px;
-    }
-}
-
 .purchase-modal__controls {
     @include mq($from: mobile) {
         display: flex;
