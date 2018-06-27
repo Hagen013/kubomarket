@@ -60,6 +60,13 @@ class Attribute(Named, Describable, Orderable):
         verbose_name="фильтр по умолчанию"
     )
 
+    unit = models.CharField(
+        blank=True,
+        max_length=256,
+        verbose_name='Единица измерения'
+    )
+
+
     @disallowed_before_creation
     def add_value(self, name, slug, value=None):
         return self.value_class.objects.create_value(

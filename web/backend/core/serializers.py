@@ -115,8 +115,8 @@ class AttributeSerializer(DynamicFieldsModelSerializer):
     name = serializers.CharField()
     key = serializers.CharField()
     attribute_type = serializers.IntegerField()
-    category_node_group = serializers.IntegerField(source='category_node_group_id')
     values = AttributeValueSerializer(many=True)
+    unit = serializers.CharField()
     
     class Meta:
         fields = (
@@ -124,7 +124,7 @@ class AttributeSerializer(DynamicFieldsModelSerializer):
             'name',
             'key',
             'attribute_type',
-            'category_node_group',
+            'unit',
             'values'
         )
 

@@ -139,10 +139,56 @@ class ProductCard(OfferPage, Image, Weighable, Dimensional):
             raise DisallowedBeforeCreationException('attribute_value_instance must be creatied')
 
     @disallowed_before_creation
+    def del_attribute_values(self, values_list):
+        relations_to_delete = self.attributevalues_relation_class.objects.filter(
+            product=self,
+            attribute_value__in=values_list
+        ).delete()
+
+    @disallowed_before_creation
     def clear_attribute_value(self):
         self.attributevalues_relation_class.objects.filter(
             product=self
         ).delete()
+
+    def set_int_value(self, value, attribute):
+        print(value)
+        value = int(value)
+        related_products_count = self.attributevalues_relation_class.objects.filter(
+            attribute_value__in=self.attribute_values.filter(attribute=attribute)
+        ).count()
+        attribute_key = attribute.key.split("__")[-1]
+        slug = "__int__{value}__{key}".format(
+            value=value,
+            key=attribute_key
+        )
+        value_name = "{value} {unit}".format(
+            value=value,
+            unit=attribute.unit
+        )
+        if related_products_count == 1:
+            # Перезапись
+            attribute_value = self.attribute_values.get(attribute=attribute)
+            attribute_value._int_value = value
+            attribute_value.name = value_name
+            attribute_value.slug = slug
+            attribute_value.save()
+        else:
+            # Создание
+            try:
+                attribute_value = self.attributevalue_class.objects.get(
+                    slug=slug
+                )
+            except ObjectDoesNotExist:
+                attribute_value = self.attributevalue_class(
+                    attribute=attribute,
+                    attribute_type=attribute.attribute_type,
+                    slug=slug,
+                    name=value_name,
+                    _int_value=value
+                )
+                attribute_value.save()
+            self.add_attribute_value(attribute_value)
 
     @property
     @disallowed_before_creation
