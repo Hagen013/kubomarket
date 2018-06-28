@@ -68,6 +68,7 @@ $mq-breakpoints: (
 @import "blocks/placeholder/*";
 @import "blocks/page-controls/*";
 @import "blocks/edit-form/*";
+@import "blocks/actions-bottom/*";
 
 .slide-enter-active, .slide-leave-active{
     transition: .3s;
