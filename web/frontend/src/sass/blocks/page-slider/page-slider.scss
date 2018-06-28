@@ -17,8 +17,19 @@
 
 .page-slide__inner {
     max-width: 306px;
+    min-height: 169px;
     @include mq($from: mobile) {
         max-width: 100%;
+        min-height: 229px;
+    }
+    @include mq($from: tablet) {
+        min-height: 322px;
+    }
+    @include mq($from: desktop) {
+        min-height: 396px;
+    }
+    @include mq($from: wide) {
+        min-height: 466px;
     }
 }
 
