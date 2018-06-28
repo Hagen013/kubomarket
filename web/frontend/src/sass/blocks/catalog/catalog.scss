@@ -10,12 +10,23 @@
 
 .catalog__gallery {
     flex-wrap: wrap;
+    flex-direction: row;
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
     width: 290px;
     @include mq($from: mobile) {
         width: 100%;
+    }
+    &:after {
+        content: '';
+        display: block;
+        margin-left: 294px;
+    }
+    @include mq($from: wide) {
+        &:after {
+            margin-left: 264px;
+        }
     }
 }
 
