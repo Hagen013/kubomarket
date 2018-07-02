@@ -1,0 +1,77 @@
+{% for node in nodes %}
+
+{% raw %}
+{% if category.id == {% endraw %}{{node['id']}}{% raw %} or category.parent.id == {% endraw %}{{node['id']}}{% raw %} %}
+{% endraw %}
+
+<div class="catalog__nav-item">
+    <a class="catalog__nav-item-content catalog__navItemContent_active"
+    {% if node['href'] is not none %}href="/catalog/{{node['href']}}"{% endif %}
+    >
+        {{node.name}}
+        {% if node['childs']|length > 0 %}
+        <i class="icon icon_chevron-down"></i>
+        {% endif %}
+    </a>
+    {% if node['childs']|length > 0 %}
+        <ul class="catalog__nav-list catalog__navList_active">
+            {% for child in node['childs'] %}
+                <li class="catalog__nav-list-item">
+                    <a class="catalog__nav-list-item-link" href="/catalog/{{child.url}}">
+                    {{child.name}}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+
+{% raw %}
+{% else %}
+{% endraw %}
+
+<div class="catalog__nav-item">
+    <a class="catalog__nav-item-content catalog__nav-item-content"
+    {% if node['href'] is not none %}href="/catalog/{{node['href']}}"{% endif %}
+    {% if node['name'] == "По бренду" %}
+        @click="toggleBrands"
+        :class="{ catalog__navItemContent_active : displayBrands }"
+    {% endif %}
+    >
+        {{node.name}}
+        {% if node['childs']|length > 0 %}
+        <i class="icon icon_chevron-down"></i>
+        {% endif %}
+    </a>
+    {% if node['childs']|length > 0 %}
+        {% if node['name'] == "По бренду" %}
+            <ul class="catalog__nav-list"
+                :class="{ catalog__navList_active : displayBrands }"
+            >
+                {% for child in node['childs'] %}
+                    <li class="catalog__nav-list-item">
+                        <a class="catalog__nav-list-item-link" href="/catalog/{{child.url}}">
+                        {{child.name}}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <ul class="catalog__nav-list catalog__nav-list">
+                {% for child in node['childs'] %}
+                    <li class="catalog__nav-list-item">
+                        <a class="catalog__nav-list-item-link" href="/catalog/{{child.url}}">
+                        {{child.name}}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+</div>
+
+{% raw %}
+{% endif %}
+{% endraw %}
+
+{% endfor %}
