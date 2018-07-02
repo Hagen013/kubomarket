@@ -26,6 +26,7 @@ def generate_static_navigation():
     childs = nav_nodes[-1]["childs"]
     for child in childs:
         child.name = "Кубы" + child.name
+    childs = [child for child in childs if child.products.count() > 0]
     nav_nodes[-1]["childs"] = childs
 
     node = Node.objects.get(url="nestandartnie/")
@@ -35,6 +36,9 @@ def generate_static_navigation():
         "href": node.url,
         "childs": node.childs.all().order_by("scoring")
     })
+    childs = nav_nodes[-1]["childs"]
+    childs = [child for child in childs if child.products.count() > 0]
+    nav_nodes[-1]["childs"] = childs
 
     nav_nodes.append({
         "name": "По бренду",
@@ -42,6 +46,9 @@ def generate_static_navigation():
         "href": None,
         "childs": Node.objects.filter(attribute_values__in=Attribute.objects.get(name="Бренд").values.all()).order_by("scoring")
     })
+    childs = nav_nodes[-1]["childs"]
+    childs = [child for child in childs if child.products.count() > 0]
+    nav_nodes[-1]["childs"] = childs
 
     node = Node.objects.get(url="tajmery-i-maty/")
     nav_nodes.append({
@@ -63,17 +70,17 @@ def generate_static_navigation():
         "nodes": nav_nodes
     }
 
-    vertical_nav = render_to_string("navigations/vertical.html", context=context)
-    mobile_nav = render_to_string("navigations/mobile.html", context=context)
-    side_nav = render_to_string("navigations/side.html", context=context)
+    vertical_nav = render_to_string("navigation/vertical.html", context=context)
+    mobile_nav = render_to_string("navigation/mobile.html", context=context)
+    side_nav = render_to_string("navigation/side.html", context=context)
 
     with open(TEMPLATE_OUTPUT_PATH + "base/desktop-menu.html", 'w') as fp:
         fp.write(vertical_nav)
 
-    with open(TEMPLATE_OUTPUT_PATH + "base/side-menu.html", 'w') as fp:
+    with open(TEMPLATE_OUTPUT_PATH + "base/nav-menu.html", 'w') as fp:
         fp.write(mobile_nav)
 
     with open(TEMPLATE_OUTPUT_PATH + "base/catalog-sidenav.html", 'w') as fp:
-        fp.write(vertical_nav)
+        fp.write(side_nav)
 
 

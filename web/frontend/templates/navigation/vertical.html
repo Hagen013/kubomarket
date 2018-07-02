@@ -13,7 +13,12 @@
         {% endif %}
     </a>
     {% if node['childs']|length > 0 %}
-    <div class="dropdown">
+    <div class="dropdown
+        {% if loop.index == 3 %}
+        dropdown_brands
+        {% endif %}
+        "
+    >
         <div class="content-area">
             <ul class="header__submenu-list">
             {% for child in node['childs'] %}
