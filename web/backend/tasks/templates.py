@@ -26,7 +26,7 @@ def generate_static_navigation():
     childs = nav_nodes[-1]["childs"]
     for child in childs:
         child.name = "Кубы " + child.name
-    childs = [child for child in childs if child.products.count() > 0]
+    childs = [child for child in childs if child.products.filter(is_in_stock=True).count() > 0]
     nav_nodes[-1]["childs"] = childs
 
     node = Node.objects.get(url="nestandartnie/")
@@ -37,7 +37,7 @@ def generate_static_navigation():
         "childs": node.childs.all().order_by("scoring")
     })
     childs = nav_nodes[-1]["childs"]
-    childs = [child for child in childs if child.products.count() > 0]
+    childs = [child for child in childs if child.products.filter(is_in_stock=True).count() > 0]
     nav_nodes[-1]["childs"] = childs
 
     nav_nodes.append({
@@ -47,7 +47,7 @@ def generate_static_navigation():
         "childs": Node.objects.filter(attribute_values__in=Attribute.objects.get(name="Бренд").values.all()).order_by("scoring")
     })
     childs = nav_nodes[-1]["childs"]
-    childs = [child for child in childs if child.products.count() > 0]
+    childs = [child for child in childs if child.products.filter(is_in_stock=True).count() > 0]
     nav_nodes[-1]["childs"] = childs
 
     node = Node.objects.get(url="tajmery-i-maty/")
