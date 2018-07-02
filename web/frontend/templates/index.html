@@ -16,9 +16,6 @@
                 <a class="item page-slider__item page-slider__item_1">
                     <img src="/static/img/slides/slide_01.png">
                 </a>
-                <a class="item page-slider__item page-slider__item_2">
-                    <img src="/static/img/slides/slide_02.png">
-                </a>
                 <a class="item page-slider__item page-slider__item_3">
                     <img src="/static/img/slides/slide_03.png">
                 </a>
@@ -29,6 +26,79 @@
         </div>
     </div>
 </div>
+
+<div class="content-area_mb">
+    <div class="product-slider" id="top-items-slider">
+        <div class="product-slider__main">
+
+            <h3 class="product-slider__title">Кубы для начинающих спидкуберов</h3>
+
+            <div class="product-slider__main-content">
+                {% for item in top_items %}
+                <div class="product-line_bg"
+                    :class="{ productLine_active_bg : currentItem == {{loop.index}} }"
+                >
+                    <div class="product-line__img-wrap_bg">
+                        <div class="product-slider__control product-slider__control_left"
+                            @click="previous"
+                            :class="{ productSlider__control_disabled : !isPreviousAvailable }"
+                        >
+                            <i class="arrow-icon icon_arrow-left"></i>
+                        </div>
+                        <div class="product-slider__control product-slider__control_right"
+                            @click="next"
+                            :class="{ productSlider__control_disabled : !isNextAvailable }"
+                        >
+                            <i class="arrow-icon icon_arrow-right"></i>
+                        </div>
+                        <img src="{{ item.thumbnail.url }}">
+                    </div>
+                    <div class="product-line__content_bg">
+                        <div class="product-line__purchase_bg">
+                            <div class="product-line__price_bg">
+                                {{item.price}} ₽
+                            </div>
+                        </div>
+                        <div class="product-line__text_bg">
+                            {{item.short_description}}
+                        </div>
+                        <div class="product-line__interaction_bg">
+                            <a class="button button_ghost-green product-line__button_bg"
+                                href="/product/{{item.slug}}"
+                            >
+                                ПОДРОБНЕЕ <div class="arrow-icon icon_arrow-right"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        <div class="product-slider__nav">
+
+            {% for item in top_items %}
+            <div class="product-slider__nav-item"
+            >
+                <div class="product-line"
+                    @click="setCurrentItem({{loop.index}})"
+                    :class="{ productLine_active : currentItem == {{loop.index}} }"
+                >
+                    <div class="product-line__img-wrap">
+                        <img src="{{item.thumbnail.url}}">
+                    </div>
+                    <div class="product-line__text">
+                        {{item.name}}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
 
 

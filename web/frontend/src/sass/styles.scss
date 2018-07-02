@@ -36,6 +36,7 @@ $mq-breakpoints: (
 
 //----> TYPOGRAPHY AND ICONS
 @import '../../static/fonts/icons/icons';
+@import '../../static/fonts/newIcons/newIcons';
 //----> TYPOGRAPHY END
 
 
@@ -69,6 +70,8 @@ $mq-breakpoints: (
 @import "blocks/page-controls/*";
 @import "blocks/edit-form/*";
 @import "blocks/actions-bottom/*";
+@import "blocks/product-line/*";
+@import "blocks/product-slider/*";
 
 .slide-enter-active, .slide-leave-active{
     transition: .3s;

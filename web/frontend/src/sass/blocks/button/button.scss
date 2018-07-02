@@ -50,6 +50,18 @@
     }
 }
 
+.button_ghost-green {
+    color: $green;
+    border: 2px solid $border;
+    transition-property: border, background, color;
+    transition-duration: .2s;
+    &:hover {
+        color: $white;
+        background: $green;
+        border-color: $green;
+    }
+}
+
 .button_disabled {
     color: $text-grey !important;
     background: $border !important;

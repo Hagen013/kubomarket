@@ -20,7 +20,8 @@
     height: 108px;
     width: 100%;
     margin-bottom: 16px;
-    background-color: #0ed670;
+    background-color: #32B872;
+    border-radius: 4px;
     transition-duration: .2s;
     transition-property: box-shadow;
     cursor: pointer;
@@ -33,6 +34,7 @@
     }
     @include mq($from: desktop) {
         width: 24%;
+        margin-bottom: 0px;
     }
 }
 

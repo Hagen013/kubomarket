@@ -1,7 +1,7 @@
 @import "./__variables";
 
 .icon {
-    font-style: normal;
+    font-style: normal !important;
     background-position: center;
     background-repeat: no-repeat;
     &:before {
@@ -378,4 +378,33 @@
 
 .icon_metro-credit {
     background-image: url('../img/icon/icon-credit.png');
+}
+
+.arrow-icon {
+    font-style: normal !important;
+    font-family: 'newIcons'
+}
+
+.icon_arrow-down {
+    &:before {
+        content: $icon-arrow-down;
+    }
+}
+
+.icon_arrow-up {
+    &:before {
+        content: $icon-arrow-up;
+    }
+}
+
+.icon_arrow-left {
+    &:before {
+        content: $icon-arrow-left;
+    }
+}
+
+.icon_arrow-right {
+    &:before {
+        content: $icon-arrow-right;
+    }
 }
