@@ -25,7 +25,7 @@ def generate_static_navigation():
     })
     childs = nav_nodes[-1]["childs"]
     for child in childs:
-        child.name = "Кубы" + child.name
+        child.name = "Кубы " + child.name
     childs = [child for child in childs if child.products.count() > 0]
     nav_nodes[-1]["childs"] = childs
 
