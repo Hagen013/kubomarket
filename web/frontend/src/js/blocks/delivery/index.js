@@ -26,7 +26,7 @@ var delivery = new Vue({
         this.ready = true;
     },
     mounted() {
-        console.log("MOUNTED");
+
     },
     computed: {
         mapIsAvailable() {
