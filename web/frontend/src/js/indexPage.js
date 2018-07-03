@@ -9,5 +9,8 @@ import mobileMenu from './blocks/mobileMenu/'
 import mobileCatalog from './blocks/mobileCatalog/'
 import modalController from './blocks/modalController/index.js';
 
+//Page-specific
+import topItemsSlider from './blocks/topItemsSlider/'
+
 //store.dispatch('geo/initGeo');
 store.dispatch('initAll');

@@ -1,0 +1,90 @@
+<div class="nav-menu" id="nav-menu"
+>
+    <div class="nav-menu__header">
+        <div class="nav-menu__control nav-menu__control_back">
+
+        </div>
+        <div class="nav-menu__title">
+            Каталог
+        </div>
+        <div class="nav-menu__control nav-menu__control_close" @click="hideNavMenu">
+            <div class="button_round">
+                <span class="icon icon_close"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-menu__content">
+        <ul class="nav-menu__list">
+            <li class="nav-menu__list-item">
+                <a class="nav-menu__list-link"
+                    @click="showSlide(1)"
+                >
+                    СТАНДАРТНЫЕ КУБЫ
+                    <i class="icon icon_chevron-right"></i>
+                </a>
+            </li>
+            <li class="nav-menu__list-item">
+                <a class="nav-menu__list-link"
+                    @click="showSlide(2)"
+                >
+                    НЕСТАНДАРТНОЙ ФОРМЫ
+                    <i class="icon icon_chevron-right"></i>
+                </a>
+            </li>
+            <li class="nav-menu__list-item">
+                <a class="nav-menu__list-link"
+                    @click="showSlide(3)"
+                >
+                    ПО БРЕНДУ
+                    <i class="icon icon_chevron-right"></i>
+                </a>
+            </li>
+            <li class="nav-menu__list-item">
+                <a class="nav-menu__list-link"
+                    href="/catalog/tajmery-i-maty/"
+                >
+                    ТАЙМЕРЫ И МАТЫ
+                    <i class="icon icon_chevron-right"></i>
+                </a>
+            </li>
+            <li class="nav-menu__list-item">
+                <a class="nav-menu__list-link"
+                    href="/catalog/smazki/"
+                >
+                    СМАЗКИ
+                    <i class="icon icon_chevron-right"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    {% for node in nodes %}
+    <transition name="slide">
+        <nav-menu-slide 
+            title="Стандартные кубы"
+            v-if="activeSlide === {{ loop.index }}"
+            v-on:hide="setActiveSlideToDefault"
+        >
+        <div class="nav-menu__content">
+            <ul class="nav-menu__list">
+
+                {% for child in node['childs'] %}
+                <li class="nav-menu__list-item">
+                    <a class="nav-menu__list-link"
+                        href="/catalog/{{child.url}}/"
+                    >
+                        {{child.name}}
+                        <i class="icon icon_chevron-right"></i>
+                    </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+        
+        </nav-menu-slide>
+    </transition>
+    {% endfor %}
+
+</div>

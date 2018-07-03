@@ -73,3 +73,14 @@ class CubesProductPageView(TemplateView):
         context['category'] = CubesCategoryNode.public.get_by_product(self.product)
         context['user_status'] = self.get_user_status()
         return context
+
+
+class IndexPage(TemplateView):
+    
+    template_name = 'index.html'
+    product_class = CubesProductCard
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(IndexPage, self).get_context_data(**kwargs)
+        context['top_items'] = self.product_class.objects.filter(is_bestseller=True)
+        return context

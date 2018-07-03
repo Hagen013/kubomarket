@@ -25,6 +25,12 @@
             padding: 0px 20px;
         }    
     }
+    @include mq($from: desktop) {
+        width: 970px;
+    }
+    @include mq($from: wide) {
+        width: 1170px;
+    }
 }
 
 .delivery-map__inner {

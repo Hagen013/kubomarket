@@ -60,6 +60,12 @@ class ProductCardAttributesAPIView(APIView):
     """
     Класс отображения информации о карточке товара
     """
+    attribute_class = CubesAttribute
+
+    def check_permissions(self, request):
+        if not request.user.is_superuser:
+            raise PermissionDenied
+
     def get(self, request, pk, *args, **kwargs):
         try:
             product = CubesProductCard.objects.get(id=pk)
@@ -77,6 +83,8 @@ class ProductCardAttributesAPIView(APIView):
         return Response(content)
 
     def put(self, request, pk, *args, **kwargs):
+        self.check_permissions(request)
+
         try:
             product = CubesProductCard.objects.get(pk=pk)
         except CubesProductCard.DoesNotExist:
@@ -97,13 +105,28 @@ class ProductCardAttributesAPIView(APIView):
 
         for attribute in int_attributes:
             values_list = attribute['selected_values']
-            if len(values_list) == 0:
-                # Удаление связи
-                pass
-            else:
-                # Добавление/перерисовка связи
-                pass
-    
+            value = values_list[0]
+            if type(value) != dict:
+                if value == '':
+                    # Удаление связи
+                    values_to_delete = product.attribute_values.filter(attribute__id=attribute['id'])
+                    product.del_attribute_values(values_to_delete)
+                else:
+                    # Добавление/перерисовка связи
+                    attribute_found = True
+                    try:
+                        attribute = self.attribute_class.objects.get(
+                            id=attribute['id'],
+                            attribute_type=3
+                        )
+                    except ObjectDoesNotExist:
+                        attribute_found = False
+                    if attribute_found:
+                        try:
+                            product.set_int_value(value, attribute)
+                        except ValueError:
+                            pass
+
         recieved_values = set()
         for attribute in non_int_attributes:
             selected_values = attribute['selected_values']

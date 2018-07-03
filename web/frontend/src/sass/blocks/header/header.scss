@@ -316,6 +316,7 @@ input.header__search-input::placeholder {
     justify-content: center;
     align-items: center;
     line-height: normal;
+    text-transform: uppercase;
     @include mq($from: desktop, $until: wide) {
         max-width: 120px;
     }

@@ -67,6 +67,10 @@
                 <md-textarea v-model="order.data.customer.address"></md-textarea>
             </md-field>
             <md-field>
+                <label>Примечания</label>
+                <md-textarea v-model="order.client_notes"></md-textarea>
+            </md-field>
+            <md-field>
                 <label for="delivery-type">Способ доставки</label>
                 <md-select v-model="order.data['delivery']['mod']['type']" name="delivery-type" id="delivery-type">
                     <md-option value=null>Не выбрано</md-option>
@@ -237,6 +241,13 @@
                     return false
                 }
             },
+            clientNotesChanged() {
+                if (this.order !== null) {
+                    return (this.order.client_notes !== this.originalOrder.client_notes)
+                } else {
+                    return false
+                }
+            },
             customerChanged() {
                 if (this.order !== null) {
                     let customer = JSON.stringify(this.order.data['customer']);
@@ -269,6 +280,7 @@
                     this.stateChanged ||
                     this.sourceChanged ||
                     this.notesChanged ||
+                    this.clientNotesChanged ||
                     this.itemsChanged ||
                     this.deliveryChanged ||
                     this.customerChanged ||

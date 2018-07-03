@@ -169,4 +169,24 @@
 .delivery-page-menu__outlet {
     min-height: 400px;
     padding: 15px 0px 100px 0px;
+    overflow: hidden;
+    opacity: 0;
+    will-change: opacity;
+    transition: 0.2s;
+    p {
+        margin-bottom: 16px;
+    }
+}
+
+.deliveryPageMenu__outlet_ready {
+    opacity: 1;
+}
+
+.infopage__placeholder-block {
+    height: 600px;
+    width: 1170px;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('../img/cubes/heroimage-placeholder.jpg');
 }

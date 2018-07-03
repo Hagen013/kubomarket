@@ -118,6 +118,7 @@ export default {
     },
     methods: {
         close() {
+            console.log('close');
             this.$store.commit("deliveryMap/hide");
         },
         pointSelected({code, type}) {

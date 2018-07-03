@@ -267,17 +267,17 @@ class Order2(TimeStamped):
 
         super(Order2, self).save(*args, **kwargs)
 
-        email = self.data['customer']['email']
-        if email:
-            if is_new:
-                MailSender(
-                    "Спасибо за заявку",
-                    "mail_templates/thanks_for_order.html",
-                    email,
-                    context={
-                        "order": self
-                    }
-                ).send_mail()
+        # email = self.data['customer']['email']
+        # if email:
+        #     if is_new:
+        #         MailSender(
+        #             "Спасибо за заявку",
+        #             "mail_templates/thanks_for_order.html",
+        #             email,
+        #             context={
+        #                 "order": self
+        #             }
+        #         ).send_mail()
 
         self.__original_state = self.state
 

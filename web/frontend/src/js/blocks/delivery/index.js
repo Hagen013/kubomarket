@@ -15,13 +15,18 @@ var delivery = new Vue({
         currentTab: 0,
         ymapsCheckTimer: null,
         ymapsInited: false,
-        ymapsReady: false
+        ymapsReady: false,
+        ready: false
     },
     components: {
         "yandex-map": yandexMap
     },
     created() {
         this.ymapsCheckTimer = setInterval(this.checkYmaps, 100);
+        this.ready = true;
+    },
+    mounted() {
+
     },
     computed: {
         mapIsAvailable() {

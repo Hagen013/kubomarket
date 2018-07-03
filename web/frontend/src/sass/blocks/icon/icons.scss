@@ -1,7 +1,7 @@
 @import "./__variables";
 
 .icon {
-    font-style: normal;
+    font-style: normal !important;
     background-position: center;
     background-repeat: no-repeat;
     &:before {
@@ -360,4 +360,55 @@
 
 @mixin icon-sm-yandex_green {
     background-image: url('../img/icon/sm-yandex_green.svg');
+}
+
+
+// Metro Icons
+.icon_metro-delivery {
+    background-image: url('../img/icon/icon-delivery.png');
+}
+
+.icon_metro-money-back {
+    background-image: url('../img/icon/icon-money-back.png');
+}
+
+.icon_metro-honest {
+    background-image: url('../img/icon/icon-honest.png');
+}
+
+.icon_metro-credit {
+    background-image: url('../img/icon/icon-credit.png');
+}
+
+.arrow-icon {
+    background-position: center;
+    background-repeat: no-repeat;
+    font-style: normal !important;
+    &:before {
+        font-family: 'fontello' !important;
+    }
+}
+
+.icon_arrow-down {
+    &:before {
+        content: $icon-arrow-down;
+    }
+}
+
+.icon_arrow-up {
+    &:before {
+        content: $icon-arrow-up;
+    }
+}
+
+.icon_arrow-left {
+    &:before {
+        content: $icon-arrow-left;
+    }
+}
+
+.icon_arrow-right {
+    &:before {
+        content: $icon-arrow-right;
+    }
 }

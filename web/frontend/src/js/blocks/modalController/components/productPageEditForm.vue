@@ -396,6 +396,7 @@
                         "id": currentAttribute.id,
                         "key": currentAttribute.key,
                         "name": currentAttribute.name,
+                        "unit": currentAttribute.unit,
                         "selected_values": currentAttribute.selected_values,
                     }
                 })

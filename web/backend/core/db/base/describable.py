@@ -14,3 +14,8 @@ class Describable(models.Model):
         verbose_name="Описание",
         blank=True
     )
+
+    short_description = models.TextField(
+        verbose_name="Короткое описание",
+        blank=True
+    )
