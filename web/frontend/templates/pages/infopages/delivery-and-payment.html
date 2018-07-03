@@ -99,7 +99,9 @@
         </div>
     </div>
 
-    <div class="delivery-page-menu__outlet">
+    <div class="delivery-page-menu__outlet"
+        :class="{ deliveryPageMenu__outlet_ready : ready }"
+    >
         <div class="content-area_mb" v-if="currentTab == 0">
             <div class="delivery-page-menu__map"
             >
@@ -135,6 +137,7 @@
                     <p class="green bold">
                         {{ priceCurier | priceFilter }} {{timeCurier | timeFilter}}
                     </p>
+                    <p class="grey">Окончательная стоимость доставки определяется при связи с оператором во время оформления заказа</p>
                 </div>
             </div>
             <div class="content-area_mb" v-else>
@@ -152,6 +155,7 @@
                     <p class="green bold">
                         {{ pricePostalService | priceFilter }} {{timePostalService | timeFilter}}
                     </p>
+                    <p class="grey">Окончательная стоимость доставки определяется при связи с оператором во время оформления заказа</p>
                 </div>
             </div>
             <div class="content-area_mb" v-else>

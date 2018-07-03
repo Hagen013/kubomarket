@@ -138,7 +138,7 @@ export default {
                     return {
                         'kladr': rootState.geo.code,
                         'products': [{
-                            price: 2000,
+                            price: 1000,
                             product_type: "CUBE",
                             purchase_price: 0,
                             vendor: "kubomarket"
