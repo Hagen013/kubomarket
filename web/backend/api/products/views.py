@@ -105,27 +105,28 @@ class ProductCardAttributesAPIView(APIView):
 
         for attribute in int_attributes:
             values_list = attribute['selected_values']
-            value = values_list[0]
-            if type(value) != dict:
-                if value == '':
-                    # Удаление связи
-                    values_to_delete = product.attribute_values.filter(attribute__id=attribute['id'])
-                    product.del_attribute_values(values_to_delete)
-                else:
-                    # Добавление/перерисовка связи
-                    attribute_found = True
-                    try:
-                        attribute = self.attribute_class.objects.get(
-                            id=attribute['id'],
-                            attribute_type=3
-                        )
-                    except ObjectDoesNotExist:
-                        attribute_found = False
-                    if attribute_found:
+            if len(values_list) > 0:
+                value = values_list[0]
+                if type(value) != dict:
+                    if value == '':
+                        # Удаление связи
+                        values_to_delete = product.attribute_values.filter(attribute__id=attribute['id'])
+                        product.del_attribute_values(values_to_delete)
+                    else:
+                        # Добавление/перерисовка связи
+                        attribute_found = True
                         try:
-                            product.set_int_value(value, attribute)
-                        except ValueError:
-                            pass
+                            attribute = self.attribute_class.objects.get(
+                                id=attribute['id'],
+                                attribute_type=3
+                            )
+                        except ObjectDoesNotExist:
+                            attribute_found = False
+                        if attribute_found:
+                            try:
+                                product.set_int_value(value, attribute)
+                            except ValueError:
+                                pass
 
         recieved_values = set()
         for attribute in non_int_attributes:
