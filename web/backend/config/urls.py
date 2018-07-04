@@ -4,6 +4,7 @@ from django.conf import settings
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
+from users.views import ProfileView
 from api.urls import urls_api
 
 
@@ -22,6 +23,7 @@ urlpatterns = [
     url(r'^order-check/', TemplateView.as_view(template_name="pages/infopages/order-check.html")),
     url(r'^login/', TemplateView.as_view(template_name="pages/login.html")),
     url(r'^registration/', TemplateView.as_view(template_name="pages/registration.html")),
+    #url(r'^profile/', ProfileView.as_view()),
     url(r'^', include('shop_cubes.urls', namespace='shop'))
 ]
 
