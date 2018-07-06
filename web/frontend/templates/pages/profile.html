@@ -6,25 +6,11 @@
     {% endwith %}
 
     <div class="content-area_mb">
-        <div class="profile" id="profile">
-            <h1 class="profile__title">
-                Здравствуйте, {{user.username}}
-            </h1>
-            <div class="profile__content">
-                <div class="profile__nav">
-                    <div class="profile__nav-item">
-                        Мои заказы
-                    </div>
-                    <div class="profile__nav-item">
-                        Комментарии
-                    </div>
-                    <div class="profile__nav-item">
-                        Мои данные
-                    </div>
-                </div>
-                <div class="profile__outlet">
-                </div>
-            </div>
+        <div id="profile">
+            <profile
+                user_id={{user.id}}
+            >
+            </profile>
         </div>
     </div>
 

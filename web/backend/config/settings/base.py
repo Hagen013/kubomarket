@@ -55,7 +55,8 @@ LOCAL_APPS = [
     'api',
     'core',
     'shop_cubes',
-    'controls'
+    'controls',
+    'users'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -69,7 +70,6 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Перенесено на Nginx для Вебвизора
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 

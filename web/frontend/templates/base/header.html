@@ -57,6 +57,19 @@
                 </div>
             </div>
             <div class="header__profile">
+                {% if request.user.is_authenticated %}
+                <a class="header__profile-link header__enter"
+                    href="/profile/"
+                >
+                    Личный кабинет
+                </a>
+                /
+                <a class="header__profile-link header__registration"
+                    href="/logout/"
+                >
+                    Выход
+                </a>
+                {% else %}
                 <a class="header__profile-link header__enter"
                     href="/login/"
                 >
@@ -68,6 +81,7 @@
                 >
                     Регистрация
                 </a>
+                {% endif %}
             </div>
             <div class="header__mobile-controls">
                 <div class="button_round header__mobile-menu-button" v-if="!mobileMenuIsVisible"

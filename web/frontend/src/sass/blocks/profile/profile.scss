@@ -1,0 +1,171 @@
+.profile__content {
+    display: flex;
+}
+
+.profile__greeting {
+    padding: 10px 0px;
+    margin-bottom: 20px;
+}
+
+.order__item-img-wrap {
+    height: 130px;
+    width: 130px;
+    img {
+        height: 100%;
+        width: auto;
+    }
+}
+
+.orders__list {
+    @include mq($from: desktop) {
+        margin-left: 32px;
+    }
+}
+
+.profile__nav {
+    display: block;
+    height: 150px;
+    width: 190px;
+    padding: 32px 32px;
+    background: $creme;
+}
+
+.profile__outlet {
+    width: 100%;
+    @include mq($from: desktop) {
+        width: 750px;
+    }
+    @include mq($from: wide) {
+        width: 950px;
+    }
+}
+
+.profile__nav-item {
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition-property: color, text-decoration;
+    transition-timing-function: cubic-bezier();
+    transition-duration: .2s;
+}
+
+.profile__navItem_active {
+    cursor: default;
+    color: $blue;
+    text-decoration: underline;
+}
+
+.order {
+    display: flex;
+    flex-direction: row;
+    padding: 16px;
+    border-top: 2px solid $border;
+    transition-property: box-shadow, border;
+    transition-timing-function: cubic-bezier();
+    transition-duration: .2s;
+    cursor: pointer;
+    @include mq($from: tablet) {
+        min-width: 720px;
+    }
+    &:hover {
+        box-shadow: 0px 0px 20px 0px rgba(54,81,104,0.2);
+    }
+}
+
+.order__main-info {
+    width:  220px;
+}
+
+.order__total-price {
+
+}
+
+.order__items {
+    display: flex;
+    flex-direction: row;
+}
+
+.order__status {
+    margin-bottom: 10px;
+}
+
+.order__title {
+    margin-bottom: 10px;
+}
+
+.order__status {
+    display: inline-block;
+    color: $white;
+    padding: 8px;
+    border-radius: 5px;
+    text-transform: capitalize;
+    font-size: 14px;
+}
+
+.order__total-price {
+    margin-bottom: 10px;
+}
+
+.order__status_green {
+    background: $green;
+}
+
+.order__date {
+    color: $text-grey;
+}
+
+.order__status_red {
+    background: $red;
+}
+
+.order__status_blue {
+    background: $blue;
+}
+
+.profile-data__fullname {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .input-box {
+        width: 32%;
+    }
+}
+
+.profile-data__delimeter {
+    margin: 4px 0px 4px 0px;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.profile-comments {
+    width: 100%;
+    padding: 60px 0px;
+    text-align: center;
+    font-size: 24px;
+    color: $text-grey_dark;
+}
+
+.profile-data {
+    margin-left: 32px;
+}
+
+.profile-data__title {
+    font-size: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.profile-data__block {
+    padding: 24px 0px;
+}
+
+.profile-data__phone-wrap {
+    .input-box {
+        max-width: 300px;
+    }
+}
+
+.profile-data__button {
+    height: 50px;
+    border-radius: 25px;
+    font-size: 14px;
+    width: 260px;
+}

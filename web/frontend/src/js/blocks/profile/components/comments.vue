@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="profile-comments bold">
+        У вас пока нет отзывов
     </div>
 </template>
 

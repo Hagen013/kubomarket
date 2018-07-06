@@ -292,7 +292,7 @@ class ProductCardDescriptionImagesAPIView(APIView):
         value = str(time.time()) + filename
         hashed = md5(value.encode()).hexdigest()
         return hashed
-        
+       
     def get_hashed_filename(self, filename, taks_id):
         extension = filename.split('.')[-1]
         print(extension)
@@ -302,6 +302,4 @@ class ProductCardDescriptionImagesAPIView(APIView):
             return "{0}.{1}".format(
                 taks_id,
                 extension
-            )
-
-            
+            )   

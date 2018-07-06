@@ -1,17 +1,18 @@
 import { Vue } from '../../vue.js';
-import store from '../../store'
+
+import profileComponent from "./components/profile.vue"
 
 
 var profile = new Vue({
     name: 'profile',
     el: '#profile',
-    store,
     data: {
+    },
+    components: {
+        "profile": profileComponent
     },
     created() {
         console.log("created");
-    },
-    components: {
     },
     computed: {
     },
