@@ -55,7 +55,8 @@ LOCAL_APPS = [
     'api',
     'core',
     'shop_cubes',
-    'controls'
+    'controls',
+    'users'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -69,11 +70,10 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Перенесено на Nginx для Вебвизора
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SOCIAL_AUTH_LOGIN_ERROR_URL = "/registration/?from=oauth"
+SOCIAL_AUTH_LOGIN_ERROR_URL = "/u/registration/?from=oauth"
 
 # LOADERS CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -147,10 +147,10 @@ STATICFILES_DIRS = (
 EMAILS_ADMIN = env("DJANGO_EMAILS_ADMIN")
 EMAIL_HOST_USER = env("DJANGO_EMAIL_HOST_USER")
 DEFAULT_FROM_EMAIL = env("DJANGO_DEFAULT_FROM_EMAIL")
-EMAIL_PORT = env("DJANGO_EMAIL_PORT")
+EMAIL_PORT = int(env("DJANGO_EMAIL_PORT"))
 EMAIL_HOST = env("DJANGO_EMAIL_HOST")
-EMAIL_HOST_PASSWORD = env('DJANGO_EMAIL_HOST_PASSWORD')
-
+EMAIL_HOST_PASSWORD = env("DJANGO_EMAIL_HOST_PASSWORD")
+EMAIL_USE_SSL = True
 
 # REDIS SETTINGS
 # ------------------------------------------------------------------------------

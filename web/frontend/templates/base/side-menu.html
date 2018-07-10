@@ -7,6 +7,30 @@
     </div>
     <div class="side-menu__content" id="side-menu__content">
         <div class="side-menu__auth-area">
+            {% if request.user.is_authenticated %}
+            <a class="side-menu__user" href="/u/profile/">
+                <div class="side-menu__user-left">
+                    <i class="side-menu__user-icon icon icon_profile"></i>
+                </div>
+                <div class="side-menu__user-right">
+                    <div class="side-menu__user-name">
+                        {{request.user.username}}
+                    </div>
+                    <div class="side-menu__user-email">
+                        {{request.user.username}}
+                    </div>
+                </div>
+            </a>
+            {% else %}
+            <div class="side-menu__auth-buttons">
+                <a class="side-menu__login side-menu__auth-button button button_blue" href="/u/login/">
+                    Вход
+                </a>
+                <a class="side-menu__register side-menu__auth-button button button_blue" href="/u/register/">
+                    Регистрация
+                </a>
+            </div>
+            {% endif %}
             <div class="button_round side-menu__close"
                 @click="hideSideMenu"
             >
@@ -65,6 +89,18 @@
                     Регион: <span class="grey">Москва</span>
                 </a>
             </li>
+            {% if request.user.is_authenticated %}
+            <div class="side-menu__delimeter">
+            </div>
+            <li class="side-menu__list-item">
+                <a class="side-menu__list-link"
+                    href="/u/logout/"
+                >
+                    <i class="button__icon icon icon__logout side-menu__location-icon"></i>
+                    Выйти
+                </a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 </div>

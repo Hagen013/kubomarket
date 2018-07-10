@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="content-area">
+        <h1 class="title">
+            Завершение регистрации
+        </h1>
+        <div class="infopage__content">
+            <p>
+                На ваш email было выслано письмо с ссылкой, переход по которой необходим для завершения регистрации
+            </p>
+            <p class="grey">
+                Если по каким-то причнам письмо не пришло в течение 5 минут, пожалуйста обратитесь по почте info@kubomarket.ru, или по телефонам, 
+                указанным в верхней части сайта
+            </p>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    {{ super() }}
+    <script src="{{ static('js/indexPage.js') }}"></script>
+{% endblock script %}

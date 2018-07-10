@@ -8,7 +8,10 @@ body {
 .content-area {
     height: 100%;
     margin: 0 auto;
-    width: 480px;
+    width: 320px;
+    @include mq($from: mobile) {
+      width: 480px;
+    }
     @include mq($from: tablet, $until: desktop) {
       width: 750px;
     }

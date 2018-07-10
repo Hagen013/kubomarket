@@ -9,7 +9,7 @@ from django.conf import settings
 from django.template.defaultfilters import slugify as dj_slugify
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-EMAIL_REPLY_TO = "clientservice@kubomarket.ru"
+EMAIL_REPLY_TO = "info@kubomarket.ru"
 
 
 class DisallowedBeforeCreationException(Exception):
@@ -55,7 +55,7 @@ class MailSender():
     def render_template(self):
         return render_to_string(self.template, {"title": self.title, **self.context})
 
-    def send_mail(self):
+    def send(self):
         title = self.title
         html_message = self.render_template()
         email = EmailMessage(
@@ -67,3 +67,4 @@ class MailSender():
 
         email.content_subtype = "html"
         email.send()
+ 

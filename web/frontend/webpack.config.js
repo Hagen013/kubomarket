@@ -14,6 +14,9 @@ module.exports = {
     cartPage: "./cartPage.js",
     deliveryPage: './deliveryPage.js',
     faqPage: './faqPage.js',
+    profilePage: './profilePage.js',
+    loginPage: './loginPage.js',
+    registerPage: './registerPage.js',
     admin: './admin.js',
     md_admin: './md-admin.js',
     login: './login.js'
@@ -80,7 +83,10 @@ module.exports.plugins = (module.exports.plugins || []).concat([
         'productPage',
         'cartPage',
         'deliveryPage',
-        'faqPage'
+        'faqPage',
+        'profilePage',
+        'loginPage',
+        'registerPage'
       ]
   }),
 

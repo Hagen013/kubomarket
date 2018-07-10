@@ -138,6 +138,12 @@
     }
 }
 
+.icon_profile {
+    &:before {
+        content: $icon-contact;
+    }
+}
+
 .icon_metro {
     background-image: url('../img/icon/mos-metro.svg');
 }

@@ -6,7 +6,7 @@
     {% endwith %}
 
     <div class="content-area" style="text-align: center;">
-        <div class="login_div">
+        <div class="login_div" id="login-form">
             <div class="login_div_block">
                 <h3>
                     Вход через социальные сети 
@@ -36,15 +36,37 @@
                     Или 
                 </h3>
                 <div class="form__wrap">
-                    <form method="POST" action="" class="form">
+                    <form method="POST" action="" class="form" v-on:submit.prevent="noop">
                         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                         <div class="input-box login__input-box">
-                            <input class="input login__input" type="text" name="email" placeholder="Email">
+                            <input class="input login__input"
+                                type="text"
+                                name="email"
+                                placeholder="Email"
+                                v-model="username"
+                            >
                         </div>
                         <div class="input-box login__input-box">
-                            <input class="input login__input" type="text" name="password" placeholder="Пароль">
+                            <input class="input login__input"
+                                type="password"
+                                name="password"
+                                placeholder="Пароль"
+                                v-model="password"
+                            >
                         </div>
-                        <input class="button button_blue login__submit bold" type="submit" value="Отправить">
+                        <div class="button button_blue login__submit bold"
+                            @click="submit"
+                        >
+                            Вход
+                        </div>
+                        <div class="login__error-wrap">
+                            <error
+                                :status="authResponseStatusCode"
+                                :details="errorDetails"
+                                v-if="authFailed"
+                            >
+                            </error>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -54,10 +76,6 @@
 
 
 {% block script %}
-    {{ super() }}
-    <!--script src="{{ static('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script-->    
-    <script src="{{ static('js/indexPage.js') }}" type="text/javascript"></script>
-    
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-  
+    {{ super() }}  
+    <script src="{{ static('js/loginPage.js') }}" type="text/javascript"></script>  
 {% endblock script %}

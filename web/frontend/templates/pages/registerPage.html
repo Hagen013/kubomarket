@@ -5,7 +5,7 @@
         {% include 'blocks/breadcrumbs.html' %}
     {% endwith %}
     <div class="content-area" style="text-align: center;">
-        <div class="login_div">
+        <div class="login_div" id="register-form">
             <div class="login_div_block">
                 <h3>
                     Регистрация через соцсети
@@ -38,17 +38,59 @@
                     <form method="POST" action="" class="form">
                         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                         <div class="input-box login__input-box">
-                            <input class="input login__input" type="text" name="email" placeholder="Email">
+                            <input class="input login__input"
+                                type="text"
+                                name="email"
+                                placeholder="Email"
+                                autocomplete="email"
+                                v-model="customerEmail"
+                                :class="{
+                                    'input_success':customerEmail.length != 0 && emailIsValid, 
+                                    'input_failure':emailError
+                                }"
+                            >
                         </div>
                         <div class="input-box login__input-box">
-                            <input class="input login__input" type="text" name="password" placeholder="Пароль">
+                            <input class="input login__input"
+                                type="password"
+                                name="password"
+                                placeholder="Пароль"
+                                v-model="password"
+                                :class="{
+                                    'input_success':passwordIsValid && passwordsMatch, 
+                                    'input_failure':passwordError
+                                }"
+                            >
                         </div>
                         <div class="input-box login__input-box">
-                            <input class="input login__input" type="text" name="password2" placeholder="Повторите пароль">
+                            <input class="input login__input"
+                                type="password"
+                                name="password2"
+                                placeholder="Повторите пароль"
+                                v-model="password2"
+                                :class="{
+                                    'input_success':passwordIsValid && passwordsMatch, 
+                                    'input_failure':passwordError
+                                }"
+                            >
                         </div>
-                        <input class="button button_blue login__submit bold" type="submit" value="Отправить">
+                        <div class="button button_blue login__submit bold"
+                            @click="submit"
+                        >
+                            Зарегестрироваться
+                        </div>
                     </form>
                 </div>
+            </div>
+            <div class="login__error-wrap">
+                <errors
+                    v-if="showErrors"
+                    :email_is_valid="emailIsValid"
+                    :password_is_valid="passwordIsValid"
+                    :passwords_match="passwordsMatch"
+                    :server_error="registrationFailed"
+                >
+                </errors>
             </div>
         </div>
         <div class="content-area" style="text-align: center;">
@@ -71,6 +113,5 @@
 
 {% block script %}
     {{ super() }}
-    <!--script src="{{ static('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script-->    
-    <script src="{{ static('js/indexPage.js') }}" type="text/javascript"></script>
+    <script src="{{ static('js/registerPage.js') }}" type="text/javascript"></script>
 {% endblock script %}
