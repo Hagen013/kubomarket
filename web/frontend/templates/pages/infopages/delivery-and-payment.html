@@ -8,49 +8,10 @@
 {% endwith %}
 
 <div class="infopage infopage_delivery" id="delivery">
-    <div class="content-area_mb">
-        <div class="infopage__content infopage__content_cut">
-            <h1 class="title centered">Доставка и оплата</h1>
-            <p class="centered">Узнайте о преимуществах каждого способа доставки и выберите самый удачный</p>
-            <div class="infopage__delivery-info">
-            
-                <div class="infopage__delivery-item"
-                >
-                    <div class="infopage__delivery-item-img-wrap">
-                        <img class="infopage__delivery-item-img"
-                            src="{{ static('img/icon/delivery-date.png') }}"
-                        >
-                    </div>
-                    <div class="infopage__delivery-item-content bold">
-                        Выбор даты и времени доставки
-                    </div>
-                </div>
 
-                <div class="infopage__delivery-item"
-                >
-                    <div class="infopage__delivery-item-img-wrap">
-                        <img class="infopage__delivery-item-img"
-                            src="{{ static('img/icon/delivery-payment.png') }}"
-                        >
-                    </div>
-                    <div class="infopage__delivery-item-content bold">
-                        Оплата наличными или картой при получении
-                    </div>
-                </div>
-
-                <div class="infopage__delivery-item"
-                >
-                    <div class="infopage__delivery-item-img-wrap">
-                        <img class="infopage__delivery-item-img"
-                            src="{{ static('img/icon/delivery-car.png') }}"
-                        >
-                    </div>
-                    <div class="infopage__delivery-item-content bold">
-                        Возможность бесплатной доставки
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="infopage__content infopage__content_cut">
+        <h1 class="title centered">Доставка и оплата</h1>
+        <p class="centered">Узнайте о преимуществах каждого способа доставки и выберите самый удачный</p>
     </div>
 
     <div class="infopage__wrap_grey infopage__city-choice-wrap">
@@ -102,12 +63,12 @@
     <div class="delivery-page-menu__outlet"
         :class="{ deliveryPageMenu__outlet_ready : ready }"
     >
-        <div class="content-area_mb" v-if="currentTab == 0">
+        <div class="content-area_mb content-area_mb-column" v-if="currentTab == 0">
+            {% raw %}
+            <span class="grey caption">*Указаны пункты выдачи для города: {{cityName}}</span>
+            {% endraw %}
             <div class="delivery-page-menu__map"
             >
-                {% raw %}
-                <span class="grey caption">*Указаны пункты выдачи для города: {{cityName}}</span>
-                {% endraw %}
                 <yandex-map 
                     id="map" 
                     :id-value="'map'"
@@ -166,6 +127,67 @@
         </div>
         {% endraw %}
     </div>
+
+    <div class="delivery-courier-static-wrap">
+        <div class="content-area_mb">
+            <div class="delivery-courier-static">
+                <div class="delivery-courier-static__img-wrap">
+                    <img class="delivery-courier-static__img" src="{{ static('/img/cubes/courier-photo-green.png') }}">
+                </div>
+                <div class="delivery-courier-static__text">
+                    <h2 class="delivery-courier-static__title">О службе доставки</h2>
+                    <p>В случае доставки курьером покупатели могут оплатить заказ как наличным, 
+                    так и безналичным способом. Мы постоянно совершенствуем нашу службу
+                    доставки для того, чтобы сделать ее максимально удобной.
+                    Чтобы быть к Вам как можно ближе мы регулярно открываем новые пункты самовывоза.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-area_mb">
+        <div class="infopage__content infopage__content_cut">
+            <div class="infopage__delivery-info">
+            
+                <div class="infopage__delivery-item"
+                >
+                    <div class="infopage__delivery-item-img-wrap">
+                        <img class="infopage__delivery-item-img"
+                            src="{{ static('img/icon/delivery-date.png') }}"
+                        >
+                    </div>
+                    <div class="infopage__delivery-item-content bold">
+                        Выбор даты и времени доставки
+                    </div>
+                </div>
+
+                <div class="infopage__delivery-item"
+                >
+                    <div class="infopage__delivery-item-img-wrap">
+                        <img class="infopage__delivery-item-img"
+                            src="{{ static('img/icon/delivery-payment.png') }}"
+                        >
+                    </div>
+                    <div class="infopage__delivery-item-content bold">
+                        Оплата наличными или картой при получении
+                    </div>
+                </div>
+
+                <div class="infopage__delivery-item"
+                >
+                    <div class="infopage__delivery-item-img-wrap">
+                        <img class="infopage__delivery-item-img"
+                            src="{{ static('img/icon/delivery-car.png') }}"
+                        >
+                    </div>
+                    <div class="infopage__delivery-item-content bold">
+                        Возможность бесплатной доставки
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 
