@@ -214,8 +214,7 @@
 }
 
 .delivery-courier-static__img-wrap {
-    height: 320px;
-    width: 100%;
+    width: 290px;
     text-align: center;
     margin: 32px 0px;
     @include mq($from: tablet) {
@@ -229,8 +228,8 @@
 }
 
 .delivery-courier-static__img {
-    height: 100%;
-    width: auto;
+    width: 100%;
+    height: auto;
 }
 
 .delivery-courier-static__text {
