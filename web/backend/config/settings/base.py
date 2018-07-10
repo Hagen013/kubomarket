@@ -73,7 +73,7 @@ MIDDLEWARE = [
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SOCIAL_AUTH_LOGIN_ERROR_URL = "/registration/?from=oauth"
+SOCIAL_AUTH_LOGIN_ERROR_URL = "/u/registration/?from=oauth"
 
 # LOADERS CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -144,16 +144,12 @@ STATICFILES_DIRS = (
 
 # MAIL SETTINGS
 # ------------------------------------------------------------------------------
-# E-mail yandex
-EMAIL_HOST_USER = "info@kubomarket.ru"
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-
-EMAILS_ADMIN = env("DJANGO_EMAILS_ADMIN")
 EMAIL_HOST_USER = env("DJANGO_EMAIL_HOST_USER")
 DEFAULT_FROM_EMAIL = env("DJANGO_DEFAULT_FROM_EMAIL")
-EMAIL_PORT = env("DJANGO_EMAIL_PORT")
+EMAIL_PORT = int(env("DJANGO_EMAIL_PORT"))
 EMAIL_HOST = env("DJANGO_EMAIL_HOST")
 EMAIL_HOST_PASSWORD = env("DJANGO_EMAIL_HOST_PASSWORD")
+EMAIL_USE_SSL = True
 
 # REDIS SETTINGS
 # ------------------------------------------------------------------------------

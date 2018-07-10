@@ -31,4 +31,18 @@
 .login__submit {
     margin-top: 15px;
     width: 100%;
+    font-size: 16px;
+}
+
+.login__error {
+    padding: 16px;
+    color: $red;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.login__error-wrap {
+    min-height: 54px;
+    transition-property: height;
+    transition-duration: .2s;
 }

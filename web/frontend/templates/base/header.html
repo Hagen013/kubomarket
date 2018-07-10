@@ -59,36 +59,31 @@
             <div class="header__profile">
                 {% if request.user.is_authenticated %}
                 <a class="header__profile-link header__enter"
-                    href="/profile/"
+                    href="/u/profile/"
                 >
                     Личный кабинет
                 </a>
                 /
                 <a class="header__profile-link header__registration"
-                    href="/logout/"
+                    href="/u/logout/"
                 >
                     Выход
                 </a>
                 {% else %}
                 <a class="header__profile-link header__enter"
-                    href="/login/"
+                    href="/u/login/"
                 >
                     Вход
                 </a>
                 /
                 <a class="header__profile-link header__registration"
-                    href="/registration/"
+                    href="/u/registration/"
                 >
                     Регистрация
                 </a>
                 {% endif %}
             </div>
             <div class="header__mobile-controls">
-                <div class="button_round header__mobile-menu-button" v-if="!mobileMenuIsVisible"
-                    @click="showMobileMenu"
-                >
-                    <span class="icon icon_menu"></span>
-                </div>
                 <a class="header__cart-button button_round"
                     href="/cart/"
                 >
@@ -103,6 +98,11 @@
                     </transition>
                     {% endraw %}
                 </a>
+                <div class="button_round header__mobile-menu-button" v-if="!mobileMenuIsVisible"
+                    @click="showMobileMenu"
+                >
+                    <span class="icon icon_menu"></span>
+                </div>
             </div>
         </div>
     </div>

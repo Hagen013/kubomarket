@@ -31,11 +31,24 @@ class Profile(models.Model):
         verbose_name="отчество"
     )
 
+    phone_number = models.CharField(
+        max_length=64,
+        blank=True,
+        verbose_name="мобильный телефон"
+    )
+
     birth_date = models.DateField(
         null=True,
         blank=True,
         verbose_name="дата рождения"
     )
+
+    @property
+    def greeting_name(self):
+        if self.name != "":
+            return name
+        else:
+            return self.user.username
 
 
 class UserComment(models.Model):

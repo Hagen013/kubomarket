@@ -35,6 +35,8 @@ STATIC_FILE_PATHS=(
     "js/productPage.js"
     "js/deliveryPage.js"
     "js/faqPage.js"
+    "js/loginPage.js"
+    "js/registerPage.js"
     "js/admin.js"
 )
 

@@ -11,7 +11,7 @@ from core.utils import MailSender
 
 
 class LoginView(TemplateView):
-    template_name = "pages/login.html"
+    template_name = "pages/loginPage.html"
 
     def get(self, request, *args, **kwargs):
         is_authenticated = request.user.is_authenticated()
@@ -35,7 +35,7 @@ class LoginView(TemplateView):
 
 
 class LogoutView(TemplateView):
-    template_name = "pages/registration.html"
+    template_name = "pages/loginPage.html"
 
     def get(self, request, *args, **kwargs):
         logout(request)
@@ -43,7 +43,7 @@ class LogoutView(TemplateView):
 
 
 class RegistrationView(TemplateView):
-    template_name = "pages/registration.html"
+    template_name = "pages/registerPage.html"
     result = None
 
     def get(self, request, *args, **kwargs):

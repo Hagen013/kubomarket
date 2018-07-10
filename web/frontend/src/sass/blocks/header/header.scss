@@ -377,6 +377,10 @@ input.header__search-input::placeholder {
 .header__cart-button {
     background: $border;
     overflow: visible;
+    margin-right: 4px;
+    @include mq($from: desktop) {
+        margin-right: 0px;
+    }
 }
 
 .header__cart-counter {
@@ -387,7 +391,7 @@ input.header__search-input::placeholder {
     height: 16px;
     width: 16px;
     top: 28px;
-    right: 0px;
+    right: 48px;
     color: $white;
     background: $red;
     border-radius: 8px;
@@ -396,6 +400,9 @@ input.header__search-input::placeholder {
     opacity: 0;
     transition: opacity .2s;
     will-change: opacity;
+    @include mq($from: desktop) {
+        right: 0px;
+    }
 }
 
 .header__cartCounter_visible {

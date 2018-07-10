@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content-area infopage__registration-success">
+        <h1>Спасибо за завершение регистрации</h1>
+        <p>Вы будете перенаправлены на главную страницу через несколько секунд.</p>
+    </div>
+{% endblock content %}
+
+{% block actions %}
+{% endblock actions %}
+
+{% block script %}
+    {{ super() }}
+    <script type="text/javascript">
+        window.setTimeout(function() {
+            window.location.href = "/";
+        }, 5000)
+    </script>
+    <script src="{{ static('js/indexPage.js') }}"></script>
+{% endblock script%}

@@ -9,8 +9,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 
-from core.utils import MailSender
 from cart.models import Order2
+from tasks.users import user_verification, password_reset
 
 
 class ProfileView(TemplateView):
@@ -28,7 +28,7 @@ class ProfileView(TemplateView):
 
 
 class LoginView(TemplateView):
-    template_name = "pages/login.html"
+    template_name = "pages/loginPage.html"
 
     def get(self, request, *args, **kwargs):
         is_authenticated = request.user.is_authenticated()
@@ -42,8 +42,6 @@ class LoginView(TemplateView):
             return redirect("/")
 
         username, password = request.POST.get('email'), request.POST.get('password')
-        print(username)
-        print(password)
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
@@ -54,7 +52,7 @@ class LoginView(TemplateView):
 
 
 class RegistrationView(TemplateView):
-    template_name = "pages/registration.html"
+    template_name = "pages/registerPage.html"
     result = None
 
     def get(self, request, *args, **kwargs):
@@ -96,22 +94,14 @@ class RegistrationView(TemplateView):
                     self.result = "password_or_email_not_valid"
                     return self.get(request, *args, **kwargs)
                 user.save()
-                MailSender(
-                    "Подтверждение почты",
-                    "mail_templates/cod_dlya_uzera.html",
-                    username,
-                    context={
-                        "user_id": user.id,
-                        "cod": j
-                    }
-                ).send_mail()
+                user_verification.delay(user.id)
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 self.result = "user_registered"
             else:
                 self.result = "user_already_exists"
         else:
             self.result = "incorrect_data"
-        return self.get(request, *args, **kwargs)
+        return redirect("users:aftercheck")
 
     def get_context_data(self, **kwargs):
         context = super(RegistrationView, self).get_context_data(**kwargs)
@@ -121,10 +111,38 @@ class RegistrationView(TemplateView):
         return context
 
 
+class RegistrationAftercheckView(TemplateView):
+    """
+    view страницы успешной регистрации и информации об отправленной,
+    необходимой для верификации пользователя ссылки
+    """
+    template_name = "pages/registration_aftercheck.html"
+    
+    def get(self, request, *args, **kwargs):
+        return super(RegistrationAftercheckView, self).get(request, *args, **kwargs)
+
+
 class LogoutView(TemplateView):
-    template_name = "pages/registration.html"
+    template_name = "pages/loginPage.html"
 
     def get(self, request, *args, **kwargs):
-        print("MATCH")
         logout(request)
+        return redirect("/")
+
+
+class UserVerificationView(TemplateView):
+    """
+    view для верификакции юзера
+    """
+    template_name = "pages/userVerification.html"
+
+    def get(self, request, pk, token, *args, **kwargs):
+        user = get_object_or_404(User, id=pk)
+        if (not user.is_active) and (token is not None):
+            if token == user.first_name:
+                user.is_active = True
+                user.save()
+                return super(UserVerificationView, self).get(request, *args, **kwargs)
+            else:
+                return redirect("/")
         return redirect("/")

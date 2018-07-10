@@ -2,7 +2,7 @@
     <transition name="fade-fast">
     <div class="profile" v-if=pageReady>
         <h1 class="profile__greeting">
-            Здравствуйте, {{profile.name}}
+            Здравствуйте {{profile.greeting_name}}
         </h1>
         <div class="profile__content">
             <nav class="profile__nav">
@@ -118,7 +118,6 @@ export default {
             )
         },
         getOrders() {
-            console.log("getting orders");
             this.$http.get(this.ordersUrl).then(
                 response => {
                     this.handleSuccessfulOrdersResponse(response);

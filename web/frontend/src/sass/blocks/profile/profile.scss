@@ -1,5 +1,17 @@
+.profile {
+    width: 100%;
+}
+
+#profile {
+    width: 100%;
+}
+
 .profile__content {
     display: flex;
+    flex-direction: column;
+    @include mq($from: desktop) {
+        flex-direction: row;
+    }
 }
 
 .profile__greeting {
@@ -23,11 +35,17 @@
 }
 
 .profile__nav {
-    display: block;
-    height: 150px;
-    width: 190px;
-    padding: 32px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: $creme;
+    padding: 15px;
+    @include mq($from: desktop) {
+        display: block;
+        height: 150px;
+        width: 190px;
+        padding: 32px 32px;
+    }
 }
 
 .profile__outlet {
@@ -42,10 +60,13 @@
 
 .profile__nav-item {
     cursor: pointer;
-    margin-bottom: 10px;
     transition-property: color, text-decoration;
     transition-timing-function: cubic-bezier();
     transition-duration: .2s;
+    margin-bottom: 0px;
+    @include mq($from: desktop) {
+        margin-bottom: 10px;
+    }
 }
 
 .profile__navItem_active {
@@ -62,13 +83,13 @@
     transition-property: box-shadow, border;
     transition-timing-function: cubic-bezier();
     transition-duration: .2s;
-    cursor: pointer;
+    // cursor: pointer;
     @include mq($from: tablet) {
         min-width: 720px;
     }
-    &:hover {
-        box-shadow: 0px 0px 20px 0px rgba(54,81,104,0.2);
-    }
+    // &:hover {
+    //     box-shadow: 0px 0px 20px 0px rgba(54,81,104,0.2);
+    // }
 }
 
 .order__main-info {
@@ -125,8 +146,17 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    flex-direction: column;
     .input-box {
-        width: 32%;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    @include mq($from: tablet) {
+        flex-direction: row;
+        .input-box {
+            width: 32%;
+            margin-bottom: 0px;
+        }
     }
 }
 
@@ -144,7 +174,9 @@
 }
 
 .profile-data {
-    margin-left: 32px;
+    @include mq($from: desktop) {
+        margin-left: 32px;
+    }
 }
 
 .profile-data__title {

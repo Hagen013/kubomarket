@@ -39,15 +39,18 @@
 
 .side-menu__auth-area {
     position: relative;
-    height: 74px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 124px;
     width: 100%;
-    padding: 22px;
 }
 
 .side-menu__close {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 26px;
+    right: 8px;
     cursor: pointer;
 }
 
@@ -81,6 +84,8 @@
     transition-duration: .2s;
     transition-property: background;
     transition-timing-function: cubic-bezier();
+    user-select: none;
+    cursor: pointer;
     &:hover {
         background: rgba(0,0,0,0.05);
     }
@@ -91,4 +96,40 @@
     margin-bottom: -3px;
     height: 16px;
     width: 16px;
+}
+
+.side-menu__auth-button {
+    display: block;
+    width: 100%;
+}
+
+.side-menu__login {
+    margin-bottom: 8px;
+}
+
+.side-menu__register {
+
+}
+
+.side-menu__user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    color: $text-black;
+    padding: 32px 15px 10px 15px;
+}
+
+.side-menu__user-icon {
+    font-size: 46px;
+    margin-right: 10px;
+}
+
+.side-menu__user-right {
+    white-space: nowrap;
+}
+
+.side-menu__user-email {
+    font-size: 13px;
+    color: $text-grey;
 }
