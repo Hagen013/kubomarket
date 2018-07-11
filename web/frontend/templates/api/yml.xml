@@ -24,7 +24,7 @@
       {% for p in products %}
         <offer id="{{p.id}}" available="{{p.is_in_stock|lower}}">
 
-            <url>http:{{p.absolute_url}}</url>
+            <url>https://www.kubomarket.ru{{p.absolute_url}}</url>
             <price>{{p.price}}</price>
             <currencyId>RUR</currencyId>
             {% if p.product_type %}

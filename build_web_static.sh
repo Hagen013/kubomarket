@@ -9,7 +9,7 @@ gulp build;
 cd ../../;
 # BACKEND
 cd ./web/;
-source ./web_venv/bin/activate;
+source ../venv/bin/activate;
 cd ./backend/;
 echo 'yes' | python3.5 manage.py collectstatic --settings=config.settings.production;
 deactivate;
