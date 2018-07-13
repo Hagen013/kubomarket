@@ -42,7 +42,7 @@
                         Пункты выдачи
                         </div>
                         <div class="cart__delivery-menu-value green bold">
-                        {{ priceCurier | priceFilter }} {{timeCurier | timeFilter}}
+                        от {{ priceDeliveryPoint | priceFilter }} {{timeCurier | timeFilter}}
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         Почтой России:
                         </div>
                         <div class="cart__delivery-menu-value green bold">
-                        {{ priceCurier | priceFilter }} {{timeCurier | timeFilter}}
+                        {{ pricePostalService | priceFilter }} {{timeCurier | timeFilter}}
                         </div>
                     </div>
                 </div>

@@ -335,9 +335,6 @@ class DeliveryController():
         if pick_point_points:
             pick_point_result = self._get_pick_point_delivery_data(one_pick_point_point=pick_point_points[0])
 
-        # print('sdek_result', sdek_result)
-        # print('pick_point_result', pick_point_result)
-
         results = list(filter(lambda x: x is not None, (pick_point_result, sdek_result)))
         if results:
             return min(results,
@@ -431,7 +428,6 @@ class MultiDeliveryController():
             return None
 
     def get_curier_data(self):
-        # print(self.products[1].dimensions)
         return max([product.get_curier_data() for product in self.products],
                    key=lambda x: inf if (x is None or x['price'] is None) else x['price'],
                    )
@@ -512,11 +508,12 @@ class MultiDeliveryController():
 
         for key in {"sdek_delivery_data", "pick_point_delivery_data"}:
             value = result["points"]["delivery_data"]
+            print(value)
             if value:
-                if result["points"]["delivery_data"][key]['time_min'] is not None:
+                if result["points"]["delivery_data"][key] is not None:
                     result["points"]["delivery_data"][key]['time_min'] = (
                         result["points"]["delivery_data"][key]['time_min'] or 0) + dt
-                if result["points"]["delivery_data"][key]['time_max'] is not None:
+                if result["points"]["delivery_data"][key] is not None:
                     result["points"]["delivery_data"][key]['time_max'] += dt
 
         return result

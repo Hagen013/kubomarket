@@ -2,8 +2,10 @@ from config.celery import app
 from celery.schedules import crontab
 
 from .test_task import test_task, periodic_task
-from .sync_sdek import sync_sdek, sync_sdek_points
+from .sync_sdek import sync_sdek_points
 from .sync_pick_point import sync_pick_point
+from .sync_sdek_v2 import sync_sdek
+
 
 app.add_periodic_task(
     crontab(
