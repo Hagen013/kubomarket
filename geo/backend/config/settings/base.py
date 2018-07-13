@@ -165,6 +165,7 @@ CELERY_RESULT_BACKEND = 'redis://%s:%d/%d' % (REDIS_HOST, REDIS_PORT, REDIS_DB)
 CELERY_IMPORTS = (
     'tasks.test_task',
     'tasks.sync_sdek',
+    'tasks.sync_sdek_v2',
     'tasks.sync_pick_point',
 )
 CELERY_REDIS_MAX_CONNECTIONS = 10
