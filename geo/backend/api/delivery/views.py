@@ -28,13 +28,10 @@ class OneProductDeliveryAPIView(APIView):
         if not(isinstance(kladr_code, str) and isinstance(product, dict)):
             return Response(status=400, data="Invalid data type kladr or product")
 
-        # print(product)
         if (frozenset(('product_type', 'price', 'purchase_price', 'vendor')).issubset(product.keys()) and
            product['product_type'] != ''):
             try:
                 d_ctrl = DeliveryController(kladr=kladr_code, **product)
-                print("DELIVERT CONTROLLER DATA:")
-                print(d_ctrl.get_devivery_data())
                 return Response(d_ctrl.get_devivery_data())
             except (TypeError, ValueError) as ex:
                 return Response(status=400, data="Invalid parametrs")
@@ -64,10 +61,8 @@ class ManyProductsDeliveryAPIView(APIView):
                 product['product_type'] != '' for product in products)):
             # try:
             d_ctrl = MultiDeliveryController(kladr=kladr_code, products=products)
-            print(d_ctrl.get_devivery_data())
             return Response(d_ctrl.get_devivery_data())
             # except (TypeError, ValueError) as ex:
-            # print(ex)
             #     return Response(status=400, data="Invalid parametrs")
         else:
             return Response({})
