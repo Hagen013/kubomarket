@@ -114,7 +114,7 @@ async def caclulate_sdek(tariff_id, weight, df):
         await asyncio.wait(futures)
     return futures
 
-
+@app.task
 def sync_sdek():
     df = pd.DataFrame(
         columns=[
