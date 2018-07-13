@@ -114,6 +114,7 @@ async def caclulate_sdek(tariff_id, weight, df):
         await asyncio.wait(futures)
     return futures
 
+
 @app.task
 def sync_sdek():
     df = pd.DataFrame(
@@ -141,7 +142,7 @@ def sync_sdek():
         ]
     )
     
-    qs = SdekCityList.objects.filter(city_name__in=["Омск", "Новосибирск"]).order_by("pk")
+    qs = SdekCityList.objects.all().order_by("pk")
     df["city_name"] = [x.city_name for x in qs]
     df["city_id"] = [x.city_id for x in qs]
     df["id"] = [x.pk for x in qs]
