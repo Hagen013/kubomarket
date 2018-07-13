@@ -36,8 +36,7 @@
                     </div>
                     <div class="delivery-map__right">
                         <div class="delivery-map__map">
-                            <keep-alive>
-                                <yandex-map 
+                            <yandex-map 
                                 id="map" 
                                 :id-value="'map'"
                                 :points="deliveryPointsList"
@@ -45,9 +44,8 @@
                                 :cityName="cityName"
                                 v-on:ready="mapReady"
                                 @pointSelected="pointSelected"
-                                >
-                                </yandex-map>
-                            </keep-alive>
+                            >
+                            </yandex-map>
                             <transition name="fade-fast">
                                 <div class="delivery-map__placeholder"
                                     v-if="!mapIsReady"
@@ -118,7 +116,6 @@ export default {
     },
     methods: {
         close() {
-            console.log('close');
             this.$store.commit("deliveryMap/hide");
         },
         pointSelected({code, type}) {

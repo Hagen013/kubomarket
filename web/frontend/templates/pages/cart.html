@@ -26,10 +26,8 @@
 {% block modal %}
     {{ super() }}
     <transition name="fade-fast">
-        <keep-alive>
-            <delivery-map v-if="deliveryMapIsActive">
-            </delivery-map>
-        </keep-alive>
+        <delivery-map v-if="deliveryMapIsActive">
+        </delivery-map>
     </transition>
 {% endblock modal %}
 

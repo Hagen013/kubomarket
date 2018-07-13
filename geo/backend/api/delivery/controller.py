@@ -482,6 +482,8 @@ class MultiDeliveryController():
     def get_devivery_data(self):
         sdek_points_delivery_data = self._get_sdek_delivery_data()
         pick_point_points_delivery_data = self._get_pick_point_delivery_data()
+        print("pick_point_points_delivery_data")
+        print(pick_point_points_delivery_data)
         result = {
             "curier": self.get_curier_data(),
             "delivery_point": self.get_delivery_point_data(),
@@ -512,6 +514,7 @@ class MultiDeliveryController():
 
         for key in {"sdek_delivery_data", "pick_point_delivery_data"}:
             value = result["points"]["delivery_data"]
+            print(value)
             if value:
                 if result["points"]["delivery_data"][key]['time_min'] is not None:
                     result["points"]["delivery_data"][key]['time_min'] = (
