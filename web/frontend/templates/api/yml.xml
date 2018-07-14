@@ -45,7 +45,7 @@
             <vendor>{{p.vendor}}</vendor>
             <model>{{p.model}}</model>
             {% if p.description %}
-            <description>{{p.description}}</description>
+            <description>{{p.html_free_description}}</description>
             {% endif %}
             <manufacturer_warranty>true</manufacturer_warranty>
             

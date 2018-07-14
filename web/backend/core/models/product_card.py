@@ -303,6 +303,10 @@ class ProductCard(OfferPage, Image, Weighable, Dimensional):
     def modifications(self):
         return self.get_modifications()
 
+    @property
+    def html_free_description(self):
+        return re.sub("<.*?>", "", self.description).strip()
+
     def __str__(self):
         return 'Product card: {0}'.format(self.slug)
 
