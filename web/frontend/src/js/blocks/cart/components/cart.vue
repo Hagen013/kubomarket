@@ -121,23 +121,45 @@
                         :selectedDeliveryPoint="selectedDeliveryPoint"
                     >
                     </delivery-menu>
-                    <div class="cart__order-summary">
-                        <div class="cart__order-summary-item">
+                    <div class="cart__bottom">
+                        <div class="cart__order-summary">
+                            <div class="cart__order-summary-item">
+                                <div class="cart__order-summary-item-title">
+                                    Товары:
+                                </div>
+                                <div class="cart__order-summary-item-value bold">
+                                    {{totalCartItemsPrice}} ₽
+                                </div>
+                            </div>
+                            <div class="cart__order-summary-item">
+                                <div class="cart__order-summary-item-title">
+                                    Доставка:
+                                </div>
+                                <div class="cart__order-summary-item-value"
+                                    :class="{ bold : isDeliveryModSelected }"
+                                >
+                                    {{deliveryPriceText}}
+                                </div>
+                            </div>
                         </div>
-                        <div class="cart__order-summary-item">
-                        </div>
-                        <div class="cart__order-total-price">
+                        <div class="cart__submit-wrap">
+                            <div class="cart__submit-price price">
+                                {{calculatedOrderRawCombinedPrice}} ₽
+                            </div>
+                            <button class="button button_blue cart__submit-button"
+                                :disabled="!isCustomerDataValid"
+                                @click="makeOrder"
+                                :class="{ button_disabled : !isCustomerDataValid }"
+                            >
+                                ОФОРМИТЬ ЗАКАЗ
+                            </button>
                         </div>
                     </div>
-                    <div class="cart__submit-wrap">
-                        <button class="button button_blue cart__submit-button"
-                            :disabled="!isCustomerDataValid"
-                            @click="makeOrder"
-                            :class="{ button_disabled : !isCustomerDataValid }"
-                        >
-                            ОФОРМИТЬ ЗАКАЗ
-                        </button>
-                    </div>
+                    <transition name="fade-fast">
+                        <div class="cart__note" v-if="!isCustomerDataValid">
+                            <i><span class="red">* </span>Для завершения заказа необходимо как минимум указать номер телефона</i>
+                        </div>
+                    </transition>
                 </div>
             </div>
 
@@ -310,6 +332,12 @@ export default {
             }
             return totalQuanity
         },
+        calculatedOrderRawCombinedPrice() {
+            if (this.isDeliveryModSelected) {
+                return this.totalCartItemsPrice + this.selectedDeliveryMod.price;
+            }
+            return this.totalCartItemsPrice
+        },
         calculatedOrderCombinedPrice() {
             if (this.isOrderSended) {
                 if (this.recievedOrderData.data.delivery.mod.price !== null) {
@@ -422,10 +450,10 @@ export default {
                 )
             );
         },
-        customerAddress(){
+        customerAddress() {
             return this.$store.state.customer.address;
         },
-        selectedDeliveryMod(){
+        selectedDeliveryMod() {
             return this.$store.state.delivery.mod;
         },
         selectedDeliveryPoint(){
@@ -450,6 +478,12 @@ export default {
                     }
                 }
             );
+        },
+        deliveryPriceText() {
+            if (this.isDeliveryModSelected) {
+                return String(this.selectedDeliveryMod.price) + " ₽";
+            }
+            return "не выбрано"
         }
     },
     methods: {

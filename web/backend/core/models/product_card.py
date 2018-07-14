@@ -2,6 +2,7 @@ from collections import OrderedDict
 import json
 import random
 import math
+import re
 
 from django.db.models import Max, Manager
 from django.db import models
