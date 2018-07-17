@@ -158,7 +158,7 @@ var delivery = new Vue({
         isDeliveryModSelected(){
             return this.$store.state.delivery.isModSelected;
         },
-        cityName(){
+        cityName() {
             return this.$store.state.geo.city;
         },
         isDeliveryAvailable(){
