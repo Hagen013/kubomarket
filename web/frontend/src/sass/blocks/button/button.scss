@@ -29,6 +29,11 @@
     @include bold();
 }
 
+.button_bg {
+    height: 48px;
+    border-radius: 24px;
+}
+
 .button_blue {
     color: $white;
     background: $blue;
@@ -65,4 +70,13 @@
 .button_disabled {
     color: $text-grey !important;
     background: $border !important;
+}
+
+.button_oval {
+    background: $white;
+    border: 2px solid $border;
+    transition: .2s background;
+    &:hover {
+        background: $border;
+    }
 }

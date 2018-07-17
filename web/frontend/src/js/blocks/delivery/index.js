@@ -12,11 +12,12 @@ var delivery = new Vue({
         showSdek: true,
         showPickPoint: true,
         lastPoint: null,
-        currentTab: 0,
+        currentTab: 1,
         ymapsCheckTimer: null,
         ymapsInited: false,
         ymapsReady: false,
-        ready: false
+        ready: false,
+        cityConfirmed: false
     },
     components: {
         "yandex-map": yandexMap
@@ -31,9 +32,6 @@ var delivery = new Vue({
     computed: {
         mapIsAvailable() {
             return ( (this.isDeliveryDataReady === true) && (this.ymapsInited === true) && (this.mapReady) ) 
-        },
-        cityName() {
-            return this.$store.state.geo.city;
         },
         deliveryData(){
             return this.$store.state.delivery.data;
@@ -93,10 +91,14 @@ var delivery = new Vue({
             ];
         },
         timeDeliveryPoint() {
-            return [
-                this.deliveryData.delivery_point.time_min,
-                this.deliveryData.delivery_point.time_max
-            ];
+            if (this.deliveryData.delivery_point === undefined) {
+                return [0, 1]
+            } else {
+                return [
+                    this.deliveryData.delivery_point.time_min,
+                    this.deliveryData.delivery_point.time_max
+                ];
+            }
         },
         timePostalService() {
             return [
@@ -217,6 +219,9 @@ var delivery = new Vue({
                     }
                 }
             );
+        },
+        showMap() {
+            return ((this.currentTab === 1) && (this.ready))
         }
     },
     mounted() {
@@ -226,6 +231,7 @@ var delivery = new Vue({
             this.$store.commit('showModalCityChoice/hide');
         },
         showCityChoiceModal() {
+            this.cityConfirmed = false;
             this.$store.commit('showModalCityChoice/show');
         },
         pointSelected({code, type}) {
@@ -240,6 +246,12 @@ var delivery = new Vue({
         },
         mapReady() {
             this.ymapsReady = true;
+        },
+        confirmCity() {
+            this.cityConfirmed = true;
+        },
+        changeCity() {
+            this.cityConfirmed = false;
         }
     },
     watch: {

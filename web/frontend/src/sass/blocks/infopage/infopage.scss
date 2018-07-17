@@ -16,6 +16,7 @@
 }
 
 .infopage__block {
+    width: 100%;
     padding-bottom: 24px;
 }
 
@@ -82,177 +83,364 @@
     background: $border;
 }
 
-.infopage__city-choice-wrap {
-    padding: 20px 0px;
-    margin: 24px 0px;
-    p {
-        width: 100%;
-        padding-bottom: 15px;
-    }
-}
-
-.infopage__city-choice {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: .2s;
-}
-
 .infopage__city-link {
-    margin: 0px 8px 0px 10px;
     .icon {
         font-size: 14px;
     }
 }
 
-.infopage__city-button {
-    width: 120px;
-    margin-left: 15px;
-}
 
 
-.delivery-page__map {
-    height: 300px;
-    width: 100%;
-}
 
-.delivery-page-menu {
-    font-size: 12px;
-    padding: 0px;
-    .icon {
-        display: none;
-    }
-    @include mq($from: mobile) {
-        .icon {
-            display: block;
-        }
-    }
+/// DELIVERY PAGE START
+.delivery-page__title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 0px;
     @include mq($from: tablet) {
-        font-size: 16px;
+        text-align: left;
     }
 }
-
-.delivery-page-menu__item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 60px;
-    flex-grow: 1;
-    background-color: rgb(244, 244, 244);
-    border-bottom: 5px solid rgb(244, 244, 244);
-    user-select: none;
-    cursor: pointer;
-    transition-duration: .25s;
-    transition-property: border-bottom, background;
-    transition-timing-function: ease;
-    box-shadow: 0 1px 4px 0 rgba(117,117,117,.5);
-    &:hover {
-        background-color: $white;
-        border-bottom: 5px solid $white;
+.delivery-page__info {
+    padding: 32px 0px 24px 0px;
+}
+.delivery-page__info-column {
+    margin-bottom: 16px;
+    @include mq($from: tablet) {
+        width: 23%;
+        margin-bottom: 0px;
     }
 }
-
-.deliveryPageMenu__item_active {
-    cursor: default;
-    border-bottom: 5px solid $green !important;
-    background-color: $white;
-    z-index: 100;
+.delivery-page__info-column-title {
+    height: 30px;
+    color: $text-grey;
+    font-size: 14px;
+    border-bottom: 3px solid $border;
 }
-
-.delivery-page-menu__map {
-    height: 418px;
+.delivery-page__info-column-content {
+    position: relative;
+    padding: 16px 0px;
+    font-size: 15px;
+    color: $text-grey_dark;
+}
+.delivery-page__info-column-content_icon {
+    padding-right: 28px;
+}
+.delivery-page__info-column-content_fixed {
+    height: 72px;
+}
+.delivery-page__info-columns {
     width: 100%;
-    overflow: hidden;
+    @include mq($from: tablet) {
+        display: flex;
+        justify-content: space-between;
+    }
 }
-
-.delivery-page-menu__outlet {
-    //min-height: 400px;
-    padding: 15px 0px 15px 0px;
-    overflow: hidden;
+.delivery-page__outlet {
+    min-height: 134px;
     opacity: 0;
+    transition-property: opacity;
+    transition-duration: .2s;
     will-change: opacity;
-    transition: 0.2s;
-    p {
-        margin-bottom: 16px;
-    }
-    .infopage__block {
-        padding-top: 24px;
-        line-height: 1.6;
+    @include mq($from: tablet) {
+        padding: 32px 0px 0px 0px;
     }
 }
-
-.deliveryPageMenu__outlet_ready {
+.deliveryPage__outlet_ready {
     opacity: 1;
 }
-
-.infopage__placeholder-block {
-    height: 600px;
-    width: 1170px;
-    margin: 0 auto;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url('../img/cubes/heroimage-placeholder.jpg');
-}
-
-.infopage__registration-success {
-    text-align: center;
-    padding: 40px 0px;
-}
-
-.delivery-courier-static-wrap {
-    padding: 16px 0px;
-    margin-top: 16px;
-    background: #f9f8f8;
-    .content-area_mb {
-        height: 100%;
-        position: relative;
-    }
-    @include mq($from: tablet) {
-        height: 320px;
-    }
-}
-
-.delivery-courier-static__img-wrap {
-    width: 290px;
-    text-align: center;
-    margin: 32px 0px;
-    @include mq($from: tablet) {
-        height: 100%;
-        width: 320px;
-        position: absolute;
-        top: 0px;
-        right: 0px;
-        margin: 0px;
-    }
-}
-
-.delivery-courier-static__img {
+.delivery-page__map {
+    height: 400px;
     width: 100%;
-    height: auto;
 }
+.delivery-page__info-icon {
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    display: block;
+    height: 28px;
+    width: 28px;
+    background-size: 90%;
+    float: right;
+}
+/// DELIVERT PAGE END
 
-.delivery-courier-static__text {
-    text-align: justify;
-    line-height: 1.6;
-    @include mq($from: tablet) {
-        padding: 15px 320px 15px 15px;
+
+/// CITY-CHOICE START
+.city-choice {
+    padding: 16px 0px;
+    background-color: $creme;
+}
+.city-choice__title {
+    margin-bottom: 16px;
+    @include mq($from: desktop) {
+        margin-bottom: 0px;
+        margin-right: 12px;
+    }
+}
+.city-choice__top {
+    @include mq($from: mobile) {
+        min-width: 260px;
+        padding-right: 16px;
     }
     @include mq($from: desktop) {
-        padding: 50px 320px 50px 0px;
+        display: flex;
+        align-items: center;
     }
 }
-
-.delivery-courier-static__title {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+.city-choice__link-wrap {
+    margin-bottom: 16px;
+    @include mq($from: desktop) {
+        margin-bottom: 0px;
+    }
+}
+.city-choice__content {
     width: 100%;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: .2s;
+    will-change: opacity;
+    @include mq($from: mobile) {
+        display: flex;
+        align-items: center;
+    }
+}
+.cityChoice__content_ready {
+    opacity: 1;
+}
+.city-choice__button {
+    float: left;
+    min-width: 80px;
+    margin-right: 8px;
+}
+/// CITY-CHOICE END
+
+
+/// TABS START
+.tabs {
+    width: 100%;
+    @include mq($from: tablet) {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+.tabs__item {
+    display: flex;
+    height: 50px;
+    margin-bottom: 16px;
+    justify-content: center;
+    align-items: center;
+    color: $text-grey_dark;
+    border: 2px solid $border;
+    transition-property: background-color, color, border-color;
+    transition-duration: .2s;
+    cursor: pointer;
+    &:hover {
+        background-color: $border;
+    }
+    @include mq($from: tablet) {
+        width: 32%;
+        margin-bottom: 0px;
+    }
+}
+.tabs__item_active {
+    color: $white;
+    background-color: $green;
+    border-color: $green;
+    &:hover {
+        background-color: $green;
+    }
+    .icon_delivery-courier-png {
+        background-image: url('../img/icon/delivery-courier_white.png');
+    }
+    .icon_delivery-point {
+        background-image: url('../img/icon/delivery-points_white.png');
+    }
+    .icon_delivery-mail {
+        background-image: url('../img/icon/delivery-mail_white.png');
+    }
+}
+.tabs__icon {
+    height: 22px;
+    width: 22px;
+    margin-right: 8px;
+    background-size: 100%;
+}
+/// TABS END
+
+
+/// DELIVERY-ADVANTAGES START
+.delivery-advantages {
+    background-color: $creme;
+    margin-bottom: 32px;
+}
+.delivery-advantages__content {
+    padding: 16px 0px 32px 16px;
+}
+.delivery-advantages__title {
+    height: 60px;
+    line-height: 60px;
+    font-size: 20px;
     text-align: center;
     @include mq($from: tablet) {
-        position: relative;
         text-align: left;
-        width: auto;
-        margin-bottom: 16px;
+        font-size: 24px;
     }
 }
+.delivery-advantages__columns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    @include mq($from: tablet) {
+        justify-content: space-between;
+    }
+}
+.delivery-advantages__column {
+    width: 50%;
+    height: 176px;
+    @include mq($from: mobile) {
+        height: 164px;
+        padding: 0px 12px;
+    }
+    @include mq($from: tablet) {
+        height: auto;
+        width: 25%;
+    }
+    @include mq($from: desktop) {
+        width: 20%;
+    }
+}
+.delivery-advantages__column-text {
+    font-size: 13px;
+    color: $text-grey_dark;
+    text-align: center;
+    @include mq($from: mobile) {
+        font-size: 14px;
+    }
+}
+.delivery-advantages__column-icon {
+    height: 104px;
+}
+/// DELIVERY-ADVANTAGES END
+
+/// DELIVERY-TERMS START
+.delivery-terms {
+    width: 100%;
+    @include mq($from: tablet) {
+        background: linear-gradient(to right, $blue 50%, $creme-blue 50%);
+    }
+}
+.delivery-terms__title {
+    height: 60px;
+    font-size: 24px;
+    line-height: 60px;
+}
+.delivery-terms__content {
+    position: relative;
+    @include mq($from: tablet) {
+        height: 210px;
+    }
+}
+.delivery-terms__wrap {
+    width: 100%;
+    @include mq($from: tablet) {
+        padding: 0px 16px;
+    }
+    @include mq($from: desktop) {
+        width: 970px;
+        margin: 0 auto;
+    }
+    @include mq($from: wide) {
+        width: 1170px;
+    }
+}
+.delivery-terms__left {
+    position: relative;
+    padding: 16px 16px;
+    font-size: 14px;
+    text-align: center;
+    color: $white;
+    background-color: $blue;
+    z-index: 1000;
+    @include mq($from: tablet) {
+        float: left;
+        height: 100%;
+        width: 324px;
+        text-align: left;
+    }
+    &:before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        bottom: -19px;
+        border: 10px solid transparent;
+        border-left-color: $blue;
+        transform: rotate(90deg);
+        @include mq($from: tablet) {
+            right: -19px;
+            top: 50%;
+            margin-top: -10px;
+            transform: none;
+        }
+    }
+}
+.delivery-terms__right {
+    padding: 16px 16px;
+    background: $creme-blue;
+    @include mq($from: tablet) {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        padding: 16px 0px 16px 356px;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+    @include mq($from: desktop) {
+        padding: 16px 0px 16px 420px;
+    }
+    @include mq($from: wide) {
+        padding: 16px 0px 16px 356px;
+    }
+}
+.delivery-terms__list {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0px;
+    width: 100%;
+    font-size: 14px;
+    @include mq($from: tablet) {
+        height: 100%;
+        padding: 0px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    @include mq($from: wide) {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+.delivery-terms__list-item {
+    margin-bottom: 16px;
+    font-weight: 500;
+    @include mq($from: tablet) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 89px;
+        width: 50%;
+        padding-right: 10px;
+        margin-bottom: 0px;
+    }
+    @include mq($from: wide) {
+        width: 25%;
+    }
+}
+.delivery-terms__label {
+    margin-bottom: 8px;
+    @include mq($from: tablet) {
+        max-width: 171px;
+    }
+}
+/// DELIVERY-TERMS END

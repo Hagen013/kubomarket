@@ -115,6 +115,10 @@ body {
   color: $green;
 }
 
+.blue {
+  color: $blue;
+}
+
 .bold {
   @include bold();
 }
@@ -165,6 +169,10 @@ body {
   color: $text-grey;
 }
 
+.grey-dark {
+  color: #787878;
+}
+
 .caption {
   font-style: italic;
   font-size: 13px;
@@ -172,4 +180,8 @@ body {
 
 .visible {
   opacity: 1 !important;
+}
+
+.text-justify {
+  text-align: justify;
 }
