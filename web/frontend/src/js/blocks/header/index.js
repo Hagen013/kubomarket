@@ -40,8 +40,13 @@ var header = new Vue({
         cityName() {
             return this.$store.state.geo.city;
         },
+        codeMatches() {
+            let codePattern = /^[0-9]*$/;
+            return ( codePattern.exec(this.searchQuery) !== null )
+            
+        },
         searchListIsActive() {
-            if ( ( this.searchQuery.length > 2 ) && (this.searchBoxIsActive === true)) {
+            if ( ((this.searchQuery.length > 2) || (this.codeMatches) ) && (this.searchBoxIsActive === true)) {
                 return true
             }
             return false    
@@ -61,22 +66,20 @@ var header = new Vue({
             this.$store.commit('showModalCityChoice/show');
         },
         searchRedirect() {
-            let codePattern = /b-247-.*[0-9].*$/;
-            if ( codePattern.exec(this.searchQuery) !== null ) {
+            if ( this.codeMatches ) {
                 document.location = `/search/by-code/${this.searchQuery}`;
             } else if ( this.searchQuery.length > 0 ) {
                 document.location = `/search/${this.searchQuery}`;
             }
         },
         enterPressed() {
-            if ( this.searchQuery.length > 2 ) {
+            if ( (this.searchQuery.length > 2) || (this.codeMatches) ) {
                 this.searchRedirect();
             }
         },
         searchTriggered: debounce(function () {
             let apiURL = this.searchApiUrl;
-            let codePattern = /b-247-.*[0-9].*$/;
-            if ( codePattern.exec(this.searchQuery) !== null ) {
+            if (this.codeMatches) {
                 apiURL = '/api/search/by-code/?line=';
             }
             this.$http.get(apiURL + this.searchQuery).then(
@@ -89,6 +92,7 @@ var header = new Vue({
             );
         }, 500),
         handleSuccessfulSearchRequest(response) {
+            console.log(response);
             this.resultsStandard = response.body['results_standard'];
             this.resultsAdvanced = response.body['results_advanced'];
         },

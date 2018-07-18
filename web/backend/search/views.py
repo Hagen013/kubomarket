@@ -153,15 +153,16 @@ class SearchByCodeView(TemplateView):
             write_search_record.delay(client_query, "SearchByCodeView")
         product = self.get_product(client_query)
         if product:
-            return redirect('cubes:product', slug=product.slug)
+            return redirect('shop:product', slug=product.slug)
         else:
             return redirect('search:results', line=client_query)
 
     def get_product(self, query):
-        pattern = re.compile(r'b-247-(\d*).*$')
+        pattern = re.compile(r'^[0-9]*$')
         code = int(pattern.findall(query)[0])
+        vendor_code = "cubemarket-" + str(code)
         try:
-            product = CubesProductCard.objects.get(id=code)
+            product = CubesProductCard.objects.get(vendor_code=vendor_code)
             return product
         except CubesProductCard.DoesNotExist:
             return None

@@ -105,10 +105,13 @@ class SearchByCodeAPIView(APIView):
             return redirect('api:search:json-search')
 
     def get_product(self, query):
-        pattern = re.compile(r'b-247-(\d*).*$')
+        pattern = re.compile(r'^[0-9]*$')
         code = int(pattern.findall(query)[0])
+        vendor_code = "cubemarket-" + str(code)
+        print(vendor_code)
         try:
-            product = CubesProductCard.objects.get(id=code)
+            product = CubesProductCard.objects.get(vendor_code=vendor_code)
+            print(product)
             return product
         except CubesProductCard.DoesNotExist:
             return None
