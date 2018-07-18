@@ -9,7 +9,7 @@
                     Доставка курьером:
                 </div>
                 <div class="product-page__delivery-type-value green bold">
-                {{ priceCurier | priceFilter }} {{timeCurier | timeFilter}}
+                {{ priceCurier}} <i class="icon icon_rouble"></i> {{timeCurier | timeFilter}}
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                     Доставка в пункты выдачи:
                 </div>
                 <div class="product-page__delivery-type-value green bold">
-                {{ priceDeliveryPoint | priceFilter }} {{timeDeliveryPoint | timeFilter}}
+                {{ priceDeliveryPoint }} <i class="icon icon_rouble"></i> {{timeDeliveryPoint | timeFilter}}
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                     Доставка почтой России:
                 </div>
                 <div class="product-page__delivery-type-value green bold">
-                {{ pricePostalService | priceFilter }} {{timePostalService | timeFilter}}
+                {{ pricePostalService}} <i class="icon icon_rouble"></i> {{timePostalService | timeFilter}}
                 </div>
             </div>
         </div>
@@ -149,7 +149,7 @@ export default {
     priceFilter(value) {
       if (value !== null) {
         if (value > 0) {
-          return `${value} ₽`;
+          return `${value}`;
         } else {
           return "бесплатно";
         }

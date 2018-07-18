@@ -34,7 +34,7 @@
                         {{totalCartItemsDeepQuantity}} товаров(a)
                     </div>
                     <div class="cart__summary-price price">
-                        {{totalCartItemsPrice}} ₽
+                        {{totalCartItemsPrice}} <i class="icon icon_rouble"></i>
                     </div>
                 </div>
             </div>
@@ -128,7 +128,7 @@
                                     Товары:
                                 </div>
                                 <div class="cart__order-summary-item-value bold">
-                                    {{totalCartItemsPrice}} ₽
+                                    {{totalCartItemsPrice}} <i class="icon icon_rouble"></i>
                                 </div>
                             </div>
                             <div class="cart__order-summary-item">
@@ -138,13 +138,13 @@
                                 <div class="cart__order-summary-item-value"
                                     :class="{ bold : isDeliveryModSelected }"
                                 >
-                                    {{deliveryPriceText}}
+                                    {{deliveryPriceText}} <i class="icon icon_rouble"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="cart__submit-wrap">
                             <div class="cart__submit-price price">
-                                {{calculatedOrderRawCombinedPrice}} ₽
+                                {{calculatedOrderRawCombinedPrice}} <i class="icon icon_rouble"></i>
                             </div>
                             <button class="button button_blue cart__submit-button"
                                 :disabled="!isCustomerDataValid"
@@ -194,7 +194,7 @@
                         Стоимость товаров:
                     </div>
                     <div class="aftercheck-value">
-                        {{recievedOrderData.data.cart.total_price}} ₽
+                        {{recievedOrderData.data.cart.total_price}} <i class="icon icon_rouble"></i>
                     </div>
                 </div>
 
@@ -224,7 +224,7 @@
                         Сумма к оплате:
                     </div>
                     <div class="aftercheck-value">
-                        {{calculatedOrderCombinedPrice}} ₽
+                        {{calculatedOrderCombinedPrice}} <i class="icon icon_rouble"></i>
                     </div>
                 </div>
 
@@ -481,7 +481,7 @@ export default {
         },
         deliveryPriceText() {
             if (this.isDeliveryModSelected) {
-                return String(this.selectedDeliveryMod.price) + " ₽";
+                return String(this.selectedDeliveryMod.price);
             }
             return "не выбрано"
         }

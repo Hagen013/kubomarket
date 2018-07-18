@@ -40,11 +40,11 @@
             <div class="cart-item__price-area">
                 <transition name="fade">
                     <div class="cart-item__price-single" v-if="quantity > 1">
-                        {{price}} ₽ × {{quantity}}
+                        {{price}} <i class="icon icon_rouble"></i> × {{quantity}}
                     </div>
                 </transition>
                 <div class="price cart-item__price">
-                    {{total_price}} ₽
+                    {{total_price}} <i class="icon icon_rouble"></i>
                 </div>
                 <div class="clearfix"></div>
             </div>

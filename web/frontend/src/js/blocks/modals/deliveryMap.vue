@@ -28,7 +28,7 @@
                                         {{[deliveryPoint.time_min, deliveryPoint.time_max] | timeFilter}}
                                     </div>
                                     <div class="delivery-map__list-item-price green">
-                                        {{deliveryPoint.price}} ₽
+                                        {{deliveryPoint.price}} <i class="icon icon_rouble"></i>
                                     </div>
                                 </li>
                             </ul>

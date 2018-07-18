@@ -19,7 +19,7 @@
                     {{name}}
                 </div>
                 <div class="purchase-modal__price price">
-                    {{price}} ₽
+                    {{price}} <i class="icon icon_rouble"></i>
                 </div>
             </div>
             <div class="purchase-modal__controls">

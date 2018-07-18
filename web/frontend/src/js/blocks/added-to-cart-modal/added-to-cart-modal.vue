@@ -9,7 +9,7 @@
     
             <div class="float-item added-to-cart-modal__right-ancor">
                 <div class="added-to-cart-modal__name">{{name}}</div>
-                <div class="price added-to-cart-modal__price">{{price}} ₽</div>
+                <div class="price added-to-cart-modal__price">{{price}} <i class="icon icon_rouble"></i></div>
                 <div class="added-to-cart-modal__button-wrap">
                     <a class="button button_blue added-to-cart-modal__button float-item" href="/cart/">Оформить заказ</a>
                     <a class="button button_blue added-to-cart-modal__button added-to-cart-modal__button_last float-item " @click="$emit('close')">Продолжить покупки</a>

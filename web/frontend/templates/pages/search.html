@@ -48,11 +48,11 @@
                 </div>
                 <div class="catalog-item__price-area">
                     <div class="catalog-item__price float-item">
-                    {{ item.price }} ₽
+                    {{ item.price }} <i class="icon icon_rouble"></i>
                     </div>
                     {% if item.price <= item.old_price %}
                     <div class="catalog-item__old-price float-item-right">
-                    {{ item.old_price }} ₽
+                    {{ item.old_price }} <i class="icon icon_rouble"></i>
                     </div>
                     {% endif %}
                     <div class="clearfix"></div>

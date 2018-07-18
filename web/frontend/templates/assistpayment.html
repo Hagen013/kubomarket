@@ -43,11 +43,11 @@
                             <div class="cart-item__price-area">
                                     <div class="cart-item__price-single" v-if="quantity > 1">
                                         {% if item["quantity"] %}
-                                            {{ item["price"] }} ₽ × {{ item["quantity"] }}
+                                            {{ item["price"] }} <i class="icon icon_rouble"></i> × {{ item["quantity"] }}
                                         {% endif %}                                        
                                     </div>
                                 <div class="price cart-item__price">
-                                    {{ item["total_price"] }} ₽
+                                    {{ item["total_price"] }} <i class="icon icon_rouble"></i>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -74,7 +74,7 @@
                 <div style="margin-left: auto;margin-right: 100px;">
                     <div class="price" style="font-size: 24px;">
                         {% if order.data["delivery"]["mod"]["price"] %}
-                            <b>{{ order.data["delivery"]["mod"]["price"] }} ₽</b>            
+                            <b>{{ order.data["delivery"]["mod"]["price"] }} <i class="icon icon_rouble"></i></b>            
                         {% else %}
                             <b> - </b>
                         {% endif %}                    </div>            

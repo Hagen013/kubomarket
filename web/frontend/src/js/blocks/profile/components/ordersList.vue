@@ -15,7 +15,7 @@
                     № <span class="bold green">100{{order.id}}</span>
                 </div>
                 <div class="order__total-price price">
-                    {{order.data.cart.total_price}} ₽
+                    {{order.data.cart.total_price}} <i class="icon icon_rouble"></i>
                 </div>
                 <div class="order__date">
                     {{order.created_at | dateFilter}}

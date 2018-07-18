@@ -73,6 +73,7 @@
 }
 
 .icon_rouble {
+    font-weight: 300;
     &:before {
         content: $icon-rouble;
     }

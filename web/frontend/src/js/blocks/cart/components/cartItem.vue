@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="cart-item__price">
-                    {{total_price}} ₽
+                    {{total_price}} <i class="icon icon_rouble"></i>
                 </div>
             </div>
             <div class="cart-item__delete"
