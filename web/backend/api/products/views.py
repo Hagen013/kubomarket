@@ -90,6 +90,9 @@ class ProductCardAttributesAPIView(APIView):
         except CubesProductCard.DoesNotExist:
             raise Http404
 
+        is_in_stock = request.data.get('is_in_stock', True)
+        product.is_in_stock = is_in_stock
+
         product.height = int(request.data['height'])
         product.width = int(request.data['width'])
         product.length = int(request.data['depth'])

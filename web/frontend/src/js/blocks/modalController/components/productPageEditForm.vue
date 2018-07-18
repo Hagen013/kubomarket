@@ -58,6 +58,18 @@
                             </div>
                         </div>
                         <div class="field">
+                            <div class="md-checkbox">
+                                <input
+                                    type="checkbox"
+                                    name="is-in-stock"
+                                    id="is-in-stock"
+                                    v-model="isInStock"
+                                    @change="checkChanges"
+                                >
+                                <label for="is-in-stock">В наличии</label>
+                            </div>
+                        </div>
+                        <div class="field">
                             <div class="field__label">
                                 Цена
                             </div>
@@ -228,7 +240,9 @@
             imagesChanged: false,
             imagesSavingIteraion: 0,
             originalDescription: "",
-            proxyDescription: ""
+            proxyDescription: "",
+            isInStockInitial: true,
+            isInStock: true,
         }),
         props: [
             'uuid',
@@ -240,7 +254,8 @@
             'height',
             'width',
             'depth',
-            'description'
+            'description',
+            'is_in_stock'
         ],
         computed: {
             apiResponsesRecieved() {
@@ -255,6 +270,9 @@
             },
             descriptionChanged() {
                 return this.proxyDescription !== this.originalDescription
+            },
+            availabilityChanged() {
+                return (this.isInStockInitial !== this.isInStock)
             }
         },
         created: function () {
@@ -265,6 +283,10 @@
             this.depthValue = Number(this.depth);
             this.originalDescription = String(this.description);
             this.proxyDescription = String(this.description);
+            if (this.is_in_stock === "False") {
+                this.isInStock = false;
+                this.isInStockInitial = false;
+            }
         },
         methods: {
             hideEditForm() {
@@ -286,7 +308,6 @@
                 )
             },
             getProductAttributes() {
-                console.log(this.product_api_url);
                 this.$http.get(this.product_api_url).then(
                     response => {
                         this.productAttributes = response.body.attributes;
@@ -301,7 +322,6 @@
                 this.$http.get(this.attrs_values_api_url).then(
                     response => {
                         this.values = response.body;
-                        console.log(this.values);
                         this.processRecievedValues();
                     },
                     response => {
@@ -349,7 +369,6 @@
                 this.$forceUpdate();
             },
             changeAttributeValue(attributeID, valuesList, hasChanged) {
-                console.log(valuesList);
                 for ( let i=0; i<this.attributes.length; i++ ) {
                     if ( this.attributes[i].id === attributeID ) {
                         this.attributes[i].selected_values = valuesList;
@@ -375,14 +394,21 @@
                 this.dimensionsInfoIsDisplayed = !this.dimensionsInfoIsDisplayed;
             },
             checkChanges() {
-                console.log('checking');
                 this.attributesChanged = this.attributes.some(function (currentValue, index, array) {
                     return currentValue.hasChanged
                 })
-                this.hasChanged = (this.attributesChanged || this.dimensionsChanged || this.descriptionChanged || this.imagesChanged);
+                this.hasChanged = (this.attributesChanged || 
+                                   this.dimensionsChanged ||
+                                   this.descriptionChanged || 
+                                   this.imagesChanged ||
+                                   this.availabilityChanged
+                                   );
             },
             saveChanges() {
-                if (this.attributesChanged || this.dimensionsChanged || this.descriptionChanged) {
+                if (this.attributesChanged ||
+                    this.dimensionsChanged ||
+                    this.descriptionChanged ||
+                    this.availabilityChanged) {
                     this.saveProductChanges();
                 }
                 if (this.imagesChanged) {
@@ -405,12 +431,14 @@
                     'height': this.heightValue,
                     'width': this.widthValue,
                     'depth': this.depthValue,
+                    'is_in_stock': this.isInStock,
                     'description': this.proxyDescription
                 }
                 this.$http.put(this.product_api_url, data).then(
                     response => {
                         this.setDefaults();
                         this.hasChanged = false;
+                        this.isInStockInitial = Boolean(this.isInStock);
                         this.serverResponse = response;
                         this.showResponseModal = true;
                     },
@@ -426,7 +454,7 @@
                 this.checkChanges();
             },
             cancelChanges() {
-                console.log('changes cancelled');
+
             },
             changeDescription(payload) {
                 this.proxyDescription = payload;
@@ -650,4 +678,80 @@
         flex-direction: row;
         background: white;
     }
+
+    $md-checkbox-margin: 16px 0;
+    $md-checkbox-checked-color: #448aff;
+    $md-checkbox-border-color: rgba(0, 0, 0, 0.54);
+
+    $md-checkbox-size: 18px;
+    $md-checkbox-padding: 3px;
+
+    $md-checkmark-width: 2px;
+    $md-checkmark-color: #fff;
+
+    .md-checkbox {
+        position: relative;
+        box-sizing: border-box;
+        margin: $md-checkbox-margin;
+        padding-top: 3px;
+
+        label {
+        cursor: pointer;
+        box-sizing: border-box;
+        margin-left: 8px;
+        &:before, &:after {
+            content: "";
+            position: absolute;
+            left:0;
+            top: 0;
+        }
+        
+        &:before {
+            width: $md-checkbox-size;
+            height: $md-checkbox-size;
+            background: #fff;
+            border: 2px solid $md-checkbox-border-color;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background .3s;
+        }
+        &:after {
+        }    
+    }
+    
+        input[type="checkbox"] {
+            outline: 0;
+            margin-right: $md-checkbox-size - 10px;
+            box-sizing: border-box;
+        
+        &:checked {
+        + label:before{
+            background: $md-checkbox-checked-color;
+            height: 22px;
+            width: 22px;
+            border:none;
+        }
+        + label:after {
+            
+            $md-checkmark-size: $md-checkbox-size - 2*$md-checkbox-padding;
+
+            transform: rotate(-45deg);
+
+            top: ($md-checkbox-size / 2) - ($md-checkmark-size / 4) - $md-checkbox-size/10;
+            left: $md-checkbox-padding+2;
+            width: $md-checkmark-size;
+            height: $md-checkmark-size / 2;
+            
+            border: $md-checkmark-width solid $md-checkmark-color;
+            border-top-style: none;
+            border-right-style: none;
+        } 
+        }
+    }
+    }
+
+    label {
+        user-select: none;
+    }
+
 </style>

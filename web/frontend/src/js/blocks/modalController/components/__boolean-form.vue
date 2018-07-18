@@ -19,7 +19,6 @@
             >
             <label :for="attribute.id">Да</label>
         </div>
-        </div>
     </div>
 </template>
 
