@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db.models import Max
+from django.db import transaction
 from django.core.files.storage import FileSystemStorage
 
 import pandas as pd
@@ -136,3 +137,18 @@ def save_description_image(image_file, filename):
     fs = FileSystemStorage()
     fs.save(path, image_file)
 
+
+@app.task 
+def wrap_description_images():
+    from bs4 import BeautifulSoup
+    qs = CubesProductCard.objects.all()
+    with transaction.atomic():
+        for instance in qs:
+            if instance.description != "":
+                soup = BeautifulSoup(instance.description, "html.parser")
+                for img in soup.find_all("img"):
+                    wrap = soup.new_tag("div")
+                    wrap.attrs["class"] = "product-page__decription-image-wrap"
+                    img.wrap(wrap)
+                instance.description = str(soup)
+                instance.save()

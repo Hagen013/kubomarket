@@ -93,7 +93,7 @@
                 this.connectionFailed = true;
             },
             addImageToDescription() {
-                this.proxyDescription += `<p><img src="/media/storage/${this.fileName}" alt="${this.product_name}"></p>`;
+                this.proxyDescription += `<p><div class="product-page__decription-image-wrap"><img src="/media/storage/${this.fileName}" alt="${this.product_name}"></div></p>`;
                 this.change();
             }
         },

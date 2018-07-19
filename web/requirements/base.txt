@@ -36,3 +36,6 @@ django-rest-elasticsearch==0.3.2
 
 # Raven
 raven==6.5.0
+
+beautifulsoup4==4.6.0
+bs4==0.0.1
