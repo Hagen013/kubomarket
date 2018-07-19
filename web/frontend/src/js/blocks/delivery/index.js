@@ -251,7 +251,7 @@ var delivery = new Vue({
             this.cityConfirmed = true;
         },
         changeCity() {
-            this.cityConfirmed = false;
+            this.showCityChoiceModal();
         }
     },
     watch: {
