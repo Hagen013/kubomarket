@@ -75,19 +75,34 @@ class CategoryAPIView(APIView):
     def get(self, request, pk, *args, **kwargs):
         try:
             instance = self.model.objects.get(id=pk)
-            serializer = self.serializer(instance)
         except ObjectDoesNotExist:
             return Response(
                 status=status.HTTP_404_NOT_FOUND
             )
+        serializer = self.serializer(instance)
         return Response(
             serializer.data,
             status=status.HTTP_200_OK
         )
 
     def put(self, request, pk, *args, **kwargs):
-        return Response({
-        })
+        try:
+            instance = self.model.objects.get(id=pk)
+        except ObjectDoesNotExist:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = self.serializer(instance=instance, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
     def post(self, request, pk, *args, **kwargs):
         return Response({

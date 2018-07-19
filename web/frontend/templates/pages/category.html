@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block meta_title %}{% if category._meta_title|length > 0 %}{{category._meta_title}}{% else %}{{ super() }}{% endif %}{% endblock %}
+{% block meta_description %}{% if category._meta_description|length > 0 %}{{category._meta_description}}{% else %}{{ super() }}{% endif %}{% endblock %}
+{% block meta_keywords %}{{category._meta_keywords}}{% endblock %}
+
 {% block content %}
 
 {% with view='shop:category', breadcrumbs=category.truncated_breadcrumbs[:-1], last_crumb=category.truncated_breadcrumbs[-1].title %}
@@ -100,7 +104,25 @@
 </div>
 {% endblock content %}
 
+{% block modal %}
+    {{ super() }}
+    <page-controls
+        v-if="pageControlsIsActive"
+    >
+    </page-controls>
+    <transition name="fade-fast">
+        <category-node-edit-form
+            v-if="productPageEditFormIsActive"
+            :id={{category.id}}
+        >
+        </category-node-edit-form>
+    </transition>
+{% endblock modal %}
+
 {% block script %}
     {{ super() }}
+    <script type="text/javascript">
+        var userAdminStatus = {{user_status | lower}};
+    </script>
     <script src="{{ static('js/categoryPage.js') }}"></script>
 {% endblock script %}

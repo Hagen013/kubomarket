@@ -44,9 +44,13 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
     def get_queryset(self, *args, **kwargs):
         return self.category.products.filter(is_in_stock=True)
 
+    def get_user_status(self):
+        return self.request.user.is_superuser
+
     def get_context_data(self, *args, **kwargs):
         context = super(CubesCategoryPageView, self).get_context_data(**kwargs)
         context['category'] = self.category
+        context['user_status'] = self.get_user_status()
         return context
 
 

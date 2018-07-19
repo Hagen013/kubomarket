@@ -57,6 +57,8 @@ class ProductCardSerializer(DynamicFieldsModelSerializer):
 
 class CategoryNodeSerializer(DynamicFieldsModelSerializer):
 
+    title = serializers.CharField()
+    absolute_url = serializers.CharField()
     level = serializers.IntegerField()
     depth = serializers.IntegerField()
 
@@ -75,6 +77,24 @@ class CategoryNodeSerializer(DynamicFieldsModelSerializer):
             'scoring',
             'search_scoring'
         )
+        read_only_fields = (
+            'id',
+            'title',
+            'url',
+            'absolute_url',
+            'level',
+            'depth',
+        )
+
+    def update(self, instance, validated_data):
+        _meta_title = validated_data["_meta_title"]
+        _meta_description = validated_data["_meta_description"]
+        _meta_keywords = validated_data["_meta_keywords"]
+        instance._meta_title = _meta_title
+        instance._meta_keywords = _meta_keywords
+        instance._meta_description = _meta_description
+        instance.save()
+        return instance
 
 
 class CategoryNodeInputRelationSerializer(serializers.Serializer):

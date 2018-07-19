@@ -10,13 +10,13 @@ import callbackModal from '../modals/callbackModal.vue';
 
 
 const productPageEditForm = () => import('./components/productPageEditForm.vue')
+const categoryNodeEditForm = () => import('./components/categoryNodeEditForm.vue')
 
 var modalController = new Vue({
     name: 'modal-controller',
     el: '#modal-controller',
     store,
     data: {
-
     },
     components: {
         'purchase-modal': purchaseModal,
@@ -25,7 +25,8 @@ var modalController = new Vue({
         'search-modal': searchModal,
         'page-controls': pageControls,
         'product-page-edit-form': productPageEditForm,
-        'callback-modal': callbackModal
+        'callback-modal': callbackModal,
+        'category-node-edit-form': categoryNodeEditForm
     },
     computed: {
         purchaseModalIsActive() {
