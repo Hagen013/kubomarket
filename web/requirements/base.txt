@@ -13,6 +13,7 @@ django-filter==1.1.0
 django-environ==0.4.3
 Jinja2==2.9.6
 celery==4.1.0
+kombu==4.1.0
 jsonschema==2.6.0
 django-hosts==3.0
 django-polymorphic==2.0.2
