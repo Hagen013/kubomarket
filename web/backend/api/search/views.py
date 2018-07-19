@@ -11,7 +11,7 @@ from elasticsearch_dsl import Search
 from config.es_client import es_client
 from config.search_patterns import generate_from_pattern
 from core.models import ProductCard
-from core.serializers import ProductCardSerializer
+from shop_cubes.serializers import CubesProductCardSerializer
 from shop_cubes.models import CubesProductCard
 from shop_cubes.serializers import CubesProductCardSerializer
 from tasks.elastic import write_search_record
@@ -22,8 +22,8 @@ class SearchAPIView(APIView):
     block_size_standard = 3
     block_size_advanced = 7
 
-    model = ProductCard
-    serializer = ProductCardSerializer
+    model = CubesProductCard
+    serializer = CubesProductCardSerializer
 
     def get(self, request):
         query = request.GET.get('line', '')
@@ -81,9 +81,11 @@ class SearchAPIView(APIView):
             results_standard = self.model.objects.filter(id__in=results_standard_pks)
             results_advanced = self.model.objects.filter(id__in=results_advanced_pks)
 
+            results_standard = self.serializer(results_standard, many=True).data
+            results_advanced = self.serializer(results_advanced, many=True).data
+
             return Response({
                 'results_standard': results_standard,
-                'results_advanced': results_advanced,
             })
 
 
@@ -96,7 +98,7 @@ class SearchByCodeAPIView(APIView):
 
         product = self.get_product(query)
         if product:
-            results = [{'absolute_url': product.absolute_url, 'name': product.name}]
+            results = CubesProductCardSerializer([product], many=True).data
             return Response({
                 'results_standard': results,
                 'results_advanced': []
@@ -106,12 +108,13 @@ class SearchByCodeAPIView(APIView):
 
     def get_product(self, query):
         pattern = re.compile(r'^[0-9]*$')
-        code = int(pattern.findall(query)[0])
+        try:
+            code = int(pattern.findall(query)[0])
+        except ValueError:
+            return None
         vendor_code = "cubemarket-" + str(code)
-        print(vendor_code)
         try:
             product = CubesProductCard.objects.get(vendor_code=vendor_code)
-            print(product)
             return product
         except CubesProductCard.DoesNotExist:
             return None

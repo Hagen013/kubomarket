@@ -18,6 +18,7 @@
             >
                 <li class="search-field__item"
                     v-for="item in searchResults"
+                    :key=item.id
                     @click="selectItem(item)"
                 >
                     <div class="search-field__item-img">
@@ -49,7 +50,11 @@
         computed: {
             showContent() {
                 return ( (this.searchQuery.length > 0) && (this.focused) )
-            }
+            },
+            codeMatches() {
+                let codePattern = /^[0-9]*$/;
+                return ( codePattern.exec(this.searchQuery) !== null ) 
+            },
         },
         methods: {
             handleInput() {
@@ -62,7 +67,12 @@
                 this.focused=true;
             },
             searchTriggered: debounce(function () {
-                let url = this.searchApiUrl + this.searchQuery;
+                let url = null;
+                if (this.codeMatches) {
+                    url = `/api/search/by-code/?line=${this.searchQuery}`;
+                } else {
+                    url = this.searchApiUrl + this.searchQuery;
+                }
                 this.$http.get(url).then(
                     response => {
                         this.handleSuccessfulSearchResponse(response);
@@ -73,7 +83,8 @@
                 )
             }, 500),
             handleSuccessfulSearchResponse(response) {
-                this.searchResults = response.body.products;
+                console.log(response);
+                this.searchResults = response.body['results_standard'];
             },
             handleFailedSearchResponse(response) {
             },

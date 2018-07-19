@@ -42,8 +42,7 @@ var header = new Vue({
         },
         codeMatches() {
             let codePattern = /^[0-9]*$/;
-            return ( codePattern.exec(this.searchQuery) !== null )
-            
+            return ( codePattern.exec(this.searchQuery) !== null ) 
         },
         searchListIsActive() {
             if ( ((this.searchQuery.length > 2) || (this.codeMatches) ) && (this.searchBoxIsActive === true)) {
@@ -92,7 +91,6 @@ var header = new Vue({
             );
         }, 500),
         handleSuccessfulSearchRequest(response) {
-            console.log(response);
             this.resultsStandard = response.body['results_standard'];
             this.resultsAdvanced = response.body['results_advanced'];
         },
