@@ -65,9 +65,6 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
         if price__gte is not None:
             qs = qs.filter(price__gte=price__gte)
 
-        print(price__lte)
-        print(price__lte)
-
         self.has_been_filtered = (price__lte is not None) or (price__gte is not None)
 
         sorting_option = self.request.GET.get("sort_by")
