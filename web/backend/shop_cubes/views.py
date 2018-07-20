@@ -44,7 +44,7 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
 
     def get_queryset(self, *args, **kwargs):
         qs = self.category.products.filter(is_in_stock=True)
-        price__lte = self.request.GET.get("price__lite", None)
+        price__lte = self.request.GET.get("price__lte", None)
         price__gte = self.request.GET.get("price__gte", None)
 
         if price__lte is not None:
@@ -64,6 +64,9 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
         
         if price__gte is not None:
             qs = qs.filter(price__gte=price__gte)
+
+        print(price__lte)
+        print(price__lte)
 
         self.has_been_filtered = (price__lte is not None) or (price__gte is not None)
 
