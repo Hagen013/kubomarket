@@ -60,7 +60,7 @@ class CategoryPriceAPIView(APIView):
             return Response(
                 status=status.HTTP_404_NOT_FOUND
             )
-        return Response(instance.products.aggregate(Min('price'), Max('price')))
+        return Response(instance.products.filter(is_in_stock=True).aggregate(Min('price'), Max('price')))
 
 
 class CategoryAPIView(APIView):
