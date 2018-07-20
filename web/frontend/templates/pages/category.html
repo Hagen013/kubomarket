@@ -18,11 +18,68 @@
 
     <div class="catalog" id="catalog">
         <div class="catalog__left">
+            <div class="filters catalog__filters">
+                <div class="filters__button bold"
+                    :class="{ filters__button_active : showFilters }"
+                    @click="toggleFilters"
+                >
+                    Фильтры
+                    <i class="icon icon_chevron-down filters__icon"></i>
+                </div>
+                <div class="filters__list {% if not has_been_filtered %} filters__list_inactive {% endif %}"
+                    :class="{ filters__list_active : showFilters, filters__list_inactive: !showFilters }"
+                >
+                    <div class="filter-item catalog__price-filter"
+                        :class="{ catalog__priceFilter_active : pricesResponseRecieved,  }"
+                    >
+                        <div class="filter-item__title bold">
+                            Цена
+                        </div>
+                        <div class="filter-item__slider">
+                            <price-filter
+                                ref="priceFilter"
+                                :min="min_price"
+                                :max="max_price"
+                                :price_values="price_values"
+                                v-on:price-request-triggered="priceFilterRedirect"
+                                v-if="pricesResponseRecieved"
+                                realTime="true"
+                                >
+                            </price-filter>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="catalog__nav">
-            {% include "base/catalog-sidenav.html" %}
+                {% include "base/catalog-sidenav.html" %}
             </div>
         </div>
         <div class="catalog__right">
+            <div class="sorting">
+                <div class="sorting__title">
+                    Сортировка:
+                </div>
+                <div class="sorting__options">
+                    <div class="sorting__option"
+                        :class="{ sorting__option_active: sortByScoring }" 
+                        id="js-sort-by-scoring" 
+                        @click="changeState(0)"
+                    >
+                        по популярности
+                    </div>
+                    <div class="sorting__option"
+                        :class="{ sorting__option_active: sortByPrice }" 
+                        id="js-sort-by-price" 
+                        @click="changeState(1)"
+                    >
+                        по цене
+                        <i class="icon sorting__icon sortingIcon"
+                            v-bind:class="{ sortingIconDown: showArrowDown, sortingIconUp: showArrowUp }"
+                        >
+                        </i>
+                    </div>
+                </div>
+            </div>
             <div class="gallery catalog__gallery">
                 {% for product in products %}
                 <div class="product-card catalog__item">
@@ -122,6 +179,8 @@
 {% block script %}
     {{ super() }}
     <script type="text/javascript">
+        var categoryId = {{category.id}};
+        var hasBeenFiltered = {{has_been_filtered|lower}};
         var userAdminStatus = {{user_status | lower}};
     </script>
     <script src="{{ static('js/categoryPage.js') }}"></script>

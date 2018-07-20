@@ -443,3 +443,15 @@
         content: $icon-arrow-right;
     }
 }
+
+.sortingIcon {
+    background-image: url("../img/icon/arrows-sort_disabled.svg");
+}
+
+.sortingIconDown {
+    background-image: url("../img/icon/arrows-sort_down.svg");
+}
+
+.sortingIconUp {
+    background-image: url("../img/icon/arrows-sort_up.svg");
+}

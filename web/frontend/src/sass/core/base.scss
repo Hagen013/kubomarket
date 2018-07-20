@@ -6,7 +6,7 @@
 
 html, body {
   height: 100%;
-  font-family: PFDinDisplayPro-Regular;  
+  font-family: 'Roboto Slab', serif;
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
 }
@@ -41,6 +41,7 @@ input {
     box-shadow: none !important;
     border-radius: 0px;
     border: none;
+    font-family: 'Roboto Slab', serif;
 }
 
 textarea {

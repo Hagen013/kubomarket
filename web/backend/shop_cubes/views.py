@@ -26,6 +26,7 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
                                'price': ('price', 'id'),
                                '-scoring': ('-scoring', 'id')}
     default_sorting_option = ('-scoring', 'id')
+    has_been_filtered = False
 
     def get(self, request, url, *args, **kwargs):
         self.category = self.get_category(url)
@@ -42,7 +43,33 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
         return category
 
     def get_queryset(self, *args, **kwargs):
-        return self.category.products.filter(is_in_stock=True)
+        qs = self.category.products.filter(is_in_stock=True)
+        price__lte = self.request.GET.get("price__lite", None)
+        price__gte = self.request.GET.get("price__gte", None)
+
+        if price__lte is not None:
+            try:
+                price__lte = int(price__lte)
+            except ValueError:
+                price__lte = None
+
+        if price__gte is not None:
+            try:
+                price__gte = int(price__gte)
+            except ValueError:
+                price__gte = None
+
+        if price__lte is not None:
+            qs = qs.filter(price__lte=price__lte)
+        
+        if price__gte is not None:
+            qs = qs.filter(price__gte=price__gte)
+
+        self.has_been_filtered = (price__lte is not None) or (price__gte is not None)
+
+        sorting_option = self.request.GET.get("sort_by")
+        sort_by = self.allowed_sorting_options.get(sorting_option, self.default_sorting_option)
+        return qs.order_by(*sort_by)
 
     def get_user_status(self):
         return self.request.user.is_superuser
@@ -51,6 +78,8 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
         context = super(CubesCategoryPageView, self).get_context_data(**kwargs)
         context['category'] = self.category
         context['user_status'] = self.get_user_status()
+        context['has_been_filtered'] = self.has_been_filtered
+        print(self.has_been_filtered)
         return context
 
 

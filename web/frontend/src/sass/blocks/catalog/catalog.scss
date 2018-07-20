@@ -1,7 +1,11 @@
 .catalog {
     display: flex;
+    flex-direction: column;
     width: 100%;
     padding-bottom: 64px;
+    @include mq($from: desktop) {
+        flex-direction: row;
+    }
 }
 
 .catalog_search {
@@ -31,7 +35,7 @@
 }
 
 .catalog__left {
-    display: none;
+    display: block;
     @include mq($from: desktop) {
         display: block;
         margin-right: 30px;
@@ -45,6 +49,7 @@
 }
 
 .catalog__right {
+    width: 100%;
     margin: 0 auto;
     @include mq($from: desktop, $until: wide) {
         width: 616px;
@@ -67,8 +72,12 @@
 }
 
 .catalog__nav {
+    display: none;
     width: 100%;
     background: #fbfbfa;
+    @include mq($from: desktop) {
+        display: block;
+    }
 }
 
 .catalog__nav-item-content {
@@ -120,4 +129,93 @@
         color: $green;
         text-decoration: underline;
     }
+}
+
+/// filters START
+.filters {
+    position: relative;
+}
+.filters__button {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: $creme;
+    transition: .2s;
+    cursor: pointer;
+    &:hover {
+        background: $border;
+    }
+    @include mq($from: desktop) {
+        display: none;
+    }
+}
+.filters__button_active {
+    background: $border;
+}
+.filters__icon {
+    font-size: 14px;
+    margin: 0px 0px -4px 6px;
+}
+.filters__list_inactive {
+    display: none;
+}
+.filters__list {
+    @include mq($from: desktop) {
+        display: block;
+    }
+}
+.filters__list_active {
+    display: block !important;
+}
+/// filters END
+
+// filter-item START
+.filter-item {
+    padding: 12px;
+    background: $creme;
+    margin-bottom: 16px;
+}
+.filter-item__title {
+    margin-bottom: 16px;
+}
+// filter-item END
+
+.catalog__price-input {
+    height: 40px;
+    width: 45%;
+    text-align: center;
+}
+
+.catalog__price-inputs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.catalog__price-slider {
+    margin-top: 15px;
+}
+
+.catalog__price-filter {
+    height: 138px;
+    opacity: 0;
+    will-change: opacity;
+    transition-property: opacity;
+    transition-duration: .2s;
+}
+
+.catalog__priceFilter_active {
+    opacity: 1;
+}
+
+.vue-slider {
+    cursor: pointer !important;
+    border-radius: 0px !important;
+}
+
+.vue-slider-process {
+    background-color: $yellow !important;
+}
+
+.vue-slider-dot {
+    border: 6px solid $green !important;
 }

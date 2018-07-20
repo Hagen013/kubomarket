@@ -1,0 +1,46 @@
+.sorting {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    margin-bottom: 16px;
+    padding: 0px 16px;
+    font-size: 14px;
+    border: 2px solid $border;
+    @include mq($from: tablet) {
+        height: 50px;
+    }
+}
+
+.sorting__title {
+    margin-right: 16px;
+}
+
+.sorting__options {
+    color: $text-grey;
+}
+
+.sorting__option {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 4px;
+    user-select: none;
+    cursor: pointer;
+    &:hover {
+        color: $green;
+    }
+    @include mq($from: tablet) {
+        margin-bottom: 0px;
+    }
+}
+
+.sorting__option_active {
+    color: $green;
+}
+
+.sortingIcon {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    background-size: 70%;
+    margin: 0px 0px -4px 4px;
+}
