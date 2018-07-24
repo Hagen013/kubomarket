@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
+from django.contrib.sitemaps import GenericSitemap, Sitemap
+from django.contrib.sitemaps.views import sitemap, index as sitemap_index
 
 from users.views import (ProfileView,
                          RegistrationView,
@@ -10,6 +12,19 @@ from users.views import (ProfileView,
                          LogoutView,
                          UserVerificationView)
 from api.urls import urls_api
+from shop_cubes.models import CubesCategoryNode, CubesProductCard
+
+
+sitemaps = {
+    "categories": GenericSitemap({
+        "queryset": CubesCategoryNode.public.all(),
+        "date_field": "modified_at",
+    }),
+    "products": GenericSitemap({
+        "queryset": CubesProductCard.public.all(),
+        "date_field": "modified_at",
+    })
+}
 
 
 urlpatterns = [
@@ -26,8 +41,12 @@ urlpatterns = [
     url(r'^contacts/', TemplateView.as_view(template_name="pages/infopages/contacts.html")),
     url(r'^order-check/', TemplateView.as_view(template_name="pages/infopages/order-check.html")),
     url(r'^u/', include('users.urls', namespace="users")),
-    url(r'^error404/', TemplateView.as_view(template_name="404.html")),
-    url(r'^error500/', TemplateView.as_view(template_name="500.html")),
+    # SITEMAP
+    url(r'^sitemap', include([
+                             url(r'^\.xml$', sitemap_index, {"sitemaps": sitemaps}),
+                             url(r'^-(?P<section>.+)\.xml$', sitemap, {
+                                 "sitemaps": sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+                             ])),
     url(r'^', include('shop_cubes.urls', namespace='shop'))
 ]
 
