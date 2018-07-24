@@ -1,12 +1,251 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="content-area">
-        <h1>Страница не найдена</h1>
-        <p>Страница не найдена, а может её никогда и не было</p>
+    <div class="content-area_mb http404-container">
+        <div class="http404">
+            <div class="pic-404">
+                <img class="pic-404__parent" src="{{ static('/img/404.png') }}" alt="404">
+                <img class="pic-404__child left" src="{{ static('/img/404_cloud.png') }}" alt="404">
+                <img class="pic-404__child mid" src="{{ static('/img/404_cloud.png') }}" alt="404">
+                <img class="pic-404__child right" src="{{ static('/img/404_cloud.png') }}" alt="404">
+            </div>
+            <div class="http404__text">
+                <h1>Страница не найдена</h1>
+                <p>Запрашиваемая по данномму адресу страница не найдена, а может её никогда и не было...</p>
+                <a class="link link_green link_underscored" href="/">вернуться на главную</a>
+            </div>
+        </div>
     </div>
+    <style type="text/css">
+        .http404-container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            min-height: 453px; }
+            @media (min-width: 60.625em) {
+              .http404-container {
+                padding-top: 70px; } }
+          
+          .http404 {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: reverse;
+                -ms-flex-direction: column-reverse;
+                    flex-direction: column-reverse;
+            position: relative;
+            width: 1200px;
+            overflow: hidden; }
+            @media (min-width: 60.625em) {
+              .http404 {
+                -webkit-box-orient: horizontal;
+                -webkit-box-direction: normal;
+                    -ms-flex-direction: row;
+                        flex-direction: row; } }
+            .http404 .http404__text {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-orient: vertical;
+              -webkit-box-direction: normal;
+                  -ms-flex-direction: column;
+                      flex-direction: column;
+              -webkit-box-pack: center;
+                  -ms-flex-pack: center;
+                      justify-content: center;
+              margin-bottom: 32px; }
+              @media (min-width: 60.625em) {
+                .http404 .http404__text {
+                  margin-bottom: 0px;
+                  width: 340px; } }
+              @media (min-width: 73.125em) {
+                .http404 .http404__text {
+                  width: 540px; } }
+            .http404 h1 {
+              font-size: 22px;
+              margin-bottom: 16px; }
+              @media (min-width: 73.125em) {
+                .http404 h1 {
+                  font-size: 2em; } }
+            .http404 p {
+              font-size: 14px;
+              line-height: 1.8;
+              margin-bottom: 12px;
+              text-align: justify; }
+            .http404 .pic-404 {
+              position: relative;
+              float: left;
+              width: 100%;
+              overflow: hidden; }
+              @media (min-width: 46.875em) {
+                .http404 .pic-404 {
+                  width: 750px; } }
+              @media (min-width: 60.625em) {
+                .http404 .pic-404 {
+                  width: 600px; } }
+              .http404 .pic-404__parent {
+                width: 100%;
+                text-align: center; }
+              .http404 .pic-404__child {
+                position: absolute; }
+                .http404 .pic-404__child.left {
+                  width: 80px;
+                  top: 17px;
+                  left: 220px;
+                  opacity: 0;
+                  -webkit-animation-name: cloudLeft;
+                          animation-name: cloudLeft;
+                  -webkit-animation-duration: 2s;
+                          animation-duration: 2s;
+                  -webkit-animation-timing-function: linear;
+                          animation-timing-function: linear;
+                  -webkit-animation-fill-mode: forwards;
+                          animation-fill-mode: forwards;
+                  -webkit-animation-delay: 1s;
+                          animation-delay: 1s; }
+                .http404 .pic-404__child.mid {
+                  width: 46px;
+                  top: 10px;
+                  left: 420px;
+                  opacity: 0;
+                  -webkit-animation-name: cloudMid;
+                          animation-name: cloudMid;
+                  -webkit-animation-duration: 2s;
+                          animation-duration: 2s;
+                  -webkit-animation-timing-function: linear;
+                          animation-timing-function: linear;
+                  -webkit-animation-fill-mode: forwards;
+                          animation-fill-mode: forwards;
+                  -webkit-animation-delay: 1.2s;
+                          animation-delay: 1.2s; }
+                .http404 .pic-404__child.right {
+                  width: 62px;
+                  top: 100px;
+                  left: 500px;
+                  opacity: 0;
+                  -webkit-animation-name: cloudRight;
+                          animation-name: cloudRight;
+                  -webkit-animation-duration: 2s;
+                          animation-duration: 2s;
+                  -webkit-animation-timing-function: linear;
+                          animation-timing-function: linear;
+                  -webkit-animation-fill-mode: forwards;
+                          animation-fill-mode: forwards;
+                  -webkit-animation-delay: 1s;
+                          animation-delay: 1s; }
+          
+          @-webkit-keyframes cloudLeft {
+            0% {
+              top: 17px;
+              left: 220px;
+              opacity: 0; }
+            20% {
+              top: 33px;
+              left: 188px;
+              opacity: 1; }
+            80% {
+              top: 81px;
+              left: 92px;
+              opacity: 1; }
+            100% {
+              top: 97px;
+              left: 60px;
+              opacity: 0; } }
+          
+          @keyframes cloudLeft {
+            0% {
+              top: 17px;
+              left: 220px;
+              opacity: 0; }
+            20% {
+              top: 33px;
+              left: 188px;
+              opacity: 1; }
+            80% {
+              top: 81px;
+              left: 92px;
+              opacity: 1; }
+            100% {
+              top: 97px;
+              left: 60px;
+              opacity: 0; } }
+          
+          @-webkit-keyframes cloudMid {
+            0% {
+              top: 10px;
+              left: 420px;
+              opacity: 0; }
+            20% {
+              top: 40px;
+              left: 360px;
+              opacity: 1; }
+            70% {
+              top: 130px;
+              left: 180px;
+              opacity: 1; }
+            100% {
+              top: 160px;
+              left: 120px;
+              opacity: 0; } }
+          
+          @keyframes cloudMid {
+            0% {
+              top: 10px;
+              left: 420px;
+              opacity: 0; }
+            20% {
+              top: 40px;
+              left: 360px;
+              opacity: 1; }
+            70% {
+              top: 130px;
+              left: 180px;
+              opacity: 1; }
+            100% {
+              top: 160px;
+              left: 120px;
+              opacity: 0; } }
+          
+          @-webkit-keyframes cloudRight {
+            0% {
+              top: 100px;
+              left: 500px;
+              opacity: 0; }
+            20% {
+              top: 120px;
+              left: 460px;
+              opacity: 1; }
+            80% {
+              top: 180px;
+              left: 340px;
+              opacity: 1; }
+            100% {
+              top: 200px;
+              left: 300px;
+              opacity: 0; } }
+          
+          @keyframes cloudRight {
+            0% {
+              top: 100px;
+              left: 500px;
+              opacity: 0; }
+            20% {
+              top: 120px;
+              left: 460px;
+              opacity: 1; }
+            80% {
+              top: 180px;
+              left: 340px;
+              opacity: 1; }
+            100% {
+              top: 200px;
+              left: 300px;
+              opacity: 0; } }
+    </style>
 {% endblock content %}
 
 
-{% block actions %}
-{% endblock actions %}
+{% block script %}
+    {{ super() }}
+    <script src="{{ static('js/indexPage.js') }}"></script>
+{% endblock script %}

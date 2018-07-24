@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^contacts/', TemplateView.as_view(template_name="pages/infopages/contacts.html")),
     url(r'^order-check/', TemplateView.as_view(template_name="pages/infopages/order-check.html")),
     url(r'^u/', include('users.urls', namespace="users")),
+    url(r'^error404/', TemplateView.as_view(template_name="404.html")),
+    url(r'^error500/', TemplateView.as_view(template_name="500.html")),
     url(r'^', include('shop_cubes.urls', namespace='shop'))
 ]
 

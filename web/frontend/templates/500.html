@@ -1,10 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="content-area">
-        <h1>Ой!</h1>
-        <p>Кажется что-то пошло не так. Приносим свои извинения и просим воспользоваться этой страницей чуть позже. Если данное сообщение будет повторяться - пожалуйста свяжитесь с нами с помощью опубликованных контактов.</p>
+    <div class="content-area_mb">
+        <div class="http500">
+            <div class="http500__text">
+                <h1>Ой!</h1>
+                <h2>Это было неожиданно</h2>
+                <p class="http500__error-code">Код ошибки: 500</p>
+                <p>Произошла ошибка, и мы уже работаем над её причинами</p>
+                <p>Если вам требуется немедленная помощь, связанная с вашим заказом, или товарами, которые вы желаете приобрести, а так же если ошибка повторяется, пожалуйста
+                    свяжитесь с нами по телефону 8 (495) 409-6238 или другим <a class="link link_green link_underscored" href="/contacts/">нашим контактам</a>
+                </p>
+            </div>
+            <div class="http500__image-wrap">
+                <img class="http500__image" src="{{ static('/img/500.gif') }}">
+            </div>
+        </div>
     </div>
-
+    <style type="text/css">
+    .http500 {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        min-height: 496px;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        padding: 32px 0px; }
+        @media (min-width: 46.875em) {
+            .http500 {
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: reverse;
+                -ms-flex-direction: row-reverse;
+                    flex-direction: row-reverse; } }
+        .http500 h1 {
+            margin-bottom: 16px; }
+        .http500 h2 {
+            margin-bottom: 16px; }
+        .http500 p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+            text-align: justify; }
+        .http500 .http500__error-code {
+            color: #787878; }          
+    </style>
 {% endblock content %}
+
+{% block script %}
+    {{ super() }}
+    <script src="{{ static('js/indexPage.js') }}"></script>
+{% endblock script %}
 

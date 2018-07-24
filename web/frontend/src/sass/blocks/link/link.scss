@@ -1,9 +1,13 @@
-.link {
-
+.link_green {
+    color: $green;
 }
 
 .link_blue {
     color: $blue;
+}
+
+.link_underscored {
+    text-decoration: underline;
 }
 
 .link_city {
