@@ -184,4 +184,37 @@
         var userAdminStatus = {{user_status | lower}};
     </script>
     <script src="{{ static('js/categoryPage.js') }}"></script>
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {% for link in category.truncated_breadcrumbs  %}
+                    {
+                        "@type": "ListItem",
+                        "position": {{ loop.index }},
+                        "item": {
+                            "@id": "{{ url('shop:category', args=[link.url]) }}",
+                            "name": "{{ link.title }}",
+                            "url": "{{ url('shop:category', args=[link.url]) }}"
+                        }
+                    }{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ]
+        }
+        </script>
 {% endblock script %}
+
+{% block meta_aditional_data %}
+    <!-- canonical -->
+    {{ super() }}
+    {% if is_paginated %}
+        <link rel="canonical" href="{{ category.absolute_url }}">
+    {% endif %}
+    {% if is_paginated and page_obj.has_next() %}
+        <link rel="next" href="{{ category.absolute_url }}?page={{page_obj.next_page_number()}}">
+    {% endif %}
+    {% if is_paginated and page_obj.has_previous() %}
+        <link rel="prev" href="{{ category.absolute_url }}?page={{page_obj.previous_page_number()}}">
+    {% endif %}
+{% endblock meta_aditional_data %}

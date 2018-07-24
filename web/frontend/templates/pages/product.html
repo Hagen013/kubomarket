@@ -280,6 +280,49 @@
         $("[data-fancybox]").fancybox({
         });
     </script>
+    <script type="application/ld+json">
+        {
+          "@context": "http://schema.org/",
+          "@type": "Product",
+          "name": "{{product.name}}",
+          "image": "https://www.kubomarket.ru{{product.image.url}}",
+          "description": "{{product.html_free_description}}",
+          {% if product.vendor|length > 0 %}
+          "brand": "{{product.vendor}}",
+          {% endif %}
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "RUB",
+            "price": "{{product.price}}",
+            "itemCondition": "http://schema.org/NewCondition",
+            {% if product.is_in_stock %}
+            "availability": "http://schema.org/InStock",
+            {% else %}
+            "availability": "http://schema.org/OutOfStock",
+            {% endif %}
+            "url": "https://www.kubomarket.ru/product/{{product.url}}/"
+          }
+        }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {% for link in category.truncated_breadcrumbs  %}
+                {
+                    "@type": "ListItem",
+                    "position": {{ loop.index }},
+                    "item": {
+                        "@id": "{{ url('shop:category', args=[link.url]) }}",
+                        "name": "{{ link.title }}",
+                        "url": "{{ url('shop:category', args=[link.url]) }}"
+                    }
+                }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+    }
+    </script>
 {% endblock script %}
 
 {% block meta_title %} 
