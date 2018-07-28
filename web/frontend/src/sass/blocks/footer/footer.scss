@@ -1,11 +1,11 @@
 .footer {
-    height: 230px;
+    height: 460px;
     width: 100%;
     @include mq($from: tablet, $until: desktop) {
-        height: 150px;
+        height: 240px;
     }
     @include mq($from: desktop) {
-        height: 180px;
+        height: 240px;
     }
     color: $white;
 }
@@ -21,14 +21,14 @@
 
 .footer__top {
     position: relative;
-    height: 180px;
+    height: 410px;
     width: 100%;
     background: $green;
     @include mq($from: tablet, $until: desktop) {
-        height: 100px;
+        height: 200px;
     }
     @include mq($from: desktop) {
-        height: 130px;
+        height: 200px;
     }
 }
 
@@ -47,13 +47,17 @@
 
 .footer__nav {
     padding-top: 16px;
-    height: 80px;
+    height: 310px;
     width: 320px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    @include mq($from: tablet) {
+        height: 100%;
+        width: 100%;
+    }
     @include mq($from: desktop) {
-        padding-top: 0px;
+        //padding-top: 0px;
     }
 }
 
@@ -65,8 +69,11 @@
 }
 
 .footer__nav-item {
-    height: 50%;
     padding: 4px;
+    font-size: 14px;
+    @include mq($from: tablet) {
+        width: 50%;
+    }
 }
 
 .footer__items {
@@ -81,7 +88,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    @include mq($from: desktop) {
+    @include mq($from: tablet) {
         height: 100%;
     }
 }
@@ -116,10 +123,10 @@
     top: 18px;
     left: 8px;
     @include mq($from: tablet) {
-        top: 40px;
+        top: 94px;
     }
     @include mq($from: desktop) {
-        top: 56px;
+        top: 94px;
     }
 }
 

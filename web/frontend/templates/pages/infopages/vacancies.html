@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% with last_crumb='Вакансии' %}
+    {% include 'blocks/breadcrumbs.html' %}
+{% endwith %}
+
+<div class="content-area_mb infopage">
+    <div class="infopage__content">
+        <div class="infopage__block">
+            <h1 class="title">
+                Вакансии
+            </h1>
+            <p class="bold centered title_2">
+                Команда Kubomarket.Ru состоит из целеустремленных, активных, творческих и позитивных профессионалов своего дела.
+            </p>
+        </div>
+        <div class="infopage__block">
+            <p class="centered">
+                Если вы обладаете перечисленными качествами, мы будем рады принять вас в наши дружные ряды. 
+            </p>
+        </div>
+        <div class="infopage__block">
+            <p>
+                На текущий момент мы готовы рассмотреть заявки по следующим направлениям:
+            </p>
+            <ul class="list list_yellow cashback__reviews-list">
+                <li class="grey-dark">
+                    SMM-маркетолог;
+                </li>
+                <li class="grey-dark">
+                    Создатель видеообзоров;
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+    {{ super() }}
+    <script src="{{ static('js/indexPage.js') }}">
+    </script>
+{% endblock script%}

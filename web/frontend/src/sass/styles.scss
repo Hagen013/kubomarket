@@ -73,6 +73,8 @@ $mq-breakpoints: (
 @import "blocks/product-line/*";
 @import "blocks/product-slider/*";
 @import "blocks/profile/*";
+@import "blocks/cashback/*";
+@import "blocks/about/*";
 
 .slide-enter-active, .slide-leave-active{
     transition: .3s;
@@ -80,28 +82,4 @@ $mq-breakpoints: (
 
 .slide-enter, .slide-leave-to {
     transform: translate3d(100%,0,0);
-}
-
-
-.http500 {
-    display: flex;
-    flex-direction: column;
-    padding: 32px 0px;
-    @include mq($from: tablet) {
-        flex-direction: row-reverse;
-    }
-    h1 {
-        margin-bottom: 16px;
-    }
-    h2 {
-        margin-bottom: 16px;
-    }
-    p {
-        margin-bottom: 16px;
-        line-height: 1.8;
-        text-align: justify;
-    }
-    .http500__error-code {
-        color: $text-grey_dark;
-    }
 }

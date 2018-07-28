@@ -12,6 +12,7 @@ from users.views import (ProfileView,
                          LogoutView,
                          UserVerificationView)
 from api.urls import urls_api
+from infopages.urls import urls_infopages
 from shop_cubes.models import CubesCategoryNode, CubesProductCard
 
 
@@ -41,6 +42,7 @@ urlpatterns = [
     url(r'^contacts/', TemplateView.as_view(template_name="pages/infopages/contacts.html")),
     url(r'^order-check/', TemplateView.as_view(template_name="pages/infopages/order-check.html")),
     url(r'^u/', include('users.urls', namespace="users")),
+    url(r'^i/', include(urls_infopages, namespace="infopages")),
     # SITEMAP
     url(r'^sitemap', include([
                              url(r'^\.xml$', sitemap_index, {"sitemaps": sitemaps}),

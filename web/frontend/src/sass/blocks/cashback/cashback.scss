@@ -1,0 +1,484 @@
+.cashback {
+    position: relative;
+    overflow: hidden;
+    p {
+        padding-bottom: 16px;
+    }
+}
+
+.layer {
+    display: none;
+    position: absolute;
+    @include mq($from: desktop) {
+        display: block;
+    }
+}
+
+.layer_1 {
+    top: 140px;
+    right: 0px;
+    height: 481px;
+    width: 893px;
+    background-image: url("../img/cubes/layer-1.png");
+    @include mq($from: desktop) {
+        right: -520px;
+    }
+
+}
+
+.layer_2 {
+    height: 690px;
+    width: 1920px;
+    background-image: url("../img/cubes/layer-2.png");
+    top: -40px;
+    left: -360px;
+}
+
+.layer-3 {
+
+}
+
+.layer-4 {
+
+}
+
+.cashback__reviews {
+    position: relative;
+    padding: 0px !important;
+    @include mq($from: desktop) {
+        padding: 0px 16px !important;
+    }
+}
+
+.cashback__emerald {
+    position: relative;
+    display: block;
+    height: 193px;
+    max-width: 750px;
+    padding: 16px;
+    color: $white;
+    background-image: url("/static/img/cubes/emerald.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 100;
+    @include mq($from: tablet) {
+        width: 750px;
+    }
+}
+
+.cashback__reviews-headline {
+    margin-bottom: 16px;
+    @include mq($from: desktop) {
+        padding-right: 332px;
+        p {
+            text-align: left;
+        }
+    }
+}
+
+.cashback__round-emerald-wrap-1 {
+    flex-direction: column;
+    align-items: center;
+    @include mq($from: desktop) {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+    }
+}
+
+.cashback__round-emerald-wrap-2 {
+    @include mq($from: tablet) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+    @include mq($from: desktop) {
+        width: 420px;
+    }
+    @include mq($from: wide) {
+        width: 260px;
+    }
+}
+
+.cashback__reviews-content {
+    @include mq($from: tablet) {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+}
+
+.cashback__uchilka {
+    display: none;
+    height: 438px;
+    width: 333px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 99;
+    background: url("../img/cubes/uchilka.png");
+    @include mq($from: desktop) {
+        display: block;
+        position: absolute;;
+    } 
+}
+
+.cashback__emerald-wrap {
+    position: relative;
+    width: 100%;
+    margin-bottom: 16px;
+    @include mq($from: tablet) {
+        display: flex;
+        justify-content: center;
+    }
+    @include mq($from: desktop) {
+        justify-content: flex-start;
+    }
+}
+
+.cashback__reviews-text {
+    @include mq($from: tablet) {
+        margin-right: 40px;
+        p {
+            text-align: left;
+        }
+    }
+    @include mq($from: desktop) {
+        padding-right: 336px;
+    }
+    @include mq($from: wide) {
+        padding-right: 480px;
+    } 
+}
+
+.cashback__reviews-top {
+    display: flex;
+    margin-bottom: 8px;
+    @include mq($from: tablet) {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+    }
+}
+
+.cashback__reviews-mid {
+    display: flex;
+    margin-bottom: 12px;
+    @include mq($from: tablet) {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+    }
+}
+
+.cashback__rewievs-bottom {
+    @include mq($from: tablet) {
+        position: absolute;
+        width: 600px;
+        font-size: 18px;
+        line-height: 1.8;
+        bottom: 30px;
+        left: 30px;
+    }
+}
+
+
+.cashback__ym {
+    display: block;
+    height: 40px;
+    width: 83px;
+    background-size: 100%;
+}
+
+.cashback__value {
+    width: 83px;
+    margin-right: 16px;
+    font-size: 40px;
+    overflow: hidden;
+}
+
+.cashback__value_numerical {
+    margin-top: -12px;
+    font-size: 48px !important;
+}
+
+
+.round-emerald {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 260px;
+    width: 260px;
+    border-radius: 130px;
+    color: $white;
+    background-image: url("/static/img/cubes/emerald-round.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+}
+
+.cashback__reviews-content {
+    position: relative;
+}
+
+.cashback__round-emerald-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0px;
+}
+
+.cashback__reviews-list_wrap {
+    padding: 16px 0px;
+    @include mq($from: desktop) {
+        padding-right: 336px;
+    }
+    @include mq($from: wide) {
+        padding-right: 480px;
+    }
+    z-index: 101;
+}
+
+.cashback__reviews-list {
+
+}
+
+.cashback__caption-hidden {
+    @include mq($from: desktop) {
+        display: none;
+    }
+}
+
+.cashback__reviews-emerald-caption {
+    display: none;
+    text-align: center;
+    @include mq($from: desktop) {
+        display: block;
+        padding: 24px 16px;
+        width: 300px;
+    }
+}
+
+.round-emerald__top {
+    font-size: 82px;
+}
+
+.round-emerald__text {
+    width: 146px;
+    text-align: center;
+}
+
+.cashback__unboxing {
+    padding: 32px 0px 16px 0px;
+    margin-bottom: 32px;
+}
+
+.cashback__subtitle {
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 32px;
+    @include mq($from: desktop) {
+        text-align: left;
+    }
+}
+
+.cashback__subtitle-2 {
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.cashback__wrap-grey {
+    background: #f9f9f8;
+    @include mq($from: tablet) {
+        background: $white;
+    }
+}
+
+.cashback__unboxing-images {
+    position: relative;
+    width: 100%;
+    @include mq($from: tablet) {
+        display: flex;
+        padding-bottom: 32px;
+        justify-content: flex-end;
+    }
+    @include mq($from: wide) {
+        padding: 0px;
+    }
+}
+
+.cashback__unboxing-video {
+    display: flex;
+    position: relative;
+    height: 210px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position-x: left;
+    background-position-y: top;
+    background-image: url("/static/img/cubes/video.png");
+    background-size: 100%;
+    border-radius: 6px;
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+    @include mq($from: mobile) {
+        height: 260px;
+    }
+    @include mq($from: tablet) {
+        height: 356px;
+        width: 518px;
+    }
+}
+
+.cashback__unboxing-video-play {
+    margin-top: 10px;
+    @include mq($from: wide) {
+        margin-left: 182px;
+    }
+}
+
+.round-emerald__mid {
+    margin-top: -16px;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.cashback__instagram {
+    padding: 16px 0px;
+    margin: 16px 16px;
+}
+
+.cashback__unboxing-images_wrap {
+    @include mq($from: wide) {
+        width: 578px !important;
+        padding: 0px;
+    }
+}
+
+.cashback__unboxing-content {
+    @include mq($from: wide) {
+        display: flex;
+        width: 1170px;
+        margin: 0 auto;
+        padding: 0px 16px;
+        flex-direction: row-reverse;
+    }
+}
+
+.cashback__unboxing-list-wrap {
+    @include mq($from: wide) {
+        padding: 0px 16px 0px 0px;
+        width: 560px !important;
+    }
+}
+
+.cahsback__instagram-image {
+    height: 220px;
+    width: 288px;
+    background-size: 100%;
+    background-image: url("../img/cubes/cashback-instagram-mobile.jpg");
+    background-repeat: no-repeat;
+    @include mq($from: tablet) {
+        height: 383px;
+        width: 505px;
+        background-image: url("../img/cubes/cashback-instagram.jpg");
+    }
+}
+
+.cashback__instagram-image-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 0px;
+    @include mq($from: desktop) {
+        padding: 0px;
+        margin-top: -82px;
+    }
+}
+
+.cashback__instagram {
+    @include mq($from: desktop) {
+        flex-direction: row-reverse;
+    }
+}
+
+.cashback__instagram-content {
+    @include mq($from: desktop) {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+}
+
+.cashback__instagram-text {
+    @include mq($from: desktop) {
+        padding-right: 48px;
+        p {
+            text-align: left;
+        }
+    }
+}
+
+.cashback__vk-image-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0px 32px 0px;
+    @include mq($from: desktop) {
+        padding: 0px;
+        margin-top: -100px;
+    }
+}
+
+.cashback__vk-image {
+    height: 180px;
+    width: 180px;
+    background-image: url("../img/cubes/cashback-vk-mobile.jpg");
+    @include mq($from: tablet) {
+        height: 292px;
+        width: 346px;
+        background-image: url("../img/cubes/cashback-vk.jpg");
+    }
+}
+
+.cashback__vk-list-wrap {
+    @include mq($from: tablet) {
+        width: 460px;
+    }
+}
+
+.cashback__vk-content {
+    @include mq($from: desktop) {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+    }
+}
+
+.cashback__vk-headline {
+    @include mq($from: desktop) {
+        max-width: 620px;
+        p {
+            padding-right: 32px;
+        }
+    }
+}
+
+.cashback__cubes-footer {
+    height: 88px;
+    width: 100%;
+    margin-top: 32px;
+    background: url("../img/cubes/cubes.png");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: 100%;
+}
+
+.cashback__cubes-footer-wrap {
+    padding: 0px !important;
+}

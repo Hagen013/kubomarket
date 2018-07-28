@@ -8,15 +8,23 @@
     white-space: nowrap;
 }
 
+.title_2 {
+    font-size: 24px;
+}
+
 .title_catalog {
     height: auto !important;
     text-align: center;
     white-space: normal !important;
+    line-height: normal;
     @include mq($from: mobile) {
         text-align: left;
     }
 }
 
+.subtitle {
+    margin-bottom: 12px;
+}
 
 .centered {
     text-align: center;

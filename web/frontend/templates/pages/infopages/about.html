@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% with last_crumb='О нас' %}
+    {% include 'blocks/breadcrumbs.html' %}
+{% endwith %}
+
+<div class="about infopage infopage_text">
+    <div class="content-area_mb content-area_mb-column">
+
+        <div class="about__text">
+            <h1 class="title">
+                О нас
+            </h1>
+
+            <div class="about__banner">
+            </div>
+
+            <p class="grey-dark">
+                Наша миссия — сделать головоломки доступнее
+                и обеспечить всех желающих качественными головоломками.
+                Мы знаем, что кубик Рубика и прочие головоломки не так-то
+                легко купить. Их практически не найти в торговых центрах,
+                магазинах и киосках. Благодаря развитию электронной торговли
+                и сервисов доставки мы можем доставить любую головоломку в любой уголок
+                России и СНГ без предоплаты.
+            </p>
+
+            <h2 class="title">
+                Движение спидкубинга
+            </h2>
+
+            <p class="grey-dark">
+                Наша компания активно участвует в привлечении и развитии
+                движения спидкубинга — скоростной сборки шарнирных головоломок.
+                Мы поддерживаем энтузиастов нашего движения и регулярно проводим и
+                спонсируем мероприятия, посвященные спидкубингу.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="facts infopage__wrap_grey">
+
+        <div class="content-area_mb">
+            <h2 class="title facts__title title_2">
+                Факты о Кубике Рубика:
+            </h2>
+        </div>
+
+        <div class="content-area_mb facts__content">
+        
+            <div class="facts__item-wrap">
+                <div class="facts__item">
+                    <div class="facts__item-circle">
+                        <div class="facts__item-icon facts__item-icon_1">
+                        </div>
+                    </div>
+                    <div class="facts__item-caption green bold">
+                        Кубик Рубика изобретен в 1974 году
+                    </div>
+                </div>
+            </div>
+
+            <div class="facts__item-wrap">
+                <div class="facts__item">
+                    <div class="facts__item-circle">
+                        <div class="facts__item-icon facts__item-icon_2">
+                        </div>
+                    </div>
+                    <div class="facts__item-caption green bold">
+                        Эрне Рубик — изобретатель кубика Рубика
+                    </div>
+                </div>
+            </div>
+
+            <div class="facts__item-wrap">
+                <div class="facts__item">
+                    <div class="facts__item-circle">
+                        <div class="facts__item-icon facts__item-icon_3">
+                        </div>
+                    </div>
+                    <div class="facts__item-caption green bold">
+                        По всему миру продано более 350 млн кубиков Рубика и
+                        аналогов
+                    </div>
+                </div>
+            </div>
+
+            <div class="facts__item-wrap">
+                <div class="facts__item">
+                    <div class="facts__item-circle">
+                        <div class="facts__item-icon facts__item-icon_4">
+                        </div>
+                    </div>
+                    <div class="facts__item-caption green bold">
+                        8 марта 2009 года прошел первый чемпионат России
+                        по спидкубингу
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="social-big">
+        <div class="content-area_mb content-area_mb-column">
+
+            <h2 class="title social-big__title title_2">
+                Мы в социальных сетях
+            </h2>
+
+            <div class="social-big__items">
+                <div target="_blank" class="social-big__item-wrap">
+                    <a class="social-big__circle" href="https://www.instagram.com/kubomarketru/">
+                        <div class="social-big__icon social-big__icon_instagram">
+                        </div>
+                    </a>
+                </div>
+
+                <div class="social-big__item-wrap">
+                    <a target="_blank" class="social-big__circle" href="https://vk.com/kubomarketru">
+                        <div class="social-big__icon social-big__icon_vk">
+                        </div>
+                    </a>
+                </div>
+
+                <div class="social-big__item-wrap">
+                    <a target="_blank" class="social-big__circle" href="https://www.youtube.com/channel/UCK0U1Kcy1XJbf-vruFXMiHA">
+                        <div class="social-big__icon social-big__icon_youtube">
+                        </div>
+                    </a>
+                </div>
+
+                <div class="social-big__item-wrap">
+                    <a target="_blank" class="social-big__circle" href="https://www.facebook.com/Kubomarketru-Правильные-кубики-193173621520855/">
+                        <div class="social-big__icon social-big__icon_facebook">
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="promo">
+        <div class="content-area_mb content-area_mb-column">
+            <h2 class="title promo__title title_2">
+                Акции
+            </h2>
+            <div class="promo__items">
+                <a class="promo__item promo__item_green" href="/i/cashback/">
+                    <div class="promo__item-header">
+                        <div class="promo__item-value">
+                        300
+                        </div>
+                        <div class="promo__item-label label_yellow">
+                            рублей за отзыв
+                        </div>
+                    </div>
+                    <div class="promo__item-text">
+                        Напишите отзыв на <span class="highlight_yellow">Яндекс.Маркет</span> —
+                        мы вернём Вам на телефон 300 рублей.
+                    </div>
+                </a>
+                <a class="promo__item promo__item_red" href="/i/cashback/">
+                    <div class="promo__item-header">
+                        <div class="promo__item-value">
+                        300
+                        </div>
+                        <div class="promo__item-label label_yellow">
+                            рублей за анбоксинг
+                        </div>
+                    </div>
+                    <div class="promo__item-text">
+                        За загруженную на <span class="highlight_yellow">YouTube</span>
+                        распаковку заказа с нашего магазина
+                    </div>
+                </a>
+                <a class="promo__item promo__item_violet" href="/i/cashback/">
+                    <div class="promo__item-header">
+                        <div class="promo__item-value">
+                        500
+                        </div>
+                        <div class="promo__item-label label_yellow">
+                            рублей за фото
+                        </div>
+                    </div>
+                    <div class="promo__item-text">
+                        Выложи фото или видео с кубиком Рубика в своём
+                        аккаунте <span class="highlight_yellow">Instagram</span> с упоминанием
+                        "<span class="bold">@kubomarketru</span>" и хештегом "<span class="bold">#kubomarketru</span>"
+                        и подпишись на нас! 
+                    </div>
+                </a>
+            </div>
+            <div class="promo__interaction-area">
+                <a class="button button_blue promo__button" href="/i/cashback/">
+                    ВСЕ АКЦИИ
+                </a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock content %}
+
+{% block actions %}
+{% endblock actions %}
+
+{% block script %}
+    {{ super() }}
+    <script src="{{ static('js/indexPage.js') }}">
+    </script>
+{% endblock script%}
