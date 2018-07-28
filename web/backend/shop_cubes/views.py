@@ -21,6 +21,7 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
     context_object_name = "products"
     node_class = CubesCategoryNode
     outdated_node_class = CubesCategoryNodeOutdatedUrl
+    paginate_by = 24
 
     allowed_sorting_options = {'-price': ('-price', 'id'),
                                'price': ('price', 'id'),
