@@ -53,7 +53,7 @@ $header-bottom-height: 60px;
 }
 
 .header__nav-link {
-    margin-left: 50px;
+    margin-left: 40px;
     color: $text-black;
     @include mq($from: wide) {
         margin-left: 70px;
@@ -376,8 +376,9 @@ input.header__search-input::placeholder {
 }
 
 .header__cart-button {
+    position: relative;
     background: $border;
-    overflow: visible;
+    overflow: visible !important;
     margin-right: 4px;
     @include mq($from: desktop) {
         margin-right: 0px;
@@ -391,8 +392,8 @@ input.header__search-input::placeholder {
     align-items: center;
     height: 16px;
     width: 16px;
-    top: 28px;
-    right: 48px;
+    top: 0px;
+    right: 0px;
     color: $white;
     background: $red;
     border-radius: 8px;
