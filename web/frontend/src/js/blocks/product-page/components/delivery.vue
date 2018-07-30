@@ -15,7 +15,7 @@
         </div>
         <div v-else class="product-page__delivery-type">
             <i class="icon product-page__delivery-icon icon_delivery-courier-png_disabled"></i>
-            <div class="product-page__delivery-caption">
+            <div class="product-page__delivery-caption grey-dark">
                 <div>Курьером - Недоступно</div>
             </div>
         </div>
@@ -34,8 +34,8 @@
             </div>
         </div>
         <div v-else class="product-page__delivery-type">
-            <i class="icon product-page__delivery-icon icon_delivery-point_disable"></i>
-            <div class="product-page__delivery-caption">
+            <i class="icon product-page__delivery-icon icon_delivery-point_disabled"></i>
+            <div class="product-page__delivery-caption grey-dark">
                 <div>Пункт выдачи - Недоступно</div>
             </div>
         </div>
@@ -55,7 +55,7 @@
         </div>
         <div v-else class="product-page__delivery-type">
             <i class="icon product-page__delivery-icon icon_delivery-mail_disabled"></i>
-            <div class="product-page__delivery-caption">
+            <div class="product-page__delivery-caption grey-dark">
                 <div>Почтой России - Недоступно</div>
             </div>
         </div>

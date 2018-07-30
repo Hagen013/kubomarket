@@ -184,6 +184,13 @@
     }
 }
 
+.cart__delivery-menu-item_disabled {
+    cursor: default;
+    &:hover {
+        background: $white;
+    }
+}
+
 .cart__deliveryMenuItem_active {
     background: $border;
     cursor: default;

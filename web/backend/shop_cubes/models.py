@@ -143,16 +143,20 @@ class CubesProductCard(ProductCard):
         return self.get_public_id()
 
     def get_meta_title(self):
-        return "{0} — купить кубики Рубика недорого в интернет-магазине kubomarket".format(
-            self.name
-        )
+        if len(self._meta_title) == 0:
+            return "{0} — купить кубики Рубика недорого в интернет-магазине Kubomarket.Ru".format(
+                self.name
+            )
+        else:
+            return self._meta_title
 
     def get_meta_description(self):
-        return "{0} купить в интернет-магазине кубиков Рубика kubomarket. \
-    Недорогие цены, обширный каталог товаров от производителей. Доставка по Москве и России. \
-    ".format(
-            self.name
-        )
+        if len(self._meta_description) == 0:
+            return "{0} — купить в интернет-магазине кубиков Рубика Kubomarket.Ru. Недорогие цены, обширный каталог товаров от производителей. Доставка по Москве и России.".format(
+                self.name
+            )
+        else:
+            return self.meta_description
 
     def get_meta_keywords(self):
         return self.name.lower()

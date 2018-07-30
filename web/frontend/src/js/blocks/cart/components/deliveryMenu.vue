@@ -18,6 +18,7 @@
 
                 <!--            Курьером старт             -->
                 <div class="cart__delivery-menu-item"
+                    v-if="isCurierAvailable"
                     :class="{ cart__deliveryMenuItem_active : currentTabKey == 0 }"
                     @click="selectDeliveryTab(0)"
                 >
@@ -30,12 +31,27 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="cart__delivery-menu-item cart__delivery-menu-item_disabled"
+                    v-else
+                >
+                    <div class="cart__delivery-menu-caption">
+                        <div class="cart__delivery-menu-title">
+                        Курьером:
+                        </div>
+                        <div class="cart__delivery-menu-value grey">
+                        недоступно
+                        </div>
+                    </div>
+                </div>
+
                 <!--            Курьером конец             -->
 
                 <!--            Пунктом выдачи старт             --> 
                 <div class="cart__delivery-menu-item"
                     :class="{ cart__deliveryMenuItem_active : currentTabKey == 1 }"
                     @click="selectDeliveryPointsTab"
+                    v-if="isPointsAvailable"
                 >
                     <div class="cart__delivery-menu-caption">
                         <div class="cart__delivery-menu-title">
@@ -46,12 +62,27 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="cart__delivery-menu-item cart__delivery-menu-item_disabled"
+                    v-else
+                >
+                    <div class="cart__delivery-menu-caption">
+                        <div class="cart__delivery-menu-title">
+                        Пункты выдачи
+                        </div>
+                        <div class="cart__delivery-menu-value grey bold">
+                        недоступно
+                        </div>
+                    </div>
+                </div>
+
                 <!--            Пунктом выдачи конец             -->
 
                 <!--            Почтой старт             -->
                 <div class="cart__delivery-menu-item"
                     :class="{ cart__deliveryMenuItem_active : currentTabKey == 2 }"
                     @click="selectDeliveryTab(2)"
+                    v-if="isPostalServiceAvailable"
                 >
                     <div class="cart__delivery-menu-caption">
                         <div class="cart__delivery-menu-title">
@@ -59,6 +90,19 @@
                         </div>
                         <div class="cart__delivery-menu-value green bold">
                         {{ pricePostalService | priceFilter }} <i class="icon icon_rouble"></i> {{timeCurier | timeFilter}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cart__delivery-menu-item"
+                    v-else
+                >
+                    <div class="cart__delivery-menu-caption">
+                        <div class="cart__delivery-menu-title">
+                        Почтой России:
+                        </div>
+                        <div class="cart__delivery-menu-value grey">
+                            Недоступно
                         </div>
                     </div>
                 </div>
@@ -191,19 +235,29 @@ export default {
         return this.deliveryData.curier.price
     },
     timeCurier() {
-        return [
-            this.deliveryData.curier.time_min,
-            this.deliveryData.curier.time_max
-        ];
+        if (this.isCurierAvailable) {
+            return [
+                this.deliveryData.curier.time_min,
+                this.deliveryData.curier.time_max
+            ];           
+        }
+        else {
+            return []
+        }
     },
     priceDeliveryPoint() {
         return this.deliveryData.delivery_point.price;
     },
     timeDeliveryPoint() {
-        return [
-            this.deliveryData.delivery_point.time_min,
-            this.deliveryData.delivery_point.time_max
-        ];
+        if (this.isPointsAvailable) {
+            return [
+                this.deliveryData.delivery_point.time_min,
+                this.deliveryData.delivery_point.time_max
+            ];
+        }
+        else {
+            return []
+        }
     },
     pricePostalService() {
         return this.deliveryData.postal_service.price;

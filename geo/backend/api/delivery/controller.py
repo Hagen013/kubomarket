@@ -249,14 +249,8 @@ class DeliveryController():
         # ЕСЛИ НЕТ СДЕКА ТО НЕТ
         # СУМКИ, РЮКЗАКИ, КОШЕЛЬКИ
         if self.product_type in {"CUBE", "BAG", "PURSE"}:
-            if self.margin >= 2000:
-                # СДЕК И БЕСПЛАТНО
-                result = delivery_data_getter(weigh=1)
-                result['price'] = 0
-                return result
-            else:
-                # БЕРЁМ СДЕК
-                return delivery_data_getter(weigh=1)
+            # БЕРЁМ СДЕК
+            return delivery_data_getter(weigh=1)
         # ЧЕМОДАНЫ
         elif self.product_type in {"SUITCASE"}:
             # ЕСЛИ ЗАДАН ОБЪЁМНЫЙ ВЕС
@@ -306,13 +300,7 @@ class DeliveryController():
         }
         # СУМКИ, РЮКЗАКИ, КОШЕЛЬКИ, ЧЕМОДАНЫ
         if self.product_type in {"CUBE", "BAG", "PURSE", "SUITCASE"}:
-            if self.margin >= 2000:
-                # СТАНДАРТНЫЙ И БЕСПЛАТНО
-                result['price'] = 0
-                return result
-            else:
-                # СТАНДАРТНЫЙ
-                return result
+            return result
         else:
             return None
 

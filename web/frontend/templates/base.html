@@ -8,26 +8,27 @@
 	<meta name="description" content="{% block meta_description %}KUBOMARKET.RU{% endblock %}">
 	<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
 
-	<meta property="og:type"             content="website" />
-	<meta property="vk:title"            content="Kubomarket.Ru | Интернет магазин кубиков Рубика" />
-	<meta property="og:site_name"        content="Интернет-магазин KUBOMARKET" />
-	<meta property="og:title"            content="Kubomarket.Ru | Интернет магазин кубиков Рубика" />
-	<meta property="og:description"      content="У нас вы можете купить кубик Рубика от 350 рублей. Оплата при получении. Доставка по всей России - от 1 до 7 дней." />
-	<meta property="og:determiner"       content="auto" />
-	<meta property="og:locale "          content="ru_RU" />
+	{% block open_graph %}
+	<meta property="og:type"             content="website"/>
+	<meta property="vk:title"            content="Kubomarket.Ru | Интернет магазин кубиков Рубика"/>
+	<meta property="og:site_name"        content="Интернет-магазин KUBOMARKET"/>
+	<meta property="og:title"            content="Kubomarket.Ru | Интернет магазин кубиков Рубика"/>
+	<meta property="og:description"      content="У нас вы можете купить кубик Рубика от 350 рублей. Оплата при получении. Доставка по всей России - от 1 до 7 дней."/>
+	<meta property="og:determiner"       content="auto"/>
+	<meta property="og:locale "          content="ru_RU"/>
 	<meta property="og:url" content="https://www.kubomarket.ru" />
 
-	<meta property="og:image"            content="https://www.kubomarket.ru/static/img/og-image.png" />
-	<meta property="og:image:secure_url" content="https://www.kubomarket.ru/static/img/og-image.png" />
-	<meta property="og:image:type"       content="image/png" />
-	<meta property="og:image:width"      content="200" />
-	<meta property="og:image:height"     content="200" />
+	<meta property="og:image"            content="https://www.kubomarket.ru/static/img/og-image.png"/>
+	<meta property="og:image:secure_url" content="https://www.kubomarket.ru/static/img/og-image.png"/>
+	<meta property="og:image:type"       content="image/png"/>
+	<meta property="og:image:width"      content="200"/>
+	<meta property="og:image:height"     content="200"/>
+	{% endblock open_graph %}
 	
-	<meta name="generator"               content="iCMS">
-	<meta name="author"    lang="ru"     content="www.kubomarket.ru" />
-	<meta name="copyright" lang="ru"     content="© 2018 Интернет-магазин KUBOMARKET" />
+	<meta name="author"    lang="ru"     content="www.kubomarket.ru"/>
+	<meta name="copyright" lang="ru"     content="© 2018 Интернет-магазин KUBOMARKET"/>
 	
-	<meta http-equiv="Content-Type"        content="text/html; charset=UTF-8" />    
+	<meta http-equiv="Content-Type"        content="text/html; charset=UTF-8"/>    
 
 	{% block favicons %}
 	<link rel="apple-touch-icon" sizes="57x57" href="/static/favicons/apple-icon-57x57.png">
