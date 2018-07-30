@@ -302,7 +302,7 @@ export default {
                 return this.$store.getters['customer/maskedPhone'];
             },
             set(value) {
-                this.$store.commit('customer/maskedPhone', value)
+                this.$store.commit('customer/phone', value)
             }
         },
         customerEmail: {
