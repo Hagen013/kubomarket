@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 
+{% block meta_title %}О доставке | Магазин головоломок Kubomarket.Ru{% endblock %}
+
 {% block content %}
 
-{% with last_crumb='Доставка и оплата' %}
+{% with last_crumb='Доставка' %}
     {% include 'blocks/breadcrumbs.html' %}
 {% endwith %}
 
@@ -11,7 +13,7 @@
 
     <div class="content-area_mb">
         <div class="infopage__block">
-            <h1 class="title delivery-page__title">Доставка и оплата</h1>
+            <h1 class="title delivery-page__title">Доставка</h1>
             <p class="grey text-justify">Узнайте о преимуществах каждого способа доставки и выберите самый удачный</p>
         </div>
     </div>
