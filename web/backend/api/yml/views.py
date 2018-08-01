@@ -15,6 +15,7 @@ class CubesYmlApiView(APIView):
     def get(self, request):
         categories = CubesCategoryNode.objects.all()
         products = CubesProductCard.public.all()
+        categories[0].name = "Головоломки"
 
         context = {'date': timezone.now().strftime('%Y-%m-%d %H:%M'),
                    'categories': categories,

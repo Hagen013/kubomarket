@@ -11,12 +11,18 @@
     
     <categories>
       {% for c in categories %}
+        {% if loop.index == 1 %}
+        <category id="{{c.id}}" 
+        >Головоломки
+        </category>
+        {% else %}
         <category id="{{c.id}}" 
                 {% if c.parent %}
                   parentId="{{c.parent.id}}"
                 {% endif %}
         >{{c.title}}
         </category>
+        {% endif %}
       {% endfor %}
     </categories>
 
