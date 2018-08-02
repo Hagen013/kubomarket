@@ -8,10 +8,10 @@ npm  run build;
 gulp build;
 cd ../../;
 # BACKEND
-cd ./web/;
 source ../venv/bin/activate;
+cd ./web/;
 cd ./backend/;
-echo 'yes' | python3.5 manage.py collectstatic --settings=config.settings.production;
+echo 'yes' | python3 manage.py collectstatic --settings=config.settings.production;
 deactivate;
 cd ../../;
 # STATIC_PRODUCTION TO NGINX STATIC
