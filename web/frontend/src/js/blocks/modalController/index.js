@@ -56,5 +56,28 @@ var modalController = new Vue({
         cartInvalidDataModalIsActive() {
             return this.$store.state.showCartInvalidData.isShowModal;
         }
+    },
+    methods: {
+        closePurchaseModal() {
+            this.$store.commit("showPurchaseModal/hide");
+        },
+        showPurchaseModal() {
+            this.$store.commit("showPurchaseModal/show");
+        },
+        closeCityChoiceModal() {
+            this.$store.commit("showModalCityChoice/hide");
+        },
+        showCityChoiceModal() {
+            this.$store.commit("showModalCityChoice/show");
+        },
+        closeDeliveryMap() {
+            this.$store.commit("deliveryMap/hide");
+        },
+        showDeliveryMap() {
+            this.$store.commit("deliveryMap/show");
+        },
+        showCallbackModal() {
+            this.$store.commit("showCallbackModal/show");
+        }
     }
 });
