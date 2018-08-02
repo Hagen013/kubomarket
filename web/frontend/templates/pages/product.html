@@ -344,11 +344,12 @@
 <meta property="og:description"      content="{{product.meta_description}}"/>
 <meta property="og:locale "          content="ru_RU"/>
 <meta property="og:url" content="https://www.kubomarket.ru{{product.absolute_url}}"/>
+{% endblock open_graph %}
 
+{% block open_graph_image %}
 <meta property="og:image"            content="https://www.kubomarket.ru{{product.thumbnail.url}}"/>
 <meta property="og:image:secure_url" content="https://www.kubomarket.ru{{product.thumbnail.url}}"/>
-
 <meta property="og:image:type"       content="image/jpeg"/>
 <meta property="og:image:width"      content="{{product.thumbnail.width}}"/>
 <meta property="og:image:height"     content="{{product.thumbnail.height}}"/>
-{% endblock open_graph %}
+{% endblock open_graph_image %}
