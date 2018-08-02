@@ -7,7 +7,7 @@
 
 {% block content %}
 
-{% with view='shop:category', breadcrumbs=category.truncated_breadcrumbs[:-1], last_crumb=category.truncated_breadcrumbs[-1].title %}
+{% with view='shop:category', breadcrumbs=category.truncated_breadcrumbs %}
     {% include 'blocks/breadcrumbs.html' %}
 {% endwith %}
 

@@ -15,7 +15,9 @@
             {% if view %}
                 {% for crumb in breadcrumbs %}
                     <a class="link breadcrumbs__item" href="{{ url(view, args=[crumb.url]) }}">{{ crumb.title }}</a>
+                    {% if loop.index != loop.length %}
                     <span class="breadcrumbs__delimeter">—</span>
+                    {% endif %}
                 {% endfor %}
             {% else %}
                {% for crumb in breadcrumbs %}
@@ -24,6 +26,7 @@
             {% endif %}
         {% endif %}
         {% if last_crumb %}
+            <span class="breadcrumbs__delimeter">—</span>
             <a class="link link_disabled breadcrumbs__item breadcrumbs__item_last">{{ last_crumb }}</a>
         {% endif %}
     </div>
