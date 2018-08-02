@@ -19,6 +19,7 @@ export default {
             state.phone = payload;
         },
         maskedPhone(state, payload) {
+            console.log(payload);
             state.phone =  (payload.match(/\d/g)||[]).slice(1).join('');
         },
         email(state, payload) {

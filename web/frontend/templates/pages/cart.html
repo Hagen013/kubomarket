@@ -29,6 +29,10 @@
         <delivery-map v-if="deliveryMapIsActive">
         </delivery-map>
     </transition>
+    <transition name="fade-fast">
+        <cart-invalid-data-modal v-if="cartInvalidDataModalIsActive">
+        </cart-invalid-data-modal>
+    </transition>
 {% endblock modal %}
 
 {% block  script_head %}

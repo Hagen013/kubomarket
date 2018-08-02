@@ -3,38 +3,40 @@
         v-if="showCart"
     >
         <div class="cart__content" v-if="showOrderForm">
-            <div class="cart__items-wrap">
-                <div class="cart__title-area">
-                    <div class="cart__subtitle">
-                        Ваши товары
+            <div>
+                <div class="cart__items-wrap">
+                    <div class="cart__title-area">
+                        <div class="cart__subtitle">
+                            Ваши товары
+                        </div>
+                        <div class="cart__items-clear"
+                            @click="clear"
+                        >
+                            Удалить все 
+                            <i class="icon icon_close"></i>
+                        </div>
                     </div>
-                    <div class="cart__items-clear"
-                        @click="clear"
-                    >
-                        Удалить все 
-                        <i class="icon icon_close"></i>
+                    <div class="cart__items">
+                        <cart-item v-for="item in sortedCartItemsArray" :key="item.offer_identifier" 
+                            :offer_identifier="item.offer_identifier" 
+                            :name="item.name" 
+                            :url="item.url" 
+                            :image="item.image" 
+                            :init_quantity="item.quantity" 
+                            :price="item.price" 
+                            :total_price="item.total_price" 
+                            v-on:cartitempost=cartitempost
+                            v-on:cartitemdelete=cartitemdelete
+                        >
+                        </cart-item>
                     </div>
-                </div>
-                <div class="cart__items">
-                    <cart-item v-for="item in sortedCartItemsArray" :key="item.offer_identifier" 
-                        :offer_identifier="item.offer_identifier" 
-                        :name="item.name" 
-                        :url="item.url" 
-                        :image="item.image" 
-                        :init_quantity="item.quantity" 
-                        :price="item.price" 
-                        :total_price="item.total_price" 
-                        v-on:cartitempost=cartitempost
-                        v-on:cartitemdelete=cartitemdelete
-                    >
-                    </cart-item>
-                </div>
-                <div class="cart__summary">
-                    <div class="cart__summary-quanity">
-                        {{totalCartItemsDeepQuantity}} товаров(a)
-                    </div>
-                    <div class="cart__summary-price price">
-                        {{totalCartItemsPrice}} <i class="icon icon_rouble"></i>
+                    <div class="cart__summary">
+                        <div class="cart__summary-quanity">
+                            {{totalCartItemsDeepQuantity}} товаров(a)
+                        </div>
+                        <div class="cart__summary-price price">
+                            {{totalCartItemsPrice}} <i class="icon icon_rouble"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,7 +91,7 @@
                                              'input_failure':customerPhone.length != 0 && !isCustomerPhoneValid
                                             }" 
                                     for="input-phone"
-                                    v-model="customerPhone"
+                                    v-model="customerPhoneProxy"
                                     @focus="isCustomerPhoneFocused = true"
                                     @blur="isCustomerPhoneFocused = false"
                                     :showMask="isCustomerPhoneFocused"
@@ -147,16 +149,21 @@
                                 {{calculatedOrderRawCombinedPrice}} <i class="icon icon_rouble"></i>
                             </div>
                             <button class="button button_blue cart__submit-button"
-                                :disabled="!isCustomerDataValid"
-                                @click="makeOrder"
-                                :class="{ button_disabled : !isCustomerDataValid }"
+                                @click="submit"
                             >
                                 ОФОРМИТЬ ЗАКАЗ
                             </button>
                         </div>
                     </div>
+                    <div class="cart__agreement grey">
+                        <i>
+                            Нажимая на кнопку, вы подтверждаете свое совершеннолетие, соглашаетесь на обработку
+                            персональных данных в соответствии c <a class="link link_blue link_underscored" href="/i/policy/">Условиями</a>,
+                            а также с <a class="link link_blue link_underscored" href="/i/oferta/">Условиями продажи</a>
+                        </i>
+                    </div>
                     <transition name="fade-fast">
-                        <div class="cart__note" v-if="!isCustomerDataValid">
+                        <div class="cart__note">
                             <i><span class="red">* </span>Для завершения заказа необходимо как минимум указать номер телефона</i>
                         </div>
                     </transition>
@@ -168,7 +175,7 @@
 
         <div class="cart__successful-order" v-else-if="showAftercheck">
             <h2>Спасибо за заказ!</h2>
-            <p>В ближайшее время с Вами свяжется оператор интернет-магазина для подверждения заказа</p>
+            <p>В ближайшее время (с 10:00 до 20:00) с Вами свяжется оператор интернет-магазина для подверждения заказа</p>
             <div class="aftercheck-list">
 
                 <div class="aftercheck-item">
@@ -267,6 +274,7 @@ export default {
             isOrderSended: false,
             isCartSubmissionInProgress: false,
             recievedOrderData: null,
+            customerPhoneProxy: ""
         }
     },
     components: {
@@ -276,6 +284,7 @@ export default {
         "masked-input": MaskedInput
     },
     mounted() {
+        this.customerPhoneProxy = String(this.customerPhone);
     },
     computed: {
         // Отображаемые формы и данные
@@ -488,11 +497,9 @@ export default {
     },
     methods: {
         cartitempost(offer_identifier, quantity) {
-            console.log("posting", offer_identifier);
             this.$store.dispatch('setQuantityInCart', { offer_identifier, quantity });
         },
         cartitemdelete(offer_identifier) {
-            console.log("deleting"+offer_identifier);
             this.$store.dispatch('deleteFromCart', { offer_identifier });
         },
         clear() {
@@ -508,6 +515,13 @@ export default {
                 // console.log(code, type);
             } else if (mod == 'postal_service') {
                 this.$store.commit('delivery/selectPostalServiceMod');
+            }
+        },
+        submit() {
+            if (this.isCustomerDataValid) {
+                this.makeOrder()
+            } else {
+                this.$store.commit("showCartInvalidData/show");
             }
         },
         makeOrder() {
@@ -560,6 +574,10 @@ export default {
             if (this.isDeliveryRequestDataReady) {
                 this.$store.dispatch('delivery/initDelivery');
             }
+        },
+        customerPhoneProxy() {
+            console.log(this.customerPhoneProxy);
+            this.customerPhone = this.customerPhoneProxy;
         }
     }
 }
