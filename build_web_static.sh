@@ -3,7 +3,7 @@
 # FRONTEND
 cd ./web/frontend/;
 rm -rf /static /static_production;
-npm i;
+# npm i;
 npm  run build;
 gulp build;
 cd ../../;
