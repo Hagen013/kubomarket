@@ -5,7 +5,7 @@
                 @click="ordersListRedirect"
             >
                 <md-icon>keyboard_backspace</md-icon>
-                К СПИСКУ
+                НАЗАД
             </md-button>
 
             <div class="order-main">
@@ -321,7 +321,7 @@
                 this.apiError = true;
             },
             ordersListRedirect() {
-                this.$router.replace({path: '/orders'});
+                this.$router.go(-1);
             },
             formatDate(dateString) {
                 let date = new Date(dateString);

@@ -5,7 +5,23 @@ from core.serializers import DynamicFieldsModelSerializer
 from .models import Profile, UserComment
 
 
+class ProfileSerializer(DynamicFieldsModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = (
+            "id",
+            "user_id",
+            "name",
+            "surname",
+            "patronymic",
+            "phone_number"
+        )
+
+
 class UserSerializer(serializers.ModelSerializer):
+
+    profile = ProfileSerializer(required=False)
 
     class Meta:
         model = User
@@ -14,7 +30,8 @@ class UserSerializer(serializers.ModelSerializer):
             "username",
             "password",
             "email",
-            "is_active"
+            "is_active",
+            "profile"
         )
         write_only_fields = ("password",)
         read_only_fields = ("id", "is_active")
@@ -28,20 +45,6 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])
         user.save()
         return user
-
-
-class ProfileSerializer(DynamicFieldsModelSerializer):
-
-    class Meta:
-        model = Profile
-        fields = (
-            "id",
-            "user_id",
-            "name",
-            "surname",
-            "patronymic",
-            "phone_number"
-        )
 
 
 class UserCommentSerializer(DynamicFieldsModelSerializer):

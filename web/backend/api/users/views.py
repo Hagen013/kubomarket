@@ -3,11 +3,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.password_validation import validate_password
 from django.shortcuts import redirect
+from django.http import Http404
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist, ValidationError
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import generics
+from rest_framework.permissions import IsAdminUser
+from rest_framework.pagination import LimitOffsetPagination
 
 from users.models import Profile, UserComment
 from users.serializers import ProfileSerializer, UserCommentSerializer, UserSerializer
@@ -80,10 +84,12 @@ class UserContentAPIView(APIView):
         })
 
 
-class UserListAPIView(APIView):
+class UserListAPIView(generics.ListCreateAPIView):
 
-    model = User
-    serializer = UserSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsAdminUser,)
+    pagination_class = LimitOffsetPagination
 
     def post(self, request, *args, **kwargs):
         is_authenticated = request.user.is_authenticated()
@@ -110,7 +116,7 @@ class UserListAPIView(APIView):
             except ObjectDoesNotExist:
                 user = None
             if user is None:
-                serializer = self.serializer(data=request.POST)
+                serializer = self.serializer_class(data=request.POST)
                 if serializer.is_valid():
                     user = serializer.save()
                     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
@@ -131,6 +137,28 @@ class UserListAPIView(APIView):
                 )
 
 
+class UserApiView(UserContentAPIView):
+
+    model = User
+    serializer = UserSerializer
+
+    def get_user(self, pk):
+        try:
+            instance = self.model.objects.get(pk=pk)
+        except ObjectDoesNotExist:
+            raise Http404
+        return instance
+
+    def get(self, request, pk, *args, **kwargs):
+        super(UserApiView, self).get(request, pk, *args, **kwargs)
+        user = self.get_user(pk=pk)
+        serializer = self.serializer(user)
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+
 class UserOrdersAPIView(UserContentAPIView):
 
     model = Order2
@@ -138,7 +166,7 @@ class UserOrdersAPIView(UserContentAPIView):
 
     def get(self, request, pk, *args, **kwargs):
         super(UserOrdersAPIView, self).get(request, pk, *args, **kwargs)
-        orders = self.model.objects.filter(user=request.user).order_by("-created_at")
+        orders = self.model.objects.filter(user=pk).order_by("-created_at")
         serializer = self.serializer(orders, many=True)
         return Response(
             serializer.data,

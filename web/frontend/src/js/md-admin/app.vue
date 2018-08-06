@@ -64,6 +64,13 @@
                     <span class="md-list-item-text">Категории</span>
                 </md-list-item>
 
+                <md-list-item @click="route('/users')"
+                    :class="{ 'md-list-item--active' : $router.currentRoute.fullPath=='/users' }"
+                >
+                    <md-icon>people</md-icon>
+                    <span class="md-list-item-text">Пользователи</span>
+                </md-list-item>
+
             </md-list>
 
         </md-app-drawer>
@@ -90,6 +97,8 @@
     import orderForm from './orders/components/orderForm.vue'
     import categories from './categories/categories.vue'
     import categoryForm from './categories/components/categoryForm.vue'
+    import users from './users/users.vue'
+    import userProfile from './users/components/userProfile.vue'
 
     const routes = [
         { path: '/offers', component: syncOffers },
@@ -100,7 +109,9 @@
         { path: '/order/:id', component: orderForm },
         { path: '/categories', component: categories },
         { path: '/category/', component: categoryForm },
-        { path: '/category/:id', component: categoryForm }
+        { path: '/category/:id', component: categoryForm },
+        { path: '/users', component: users },
+        { path: '/users/:id', component: userProfile }
     ]
 
     const router = new VueRouter({
