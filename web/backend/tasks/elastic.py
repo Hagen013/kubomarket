@@ -167,8 +167,6 @@ def sync_elasticsearch():
         doc_count = json.loads(index_response.text)['count']
         
     if index_exists is False:
-        print('index does not exist')
-        print('rewriting the index')
         setup_settings()
         rewrite_index()
         pass
@@ -178,7 +176,6 @@ def sync_elasticsearch():
         if doc_count == products_count:
             counts_matches = True
         else:
-            print('counts does not match. Rewriting...')
             rewrite_index()
         pass
 

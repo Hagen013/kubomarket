@@ -496,7 +496,6 @@ class MultiDeliveryController():
 
         for key in {"sdek_delivery_data", "pick_point_delivery_data"}:
             value = result["points"]["delivery_data"]
-            print(value)
             if value:
                 if result["points"]["delivery_data"][key] is not None:
                     result["points"]["delivery_data"][key]['time_min'] = (

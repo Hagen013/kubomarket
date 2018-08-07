@@ -153,7 +153,6 @@ class ProductCard(OfferPage, Image, Weighable, Dimensional):
         ).delete()
 
     def set_int_value(self, value, attribute):
-        print(value)
         value = int(value)
         related_products_count = self.attributevalues_relation_class.objects.filter(
             attribute_value__in=self.attribute_values.filter(attribute=attribute)

@@ -80,7 +80,6 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
         context['category'] = self.category
         context['user_status'] = self.get_user_status()
         context['has_been_filtered'] = self.has_been_filtered
-        print(self.has_been_filtered)
         return context
 
 

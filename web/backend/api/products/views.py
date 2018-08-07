@@ -274,7 +274,6 @@ class ProductCardDescriptionImagesAPIView(APIView):
         image_file = request.FILES['file']
         task_id = self.get_task_id(image_file.name)
         filename = self.get_hashed_filename(image_file.name, task_id)
-        print(filename)
         if filename is None:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST
@@ -299,7 +298,6 @@ class ProductCardDescriptionImagesAPIView(APIView):
        
     def get_hashed_filename(self, filename, taks_id):
         extension = filename.split('.')[-1]
-        print(extension)
         if extension not in self.allowed_image_extensions:
             return None
         else:

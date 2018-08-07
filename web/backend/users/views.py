@@ -107,7 +107,6 @@ class RegistrationView(TemplateView):
         context = super(RegistrationView, self).get_context_data(**kwargs)
         context['result'] = self.result
         context['fromOauth'] = self.request.GET.get('from') == "oauth"
-        # print(self.result)
         return context
 
 

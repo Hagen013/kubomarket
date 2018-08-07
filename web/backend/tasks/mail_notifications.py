@@ -85,5 +85,4 @@ def anton_new_order_notification(order_id,
         to=['akontuzov@mail.ru'],
         reply_to=['info@kubomarket.ru'],
     )
-    # print(text)
     email.send()
