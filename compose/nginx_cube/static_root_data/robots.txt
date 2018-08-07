@@ -3,5 +3,5 @@ User-agent: *
 Disallow: /api
 Disallow: /u
 
-Sitemap: http://kubomarket.ru/sitemap.xml
-Host: http://kubomarket.ru
+Sitemap: https://kubomarket.ru/sitemap.xml
+Host: https://kubomarket.ru
