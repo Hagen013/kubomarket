@@ -1,16 +1,7 @@
 User-agent: *
 
-Disallow: /admin
-Disallow: /controls
-Disallow: /cart
-Disallow: /search
-Disallow: /about
-Disallow: /delivery
-Disallow: /exchange
-Disallow: /guarantees
-Disallow: /contacts
-Disallow: /privacy-policy
-Disallow: /contract-offer
+Disallow: /api
+Disallow: /u
 
 Sitemap: http://kubomarket.ru/sitemap.xml
 Host: http://kubomarket.ru

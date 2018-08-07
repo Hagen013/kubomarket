@@ -5,6 +5,7 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from django.contrib.sitemaps import GenericSitemap, Sitemap
 from django.contrib.sitemaps.views import sitemap, index as sitemap_index
+from django.urls import reverse
 
 from users.views import (ProfileView,
                          RegistrationView,
@@ -16,6 +17,23 @@ from infopages.urls import urls_infopages
 from shop_cubes.models import CubesCategoryNode, CubesProductCard
 
 
+class StaticViewSitemap(Sitemap):
+
+    def items(self):
+        return [
+            'shop:index',
+            'infopages:about',
+            'infopages:vacancies',
+            'infopages:cashback',
+            'infopages:faq',
+            'infopages:delivery',
+            'infopages:contacts',
+        ]
+
+    def location(self, item):
+        return reverse(item)
+
+
 sitemaps = {
     "categories": GenericSitemap({
         "queryset": CubesCategoryNode.public.all(),
@@ -24,7 +42,8 @@ sitemaps = {
     "products": GenericSitemap({
         "queryset": CubesProductCard.public.all(),
         "date_field": "modified_at",
-    })
+    }),
+    "static-pages": StaticViewSitemap
 }
 
 
@@ -36,11 +55,6 @@ urlpatterns = [
     url(r'^cart/', include('cart.urls', namespace='cart')),
     url(r'^search/', include('search.urls', namespace='search')),
     url(r'^api/', include(urls_api, namespace='api')),
-    url(r'^faq/', TemplateView.as_view(template_name="pages/infopages/faq.html")),
-    url(r'^delivery-and-payment/', TemplateView.as_view(
-        template_name="pages/infopages/delivery-and-payment.html")),
-    url(r'^contacts/', TemplateView.as_view(template_name="pages/infopages/contacts.html")),
-    url(r'^order-check/', TemplateView.as_view(template_name="pages/infopages/order-check.html")),
     url(r'^u/', include('users.urls', namespace="users")),
     url(r'^i/', include(urls_infopages, namespace="infopages")),
     # SITEMAP

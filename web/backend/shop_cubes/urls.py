@@ -5,7 +5,7 @@ from .views import CubesCategoryPageView, CubesProductPageView, IndexPage
 
 
 urlpatterns = [
-    url(r'^$', IndexPage.as_view()),
+    url(r'^$', IndexPage.as_view(), name='index'),
     url(r'^catalog/(?P<url>(($)|([-_\.\d\w/]+/$)))', CubesCategoryPageView.as_view(), name='category'),
     url(r'^product/(?P<slug>(($)|([-_\.\d\w/]+/$)))', CubesProductPageView.as_view(), name='product'),
 ]

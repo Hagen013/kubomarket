@@ -12,5 +12,9 @@ urls_infopages = [
     url(r'^cashback/$', TemplateView.as_view(
         template_name="pages/infopages/cashback.html"), name="cashback"),
     url(r'^agreement/$', TemplateView.as_view(
-        template_name="pages/infopages/agreement.html"), name="agreement")
+        template_name="pages/infopages/agreement.html"), name="agreement"),
+    url(r'^faq/', TemplateView.as_view(template_name="pages/infopages/faq.html"), name="faq"),
+    url(r'^delivery/', TemplateView.as_view(
+        template_name="pages/infopages/delivery-and-payment.html"), name="delivery"),
+    url(r'^contacts/', TemplateView.as_view(template_name="pages/infopages/contacts.html"), name="contacts"),
 ]
