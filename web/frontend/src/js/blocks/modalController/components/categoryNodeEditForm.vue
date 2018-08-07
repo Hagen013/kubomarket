@@ -59,6 +59,26 @@
                     v-model="category._meta_description">
                 </el-input>
             </el-row>
+            <el-row>
+                <div class="description-wrap">
+                    <div class="description">
+                        <h2 class="title">
+                        Описание
+                        </h2>
+                        <editor
+                            api-key="01cvgst8dh28i7irbbw1k430b4mi12q4pfb7sksuk67kkqpz"
+                            :init="{
+                                height: 500,
+                                toolbar: 'formatselect | bold italic | bullist numlist | link | alignleft alignright aligncenter alignjustify',
+                                block_formats: 'параграф=p;Заголовок 2=h2;Заголовок 3=h3;Заголовок 4=h4;',
+                                plugins: 'lists, link'
+                            }"
+                            v-model="category.description"
+                        >
+                        </editor>
+                    </div>
+                </div>
+            </el-row>
         </el-main>
     </div>
 </template>
@@ -67,6 +87,7 @@
 import { Vue } from '../../../vue'
 import Element from 'element-ui'
 import "element-ui/lib/theme-chalk/index.css";
+import Editor from '@tinymce/tinymce-vue';
 var equal = require('fast-deep-equal');
 
 Vue.use(Element)
@@ -76,6 +97,9 @@ import store from "../../../store";
 export default Vue.component("category-node-edit-from", {
     name: "categoryNodeEditForm",
     store,
+    components: {
+        "editor": Editor
+    },
     data: () => ({
         categoryApiUrl: '/api/cubes/categories/',
         apiResponseRecieved: false,
@@ -90,10 +114,14 @@ export default Vue.component("category-node-edit-from", {
     created() {
         this.setInitialData();
         this.initializeCategory();
+        document.body.style.position = "fixed";
+        document.body.style.top = 0;
     },
     methods: {
         close() {
+            document.body.style.position = "static";
             this.$store.commit("showProductPageEditForm/hide");
+            location.reload();
         },
         setInitialData() {
             this.categoryApiUrl = `${this.categoryApiUrl}${this.id}/`;
@@ -162,6 +190,7 @@ export default Vue.component("category-node-edit-from", {
         width: 100%;
         z-index: 20000;
         background: white;
+        overflow-y:scroll;
     }
     .header {
         position: relative;
@@ -199,5 +228,16 @@ export default Vue.component("category-node-edit-from", {
         display: flex;
         padding-right: 16px;
         justify-content: flex-end;
+    }
+    .description-wrap {
+        display: flex;
+        justify-content: center;
+    }
+    .description {
+        width: 100%;
+        max-width: 970px;
+        h2 {
+            height: 50px;
+        }
     }
 </style>

@@ -221,6 +221,21 @@ body {
   }
 }
 
+@mixin list_yellow {
+  li {
+    padding-left: 8px; 
+    text-indent: -.5em;
+    &:before {
+      content: "";
+      display: inline-block;
+      height: 4px;
+      width: 4px;
+      margin-bottom: 4px;
+      background-color: $yellow;
+    }
+  }
+}
+
 .highlight_yellow {
   display: inline-block;
   border-bottom: 2px solid $yellow-light;
@@ -247,5 +262,35 @@ body {
       background-repeat: no-repeat;
       background-size: 100%;
       background-image: url("/static/img/icon/triangle-yellow-right.png");
+  }
+}
+
+
+.text {
+  font-size: 14px;
+  line-height: 1.8;
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 16px;
+  }
+  p {
+    padding-bottom: 12px;
+  }
+  a {
+    color: $green;
+    text-decoration: underline;
+  }
+  ul {
+    padding-left: 32px;
+    padding-bottom: 12px;
+    li {
+      list-style: square;
+    }
+  }
+  ol {
+    padding-left: 32px;
+    padding-bottom: 12px;
+    li {
+      list-style: decimal;
+    }
   }
 }

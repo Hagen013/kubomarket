@@ -75,7 +75,8 @@ class CategoryNodeSerializer(DynamicFieldsModelSerializer):
             'level',
             'depth',
             'scoring',
-            'search_scoring'
+            'search_scoring',
+            'description'
         )
         read_only_fields = (
             'id',
@@ -87,12 +88,15 @@ class CategoryNodeSerializer(DynamicFieldsModelSerializer):
         )
 
     def update(self, instance, validated_data):
+        ## СРОЧНЫЕ КОСТЫЛИ
         _meta_title = validated_data["_meta_title"]
         _meta_description = validated_data["_meta_description"]
         _meta_keywords = validated_data["_meta_keywords"]
+        description = validated_data["description"]
         instance._meta_title = _meta_title
         instance._meta_keywords = _meta_keywords
         instance._meta_description = _meta_description
+        instance.description = description
         instance.save()
         return instance
 
