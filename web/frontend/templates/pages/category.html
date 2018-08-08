@@ -216,9 +216,7 @@
 {% block meta_aditional_data %}
     <!-- canonical -->
     {{ super() }}
-    {% if is_paginated %}
-        <link rel="canonical" href="{{ category.absolute_url }}">
-    {% endif %}
+    <link rel="canonical" href="{{ category.absolute_url }}">
     {% if is_paginated and page_obj.has_next() %}
         <link rel="next" href="{{ category.absolute_url }}?page={{page_obj.next_page_number()}}">
     {% endif %}
