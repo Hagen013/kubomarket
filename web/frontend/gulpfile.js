@@ -117,6 +117,12 @@ gulp.task('prod_css', function() {
         .pipe(gulp.dest(paths.css));
 });
 
+// FILES TO STATIC FOLDER
+gulp.task('prod_files', function() {
+	return gulp.src('./src/files/**/*')
+	.pipe(gulp.dest('./static/files/'))
+});
+
 
 // PRODUCTION
-gulp.task('build', ['prod_css', 'prod_img', 'prod_font', 'prod_favicons']);
+gulp.task('build', ['prod_css', 'prod_img', 'prod_font', 'prod_favicons', 'prod_files']);
