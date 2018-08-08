@@ -69,7 +69,7 @@
                             api-key="01cvgst8dh28i7irbbw1k430b4mi12q4pfb7sksuk67kkqpz"
                             :init="{
                                 height: 500,
-                                toolbar: 'formatselect | bold italic | bullist numlist | link | alignleft alignright aligncenter alignjustify',
+                                toolbar: 'formatselect | bold italic removeformat | bullist numlist | link | alignleft alignright aligncenter alignjustify',
                                 block_formats: 'параграф=p;Заголовок 2=h2;Заголовок 3=h3;Заголовок 4=h4;',
                                 plugins: 'lists, link'
                             }"
