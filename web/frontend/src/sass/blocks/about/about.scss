@@ -2,6 +2,38 @@
 
 }
 
+.about__banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 70px;
+    width: 100%;
+    padding: 0px 8px;
+    margin-bottom: 32px;
+    font-size: 13px;
+    color: $white;
+    background: url("../img/cubes/banner.jpg");
+    background-position: center;
+    @include mq($from: mobile) {
+        font-size: 14px;
+    }
+    @include mq($from: tablet) {
+        align-items: flex-start;
+        padding: 0px 32px;
+        background-position: right;
+        font-size: 15px;
+    }
+    @include mq($from: desktop) {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        p {
+            margin-right: 16px;
+        }
+    }
+}
+
 .about__text {
     margin-bottom: 32px;
 }
