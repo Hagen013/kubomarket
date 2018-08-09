@@ -92,7 +92,7 @@
                             </div>
                         </td>
                         <td class="table__cell">
-                            <div class="table__cell-container">
+                            <div class="table__cell-container table-cell-container--time">
                                 {{order.created_at | dataFilter}}
                             </div>
                         </td>
@@ -410,5 +410,10 @@
     }
     .callback {
         color: $success;
+    }
+    .table-cell-container--time {
+        max-width: 150px;
+        padding: 6px 32px 6px 24px;
+        line-height: 1.6;
     }
 </style>
