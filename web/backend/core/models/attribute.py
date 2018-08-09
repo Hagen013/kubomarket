@@ -93,8 +93,8 @@ class Attribute(Named, Describable, Orderable):
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         # После создания атрибута запрещено изменять его тип
-        if self.id and self.__original_attribute_type != self.attribute_type:
-            raise models.FieldError("Can`t change attribute_type after create")
+        # if self.id and self.__original_attribute_type != self.attribute_type:
+        #     raise models.FieldError("Can`t change attribute_type after create")
         self.__original_attribute_type = self.attribute_type
         super(Attribute, self).save(force_insert,
                                     force_update,
