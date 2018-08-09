@@ -246,7 +246,7 @@
                 this.responseError = false;
                 this.responseRecieved = true;
             },
-            handleSuccessfulRefreshResponse() {
+            handleSuccessfulRefreshResponse(response) {
                 this.orders = response.body.results;
                 this.count = response.body.count;
                 let hasChanged = false;
@@ -291,7 +291,7 @@
                 return this.orderStatusMap[value]
             },
             refresh() {
-                this.getOrders();
+                this.refreshOrders();
             },
             notify(order) {
                 if (Notification.permission === 'granted') {
