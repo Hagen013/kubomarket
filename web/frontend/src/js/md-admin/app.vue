@@ -101,6 +101,7 @@
     import userProfile from './users/components/userProfile.vue'
 
     const routes = [
+        { path: '/', redirect: "/orders" },
         { path: '/offers', component: syncOffers },
         { path: '/attributes', component: syncAttributes },
         { path: '/images', component: syncImages },
