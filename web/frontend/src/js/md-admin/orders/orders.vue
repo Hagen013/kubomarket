@@ -6,7 +6,7 @@
             <div class="orders__controls">
                 <div class="orders__pagination pagination">
                     <div class="pagination__client-count">
-                        {{ordersCount}}
+                        {{offset}} - {{ordersCount}}
                     </div>
                     <div class="pagination__delimeter">
                         из
