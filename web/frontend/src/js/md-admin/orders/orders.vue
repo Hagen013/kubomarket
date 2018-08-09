@@ -178,7 +178,8 @@
             limit: 50,
             offset: 0,
             responseRecieved: false,
-            responseError: false
+            responseError: false,
+            refreshing: false,
         }),
         computed: {
             listApiUrl() {
@@ -223,9 +224,33 @@
                     }
                 )
             },
+            refreshOrders() {
+                this.$http.get(this.listApiUrl).then(
+                    response => {
+                        this.handleSuccessfulRefreshResponse(response);
+                    },
+                    response => {
+                        this.handleFailedGetResponse(response);
+                    }
+                )
+            },
             handleSuccessfulGetResponse(response) {
                 this.orders = response.body.results;
                 this.count = response.body.count;
+                let hasChanged = false;
+
+                if (this.originalOrders.length === 0) {
+                    this.originalOrders = this.orders.slice();
+                }
+
+                this.responseError = false;
+                this.responseRecieved = true;
+            },
+            handleSuccessfulRefreshResponse() {
+                this.orders = response.body.results;
+                this.count = response.body.count;
+                let hasChanged = false;
+
                 if (this.originalOrders.length === 0) {
                     this.originalOrders = this.orders.slice();
                 }
