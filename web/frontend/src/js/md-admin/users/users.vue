@@ -149,7 +149,7 @@
             getListApiResponseError: false,
             search: null,
             searched: [],
-            limit: 10,
+            limit: 20,
             offset: 0,
             count: 0,
         }),

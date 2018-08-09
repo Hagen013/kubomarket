@@ -57,7 +57,9 @@
                                 </th>
                             </tr>
 
-                            <tr class="table-row" v-for="order in orders"
+                            <tr class="table-row" 
+                                v-for="order in orders"
+                                :key="order.id"
                                 :class="computeRowStatusClass(order.state)"
                             >
                                 <td class="table-cell table-cell--colored">
@@ -126,8 +128,6 @@
             componentTitle: 'Заказы',
             orderListAPIUrl: '/api/order/list/',
             orderListAPIConnectionFailed: false,
-            currentPage: null,
-            ordersCount: 0,
             originalOrders: [],
             orders: [],
             orderStatusMap: {
@@ -141,18 +141,20 @@
             },
             currentOrder: null,
             editModalIsDisplayed: false,
-            refreshTimer: null
+            refreshTimer: null,
+            count: 0,
+            limit: 50,
+            offset: 0
         }),
         computed: {
             nonRouterLocation() {
                 return window.location.href.replace('#/', '')
+            },
+            listApiUrl() {
+                return `/api/order/list?offset=${this.offset}&limit=${this.limit}`
             }
         },
         created() {
-            this.currentPage = getParameterByName('page', this.nonRouterLocation);
-            if ( this.currentPage === null ) {
-                this.currentPage = 1;
-            }
             this.getOrders();
             this.$store.commit('admin/changeAppTitle', this.componentTitle);
         },
@@ -165,7 +167,7 @@
                 return this.orderStatusMap[value]
             },
             getOrders() {
-                this.$http.get(`${this.orderListAPIUrl}?page=${this.currentPage}`).then(
+                this.$http.get(this.listApiUrl).then(
                     response => {
                         this.processOrdersResponse(response);
                     },
@@ -175,6 +177,7 @@
                 )
             },
             processOrdersResponse(response) {
+                console.log(response);
                 this.orders = response.body.results;
                 let hasChanged = false;
 
@@ -197,7 +200,7 @@
             },
             orderFormRedirect(order) {
                 let orderPath = `order/${order.id}`;
-                this.$router.replace({path: orderPath});
+                this.$router.push({path: orderPath});
             },
             refresh() {
                 this.getOrders();
@@ -206,7 +209,6 @@
 
             },
             notify(order) {
-                console.log('notify');
                 if (Notification.permission === 'granted') {
                     let options = {
                         body: order.data['cart']['total_price'] + ' рублей'
