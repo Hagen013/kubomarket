@@ -1,122 +1,158 @@
 <template>
     <md-content class="orders">
-        <div class="md-layout">
-            <md-card>
-                <md-card-content>
-                    <table class="table">
-                        <tbody>
-                            <tr class="table-row">
-                                <th class="table-head">
-                                    <div class="table-head-container">
-                                        <div class="table-head-label">
-                                            №
-                                        </div>
-                                    </div>
-                                </th>
-                                <th class="table-head">
-                                    <div class="table-head-container">
-                                        <div class="table-head-label">
-                                        СОЗДАН
-                                        </div>
-                                    </div>
-                                </th>
-                                <th class="table-head">
-                                    <div class="table-head-container">
-                                        <div class="table-head-label">
-                                        СУММА
-                                        </div>
-                                    </div>
-                                </th>
-                                <th class="table-head">
-                                    <div class="table-head-container">
-                                        <div class="table-head-label">
-                                        ПОКУПАТЕЛЬ
-                                        </div>
-                                    </div>
-                                </th>
-                                <th class="table-head">
-                                    <div class="table-head-container">
-                                        <div class="table-head-label">
-                                        СТАТУС
-                                        </div>
-                                    </div>
-                                </th>
-                                <th class="table-head">
-                                    <div class="table-head-container">
-                                        <div class="table-head-label">
-                                        ОПЛАТА
-                                        </div>
-                                    </div>
-                                </th>
-                                <th class="table-head">
-                                    <div class="table-head-container">
-                                        <div class="table-head-label">
-                                        ДОСТАВКА
-                                        </div>
-                                    </div>
-                                </th>
-                            </tr>
-
-                            <tr class="table-row" 
-                                v-for="order in orders"
-                                :key="order.id"
-                                :class="computeRowStatusClass(order.state)"
+        <div class="orders__content"
+            v-if="showContent"
+        >
+            <div class="orders__controls">
+                <div class="orders__pagination pagination">
+                    <div class="pagination__client-count">
+                        {{ordersCount}}
+                    </div>
+                    <div class="pagination__delimeter">
+                        из
+                    </div>
+                    <div class="pagination__total-count">
+                        {{count}}
+                    </div>
+                    <div class="pagination__controls">
+                        <md-button class="md-icon-button"
+                            :disabled="!hasPreviousPage"
+                            @click="previousPage"
+                        >
+                            <md-icon>
+                            chevron_left
+                            </md-icon>
+                        </md-button>
+                        <md-button class="md-icon-button"
+                            :disabled="!hasNextPage"
+                            @click="nextPage"
+                        >
+                            <md-icon>
+                            chevron_right
+                            </md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+            <div class="orders__table-wrap">
+                <table class="table">
+                    <tr class="table__head">
+                        <th class="table__head numeric">
+                            <div class="table__head-container">
+                                <div class="table__label">
+                                    ID
+                                </div>
+                            </div>
+                        </th>
+                        <th class="table__head numeric">
+                            <div class="table__head-container">
+                                <div class="table__label">
+                                    СОЗДАН
+                                </div>
+                            </div>
+                        </th>
+                        <th class="table__head numeric">
+                            <div class="table__head-container">
+                                <div class="table__label">
+                                    СУММА
+                                </div>
+                            </div>
+                        </th>
+                        <th class="table__head numeric">
+                            <div class="table__head-container">
+                                <div class="table__label">
+                                    КЛИЕНТ
+                                </div>
+                            </div>
+                        </th>
+                        <th class="table__head numeric">
+                            <div class="table__head-container">
+                                <div class="table__label">
+                                    СТАТУС
+                                </div>
+                            </div>
+                        </th>
+                        <th class="table__head numeric">
+                            <div class="table__head-container">
+                                <div class="table__label">
+                                    ДОСТАВКА
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr class="table__row"
+                        v-for="order of orders"
+                        :key="order.id"
+                        @click="select(order.id)"
+                        :class="computeRowStatusClass(order.state)"
+                    >
+                        <td class="table__cell">
+                            <div class="table__cell-container table-cell--colored">
+                                {{order.id}}
+                            </div>
+                        </td>
+                        <td class="table__cell">
+                            <div class="table__cell-container">
+                                {{order.created_at | dataFilter}}
+                            </div>
+                        </td>
+                        <td class="table__cell">
+                            <div class="table__cell-container green">
+                                <span class="md-body-2">
+                                    {{order.data.cart.total_price}} ₽
+                                </span>
+                            </div>
+                        </td>
+                        <td class="table__cell">
+                            <div class="table__cell-container">
+                                <div class="md-caption">{{order.data.geo.city}}</div>
+                                <div class="callback" v-if="order.source=='callback'">
+                                    <span class="md-body-2">Обратный звонок</span>
+                                </div>
+                                <div v-else>
+                                    {{order.data.customer.name}}
+                                </div>
+                                <div>{{order.data.customer.phone}}</div>
+                            </div>
+                        </td>
+                        <td class="table__cell table-cell--colored">
+                            <div class="table__cell-container"
                             >
-                                <td class="table-cell table-cell--colored">
-                                    <a class="table-cell-container table-cell-container--clickable"
-                                        @click="orderFormRedirect(order)"
-                                    >
-                                        <span class="md-body-2">{{order.id}}</span>
-                                    </a>
-                                </td>
-                                <td class="table-cell">
-                                    <div class="table-cell-container table-cell-container--time">
-                                        {{order.created_at | dataFilter}}
+                                {{order.state | capitalize}}
+                            </div>
+                        </td>
+                        <td class="table__cell">
+                            <div class="table__cell-container">
+                                <div
+                                    v-if="order.data.delivery.mod.price !== null"
+                                >
+                                    <span class="md-body-2">{{order.data.delivery.mod.price}} ₽</span>
+                                    <div class="md-caption">
+                                        {{order.data.delivery.mod | deliveryFilter}}
                                     </div>
-                                </td>
-                                <td class="table-cell">
-                                    <div class="table-cell-container table-cell-container--right">
-                                        <span class="md-body-2">{{order.data.cart.total_price}} ₽</span>
-                                    </div>
-                                </td>
-                                <td class="table-cell">
-                                    <div class="table-cell-container">
-                                        <div class="md-caption">{{order.data.geo.city}}</div>
-                                        <div class="callback" v-if="order.source=='callback'">
-                                            <span class="md-body-2">Обратный звонок</span>
-                                        </div>
-                                        <div v-else>
-                                            {{order.data.customer.name}}
-                                        </div>
-                                        <div>{{order.data.customer.phone}}</div>
-                                    </div>
-                                </td>
-                                <td class="table-cell table-cell--colored">
-                                    <div class="table-cell-container">
-                                        <span class="md-body-2">{{order.state | capitalize}}</span>
-                                    </div>
-                                </td>
-                                <td class="table-cell">
-                                    <div class="table-cell-container">
-                                    </div>
-                                </td>
-                                <td class="table-cell">
-                                    <div class="table-cell-container">
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </md-card-content>
-            </md-card>
+                                </div>
+                                <div
+                                    class="md-caption"
+                                    v-else
+                                >
+                                    не выбрано
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="orders__placeholder"
+            v-else
+        >
+            <md-progress-spinner :md-diameter="100" :md-stroke="10" md-mode="indeterminate">
+            </md-progress-spinner>
         </div>
     </md-content>
 </template>
 
 <script>
-    import getParameterByName from '../../core/getParameterByName'
-    import updateQueryString from '../../core/updateQueryString'
     import normalizeNumber from '../../core/normalizeNumber'
 
     import store from './../../store';
@@ -126,10 +162,8 @@
         store,
         data: () => ({
             componentTitle: 'Заказы',
-            orderListAPIUrl: '/api/order/list/',
-            orderListAPIConnectionFailed: false,
-            originalOrders: [],
             orders: [],
+            originalOrders: [],
             orderStatusMap: {
                 'новый': 'table-row--new',
                 'недозвон': 'table-row--err',
@@ -139,23 +173,36 @@
                 'отменён': 'table-row--err',
                 'отменён: недозвон': 'table-row--err'
             },
-            currentOrder: null,
-            editModalIsDisplayed: false,
             refreshTimer: null,
             count: 0,
             limit: 50,
-            offset: 0
+            offset: 0,
+            responseRecieved: false,
+            responseError: false
         }),
         computed: {
-            nonRouterLocation() {
-                return window.location.href.replace('#/', '')
-            },
             listApiUrl() {
-                return `/api/order/list?offset=${this.offset}&limit=${this.limit}`
+                return `/api/order/list/?limit=${this.limit}&offset=${this.offset}`
+            },
+            showContent() {
+                return (this.responseRecieved && !this.responseError)
+            },
+            ordersCount() {
+                let sum = this.offset + this.limit;
+                if (sum > this.count) {
+                    sum = this.count;
+                }
+                return sum
+            },
+            hasPreviousPage() {
+                return this.offset > 0
+            },
+            hasNextPage() {
+                return this.ordersCount < this.count;
             }
         },
         created() {
-            this.getOrders();
+            this.initialize();
             this.$store.commit('admin/changeAppTitle', this.componentTitle);
         },
         mounted() {
@@ -163,27 +210,26 @@
             Notification.requestPermission();
         },
         methods: {
-            computeRowStatusClass(value) {
-                return this.orderStatusMap[value]
+            initialize() {
+                this.getOrders();
             },
             getOrders() {
                 this.$http.get(this.listApiUrl).then(
                     response => {
-                        this.processOrdersResponse(response);
+                        this.handleSuccessfulGetResponse(response);
                     },
                     response => {
-                        this.orderListAPIConnectionFailed = true;
+                        this.handleFailedGetResponse(response);
                     }
                 )
             },
-            processOrdersResponse(response) {
-                console.log(response);
+            handleSuccessfulGetResponse(response) {
                 this.orders = response.body.results;
-                let hasChanged = false;
-
+                this.count = response.body.count;
                 if (this.originalOrders.length === 0) {
                     this.originalOrders = this.orders.slice();
-                } else {
+                }
+                else {
                     let oldIds = this.originalOrders.map(function(order) {
                         return order.id
                     })
@@ -197,16 +243,30 @@
                         this.originalOrders = this.orders.slice();
                     }
                 }
+                this.responseError = false;
+                this.responseRecieved = true;
             },
-            orderFormRedirect(order) {
-                let orderPath = `order/${order.id}`;
+            handleFailedGetResponse(response) {
+                this.responseError = true;
+                this.responseRecieved = true;
+            },
+            select(orderID) {
+                let orderPath = `order/${orderID}`;
                 this.$router.push({path: orderPath});
+            },
+            previousPage() {
+                this.offset -= this.limit;
+                this.getOrders();
+            },
+            nextPage() {
+                this.offset += this.limit;
+                this.getOrders();
+            },
+            computeRowStatusClass(value) {
+                return this.orderStatusMap[value]
             },
             refresh() {
                 this.getOrders();
-            },
-            checkChanges() {
-
             },
             notify(order) {
                 if (Notification.permission === 'granted') {
@@ -215,11 +275,6 @@
                     }
                     let notification = new Notification('Новый заказ', options);
                 }
-            }
-        },
-        watch: {
-            currentPage() {
-                console.log('current page changed');
             }
         },
         filters: {
@@ -239,6 +294,17 @@
                 value = value.toString()
                 return value.charAt(0).toUpperCase() + value.slice(1)
             },
+            deliveryFilter(deliveryMod) {
+                if (deliveryMod.type === "delivery_points") {
+                    return "пункт выдачи"
+                }
+                else if (deliveryMod.type === "curier") {
+                    return "курьер"
+                }
+                else {
+                    return "почта"
+                }
+            }
         }
     }
 </script>
@@ -247,17 +313,76 @@
     $primary: #448aff;
     $accent: #F44336;
     $success: #00BFA5;
-
     .orders {
-        position: relative;
+        min-height: 400px;
     }
-    .table-head {
-        color: rgba(0,0,0,.54);
+    .orders__placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        min-height: 400px;
+        width: 100%;
     }
-    .table-row {
-        &:nth-child(odd) {
-            background: rgba(27,54,100,0.03);
+    .table {
+        width: 100%;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+    .table__row {
+        transition: .3s cubic-bezier(.4,0,.2,1);
+        transition-property: background-color,font-weight;
+        will-change: background-color,font-weight;
+        cursor: pointer;
+        &:hover {
+            background-color: rgba(0,0,0,.08);
         }
+    }
+    .table__cell {
+        height: 48px;
+        position: relative;
+        transition: .3s cubic-bezier(.4,0,.2,1);
+        font-size: 13px;
+        line-height: 18px;
+        border-top-color: rgba(0,0,0,.12);
+        border-top: 1px solid rgba(0,0,0,.12);
+    }
+    .table__cell-container {
+        padding: 6px 32px 6px 24px;
+    }
+    .table__head-container {
+        height: 56px;
+        padding: 14px 0px;
+        text-align: left;
+    }
+    .table__label {
+        height: 28px;
+        padding-right: 32px;
+        padding-left: 24px;
+        color: rgba(0, 0, 0, 0.54);
+        display: inline-block;
+        position: relative;
+        line-height: 28px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .orders__controls {
+        padding: 0px 32px;
+    }
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .pagination__delimeter {
+        padding: 0px 10px;
+    }
+    .pagination__total-count {
+
+    }
+    .pagination__controls {
+        user-select: none;
     }
     .table-row--new {
         .table-cell--colored {
@@ -283,51 +408,7 @@
             }
         }
     }
-    .table-head-container {
-        height: 56px;
-        padding: 14px 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .table-head-label {
-        height: 28px;
-        padding-right: 32px;
-        padding-left: 24px;
-        display: inline-block;
-        position: relative;
-        line-height: 28px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .table-cell {
-        position: relative;
-        height: 48px;
-        font-size: 13px;
-        line-height: 18px;
-    }
-    .table-cell-container {
-        padding: 6px 32px 6px 24px;
-    }
-    .md-layout {
-        width: 100% !important;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .table-cell-container--right {
-        text-align: right;
-    }
-    .table-cell-container--time {
-        max-width: 150px;
-        padding: 6px 32px 6px 24px;
-        line-height: 14px;
-    }
     .callback {
         color: $success;
-    }
-    .table-cell-container--clickable {
-        cursor: pointer;
     }
 </style>
