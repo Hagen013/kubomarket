@@ -113,18 +113,35 @@ export default {
             if (!this.responseAwaiting) {
                 this.responseAwaiting = true;
                 let source = this.productData !== undefined ? 'callback' : 'product-page';
-                this.$http.post(
-                    this.apiUrl,
-                    this.$store.getters['orderData'](source)
-                ).then(
+                this.$http.put(`/api/cart/items/${this.productData.id}/`).then(
                     response => {
-                        this.handleSuccessfulResponse(response);
+                        this.$http.post(
+                            this.apiUrl,
+                            this.$store.getters['orderData'](source)
+                        ).then(
+                            response => {
+                                this.handleSuccessfulResponse(response);
+                            },
+                            response => {
+                                this.handleFailedResponse(response);
+                            }
+                        )
                     },
                     response => {
-                        this.handleFailedResponse(response);
+
                     }
                 )
             }
+        },
+        addToCart() {
+            this.$http.put(`/api/cart/items/${this.productData.id}`).then(
+                response => {
+
+                },
+                response => {
+
+                }
+            )
         },
         handleSuccessfulResponse(response) {
             this.title = "Заявка отправлена";
