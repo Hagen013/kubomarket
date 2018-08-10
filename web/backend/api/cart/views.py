@@ -6,12 +6,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import APIException
 
-
 from cart.cart import Cart
 from cart.models import Order, OrderItem, Order2
 from core.db.shop import OfferIdentifier
-from tasks.mail_notifications import (anton_new_order_notification,
-                                      client_new_order_notification)
+
 from cart.serializers import OrderSerializer
 
 
