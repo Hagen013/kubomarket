@@ -10,7 +10,5 @@ def order_on_save(sender, instance, **kwargs):
             sms_notify.delay(instance.id)
         if not instance.notified_by_email and instance.data["customer"]["email"] != "":
             mail_notify.delay(instance.id)
-    print(instance.__original_state)
-    # if instance.__original_state != "недозвон" and instance.state == "недозвон":
-    #     print("AKUNAMATATA")
+
 
