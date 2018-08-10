@@ -156,6 +156,12 @@
             {% endif %}
             {% endblock pagination %}
 
+            {% if not is_paginated %}
+            <div class="catalog__description text">
+                    {{category.description|safe}}
+                </div>
+            {% endif %}
+
             {% if is_paginated and not page_obj.has_previous() %}
                 {% if category.description|length > 0 %}
                 <div class="catalog__description text">
