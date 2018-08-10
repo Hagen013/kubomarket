@@ -198,6 +198,14 @@ class Order2(TimeStamped):
         on_delete=models.SET_NULL,
     )
 
+    notified_by_sms = models.BooleanField(
+        default=False,
+    )
+
+    notified_by_email = models.BooleanField(
+        default=False
+    )
+
     def clean(self):
         try:
             jsonschema_validate(self.data, self.ORDER_DATA_JSONSCHEMA)
