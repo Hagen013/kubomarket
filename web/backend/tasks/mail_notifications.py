@@ -16,7 +16,13 @@ def mail_notify(pk):
             "order": instance
         }
     ).send()
+    MailSender(
+        "Спасибо за заявку",
+        "mail_templates/thanks_for_order.html",
+        "zakaz@kubomarket.ru",
+        context={
+            "order": instance
+        }
+    ).send()
     instance.notified_by_email = True
     instance.save()
-
-
