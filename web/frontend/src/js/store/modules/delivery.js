@@ -80,11 +80,9 @@ export default {
     actions: {
         initDelivery({ state, commit, dispatch }, payload) {
             return new Promise((resolve, reject) => {
-                console.log('initDelivery');
                 if (!state.isDataInited) {
                     dispatch('syncDelivery').then(resolve, reject);
-                } else {
-                    console.log('Delivery already inited');                    
+                } else {                 
                     resolve();
                 }
             });

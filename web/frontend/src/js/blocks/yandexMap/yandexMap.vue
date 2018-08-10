@@ -171,12 +171,10 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.geoPoints);
     this.addPoints();
   },
   watch: {
     ready() {
-      // console.log(this.geoPoints);
       this.addPoints();
       
     },

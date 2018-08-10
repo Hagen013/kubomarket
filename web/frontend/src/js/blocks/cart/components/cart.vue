@@ -512,7 +512,6 @@ export default {
                 this.$store.commit('delivery/selectCurierMod');
             } else if (mod == 'delivery_points') {
                 this.$store.commit('delivery/selectDeliveryPointsMod', {code, type});
-                // console.log(code, type);
             } else if (mod == 'postal_service') {
                 this.$store.commit('delivery/selectPostalServiceMod');
             }
@@ -576,7 +575,6 @@ export default {
             }
         },
         customerPhoneProxy() {
-            console.log(this.customerPhoneProxy);
             this.customerPhone = this.customerPhoneProxy;
         }
     }

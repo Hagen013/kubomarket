@@ -41,13 +41,12 @@ var loginForm = new Vue({
             window.location.href = this.redirectUrl;
         },
         handleFailedAuthResponse(response) {
-            console.log(response);
             this.authResponseStatusCode = response.status;
             this.authFailed = true;
             this.errorDetails = response.body["details"];
         },
         noop() {
-            console.log("noop");
+
         }
     }
 });

@@ -237,7 +237,6 @@
         created: function () {
             this.mainImageUploadAPIUrl = `/api/products/${this.id}/image/`;
             this.productImagesApiUrl = `/api/products/${this.id}/images/`;
-            console.log()
             window.onscroll = this.scrollFunction;
             this.getImages();
         },
@@ -307,10 +306,8 @@
 
             },
             showAddModal() {
-                console.log('show add modal');
             },
             showEditModal() {
-                console.log('show edit modal');
             },
             scrollFunction(e) {
                 let mainImage = document.getElementById('main-image');
@@ -412,9 +409,6 @@
                 let reader = new FileReader();
                 let mainImage = document.getElementById('main-image-preview');
                 let fileInput = document.getElementById('main-file-upload');
-
-                console.log(mainImage);
-                console.log(fileInput);
 
                 reader.onload = function(e) {
                     mainImage.setAttribute('src', e.target.result);

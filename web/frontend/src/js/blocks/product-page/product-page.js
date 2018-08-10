@@ -182,7 +182,6 @@ var productCard = new Vue({
             }
         },
         showCallbackModal() {
-            console.log('pidar');
             this.$store.commit("showCallbackModal/show");
         },
         isImageActive(image_key) {

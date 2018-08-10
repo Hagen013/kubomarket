@@ -83,7 +83,6 @@
                 )
             }, 500),
             handleSuccessfulSearchResponse(response) {
-                console.log(response);
                 this.searchResults = response.body['results_standard'];
             },
             handleFailedSearchResponse(response) {

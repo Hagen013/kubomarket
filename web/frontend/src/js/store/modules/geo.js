@@ -30,11 +30,9 @@ export default {
     actions: {
         initGeo({ state, commit, dispatch }, payload) {
             return new Promise((resolve, reject) => {
-                    console.log('initGeo');
                     if(!state.isDataInited) {
                         return dispatch('getKladr');
                     } else {
-                        console.log('Geo already inited');
                         resolve();
                     }
                 }
