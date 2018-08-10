@@ -33,7 +33,7 @@ class Order2(TimeStamped):
     def __init__(self, *args, **kwargs):
         super(Order2, self).__init__(*args, **kwargs)
         # Взятие исходного состояния, чтобя при сохранении,
-        # в засисимости от его изменение отправиь уведомления etc
+        # в засисимости от его изменение отправить уведомления etc
         self.__original_state = self.state
 
     data = JSONField()
@@ -269,25 +269,12 @@ class Order2(TimeStamped):
         return "Заказ №{0}".format(str(self.id))
 
     def save(self, *args, **kwargs):
+        print(self.__original_state)
         is_new = not self.id
         if is_new:
             self.assist_key = "".join((str(randint(0, 9)) for _ in range(128)))
-
         super(Order2, self).save(*args, **kwargs)
-
-        # email = self.data['customer']['email']
-        # if email:
-        #     if is_new:
-        #         MailSender(
-        #             "Спасибо за заявку",
-        #             "mail_templates/thanks_for_order.html",
-        #             email,
-        #             context={
-        #                 "order": self
-        #             }
-        #         ).send_mail()
-
-        self.__original_state = self.state
+        print(self.__original_state)
 
 
 class Order(models.Model):
@@ -407,7 +394,6 @@ class Order(models.Model):
         # elif self.state != self.__original_state:
         #     if self.state == "доставка":
         # notification_delivery.delay(self.phone_number, self.email, self.id)
-
         self.__original_state = self.state
 
 
