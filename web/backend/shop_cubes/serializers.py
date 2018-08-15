@@ -18,16 +18,18 @@ class CubesProductCardSerializer(ProductCardSerializer):
         model = CubesProductCard
 
 
-class CubesCategoryNodeSerializer(CategoryNodeSerializer):
-
-    class Meta(CategoryNodeSerializer.Meta):
-        model = CubesCategoryNode
-
-
 class CubesAttributeValueSerializer(AttributeValueSerializer):
 
     class Meta(AttributeValueSerializer.Meta):
         model = CubesAttributeValue
+
+
+class CubesCategoryNodeSerializer(CategoryNodeSerializer):
+
+    attribute_values = CubesAttributeValueSerializer(many=True, required=False)
+
+    class Meta(CategoryNodeSerializer.Meta):
+        model = CubesCategoryNode
 
 
 class CubesAttributeSerializer(AttributeSerializer):

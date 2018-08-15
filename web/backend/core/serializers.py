@@ -55,52 +55,6 @@ class ProductCardSerializer(DynamicFieldsModelSerializer):
         )
 
 
-class CategoryNodeSerializer(DynamicFieldsModelSerializer):
-
-    title = serializers.CharField()
-    absolute_url = serializers.CharField()
-    level = serializers.IntegerField()
-    depth = serializers.IntegerField()
-
-    class Meta:
-        fields = (
-            'id',
-            'name',
-            'title',
-            '_meta_title',
-            '_meta_keywords',
-            '_meta_description',
-            'url',
-            'absolute_url',
-            'level',
-            'depth',
-            'scoring',
-            'search_scoring',
-            'description'
-        )
-        read_only_fields = (
-            'id',
-            'title',
-            'url',
-            'absolute_url',
-            'level',
-            'depth',
-        )
-
-    def update(self, instance, validated_data):
-        ## СРОЧНЫЕ КОСТЫЛИ
-        _meta_title = validated_data["_meta_title"]
-        _meta_description = validated_data["_meta_description"]
-        _meta_keywords = validated_data["_meta_keywords"]
-        description = validated_data["description"]
-        instance._meta_title = _meta_title
-        instance._meta_keywords = _meta_keywords
-        instance._meta_description = _meta_description
-        instance.description = description
-        instance.save()
-        return instance
-
-
 class CategoryNodeInputRelationSerializer(serializers.Serializer):
 
     input_node = serializers.IntegerField(source='input_node.id')
@@ -161,3 +115,62 @@ class CategoryNodeGroupSerializer(DynamicFieldsModelSerializer):
             "name",
             "order"
         )
+
+
+class CategoryNodeSerializer(DynamicFieldsModelSerializer):
+
+    _title = serializers.CharField()
+    absolute_url = serializers.CharField()
+    level = serializers.IntegerField()
+    depth = serializers.IntegerField()
+    attribute_values = AttributeValueSerializer(required=False)
+
+    class Meta:
+        fields = (
+            'id',
+            'name',
+            '_title',
+            '_meta_title',
+            '_meta_keywords',
+            '_meta_description',
+            'url',
+            'absolute_url',
+            'level',
+            'depth',
+            'scoring',
+            'search_scoring',
+            'description',
+            'parent',
+            'attribute_values'
+        )
+        read_only_fields = (
+            'id',
+            'url',
+            'absolute_url',
+            'level',
+            'depth',
+            'parent'
+        )
+    
+    ## СРОЧНЫЕ КОСТЫЛИ
+    def update(self, instance, validated_data):
+        name = validated_data["name"]
+        _title = validated_data["_title"]
+        _meta_title = validated_data["_meta_title"]
+        _meta_description = validated_data["_meta_description"]
+        _meta_keywords = validated_data["_meta_keywords"]
+        description = validated_data["description"]
+        scoring = validated_data["scoring"]
+        search_scoring = validated_data["search_scoring"]
+
+        instance._title = _title
+        instance.name = name
+        instance.search_scoring = search_scoring
+        instance.scoring = scoring
+        instance._meta_title = _meta_title
+        instance._meta_keywords = _meta_keywords
+        instance._meta_description = _meta_description
+        instance.description = description
+
+        instance.save()
+        return instance

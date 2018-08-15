@@ -1,12 +1,15 @@
 from django.http import Http404
+from django.db import transaction
 from django.db.models import Max, Min, Count
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.contrib.postgres.search import SearchVector
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAdminUser
 
+from ..permissions import IsAdminUserOrReadOnly
 
 class CategoryFiltersAPIView(APIView):
 
@@ -64,13 +67,14 @@ class CategoryPriceAPIView(APIView):
 
 
 class CategoryAPIView(APIView):
-
     """
     Общий класс API-view для категории.
     В качестве параметра использует ID категории из url
     """
     model = None
-    serializer = None
+    serializer_class = None
+    permission_classes = (IsAdminUserOrReadOnly,)
+    value_class = None
 
     def get(self, request, pk, *args, **kwargs):
         try:
@@ -79,47 +83,63 @@ class CategoryAPIView(APIView):
             return Response(
                 status=status.HTTP_404_NOT_FOUND
             )
-        serializer = self.serializer(instance)
+        serializer = self.serializer_class(instance)
         return Response(
             serializer.data,
             status=status.HTTP_200_OK
         )
 
     def put(self, request, pk, *args, **kwargs):
+        # СРОЧНЫЕ КОСТЫЛИ
         try:
-            instance = self.model.objects.get(id=pk)
+            instance = self.model.objects.get(pk=pk)
         except ObjectDoesNotExist:
-            return Response(
-                status=status.HTTP_404_NOT_FOUND
-            )
-        serializer = self.serializer(instance=instance, data=request.data)
+            raise Http404
+        data = dict(request.data)
+
+        attribute_values = data.get("attribute_values", [])
+        if len(attribute_values) > 0:
+            data.pop("attribute_values")
+        attribute_values = self.value_class.objects.filter(
+            id__in={value["id"] for value in attribute_values}
+        )
+
+        serializer = self.serializer_class(instance, data=data)
         if serializer.is_valid():
-            serializer.save()
+            with transaction.atomic():
+                instance = serializer.save()
+                instance.update_values(attribute_values)
+
             return Response(
                 serializer.data,
                 status=status.HTTP_200_OK
             )
         else:
             return Response(
+                serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-    def post(self, request, pk, *args, **kwargs):
-        return Response({
-        })
 
     def delete(self, request, pk, *args, **kwargs):
-        return Response({
-        })
+        try:
+            instance = self.model.objects.get(pk=pk)
+        except ObjectDoesNotExist:
+            raise Http404
+        instance.delete()
+        return Response(
+            {"details": "deleted"},
+            status=status.HTTP_200_OK
+        )
 
 
 class CategoryNodeInputsAPIView(APIView):
-
     """
     Класс для работы с входными узлами категории дерева
     """
     model = None
     serializer = None
+    permission_classes = (IsAdminUserOrReadOnly,)
 
     def get(self, request, pk, *args, **kwargs):
         try:
@@ -147,12 +167,12 @@ class CategoryNodeInputsAPIView(APIView):
 
 
 class CategoryNodeOutputsAPIView(APIView):
-
     """
     Класс для работы с выходными узлами категории дерева
     """
     model = None
     serializer = None
+    permission_classes = (IsAdminUserOrReadOnly,)
 
     def get(self, request, pk, *args, **kwargs):
         try:
@@ -180,13 +200,12 @@ class CategoryNodeOutputsAPIView(APIView):
 
 
 class CategoryAdditionalNodesAPIView(APIView):
-
     """
     Класс для работы с входными узлами категории дерева
     """
-
     model = None
     serializer = None
+    permission_classes = (IsAdminUserOrReadOnly,)
 
     def get(self, request, pk, *args, **kwargs):
         return Response({
@@ -206,13 +225,12 @@ class CategoryAdditionalNodesAPIView(APIView):
 
 
 class CategoryNodeInputRelationAPIView(APIView):
-
     """
     Класс для работы с M2M-таблицей основных связей дерева
     """
-
     model = None
     serializer = None
+    permission_classes = (IsAdminUserOrReadOnly,)
 
     def get(self, request, pk, *args, **kwargs):
         return Response({
@@ -239,6 +257,7 @@ class CategoryNodeAdditionalRelationAPIView(APIView):
 
     model = None
     serializer = None
+    permission_classes = (IsAdminUserOrReadOnly,)
 
     def get(self, request, pk, *args, **kwargs):
         return Response({
@@ -268,7 +287,9 @@ class CategoryNodeListAPIView(APIView):
     default_ordering = 'level'
 
     model = None
+    value_class = None
     serializer = None
+    permission_classes = (IsAdminUserOrReadOnly,)
 
     def get(self, request, *args, **kwargs):
         ordering = request.GET.get('ordering', '_depth')
@@ -282,11 +303,57 @@ class CategoryNodeListAPIView(APIView):
             qs = self.model.objects.annotate(search=SearchVector('name')).filter(search=search_query)
             count = qs.count()
             qs = qs[offset:limit]
-        serializer = self.serializer(qs, many=True)
+        serializer = self.serializer_class(qs, many=True)
         return Response(
             {
                 'count': count,
                 'results': serializer.data
             },
             status=status.HTTP_200_OK
+        )
+
+    def post(self, request, *args, **kwargs):
+        #СРОЧНЫЕ КОСТЫЛИ
+        data = request.data
+        values = data.get("attribute_values", [])
+        if len(values) != 0:
+            slugs = [value["slug"] for value in values]
+        else:
+            slugs = ""
+        url = "".join(sorted(slugs)) + "/"
+        
+        instance = self.model(
+            name=data.get("name", ""),
+            _title=data.get("_title", ""),
+            scoring=int(data.get("scoring", 0)),
+            search_scoring=int(data.get("search_scoring", 10)),
+            _meta_title=data.get("_meta_title", ""),
+            _meta_keywords=data.get("_meta_keywords", ""),
+            _meta_description=data.get("_meta_description", ""),
+            description=data.get("description", ""),
+            url=url,
+            slug=url
+        )
+
+        try:
+            instance.full_clean()
+        except ValidationError:
+            return Response(
+                {"details": "invalid data"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        values_ids = [value["id"] for value in values]
+        values_to_add = self.value_class.objects.filter(id__in=values_ids)
+
+        with transaction.atomic():
+            instance.save()
+            for attribute_value in values_to_add:
+                instance.add_value(attribute_value)
+
+        serializer = self.serializer_class(instance)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED
         )

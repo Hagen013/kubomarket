@@ -8,7 +8,7 @@ from api.core.views import (CategoryAPIView,
                             CategoryNodeAdditionalRelationAPIView,
                             CategoryNodeInputRelationAPIView)
 
-from shop_cubes.models import CubesCategoryNode
+from shop_cubes.models import CubesCategoryNode, CubesAttributeValue
 from shop_cubes.serializers import CubesProductCardSerializer, CubesCategoryNodeSerializer
 
 
@@ -29,7 +29,8 @@ class CubesCategoryAPIView(CategoryAPIView):
     В качестве параметра использует ID категории из url
     """
     model = CubesCategoryNode
-    serializer = CubesCategoryNodeSerializer
+    serializer_class = CubesCategoryNodeSerializer
+    value_class = CubesAttributeValue
 
 
 class CubesCategoryNodeInputsAPIView(CategoryNodeInputsAPIView):
@@ -83,4 +84,5 @@ class CubesCategoryAdditionalNodesAPIView(CategoryAdditionalNodesAPIView):
 class CubesCategoryNodeListAPIView(CategoryNodeListAPIView):
 
     model = CubesCategoryNode
-    serializer = CubesCategoryNodeSerializer
+    value_class = CubesAttributeValue
+    serializer_class = CubesCategoryNodeSerializer

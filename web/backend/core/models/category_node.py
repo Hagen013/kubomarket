@@ -221,6 +221,35 @@ class CategoryNode(MPTTModel, WebPage, Named):
         )
         relation.save()
 
+    def remove_value(self, value):
+        relation = self.attributevalues_relation_class.get(
+            category=self,
+            attributevalue=value
+        )
+        relation.delete()
+
+    def update_values(self, values):
+        stored_values = self.attributevalues_relation_class.objects.filter(
+            category=self
+        )
+        stored_values_ids = {value.id for value in stored_values}
+        values_ids = {value.id for value in values}
+        ids_to_add = values_ids.difference(stored_values_ids)
+        ids_to_delete = stored_values_ids.difference(values_ids)
+        
+        self.attributevalues_relation_class.objects.filter(
+            category=self,
+            id__in=ids_to_delete
+        ).delete()
+
+        for instance in values:
+            relation = self.attributevalues_relation_class(
+                category=self,
+                attributevalue=instance
+            )
+            relation.save()
+
+
     @disallowed_before_creation
     def add_input(self, instance):
         """

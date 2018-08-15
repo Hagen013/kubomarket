@@ -1,13 +1,16 @@
 <template>
-    <div class="autocomplete-field">
+    <div class="numeric-field">
     </div>
 </template>
 
 <script>
     export default {
-        name: 'category-form',
+        name: 'numeric-field',
         data: () => ({
         }),
+        props: [
+            "attribute"
+        ],
         created() {
         },
         computed: {
@@ -18,8 +21,6 @@
 </script>
 
 <style lang="scss" scoped>
-
-
     .fade {
         opacity: 1 !important;
         transition: opacity 1s
