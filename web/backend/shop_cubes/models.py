@@ -12,6 +12,7 @@ from core.models import (CategoryNodeGroup,
                          ProductCard,
                          ProductModel,
                          ProductAditionalImage,
+                         ProductVideoReview,
                          CategoryNodeInputRelation,
                          CategoryNodeAdditionalRelation,
                          CategoryNodeAttributeValueRelation,
@@ -131,8 +132,10 @@ class CubesProductCard(ProductCard):
     )
 
     def get_absolute_url(self):
-
-        return reverse('shop:product', kwargs={'slug': self.slug})
+        # Костыль для сохранения в Elasticsearch при большом 
+        # bulk-insert'e в одну транзакцию
+        #return reverse('shop:product', kwargs={'slug': self.slug})
+        return "/product/{slug}".format(slug=self.slug)
 
     @disallowed_before_creation
     def get_public_id(self):
@@ -183,6 +186,10 @@ class CubesProductCard(ProductCard):
                     "CUBE": 4,
                     "PURSE": 5
             }[self.product_type]
+
+    @property
+    def videos(self):
+        return self.video_reviews.all().order_by("-order")
 
     def save(self, update_product_type=True, *args, **kwargs):
         if update_product_type:
@@ -339,4 +346,16 @@ class CubesImagesRegisterRecord(models.Model):
         unique=False,
         max_length=1024,
         verbose_name='url'
+    )
+
+
+class CubesProductVideoReview(ProductVideoReview):
+
+    class Meta:
+        unique_together=(("product", "youtube_code"))
+
+    product = models.ForeignKey(
+        CubesProductCard,
+        on_delete=models.CASCADE,
+        related_name='video_reviews'
     )

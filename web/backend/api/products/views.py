@@ -10,10 +10,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import IsAdminUser
 
 from shop_cubes.models import CubesProductCard
 from shop_cubes.models import CubesAttribute
 from shop_cubes.models import CubesAttributeValue
+from shop_cubes.models import CubesProductVideoReview
+from shop_cubes.serializers import CubesProductVideoReviewSerializer
 from core.models import ProductCard
 from core.serializers import ProductCardSerializer
 from tasks.images import save_description_image
@@ -305,3 +308,74 @@ class ProductCardDescriptionImagesAPIView(APIView):
                 taks_id,
                 extension
             )   
+
+
+class ProductReviewListAPIView(APIView):
+    model = CubesProductVideoReview
+    serializer_class = CubesProductVideoReviewSerializer
+    permission_classes = (IsAdminUser,)
+
+    def get(self, request, product_pk, *args, **kwargs):
+        qs = self.model.objects.filter(
+            product_id=product_pk
+        )
+        print(qs)
+        print(self.model)
+        serializer = self.serializer_class(qs, many=True)
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+    def post(self, request, product_pk, *arsg, **kwargs):
+        data = dict(request.data)
+        data["product"] = product_pk
+        serializer = self.serializer_class(data=data)
+        if serializer.is_valid():
+            instance = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProductReviewAPIView(APIView):
+    model = CubesProductVideoReview
+    serializer_class = CubesProductVideoReviewSerializer
+    permission_classes = (IsAdminUser,)
+
+    def get_instance(self, product_pk, pk):
+        try:
+            return self.model.objects.get(
+                product_id=product_pk,
+                pk=pk
+            )
+        except ObjectDoesNotExist:
+            raise Http404
+
+    def get(self, request, product_pk, pk, *args, **kwargs):
+        instance = self.get_instance(product_pk, pk)
+        serializer = self.serializer_class(instance)
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+    def put(self, request, product_pk, pk, *args, **kwargs):
+        instance = self.get_instance(product_pk, pk)
+        serializer = self.serializer_class(instance, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    def delete(self, request, product_pk, pk, *args, **kwargs):
+        instance = self.get_instance(product_pk, pk)
+        instance.delete()
+        return Response(
+            status=status.HTTP_200_OK
+        )

@@ -105,6 +105,7 @@ class CubesProductPageView(TemplateView):
         context['product'] = self.product
         context['category'] = CubesCategoryNode.public.get_by_product(self.product)
         context['user_status'] = self.get_user_status()
+        context['videos'] = self.product.videos
         return context
 
 

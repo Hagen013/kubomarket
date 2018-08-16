@@ -173,9 +173,9 @@
             originalMainImage: '',
             originalAdditionalImages: [],
             hasChanged: false,
-            additionalImageApiURL: '/api/bags/images/',
+            additionalImageApiURL: '/api/cubes/images/',
             additionalImagesFile: null,
-            addImageUploadURL: '/api/bags/images/upload/',
+            addImageUploadURL: '/api/cubes/images/upload/',
             addImageUploadInProgess: false,
             addImageConnectionFailed: false,
             addImageUploadSucceded: false,
@@ -313,7 +313,8 @@
                 let mainImage = document.getElementById('main-image');
                 let imageOffset = mainImage.offsetTop;
                 let offset = window.pageYOffset;
-                let distance = imageOffset - offset;
+                let distance = imageOffset - offset +71;
+                console.log(imageOffset);
                 
                 if ( (distance <= 0) && (!this.mainImageFixed) ) {
                     this.mainImageFixed = true;
@@ -719,7 +720,7 @@
     }
     .images-gallery__additional-imgs-wrap {
         padding-left: 32px;
-        margin-top: 359px;
+        margin-top: 430px;
     }
     .imagesGallery__additionalImgsWrapMainContentHidden {
         margin-top: 115px !important;

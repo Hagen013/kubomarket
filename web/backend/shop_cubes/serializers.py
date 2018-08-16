@@ -4,12 +4,15 @@ from core.serializers import (ProductCardSerializer,
                               CategoryNodeAdditionalRelationSerializer,
                               CategoryNodeGroupSerializer,
                               AttributeSerializer,
-                              AttributeValueSerializer)
+                              AttributeValueSerializer,
+                              ProductVideoReviewSerializer)
 from shop_cubes.models import (CubesProductCard,
                               CubesCategoryNode,
                               CubesCategoryNodeGroup,
                               CubesAttribute,
-                              CubesAttributeValue)
+                              CubesAttributeValue,
+                              CubesProductVideoReview
+                              )
 
 
 class CubesProductCardSerializer(ProductCardSerializer):
@@ -54,3 +57,9 @@ class CubesCategoryNodeGroupSerializer(CategoryNodeGroupSerializer):
     
     class Meta(CategoryNodeGroupSerializer.Meta):
         model = CubesCategoryNodeGroup
+
+
+class CubesProductVideoReviewSerializer(ProductVideoReviewSerializer):
+
+    class Meta(ProductVideoReviewSerializer.Meta):
+        model = CubesProductVideoReview

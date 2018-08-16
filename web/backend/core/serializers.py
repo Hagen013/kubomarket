@@ -174,3 +174,23 @@ class CategoryNodeSerializer(DynamicFieldsModelSerializer):
 
         instance.save()
         return instance
+
+
+class ProductVideoReviewSerializer(DynamicFieldsModelSerializer):
+
+    class Meta:
+        fields = (
+            'id',
+            'youtube_code',
+            'product',
+            'created_at',
+            'modified_at',
+            'order',
+            'url'
+        )
+        read_only_fields = (
+            'id',
+            'created_at',
+            'modified_at',
+            'url'
+        )

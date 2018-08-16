@@ -19,7 +19,7 @@ from django.conf import settings
 from ..db.shop import OfferIdentifier
 from ..db.shop import OfferPage
 from ..db.image import Image
-from ..db.base import Weighable, Dimensional, Named
+from ..db.base import Weighable, Dimensional, Named, TimeStamped, Orderable
 from ..db import Orderable
 from ..utils import disallowed_before_creation, DisallowedBeforeCreationException,\
     md5_file_checksum
@@ -336,3 +336,22 @@ class ProductModel(Named):
 
     class Meta:
         abstract = True
+
+
+class ProductVideoReview(TimeStamped, Orderable):
+
+    class Meta:
+        abstract = True
+
+    product = None
+
+    youtube_code = models.CharField(
+        db_index=True,
+        max_length=64,
+        blank=True,
+        verbose_name="код Youtube"
+    )
+
+    @property
+    def url(self):
+        return "https://www.youtube.com/watch?v={code}".format(self.code)

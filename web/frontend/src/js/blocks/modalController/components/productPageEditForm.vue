@@ -9,6 +9,10 @@
                 <svg height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path> <path d="M0 0h24v24H0z" fill="none"></path></svg>
             </div>
         </div>
+        <div class="edit-form__content-wrap">
+            <el-tabs class="edit-form__nav">
+                <el-tab-pane label="Основное">
+
         <div class="edit-form__main">
         <div class="edit-form__controls">
             <button class="edit-form__controls-button edit-form__controls-button-accept"
@@ -187,11 +191,23 @@
             v-on:close-modal="showResponseModal=false"
         >
         </edit-modal>
+
+
+                </el-tab-pane>
+                <el-tab-pane label="Видеобзоры">
+                    <video-reviews
+                        :pk="id"
+                    >
+                    </video-reviews>
+                </el-tab-pane>
+            </el-tabs>
+        </div>
     </div>
 
 </template>
 
 <script>
+    import { Vue } from '../../../vue'
     import multiChoiceForm from './__multi-choice-form.vue'
     import choiceForm from './__choice-form.vue'
     import booleanForm from './__boolean-form.vue'
@@ -201,6 +217,10 @@
     import imagesGallery from './__images-gallery.vue'
     import description from './__description.vue'
     import store from "../../../store"
+    import Element from 'element-ui'
+    import "element-ui/lib/theme-chalk/index.css"
+    import videoReviews from "./videoReviews.vue"
+    Vue.use(Element)
 
     export default {
         name: 'edit-form',
@@ -212,7 +232,8 @@
             'field': field,
             'edit-modal': editModal,
             'images-gallery': imagesGallery,
-            'description': description
+            'description': description,
+            'video-reviews': videoReviews
         },
         store,
         data: () => ({
@@ -518,9 +539,12 @@
             fill: rgba(255,255,255,.90);
         }
     }
+    .edit-form__content-wrap {
+        padding: 16px;
+    }
     .edit-form__content {
         position: relative;
-        padding: 32px 0px 124px 16px;
+        padding: 32px 0px 124px 0px;
         width: 50%;
         background: white;
     }
@@ -552,7 +576,7 @@
     }
     .edit-form__main-info {
         min-width: 600px;
-        padding: 0px 16px 0px 16px;
+        padding: 0px 8px 0px 0px;
     }
     .edit-form__attr {
         padding: 16px 0px 16px 0px;
