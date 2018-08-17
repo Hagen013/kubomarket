@@ -105,7 +105,7 @@ export default {
             this.synchronizing = true;
             let data = {
                 "youtube_code": this.videoCode,
-                "product": this.pk
+                "product": Number(this.pk)
             }
             this.$http.post(this.apiListUrl, data).then(
                 response => {
@@ -134,6 +134,7 @@ export default {
             this.getReviews();
         },
         handleFailedPostResponse(response) {
+            console.log(response);
         },
         handleSuccessfulDeleteResponse(response) {
             this.getReviews();

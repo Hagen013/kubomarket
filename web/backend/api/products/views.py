@@ -329,12 +329,17 @@ class ProductReviewListAPIView(APIView):
 
     def post(self, request, product_pk, *arsg, **kwargs):
         data = dict(request.data)
-        data["product"] = product_pk
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             instance = serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 class ProductReviewAPIView(APIView):

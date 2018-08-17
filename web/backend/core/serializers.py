@@ -178,6 +178,8 @@ class CategoryNodeSerializer(DynamicFieldsModelSerializer):
 
 class ProductVideoReviewSerializer(DynamicFieldsModelSerializer):
 
+    order = serializers.IntegerField(required=False)
+
     class Meta:
         fields = (
             'id',
