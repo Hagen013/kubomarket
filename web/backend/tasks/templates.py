@@ -29,7 +29,7 @@ def generate_static_navigation():
     childs = [child for child in childs if child.products.filter(is_in_stock=True).count() > 0]
     nav_nodes[-1]["childs"] = childs
 
-    node = Node.objects.get(url="nestandartnie/")
+    node = Node.objects.get(url="nestandartnoj-formy/")
     nav_nodes.append({
         "name": "Нестандартные кубы",
         "id": node.id,
