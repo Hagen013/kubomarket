@@ -1,3 +1,5 @@
+from rest_framework import serializers
+
 from core.serializers import (ProductCardSerializer,
                               CategoryNodeSerializer,
                               CategoryNodeInputRelationSerializer,
@@ -60,6 +62,8 @@ class CubesCategoryNodeGroupSerializer(CategoryNodeGroupSerializer):
 
 
 class CubesProductVideoReviewSerializer(ProductVideoReviewSerializer):
+
+    product = serializers.PrimaryKeyRelatedField(queryset=CubesProductCard.objects.all())
 
     class Meta(ProductVideoReviewSerializer.Meta):
         model = CubesProductVideoReview

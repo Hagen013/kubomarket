@@ -319,8 +319,6 @@ class ProductReviewListAPIView(APIView):
         qs = self.model.objects.filter(
             product_id=product_pk
         )
-        print(qs)
-        print(self.model)
         serializer = self.serializer_class(qs, many=True)
         return Response(
             serializer.data,
@@ -329,6 +327,7 @@ class ProductReviewListAPIView(APIView):
 
     def post(self, request, product_pk, *arsg, **kwargs):
         data = dict(request.data)
+        print(data)
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             instance = serializer.save()
