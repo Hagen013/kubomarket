@@ -380,7 +380,7 @@ def upload_offers(filepath):
         price = row['price']
         purchase_price = row['purchase_price']
         slug_body = name
-        slug = slugify(slug_body)
+        slug = slugify(slug_body) + "/"
 
         try:
             product = ProductCard.objects.get(vendor_code=vendor_code)
