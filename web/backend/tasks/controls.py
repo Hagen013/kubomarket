@@ -1,4 +1,5 @@
 import json
+import os
 
 from unidecode import unidecode
 
@@ -358,6 +359,8 @@ def process_uploaded_attrs_file(path):
         fp.write(short_report)
         for message in log_msgs:
             fp.write(message+'\n')
+
+    os.remove(path)
 
     return report_data
 
