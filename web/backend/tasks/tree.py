@@ -1,5 +1,6 @@
 from shop_cubes.models import CubesCategoryNode
 from config.celery import app
+from celery.schedules import crontab
 
 
 @app.task
