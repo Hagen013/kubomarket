@@ -53,7 +53,7 @@
                         <th class="table__head numeric">
                             <div class="table__head-container">
                                 <div class="table__label">
-                                    Глубина в каталоге
+                                    Уровень
                                 </div>
                             </div>
                         </th>
@@ -68,6 +68,20 @@
                             <div class="table__head-container">
                                 <div class="table__label">
                                     Скоринг
+                                </div>
+                            </div>
+                        </th>
+                        <th class="table__head numeric">
+                            <div class="table__head-container">
+                                <div class="table__label">
+                                    meta-tags
+                                </div>
+                            </div>
+                        </th>
+                        <th class="table__head numeric">
+                            <div class="table__head-container">
+                                <div class="table__label">
+                                    Описание
                                 </div>
                             </div>
                         </th>
@@ -105,6 +119,34 @@
                         <td class="table__cell">
                             <div class="table__cell-container">
                                 {{node.scoring}}
+                            </div>
+                        </td>
+                        <td class="table__cell">
+                            <div class="table__cell-container">
+                                <md-icon class="md-primary"
+                                    v-if="hasMetaTags(node)"
+                                >
+                                    check_circle
+                                </md-icon>
+                                <md-icon class="md-accent"
+                                    v-else
+                                >
+                                    remove_circle
+                                </md-icon>
+                            </div>
+                        </td>
+                        <td class="table__cell">
+                            <div class="table__cell-container">
+                                <md-icon class="md-primary"
+                                    v-if="hasDescription(node)"
+                                >
+                                    check_circle
+                                </md-icon>
+                                <md-icon class="md-accent"
+                                    v-else
+                                >
+                                    remove_circle
+                                </md-icon>
                             </div>
                         </td>
                     </tr>
@@ -202,6 +244,12 @@
                 const target = item.toLowerCase();
                 const search = this.query.toLowerCase();
                 return fuzzy(search, target)
+            },
+            hasMetaTags(node) {
+                return ( (node._meta_title.length>0) && (node._meta_description.length>0) && (node._meta_keywords.length>0) )
+            },
+            hasDescription(node) {
+                return node.description.length > 0
             }
         }
     }
@@ -213,6 +261,9 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+    }
+    .categories__wrap {
+        margin-bottom: 32px;
     }
     .table {
         width: 100%;
@@ -274,7 +325,12 @@
     .pagination__controls {
         user-select: none;
     }
-
+    .success {
+        color: #00ef81 !important;
+    }
+    .failure {
+        color: #fd4b2d !important;
+    }
     .categories__placeholder {
         display: flex;
         justify-content: center;
