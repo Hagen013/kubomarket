@@ -229,20 +229,19 @@ class CategoryNode(MPTTModel, WebPage, Named):
         relation.delete()
 
     def update_values(self, values):
-        stored_values = self.attributevalues_relation_class.objects.filter(
-            category=self
-        )
+        stored_values = self.attribute_values.all()
         stored_values_ids = {value.id for value in stored_values}
         values_ids = {value.id for value in values}
         ids_to_add = values_ids.difference(stored_values_ids)
         ids_to_delete = stored_values_ids.difference(values_ids)
-        
+
         self.attributevalues_relation_class.objects.filter(
             category=self,
-            id__in=ids_to_delete
+            attributevalue__id__in=ids_to_delete
         ).delete()
 
-        for instance in values:
+        values_to_add = [value for value in values if value.id in ids_to_add]
+        for instance in values_to_add:
             relation = self.attributevalues_relation_class(
                 category=self,
                 attributevalue=instance
