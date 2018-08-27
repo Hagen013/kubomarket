@@ -34,17 +34,19 @@ class Client(object):
         except ParseError:
             pass
         else:
-            return xml
+            return xml.getroot()
         
     @classmethod
     def _xml_to_dict(cls, xml):
         result = xml.attrib
+
         for child in xml.getchildren():
             if child.tag in cls.array_tags:
                 result[child.tag] = result.get(child.tag, [])
                 result[child.tag].append(cls._xml_to_dict(child))
             else:
                 result[child.tag] = cls._xml_to_dict(child)
+
         return result
     
     def _xml_to_string(self, xml):
@@ -74,5 +76,4 @@ class Client(object):
                 Number=str(order['id']),
             )
         xml = self._exec_xml_request(self.ORDER_STATUS_URL, status_report_element)
-        return xml
         return self._xml_to_dict(xml)
