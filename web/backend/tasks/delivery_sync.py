@@ -214,5 +214,11 @@ def sync_delivery_statuses():
     sorted_pks = sort_orders_by_delivery_service()
     sync_sdek_orders.delay(sorted_pks['sdek'])
     sync_pickpoint_orders.delay(sorted_pks['pickpoint'])
-    #sync_postal_orders.delay(sorted_pks['rupost'])
+    sync_postal_orders.delay(sorted_pks['rupost'])
 
+
+app.add_periodic_task(
+    crontab(minute=0,  hour='*/12'),
+    sync_delivery_statuses.s(),
+    name='sync_delivery_statuses',
+)
