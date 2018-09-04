@@ -48,7 +48,8 @@ export default {
             'выполнен': 'order__status_green',
             'согласован': 'order__status_blue',
             'отменён': 'order__status_red',
-            'отменён: недозвон': 'order__status_red'
+            'отменён: недозвон': 'order__status_red',
+            'вручен': 'order__status_violet'
         },
     }),
     props: [

@@ -11,6 +11,8 @@ from cart.models import Order, OrderItem, Order2
 from core.db.shop import OfferIdentifier
 
 from cart.serializers import OrderSerializer
+from tasks.sms_notifications import sms_notify
+from tasks.mail_notifications import mail_notify
 
 
 class BaseCartAPIView(APIView):
@@ -128,6 +130,10 @@ class CartMakeOrderAPIView(BaseCartAPIView):
             return Response(status=400, data=e.messages)
 
         order.save()
+        if order.total_price > 0:
+            sms_notify.delay(order.id)
+        if order.data["customer"]["email"] != "":
+            mail_notify.delay(order.id)
         serializer = OrderSerializer(order)
 
         self.cart.clear()

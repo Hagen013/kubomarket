@@ -54,20 +54,20 @@ class Client(object):
         response = self._exec_request(self.STATES_URL, payload)
         return response.json()
     
-    def track_sending(self, order):
+    def track_sending(self, public_code):
         self.check_auth()
         payload = {
             'SessionId': self._session_id,
-            'SenderInvoiceNumber': order['id']
+            'SenderInvoiceNumber': str(public_code)
         }
         response = self._exec_request(self.TRACK_URL, payload, method='POST')
         return response
     
-    def get_order_info(self, order):
+    def get_order_info(self, invoice_number):
         self.check_auth()
         payload = {
             'SessionId': self._session_id,
-            'SenderInvoiceNumber': order['id'],
+            'SenderInvoiceNumber': str(invoice_number),
         }
         response = self._exec_request(self.SENDING_INFO_URL, payload, method='POST')
         return response

@@ -6,6 +6,7 @@ class CartConfig(AppConfig):
     name = 'cart'
 
     def ready(self):
-        from .signals import order_on_save
-        from .models import Order2
-        post_save.connect(order_on_save, Order2)
+        pass
+        # from .signals import order_on_save
+        # from .models import Order2
+        # post_save.connect(order_on_save, Order2)

@@ -128,6 +128,61 @@ class Order2(TimeStamped):
         "additionalProperties": False,
     }
 
+    delivery_status = JSONField(
+        default={
+            "service": "",
+            "change_date": "",
+            "dispatch_number": "",
+            "state_description": "",
+            "service_status_code": None,
+            "status_code": None,
+            "history": []
+        }
+    )
+
+    DELIVERY_DATA_JSONCHEMA = {
+        "type": "object",
+        "properties": {
+            "service": {"type": "string"},
+            "change_date": {"type": "string"},
+            "dispatch_number": {"type": "string"},
+            "state_description": {"type": "string"},
+            "service_status_code": {"type": ["integer", "null"]},
+            "status_code": {"type": ["integer", "null"]},
+            "history": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "change_date": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "state_description": {"type": "string"},
+                        "service_status_code": {"type": "integer"},
+                        "city_code": {"type": ["string", "null"]}
+                    },
+                    "additionalProperties": False
+                }
+            },
+            "reason": {
+                "type": ["object", "null"],
+                "properties": {
+                    "code": {"type": ["string", "null"]}
+                },
+                "additionalProperties": False
+            },
+            "delay_reason": {
+                "type": ["object", "null"],
+                "propertues": {
+                    "code": {"type": ["string", "null"]}
+                },
+                "additionalProperties": False
+            }
+        },
+        "additionalProperties": False
+    }
+
     manager_notes = models.TextField(
         max_length=2000,
         verbose_name='Служебные заметки',
@@ -148,6 +203,7 @@ class Order2(TimeStamped):
         ("выполнен", "Выполнен"),
         ("отменён", "Отменён"),
         ("отменён: недозвон", "Отменён: недозвон"),
+        ("вручен", "вручен")
     )
     state = models.CharField(
         max_length=100,
@@ -206,9 +262,16 @@ class Order2(TimeStamped):
         default=False
     )
 
+    public_id = models.CharField(
+        db_index=True,
+        max_length=24,
+        blank=True
+    )
+
     def clean(self):
         try:
             jsonschema_validate(self.data, self.ORDER_DATA_JSONSCHEMA)
+            jsonschema_validate(self.delivery_status, self.DELIVERY_DATA_JSONCHEMA)
         except JsonSchemaValidationError as e:
             raise ValidationError(message=e.message)
 
@@ -265,16 +328,18 @@ class Order2(TimeStamped):
             self.assist_status = "approved"
         return self.assist_status
 
+    def generate_public_id(self):
+        return ""
+
     def __str__(self):
         return "Заказ №{0}".format(str(self.id))
 
     def save(self, *args, **kwargs):
-        print(self.__original_state)
         is_new = not self.id
         if is_new:
             self.assist_key = "".join((str(randint(0, 9)) for _ in range(128)))
+            # self.public_id = self.generate_public_id()
         super(Order2, self).save(*args, **kwargs)
-        print(self.__original_state)
 
 
 class Order(models.Model):
