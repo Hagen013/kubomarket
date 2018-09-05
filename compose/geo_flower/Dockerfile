@@ -1,4 +1,5 @@
 FROM graphmarket/base_alpine:latest
+RUN apk add --no-cache --virtual .pynacl_deps build-base python3-dev libffi-dev
 
 # INSTALL REQUIREMENTS
 COPY  geo/requirements/base.txt base.txt

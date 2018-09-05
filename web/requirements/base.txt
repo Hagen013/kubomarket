@@ -40,3 +40,7 @@ raven==6.5.0
 
 beautifulsoup4==4.6.0
 bs4==0.0.1
+
+
+# XML-client
+zeep==3.1.0
