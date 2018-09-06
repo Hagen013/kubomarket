@@ -192,10 +192,8 @@ CELERY_IMPORTS = (
     'tasks.elastic',
     'tasks.mail_notifications',
     'tasks.yandex_market',
-    'tasks.mywarehouse',
     'tasks.controls',
     'tasks.images',
-    'tasks.asist',
     'tasks.sms_notifications',
     'tasks.tree',
     'tasks.delivery_sync'

@@ -1,11 +1,13 @@
 import xml.etree.ElementTree as ET
 from random import randint
+import datetime
 import requests
 
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.db import IntegrityError
 
 from core.db.base import TimeStamped
 from core.utils import MailSender
@@ -265,7 +267,8 @@ class Order2(TimeStamped):
     public_id = models.CharField(
         db_index=True,
         max_length=24,
-        blank=True
+        blank=True,
+        unique=True
     )
 
     def clean(self):
@@ -328,17 +331,33 @@ class Order2(TimeStamped):
             self.assist_status = "approved"
         return self.assist_status
 
-    def generate_public_id(self):
-        return ""
+    @classmethod
+    def generate_public_id(cls):
+        date = datetime.datetime.now()
+        number = str(randint(1000, 9999))
+        year = str(date.year)[2:]
+        month = str(date.month)
+        day = str(date.day)
+        if len(day) == 1:
+            day = "0" + day
+        if len(month) == 1:
+            month = "0" + month
+        code = "KU{0}{1}{2}{3}{4}".format(
+            year,
+            number[:2],
+            month,
+            day,
+            number[2:]
+        )
+        return code
 
     def __str__(self):
-        return "Заказ №{0}".format(str(self.id))
+        return "Заказ №{0}".format(str(self.public_id))
 
     def save(self, *args, **kwargs):
         is_new = not self.id
         if is_new:
             self.assist_key = "".join((str(randint(0, 9)) for _ in range(128)))
-            # self.public_id = self.generate_public_id()
         super(Order2, self).save(*args, **kwargs)
 
 
@@ -448,17 +467,11 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return("Заказ №{0}".format(str(self.id),)
+        return("Заказ №{0}".format(str(self.public_id),)
                )
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         is_new = not self.id
-        super(Order, self).save(force_insert, force_update, *args, **kwargs)
-        # if is_new:
-        #     notification_new_order.delay(self.phone_number, self.email, self.id)
-        # elif self.state != self.__original_state:
-        #     if self.state == "доставка":
-        # notification_delivery.delay(self.phone_number, self.email, self.id)
         self.__original_state = self.state
 
 

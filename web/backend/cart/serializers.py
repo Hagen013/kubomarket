@@ -8,10 +8,13 @@ from .models import Order2
 
 class OrderSerializer(DynamicFieldsModelSerializer):
 
+
+
     class Meta:
         model = Order2
         fields = (
             'id',
+            'public_id',
             'data',
             'state',
             'source',
@@ -24,5 +27,6 @@ class OrderSerializer(DynamicFieldsModelSerializer):
         )
         read_only_fields = (
             'id',
-            'user'
+            'user',
+            'public_id'
         )
