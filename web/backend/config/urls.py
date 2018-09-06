@@ -63,6 +63,8 @@ urlpatterns = [
                              url(r'^-(?P<section>.+)\.xml$', sitemap, {
                                  "sitemaps": sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
                              ])),
+    url(r'^ym/payment-success/$', TemplateView.as_view(template_name="payment-success.html")),
+    url(r'^ym/payment-fail/$', TemplateView.as_view(template_name="payment-fail.html")),
     url(r'^', include('shop_cubes.urls', namespace='shop'))
 ]
 

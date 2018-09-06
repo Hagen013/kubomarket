@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+    <div class="content-area_mb">
+        <div class="payment">
+            <h1 class="title">Платёж не удалось выполнить</h1>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block script %}
+    {{ super() }}
+    <script src="{{ static('js/indexPage.js') }}"></script>
+{% endblock script %}

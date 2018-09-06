@@ -86,7 +86,15 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
-        }
+        },
+        'yandex_money': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'yandex_money.log'),
+            'maxBytes': 1024 * 1024 * 5,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
     },
     'loggers': {
         'raven': {
@@ -98,6 +106,11 @@ LOGGING = {
             'level': 'DEBUG',
             'handlers': ['console'],
             'propagate': False,
+        },
+        'yandex_money': {
+            'handlers': ['yandex_money'],
+            'level': 'DEBUG',
+            'propagate': False
         },
     },
 }
