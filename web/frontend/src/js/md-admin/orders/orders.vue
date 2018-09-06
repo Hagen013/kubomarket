@@ -171,7 +171,8 @@
                 'выполнен': 'table-row--done',
                 'согласован': 'table-row--done',
                 'отменён': 'table-row--err',
-                'отменён: недозвон': 'table-row--err'
+                'отменён: недозвон': 'table-row--err',
+                'вручен': 'table-row-success'
             },
             refreshTimer: null,
             count: 0,
@@ -236,12 +237,9 @@
             },
             handleSuccessfulGetResponse(response) {
                 this.orders = response.body.results;
+                this.originalOrders = this.orders.slice();
                 this.count = response.body.count;
                 let hasChanged = false;
-
-                if (this.originalOrders.length === 0) {
-                    this.originalOrders = this.orders.slice();
-                }
 
                 this.responseError = false;
                 this.responseRecieved = true;
@@ -422,6 +420,14 @@
             color: $accent;
             a {
                 color: $accent;
+            }
+        }
+    }
+    .table-row-success {
+        .table-cell--colored {
+            color: #512DA8;
+            a {
+                color: #512DA8;
             }
         }
     }

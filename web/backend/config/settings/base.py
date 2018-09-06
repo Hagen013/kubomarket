@@ -55,7 +55,8 @@ LOCAL_APPS = [
     'core',
     'shop_cubes',
     'controls',
-    'users'
+    'users',
+    'delivery'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -191,12 +192,11 @@ CELERY_IMPORTS = (
     'tasks.elastic',
     'tasks.mail_notifications',
     'tasks.yandex_market',
-    'tasks.mywarehouse',
     'tasks.controls',
     'tasks.images',
-    'tasks.asist',
     'tasks.sms_notifications',
-    'tasks.tree'
+    'tasks.tree',
+    'tasks.delivery_sync'
 )
 
 CELERY_QUEUES = (
@@ -293,3 +293,15 @@ SOCIAL_AUTH_PIPELINE = (
 # ------------------------------------------------------------------------------
 SMS_URL = env("DJANGO_SMS_URL")
 SMS_SECRET_KEY = env("DJANGO_SMS_SECRET_KEY")
+
+
+# DELIVERY SYNCHRONIZATION CREDENTIALS
+# ------------------------------------------------------------------------------
+SDEK_USER = env('SDEK_USER')
+SDEK_PASSWORD = env('SDEK_PASSWORD')
+
+PICKPOINT_USER = env('PICKPOINT_USER')
+PICKPOINT_PASSWORD = env('PICKPOINT_PASSWORD')
+
+RUPOST_LOGIN = env('RUPOST_LOGIN')
+RUPOST_PASSWORD = env('RUPOST_PASSWORD')

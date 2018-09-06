@@ -1,19 +1,32 @@
-from rest_framework import serializers
+from core.serializers import DynamicFieldsModelSerializer
+
+from tasks.sms_notifications import sms_notify
+from tasks.mail_notifications import mail_notify
 
 from .models import Order2
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class OrderSerializer(DynamicFieldsModelSerializer):
+
+
 
     class Meta:
         model = Order2
         fields = (
             'id',
+            'public_id',
             'data',
             'state',
             'source',
             'manager_notes',
             'client_notes',
             'created_at',
-            'modified_at'
+            'modified_at',
+            'delivery_status',
+            'user'
+        )
+        read_only_fields = (
+            'id',
+            'user',
+            'public_id'
         )

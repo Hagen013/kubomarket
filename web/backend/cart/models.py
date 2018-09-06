@@ -1,11 +1,13 @@
 import xml.etree.ElementTree as ET
 from random import randint
+import datetime
 import requests
 
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.db import IntegrityError
 
 from core.db.base import TimeStamped
 from core.utils import MailSender
@@ -128,6 +130,61 @@ class Order2(TimeStamped):
         "additionalProperties": False,
     }
 
+    delivery_status = JSONField(
+        default={
+            "service": "",
+            "change_date": "",
+            "dispatch_number": "",
+            "state_description": "",
+            "service_status_code": None,
+            "status_code": None,
+            "history": []
+        }
+    )
+
+    DELIVERY_DATA_JSONCHEMA = {
+        "type": "object",
+        "properties": {
+            "service": {"type": "string"},
+            "change_date": {"type": "string"},
+            "dispatch_number": {"type": "string"},
+            "state_description": {"type": "string"},
+            "service_status_code": {"type": ["integer", "null"]},
+            "status_code": {"type": ["integer", "null"]},
+            "history": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "change_date": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "state_description": {"type": "string"},
+                        "service_status_code": {"type": "integer"},
+                        "city_code": {"type": ["string", "null"]}
+                    },
+                    "additionalProperties": False
+                }
+            },
+            "reason": {
+                "type": ["object", "null"],
+                "properties": {
+                    "code": {"type": ["string", "null"]}
+                },
+                "additionalProperties": False
+            },
+            "delay_reason": {
+                "type": ["object", "null"],
+                "propertues": {
+                    "code": {"type": ["string", "null"]}
+                },
+                "additionalProperties": False
+            }
+        },
+        "additionalProperties": False
+    }
+
     manager_notes = models.TextField(
         max_length=2000,
         verbose_name='Служебные заметки',
@@ -148,6 +205,7 @@ class Order2(TimeStamped):
         ("выполнен", "Выполнен"),
         ("отменён", "Отменён"),
         ("отменён: недозвон", "Отменён: недозвон"),
+        ("вручен", "вручен")
     )
     state = models.CharField(
         max_length=100,
@@ -206,9 +264,17 @@ class Order2(TimeStamped):
         default=False
     )
 
+    public_id = models.CharField(
+        db_index=True,
+        max_length=24,
+        blank=True,
+        unique=True
+    )
+
     def clean(self):
         try:
             jsonschema_validate(self.data, self.ORDER_DATA_JSONSCHEMA)
+            jsonschema_validate(self.delivery_status, self.DELIVERY_DATA_JSONCHEMA)
         except JsonSchemaValidationError as e:
             raise ValidationError(message=e.message)
 
@@ -265,16 +331,34 @@ class Order2(TimeStamped):
             self.assist_status = "approved"
         return self.assist_status
 
+    @classmethod
+    def generate_public_id(cls):
+        date = datetime.datetime.now()
+        number = str(randint(1000, 9999))
+        year = str(date.year)[2:]
+        month = str(date.month)
+        day = str(date.day)
+        if len(day) == 1:
+            day = "0" + day
+        if len(month) == 1:
+            month = "0" + month
+        code = "KU{0}{1}{2}{3}{4}".format(
+            year,
+            number[:2],
+            month,
+            day,
+            number[2:]
+        )
+        return code
+
     def __str__(self):
-        return "Заказ №{0}".format(str(self.id))
+        return "Заказ №{0}".format(str(self.public_id))
 
     def save(self, *args, **kwargs):
-        print(self.__original_state)
         is_new = not self.id
         if is_new:
             self.assist_key = "".join((str(randint(0, 9)) for _ in range(128)))
         super(Order2, self).save(*args, **kwargs)
-        print(self.__original_state)
 
 
 class Order(models.Model):
@@ -383,17 +467,11 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return("Заказ №{0}".format(str(self.id),)
+        return("Заказ №{0}".format(str(self.public_id),)
                )
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         is_new = not self.id
-        super(Order, self).save(force_insert, force_update, *args, **kwargs)
-        # if is_new:
-        #     notification_new_order.delay(self.phone_number, self.email, self.id)
-        # elif self.state != self.__original_state:
-        #     if self.state == "доставка":
-        # notification_delivery.delay(self.phone_number, self.email, self.id)
         self.__original_state = self.state
 
 

@@ -115,7 +115,7 @@ def set_cubes_images_order():
 
 @app.task
 def check_main_image_files():
-    for instance in ProductCard.objects.all():
+    for instance in CubesProductCard.objects.all():
         filepath = settings.MEDIA_ROOT + str(instance.image)
         try:
             fp = open(filepath)

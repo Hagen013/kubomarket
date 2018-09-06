@@ -1,4 +1,5 @@
 import re
+import uuid
 
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from rest_framework.views import APIView
@@ -11,6 +12,8 @@ from cart.models import Order, OrderItem, Order2
 from core.db.shop import OfferIdentifier
 
 from cart.serializers import OrderSerializer
+from tasks.sms_notifications import sms_notify
+from tasks.mail_notifications import mail_notify
 
 
 class BaseCartAPIView(APIView):
@@ -122,12 +125,30 @@ class CartMakeOrderAPIView(BaseCartAPIView):
             client_notes=request.data.get('client_notes', '')
         )
 
+        id_unique = False
+        for i in range(100):
+            public_id = Order2.generate_public_id()
+            try:
+                instance = Order2.objects.get(public_id=public_id)
+            except ObjectDoesNotExist:
+                id_unique = True
+                break
+        
+        if not id_unique:
+            public_id = uuid.uuid4().hex
+    
+        order.public_id = public_id
+
         try:
             order.full_clean()
         except ValidationError as e:
             return Response(status=400, data=e.messages)
 
         order.save()
+        if order.total_price > 0:
+            sms_notify.delay(order.public_id)
+        if order.data["customer"]["email"] != "":
+            mail_notify.delay(order.public_id)
         serializer = OrderSerializer(order)
 
         self.cart.clear()

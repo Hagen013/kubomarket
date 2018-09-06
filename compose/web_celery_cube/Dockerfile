@@ -1,4 +1,8 @@
 FROM graphmarket/base_alpine:latest
+RUN apk add --no-cache gcc
+RUN apk add --no-cache libxml2-dev libxslt-dev
+RUN apk add --no-cache --virtual .pynacl_deps build-base python3-dev libffi-dev
+
 
 # INSTALL PILLOW
 RUN apk add --no-cache \
