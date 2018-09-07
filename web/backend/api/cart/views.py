@@ -146,9 +146,9 @@ class CartMakeOrderAPIView(BaseCartAPIView):
 
         order.save()
         if order.total_price > 0:
-            sms_notify.delay(order.public_id)
+            sms_notify.delay(order.id)
         if order.data["customer"]["email"] != "":
-            mail_notify.delay(order.public_id)
+            mail_notify.delay(order.id)
         serializer = OrderSerializer(order)
 
         self.cart.clear()

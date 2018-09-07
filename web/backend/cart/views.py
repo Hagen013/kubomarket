@@ -9,7 +9,7 @@ class CartPageView(TemplateView):
 
 
 class PaymentPageView(TemplateView):
-    template_name = 'payment.html'
+    template_name = 'payment/payment.html'
 
     def get_context_data(self, **kwargs):
         payment = Payment(order_amount=123)
