@@ -5,5 +5,8 @@ var payment = new Vue({
     name: 'payment',
     el: '#js-payment',
     data: {
+    },
+    created() {
+        
     }
 });
