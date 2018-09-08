@@ -47,7 +47,6 @@ THIRD_PARTY_APPS = [
     'jsoneditor',
     'raven.contrib.django.raven_compat',
     'social_django',
-    'yandex_money'
 ]
 
 LOCAL_APPS = [
@@ -57,7 +56,8 @@ LOCAL_APPS = [
     'shop_cubes',
     'controls',
     'users',
-    'delivery'
+    'delivery',
+    'yandex_money'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

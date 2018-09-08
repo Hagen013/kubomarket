@@ -44,6 +44,3 @@ bs4==0.0.1
 
 # XML-client
 zeep==3.1.0
-
-#Yandex-money
-django-yandex-money==1.1.3
