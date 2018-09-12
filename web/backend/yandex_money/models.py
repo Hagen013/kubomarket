@@ -6,7 +6,10 @@ from uuid import uuid4
 import six
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
+
+from cart.models import Order2
 
 from .signals import payment_process
 from .signals import payment_completed
@@ -66,59 +69,172 @@ class Payment(models.Model):
         )
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True,
-        verbose_name='Пользователь')
-    pub_date = models.DateTimeField('Время создания', auto_now_add=True)
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        null=True,
+        verbose_name='Пользователь'
+    )
+
+    order = models.ForeignKey(
+        Order2,
+        blank=True,
+        null=True,
+        related_name="payments"
+    )
+
+    pub_date = models.DateTimeField(
+        'Время создания',
+        auto_now_add=True
+    )
 
     # Required request fields
     shop_id = models.PositiveIntegerField(
-        'ID магазина', default=settings.YANDEX_MONEY_SHOP_ID)
+        'ID магазина',
+        default=settings.YANDEX_MONEY_SHOP_ID
+    )
+
     scid = models.PositiveIntegerField(
-        'Номер витрины', default=settings.YANDEX_MONEY_SCID)
+        'Номер витрины',
+        default=settings.YANDEX_MONEY_SCID
+    )
+
     customer_number = models.CharField(
-        'Идентификатор плательщика', max_length=64,
-        default=get_default_as_uuid)
+        'Идентификатор плательщика',
+        max_length=64,
+        default=get_default_as_uuid
+    )
+
     order_amount = models.DecimalField(
-        'Сумма заказа', max_digits=15, decimal_places=2)
+        'Сумма заказа', max_digits=15,
+        decimal_places=2
+    )
 
     # Non-required fields
     article_id = models.PositiveIntegerField(
-        'Идентификатор товара', blank=True, null=True)
+        'Идентификатор товара',
+        blank=True,
+        null=True
+    )
+
     payment_type = models.CharField(
-        'Способ платежа', max_length=2, default=PAYMENT_TYPE.PC,
-        choices=PAYMENT_TYPE.CHOICES)
+        'Способ платежа',
+        max_length=2,
+        default=PAYMENT_TYPE.PC,
+        choices=PAYMENT_TYPE.CHOICES
+    )
+
     order_number = models.CharField(
-        'Номер заказа', max_length=64,
-        default=get_default_as_uuid)
+        'Номер заказа',
+        max_length=64,
+        default=get_default_as_uuid
+    )
+
     cps_email = models.EmailField(
-        'Email плательщика', max_length=100, blank=True, null=True)
+        'Email плательщика',
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
     cps_phone = models.CharField(
-        'Телефон плательщика', max_length=15, blank=True, null=True)
+        'Телефон плательщика',
+        max_length=15,
+        blank=True,
+        null=True
+    )
+
     success_url = models.URLField(
-        'URL успешной оплаты', default=settings.YANDEX_MONEY_SUCCESS_URL)
+        'URL успешной оплаты',
+        default=settings.YANDEX_MONEY_SUCCESS_URL
+    )
+
     fail_url = models.URLField(
-        'URL неуспешной оплаты', default=settings.YANDEX_MONEY_FAIL_URL)
+        'URL неуспешной оплаты',
+        default=settings.YANDEX_MONEY_FAIL_URL
+    )
 
     # Transaction info
     status = models.CharField(
-        'Статус', max_length=16, choices=STATUS.CHOICES,
-        default=STATUS.PROCESSED)
+        'Статус',
+        max_length=16,
+        choices=STATUS.CHOICES,
+        default=STATUS.PROCESSED
+    )
+
     invoice_id = models.PositiveIntegerField(
-        'Номер транзакции оператора', blank=True, null=True)
+        'Номер транзакции оператора',
+        blank=True,
+        null=True
+    )
+
     shop_amount = models.DecimalField(
-        'Сумма полученная на р/с', max_digits=15, decimal_places=2, blank=True,
-        null=True, help_text='За вычетом процента оператора')
+        'Сумма полученная на р/с',
+        max_digits=15,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        help_text='За вычетом процента оператора'
+    )
+
     order_currency = models.PositiveIntegerField(
-        'Валюта', default=CURRENCY.RUB, choices=CURRENCY.CHOICES)
+        'Валюта',
+        default=CURRENCY.RUB,
+        choices=CURRENCY.CHOICES
+    )
+
     shop_currency = models.PositiveIntegerField(
-        'Валюта полученная на р/с', blank=True, null=True,
-        default=CURRENCY.RUB, choices=CURRENCY.CHOICES)
+        'Валюта полученная на р/с',
+        blank=True,
+        null=True,
+        default=CURRENCY.RUB,
+        choices=CURRENCY.CHOICES
+    )
+
     performed_datetime = models.DateTimeField(
-        'Время выполнение запроса', blank=True, null=True)
+        'Время выполнение запроса',
+        blank=True,
+        null=True
+    )
+
+    # Additional fields
+    uuid = models.CharField(
+        'уникальный идентификатор',
+        max_length=64,
+        default=get_default_as_uuid,
+        db_index=True
+    )
 
     @property
     def is_payed(self):
         return self.status == self.STATUS.SUCCESS
+
+    @property
+    def url(self):
+        return "/cart/payment/{0}/".format(self.uuid)
+
+    @property
+    def is_expired(self):
+        now = timezone.now()
+        td = now - self.pub_date
+        return td.days >= 1
+
+    @property
+    def ym_receipt(self):
+        data = {}
+        items = []
+        data['customerContact'] = self.cps_phone
+        data['taxSystem'] = 3
+        for key in self.order.data['cart']['items']:
+            item = self.order.data['cart']['items'][key]
+            instance = {
+                "quantity": item['quantity'],
+                "price": {"amount": item['price']},
+                "tax": 3,
+                "text": item['name']
+            }
+            items.append(instance)
+        data['items'] = items
+        return str(data).replace("'", '"')
 
     def send_signals(self):
         status = self.status

@@ -1,0 +1,195 @@
+.payment-form {
+    width: 100%;
+    margin-bottom: 120px;
+}
+
+.payment-form__main {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
+    @include mq($from: desktop) {
+        flex-direction: row;
+    }
+}
+
+.payment-form__left {
+    position: relative;
+    padding: 16px 8px;
+    margin-bottom: 24px;
+    border: 3px solid $creme;
+    @include mq($from: desktop) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 350px;
+        width: 300px;
+        margin-bottom: 0px;
+        padding: 0px;
+    }
+}
+
+.payment-form__right {
+    padding: 16px;
+    flex-grow: 1;
+    border: 3px solid $creme;
+    @include mq($from: desktop) {
+        margin-left: 32px;
+    }
+}
+
+.payment-form__amount-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.payment-form__amount {
+    font-size: 30px;
+}
+
+.content-area_payment {
+    margin-top: 32px;
+}
+
+.payment-form__methods-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.payment-form__method {
+    height: 120px;
+    width: 220px;
+    background-position: center;
+    background-size: 80%;
+    background-repeat: no-repeat;
+    border: 2px solid $border;
+    transition-property: border, background;
+    transition-duration: .2s;
+    cursor: pointer;
+    &:hover {
+        background-color: $border;
+    }
+}
+
+.paymentForm__method_selected {
+    cursor: default;
+    background-color: $border;
+}
+
+.payment-form__method_ac {
+    background-image: url("../img/logo/payment-card.png");
+}
+
+.payment-form__method_pc {
+    background-image: url("../img/logo/payment-ym.png");
+}
+
+.payment-form__method_qw {
+    background-image: url("../img/logo/payment-qiwi.png");
+    background-size: 40%;
+}
+
+.payment-form__methods {
+    height: 228px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0px;
+    @include mq($from: tablet) {
+        flex-direction: row;
+    }
+}
+
+.payment-form__submit {
+    height: 50px;
+    width: 200px;
+    border-radius: 25px;
+    text-transform: uppercase;
+    font-family: 'Roboto Slab', serif;
+}
+
+.payment-form__cart {
+    border: 3px solid $creme;
+}
+
+.payment-form__cart-header {
+    padding: 16px;
+    color: $text-grey;
+}
+
+.payment-form__cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-top: 3px solid $creme;
+}
+
+.payment-form__cart-item-image {
+    height: 100px;
+    width: 100px;
+    img {
+        height: 100%;
+        width: auto;
+    }
+}
+
+.payment-form__cart-item__total {
+    font-size: 20px;
+}
+
+.payment-form__order-title {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.payment-form__order-caption {
+    color: $text-grey;
+}
+
+.payment-form__order-number {
+
+}
+
+.payment-form__summary {
+    width: 100%;
+    padding: 16px;
+    @include mq($from: desktop) {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+    }
+}
+
+.payment-form__dotted-row {
+    width: 100%;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dotted #909090;
+}
+
+.payment-form__dotted-row-key {
+    color: #909090;
+}
+
+.title_payment {
+    height: auto;
+    white-space: wrap;
+    font-size: 24px;
+    line-height: 40px;
+}
+
+.payment-form__price-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}

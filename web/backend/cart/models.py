@@ -226,29 +226,6 @@ class Order2(TimeStamped):
         default=ORDER_SOURCE[0][0],
     )
 
-    assist_key = models.CharField(
-        max_length=128,
-        default=0,
-        blank=True,
-        validators=[
-            RegexValidator(
-                regex=r'^\d+$',
-                message='vendor_code valid error',
-            )
-        ]
-    )
-
-    assist_status = models.CharField(
-        max_length=64,
-        default="",
-        blank=True,
-        choices=(
-            ("", ""),
-            ("in_process", "in_process"),
-            ("approved", "approved"),
-        )
-    )
-
     user = models.ForeignKey(
         User,
         blank=True,

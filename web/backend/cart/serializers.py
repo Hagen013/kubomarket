@@ -8,8 +8,6 @@ from .models import Order2
 
 class OrderSerializer(DynamicFieldsModelSerializer):
 
-
-
     class Meta:
         model = Order2
         fields = (

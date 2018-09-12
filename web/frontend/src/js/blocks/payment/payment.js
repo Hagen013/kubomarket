@@ -5,8 +5,11 @@ var payment = new Vue({
     name: 'payment',
     el: '#js-payment',
     data: {
+        paymentMethod: "AC"
     },
-    created() {
-        
+    methods: {
+        changePaymentMethod(paymentMethod) {
+            this.paymentMethod = paymentMethod;
+        }
     }
 });

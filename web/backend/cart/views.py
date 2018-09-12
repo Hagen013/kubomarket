@@ -1,6 +1,12 @@
 from django.views.generic import TemplateView
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
+from django.conf import settings
+
 from yandex_money.forms import PaymentForm
 from yandex_money.models import Payment
+
+from .models import Order2
 
 
 class CartPageView(TemplateView):
@@ -9,12 +15,31 @@ class CartPageView(TemplateView):
 
 
 class PaymentPageView(TemplateView):
+
     template_name = 'payment/payment.html'
+    model = Payment
+
+    def get_payment(self, uuid):
+        print(uuid)
+        try:
+            instance = self.model.objects.get(uuid=uuid)
+            if instance.is_expired:
+                raise Http404
+            return instance
+        except ObjectDoesNotExist:
+            raise Http404
+
+    def get(self, request, uuid, *args, **kwargs):
+        self.payment = self.get_payment(uuid)
+        return super(PaymentPageView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        payment = Payment(order_amount=123)
-        payment.save()
+        context = super(PaymentPageView, self).get_context_data(**kwargs)
+        context['payment'] = self.payment
+        context['order'] = self.payment.order
+        context['shopId'] = settings.YANDEX_MONEY_SHOP_ID
+        context['scid'] = settings.YANDEX_MONEY_SCID
+        context['form'] = PaymentForm(instance=self.payment)
+        return context
 
-        ctx = super(PaymentPageView, self).get_context_data(**kwargs)
-        ctx['form'] = PaymentForm(instance=payment)
-        return ctx
+

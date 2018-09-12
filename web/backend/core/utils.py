@@ -68,3 +68,9 @@ class MailSender():
         email.content_subtype = "html"
         email.send()
  
+
+class SMSMessage():
+
+    def __init__(self, phone, message):
+        self._phone = phone
+        self._message = message

@@ -17,6 +17,7 @@ module.exports = {
     profilePage: './profilePage.js',
     loginPage: './loginPage.js',
     registerPage: './registerPage.js',
+    paymentPage: './paymentPage.js',
     admin: './admin.js',
     md_admin: './md-admin.js',
     login: './login.js'

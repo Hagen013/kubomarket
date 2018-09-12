@@ -177,7 +177,43 @@
                     </div>
                 </div>
             </md-tab>
-            <md-tab id="tab-pages" md-label="Доставка">
+            <md-tab
+                id="tab-payment"
+                md-label="Оплата"
+                @click="paymentsTriggered=true"
+            >
+                <div class="md-layout tab__content">
+                    <div class="md-layout-item payment md-size-30">
+                        <div class="md-title payment__title">
+                            Выслать ссылку для оплаты
+                        </div>
+                        <div class="payment__col-1-content">
+                            <div class="payment__email-form">
+                                <md-field>
+                                    <label>Используемый email</label>
+                                    <md-input v-model="order.data.customer.email"></md-input>
+                                </md-field>
+                                <md-button class="md-primary md-raised non-margin"
+                                    @click="sendPaymentMessage"
+                                >
+                                    Отправить
+                                </md-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md-layout-item">
+                        <payments-list
+                            :payments="payments"
+                            v-on:deleteItem="deletePayment"
+                        >
+                        </payments-list>
+                    </div>
+                </div>
+            </md-tab>
+            <md-tab
+                id="tab-delivery"
+                md-label="Доставка"
+            >
                 <div class="tab__content">
                     <div class="md-layout">
                         <div class="md-layout-item">
@@ -229,7 +265,7 @@
                                 </div>
                                 <md-list class="md-triple-line">
                                     <md-list-item
-                                        v-for="(item, key, index) in order.delivery_status['history']"
+                                        v-for="(item, key) in order.delivery_status['history']"
                                         :key="key"
                                     >
                                         <div class="md-list-item-text">
@@ -326,6 +362,32 @@
                 </div>
             </md-tab>
         </md-tabs>
+        <md-snackbar
+            md-position="center"
+            :md-duration="snackbarDuration" 
+            :md-active.sync="showPaymentAddedSuccess" 
+            md-persistent
+        >
+            <span>Письмо отправлено</span>
+            <md-button class="md-primary" 
+                @click="showPaymentAddedSuccess = false"
+            >
+                Скрыть
+            </md-button>
+        </md-snackbar>
+        <md-snackbar
+            md-position="center"
+            :md-duration="snackbarDuration" 
+            :md-active.sync="showPaymentAddedFailed" 
+            md-persistent
+        >
+            <span>Не удалось отправить письмо</span>
+            <md-button class="md-primary" 
+                @click="sendPaymentMessage"
+            >
+                Ещё раз
+            </md-button>
+        </md-snackbar>
     </div>
 </template>
 
@@ -333,6 +395,7 @@
     import searchField from './searchField.vue'
     import debounce from 'debounce'
     import normalizeNumber from '../../../core/normalizeNumber.js'
+    import paymentsList from './paymentsList.vue'
 
     var equal = require('fast-deep-equal');
 
@@ -340,6 +403,7 @@
         name: 'order-form',
         components: {
             'search-field': searchField,
+            'payments-list': paymentsList
         },
         data: () => ({
             componentTitle: null,
@@ -368,7 +432,12 @@
             userId: null,
             user: null,
             userProfile: null,
-            userOrders: []
+            userOrders: [],
+            showPaymentAddedSuccess: false,
+            showPaymentAddedFailed: false,
+            snackbarDuration: 4000,
+            payments: [],
+            paymentsTriggered: false
         }),
         created() {
             this.orderId = this.$route.params.id;
@@ -625,10 +694,30 @@
                 this.order.data['cart']['total_price'] = totalPrice;
             },
             sendEmailMessage() {
-
             },
             sendSmsMessage() {
-
+            },
+            getOrderPayments() {
+                let url = `/api/order/${this.orderId}/payments/`;
+                this.$http.get(url).then(
+                    response => {
+                        this.handleSuccessfulPaymentsResponse(response);
+                    },
+                    response => {
+                        this.handleFailedPaymentsResponse(response);
+                    }
+                )
+            },
+            sendPaymentMessage() {
+                let url = `/api/order/${this.orderId}/payments/`;
+                this.$http.post(url, {}).then(
+                    response => {
+                        this.handleSuccessfulAddPaymentResponse(response);
+                    },
+                    response => {
+                        this.handleFailedAddPaymentResponse(response);
+                    }
+                )
             },
             getUser() {
                 let url = `${this.userApiUrl}${this.userId}`;
@@ -663,9 +752,27 @@
             },
             handleFailedGETUserResponse(response) {
             },
+            handleSuccessfulAddPaymentResponse(response) {
+                console.log(response);
+                this.payments = response.body;
+                this.showPaymentAddedSuccess = true;
+            },
+            handleFailedAddPaymentResponse(response) {
+                console.log(response);
+                this.showPaymentAddedFailed = true;
+            },
+            handleSuccessfulPaymentsResponse(response) {
+                this.payments = response.body;
+            },
+            handleFailedPaymentsResponse(response) {
+                console.log(response);
+            },
             profileRedirect() {
                 let path = `/users/${this.userId}`;
                 this.$router.push({path: path});
+            },
+            deletePayment(payment) {
+                console.log(payment);
             }
         },
         filters: {
@@ -684,6 +791,11 @@
                 value = value.toString()
                 return value.charAt(0).toUpperCase() + value.slice(1)
             },
+        },
+        watch: {
+            paymentsTriggered() {
+                this.getOrderPayments();
+            }
         }
     }
 </script>
@@ -788,9 +900,15 @@
     .feedback__forms {
         padding-top: 16px;
     }
+    .payment__title {
+        margin-bottom: 32px;
+    }
+    .payment__col-1-content {
 
-
-
+    }
+    .non-margin {
+        margin: 0px !important;
+    }
 
     .fade {
         opacity: 1 !important;

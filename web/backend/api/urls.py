@@ -11,6 +11,7 @@ from .yml.urls import urls_yml
 from .products.urls import urls_product
 from .order.urls import urls_order
 from .users.urls import urls_users
+from .payment.urls import urls_payment
 from .mywarehouse.urls import urls_mywarehouse
 
 
@@ -24,6 +25,7 @@ urls_api = ([
     url(r'^products/', include(urls_product)),
     url(r'^order/', include(urls_order)),
     url(r'^users/', include(urls_users)),
+    url(r'^payments/', include(urls_payment)),
     url(r'^yml/', include(urls_yml)),
     url(r'^my-warehouse/', include(urls_mywarehouse))
 ], 'api')

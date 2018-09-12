@@ -1,23 +1,123 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta charset="utf-8">
-    </head>
-    <body>
-        <div style="border: 1px dotted gray; padding: 15px 15px 0; margin: 30px auto; min-width: 320px; max-width: 750px">
-            <form name="ShopForm" method="POST" action="https://money.yandex.ru/eshop.xml">
-                <ul style="list-style: none;">
-                    <li style="margin-bottom: 20px;">
-                        Сумма заказа: <b>{{ form.sum.value() }}</b>
-                    </li>
+{% extends "base.html" %}
 
-                    {{ form.as_ul() }}
-
-                    <li style="margin-top: 20px;">
-                        <input type="submit" value="Оплатить">
+{% block content %}
+    <div class="content-area_mb content-area_mb-column content-area_payment">
+        <h1 class="title title_payment">
+            Оплата заказа: {{payment.order.public_id}}
+        </h1>
+        <form
+            action="https://money.yandex.ru/eshop.xml"
+            method="post"
+            class="payment-form"
+            id="js-payment"
+        >
+            <div class="payment-form__main">
+                <div class="payment-form__left">
+                    <div class="payment-form__price-wrap">
+                        <div class="payment-form__amount-title bold">
+                            Всего к оплате:
+                        </div>
+                        <div class="payment-form__amount bold green">
+                            {{payment.order.total_price}} <i class="icon icon_rouble"></i>
+                        </div>
+                    </div>
+                    <div class="payment-form__summary">
+                        <div class="payment-form__dotted-row">
+                            <div class="payment-form__dotted-row-key">
+                                Товары:
+                            </div>
+                            <div class="payment-form__dotted-row-value">
+                                {{payment.order.total_price}}
+                                <i class="icon icon_rouble"></i>
+                            </div>
+                        </div>
+                        <div class="payment-form__dotted-row">
+                            <div class="payment-form__dotted-row-key">
+                                Доставка
+                            </div>
+                            <div class="payment-form__dotted-row-value">
+                                {% if payment.order.data['delivery']['mod']['price'] is not none %}
+                                {{payment.order.data['delivery']['mod']['price']}}
+                                {% else %}
+                                не выбрано
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-form__right">
+                    <div class="payment-form__methods-title bold">
+                        Выберите способ оплаты:
+                    </div>
+                    <div class="payment-form__methods">
+                        <div class="payment-form__method payment-form__method_ac"
+                            :class="{ paymentForm__method_selected : paymentMethod === 'AC' }"
+                            @click="changePaymentMethod('AC')"
+                        >
+                        </div>
+                        <div class="payment-form__method payment-form__method_pc"
+                            :class="{ paymentForm__method_selected : paymentMethod === 'PC' }"
+                            @click="changePaymentMethod('PC')"
+                        >
+                        </div>
+                        <div class="payment-form__method payment-form__method_qw"
+                            :class="{ paymentForm__method_selected : paymentMethod === 'QW' }"
+                            @click="changePaymentMethod('QW')"
+                        >
+                        </div>
+                    </div>
+                    <div class="payment-form__controls">
+                        <input class="button button_blue payment-form__submit"
+                            type="submit"
+                            value="Оплатить"
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="payment-form__cart">
+                <div class="payment-form__cart-header">
+                    Товары к оплате:
+                </div>
+                <ul class="payment-form__cart-list">
+                    {% for key in order.data['cart']['items'] %}
+                    <li class="payment-form__cart-item">
+                        <div class="payment-form__cart-item-image">
+                            <img src="{{order.data['cart']['items'][key]['image']}}">
+                        </div>
+                        <div class="payment-form__cart-item__name">
+                            <div class="bold">{{order.data['cart']['items'][key]['name']}}</div>
+                            <div>
+                                <a href="{{order.data['cart']['items'][key]['url']}}"
+                                    class="link link_blue"
+                                >
+                                    Ссылка
+                                </a>
+                            </div>
+                        </div>
+                        <div class="payment-form__cart-item__quantity">
+                            {{order.data['cart']['items'][key]['quantity']}} шт.
+                        </div>
+                        <div class="payment-form__cart-item__total green bold">
+                            {{order.data['cart']['items'][key]['total_price']}} <i class="icon icon_rouble"></i>
+                        </div>
                     </li>
+                    {% endfor %}
                 </ul>
-            </form>
-        </div>
-    </body>
-</html>
+            </div>
+            <input name="shopId" value="{{shopId}}" type="hidden"/>
+            <input name="scid" value="{{scid}}" type="hidden"/>
+            <input name="sum" value="{{payment.order_amount}}" type="hidden">
+            {% raw %}<input name="paymentType" :value="paymentMethod" type="hidden"/>{% endraw %}
+            <input name="orderNumber" value="{{payment.order.public_id}}" type="hidden"/>
+            <input name="customerNumber" value="{{payment.customer_number}}" type="hidden"/>
+            <input name="cps_phone" value="{{payment.cps_phone}}" type="hidden"/>
+            <input name="cps_email" value="{{payment.cps_email}}" type="hidden"/>
+            <input name="ym_merchant_receipt" value='{{payment.ym_receipt|safe}}' type="hidden">
+        </form>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    {{ super() }}
+    <script src="{{ static('js/paymentPage.js') }}"></script>
+{% endblock script %}
