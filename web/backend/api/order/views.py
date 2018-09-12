@@ -88,6 +88,7 @@ class OrderPaymentsAPIView(APIView):
         payment = Payment(
             order=instance,
             user=user,
+            order_number=instance.public_id,
             order_amount=instance.total_price,
             cps_phone=cps_phone,
             cps_email=cps_email

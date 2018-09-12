@@ -97,8 +97,9 @@
                         <div class="payment-form__cart-item__quantity">
                             {{order.data['cart']['items'][key]['quantity']}} шт.
                         </div>
-                        <div class="payment-form__cart-item__total green bold">
-                            {{order.data['cart']['items'][key]['total_price']}} <i class="icon icon_rouble"></i>
+                        <div class="payment-form__cart-item-total green bold">
+                            {{order.data['cart']['items'][key]['total_price']}}
+                            <i class="icon payment-form__icon-rouble icon_rouble"></i>
                         </div>
                     </li>
                     {% endfor %}

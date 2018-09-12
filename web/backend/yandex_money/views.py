@@ -78,7 +78,9 @@ class BaseView(View):
     def get_payment(self, cd):
         try:
             payment = Payment.objects.get(
-                order_number=cd['orderNumber'], shop_id=cd['shopId'])
+                order_number=cd['orderNumber'],
+                shop_id=cd['shopId']
+            )
         except Payment.DoesNotExist:
             payment = None
         return payment

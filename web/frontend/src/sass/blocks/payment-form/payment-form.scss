@@ -17,6 +17,9 @@
     padding: 16px 8px;
     margin-bottom: 24px;
     border: 3px solid $creme;
+    @include mq($from: mobile, $until: desktop) {
+        display: flex;
+    }
     @include mq($from: desktop) {
         display: flex;
         flex-direction: column;
@@ -54,6 +57,10 @@
 .payment-form__methods-title {
     font-size: 18px;
     margin-bottom: 10px;
+    text-align: center;
+    @include mq($from: desktop) {
+        text-align: left;
+    }
 }
 
 .payment-form__method {
@@ -65,9 +72,22 @@
     border: 2px solid $border;
     transition-property: border, background;
     transition-duration: .2s;
+    margin-bottom: 16px;
     cursor: pointer;
     &:hover {
         background-color: $border;
+    }
+    @include mq($from: mobile, $until: tablet) {
+        margin-left: -2px;
+    }
+    @include mq($from: tablet) {
+        margin-bottom: 0px;
+    }
+    @include mq($from: desktop) {
+        width: 180px;
+    }
+    @include mq($from: wide) {
+        width: 220px;
     }
 }
 
@@ -90,15 +110,21 @@
 }
 
 .payment-form__methods {
-    height: 228px;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding: 16px 0px;
-    @include mq($from: tablet) {
+    @include mq($from: mobile) {
         flex-direction: row;
+    }
+    @include mq($from: tablet) {
+        justify-content: space-around;
+    }
+    @include mq($from: desktop) {
+        justify-content: space-between;
+        height: 228px;
     }
 }
 
@@ -120,11 +146,17 @@
 }
 
 .payment-form__cart-item {
+    position: relative;
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     padding: 16px;
     border-top: 3px solid $creme;
+    @include mq($from: desktop) {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
 }
 
 .payment-form__cart-item-image {
@@ -133,6 +165,10 @@
     img {
         height: 100%;
         width: auto;
+    }
+    margin-bottom: 10px;
+    @include mq($from: desktop) {
+        margin-bottom: 0px;
     }
 }
 
@@ -166,6 +202,9 @@
         bottom: 0px;
         left: 0px;
     }
+    @include mq($from: mobile, $until: desktop) {
+        width: 50%;
+    }
 }
 
 .payment-form__dotted-row {
@@ -182,9 +221,13 @@
 
 .title_payment {
     height: auto;
-    white-space: wrap;
+    white-space: normal;
     font-size: 24px;
     line-height: 40px;
+    text-align: center;
+    @include mq($from: desktop) {
+        text-align: left;
+    }
 }
 
 .payment-form__price-wrap {
@@ -192,4 +235,51 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    @include mq($from: mobile, $until: desktop) {
+        width: 50%;
+    }
+}
+
+.payment-form__controls {
+    display: flex;
+    justify-content: center;
+    @include mq($from: desktop) {
+        justify-content: flex-start;
+    }
+}
+
+.payment-form__cart-item__name {
+    text-align: center;
+    margin-bottom: 10px;
+    @include mq($from: desktop) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100px;
+        width: 400px;
+        margin-bottom: 0px;
+        padding: 0px 16px;
+    }
+    @include mq($from: wide) {
+        width: 550px;
+    }
+}
+
+.payment-form__cart-item-total {
+    @include mq($from: desktop) {
+        display: flex;
+        position: absolute;
+        right: 0px;
+        align-items: center;
+        justify-content: flex-end;
+        height: 100px;
+        width: 120px;
+        margin: 0px 16px;
+        padding: 0px 16px;
+        text-align: right;
+    }
+}
+
+.payment-form__icon-rouble {
+    margin-left: 4px;
 }
