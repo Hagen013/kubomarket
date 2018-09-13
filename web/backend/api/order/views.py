@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 
 from rest_framework.views import APIView
 from rest_framework import generics, status
@@ -96,8 +96,19 @@ class OrderPaymentsAPIView(APIView):
         if user is not None:
             payment.customer_number = user.id
 
+        try:
+            payment.save()
+        except IntegrityError:
+            with transaction.atomic():
+                count = 1
+                for item in instance.payments.all().order_by("-pub_date"):
+                    item.order_number = instance.public_id + "-" + str(item.pk)
+                    item.save()
+                for item in instance.payments.all().order_by("-pub_date"):
+                    item.order_number = instance.public_id + "-" + str(count)
+                    item.save()
+                    count += 1
         payment.save()
-
         serializer = self.serializer_class(instance.payments.all(), many=True)
         return Response(
             serializer.data,
