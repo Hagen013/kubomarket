@@ -65,6 +65,7 @@ urlpatterns = [
                              ])),
     url(r'^ym/payment-success/$', TemplateView.as_view(template_name="payment/payment-success.html")),
     url(r'^ym/payment-fail/$', TemplateView.as_view(template_name="payment/payment-fail.html")),
+    url(r'^ym/', include('yandex_money.urls', namespace="yandex-money")),
     url(r'^', include('shop_cubes.urls', namespace='shop'))
 ]
 
