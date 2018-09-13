@@ -191,7 +191,7 @@
                             <div class="payment__email-form">
                                 <md-field>
                                     <label>Используемый email</label>
-                                    <md-input v-model="order.data.customer.email"></md-input>
+                                    <md-input v-model="paymentEmail"></md-input>
                                 </md-field>
                                 <md-button class="md-primary md-raised non-margin"
                                     @click="sendPaymentMessage"
@@ -507,7 +507,8 @@
             showSmsSendedSuccess: false,
             showSmsSendedFail: false,
             showMailSendedSuccess: false,
-            showMailSendedFail: false
+            showMailSendedFail: false,
+            paymentEmail: "",
         }),
         created() {
             this.orderId = this.$route.params.id;
@@ -667,6 +668,7 @@
                 }
                 this.order = orderData;
                 this.originalOrder = JSON.parse(JSON.stringify(this.order));
+                this.paymentEmail = this.order.data.customer.email;
             },
             handleErrorGETResponse(response) {
                 this.apiError = true;
@@ -824,7 +826,10 @@
             },
             sendPaymentMessage() {
                 let url = `/api/order/${this.orderId}/payments/`;
-                this.$http.post(url, {}).then(
+                let data = {
+                    "email": this.paymentEmail
+                }
+                this.$http.post(url, data).then(
                     response => {
                         this.handleSuccessfulAddPaymentResponse(response);
                     },

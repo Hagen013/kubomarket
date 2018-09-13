@@ -11,6 +11,7 @@ from rest_framework.pagination import LimitOffsetPagination
 from yandex_money.models import Payment
 from yandex_money.serializers import PaymentSerializer
 
+from core.utils import MailSender
 from cart.models import Order2
 from cart.serializers import OrderSerializer
 
@@ -74,6 +75,7 @@ class OrderPaymentsAPIView(APIView):
         )
 
     def post(self, request, pk, *args, **kwargs):
+        email = request.data['email']
         instance = self.get_order(pk)
         user = instance.user
         cps_phone = instance.data['customer']['phone']
@@ -109,6 +111,27 @@ class OrderPaymentsAPIView(APIView):
                     item.save()
                     count += 1
         payment.save()
+
+        MailSender(
+            "Оплата заказа",
+            "mail_templates/payment.html",
+            email,
+            context={
+                "BASE_URL": "www.kubomarket.ru",
+                "uuid": payment.uuid,
+                "order": payment.order
+            }
+        ).send()
+        # MailSender(
+        #     "Оплата заказа",
+        #     "mail_templates/payment.html",
+        #     "zakaz@kubomarket.ru",
+        #     context={
+        #         "BASE_URL": "www.kubomarket.ru",
+        #         "uuid": payment.uuid,
+        #     }
+        # ).send()
+
         serializer = self.serializer_class(instance.payments.all(), many=True)
         return Response(
             serializer.data,

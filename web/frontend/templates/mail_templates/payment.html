@@ -12,7 +12,7 @@
                 {% endif %}
             </b></p> 
             <p>Ваш заказ c номером <b>{{ order.id }}</b> согласован и ожидает оплаты.</p>
-            <p>Для оплаты заказа нажмите на кнопку "ОПЛАТИТЬ" внизу письма.</p>            
+            <p>Для оплаты заказа нажмите на кнопку "ОПЛАТИТЬ" в нижней части письма.</p>            
         </td>
     </tr>
     <tr><td><p><span></span></p></td></tr>
@@ -25,7 +25,7 @@
     </tr>    
     <tr>
         <td style="max-width:600px; width:100%;" align="center" >
-            <a href="{{URL}}/assist/{{order.id}}/{{order.assist_key}}/" style="margin:auto; height:40px; width:120px; padding:10px; color:#ffffff; background:#2074ba; border:none;">ОПЛАТИТЬ</a>
+            <a href="{{BASE_URL}}/cart/payment/{{uuid}}/" style="margin:auto; height:40px; width:120px; padding:10px; color:#ffffff; background:#11aff1; border:none;">ОПЛАТИТЬ</a>
         </td>
     </tr>
     <tr>
