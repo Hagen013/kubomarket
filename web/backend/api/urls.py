@@ -12,6 +12,8 @@ from .products.urls import urls_product
 from .order.urls import urls_order
 from .users.urls import urls_users
 from .payment.urls import urls_payment
+from .sms.urls import urls_sms
+from .mail.urls import urls_mail
 from .mywarehouse.urls import urls_mywarehouse
 
 
@@ -26,6 +28,8 @@ urls_api = ([
     url(r'^order/', include(urls_order)),
     url(r'^users/', include(urls_users)),
     url(r'^payments/', include(urls_payment)),
+    url(r'^mail/', include(urls_mail)),
+    url(r'^sms/', include(urls_sms)),
     url(r'^yml/', include(urls_yml)),
     url(r'^my-warehouse/', include(urls_mywarehouse))
 ], 'api')

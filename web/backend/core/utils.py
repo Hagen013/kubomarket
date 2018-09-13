@@ -9,6 +9,7 @@ from django.conf import settings
 from django.template.defaultfilters import slugify as dj_slugify
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+
 EMAIL_REPLY_TO = "info@kubomarket.ru"
 
 
@@ -71,6 +72,19 @@ class MailSender():
 
 class SMSMessage():
 
-    def __init__(self, phone, message):
+    def __init__(self, phone, message, sender="Kubomarket", secret_key=None):
         self._phone = phone
         self._message = message
+        self._sender = sender
+        if secret_key is None:
+            self._secret_key = settings.SMS_SECRET_KEY
+        
+    def send(self):
+        payload = {
+            "api_id": self._secret_key,
+            "msg": self._message,
+            "to": self._phone,
+            "from": self._sender
+        }
+        response = requests.get(url=settings.SMS_URL, params=payload)
+        return response
