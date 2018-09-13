@@ -28,7 +28,7 @@ class SMSAPIView(APIView):
             json = response.json()
         except JSONDecodeError:
             return Response(
-                status=status.HTTP_409_CONFLICT
+                status=status.HTTP_400_BAD_REQUEST
             )
         return Response(
             json,

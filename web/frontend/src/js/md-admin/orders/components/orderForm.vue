@@ -311,21 +311,30 @@
                                             </md-textarea>
                                         </md-field>
                                         <md-button
-                                            class="md-primary md-raised"
-                                            disabled
+                                            class="md-primary md-raised non-margin"
+                                            @click="sendSmsMessage"
                                         >
                                             Отправить
                                         </md-button>
                                     </div>
                                     <div class="message-form">
-                                        <md-field>
-                                            <label>Email</label>
+                                        <div class="md-subheading">
+                                            Отправить Email
+                                        </div>
+                                        <md-field class="mail-heading">
+                                            <label>Заголовок</label>
+                                            <md-input v-model="emailTitle">
+                                            </md-input>
+                                        </md-field>
+                                        <md-field class="mail-text">
+                                            <label>Текст</label>
                                             <md-textarea v-model="emailText">
                                             </md-textarea>
                                         </md-field>
                                         <md-button
-                                            class="md-primary md-raised"
-                                            disabled
+                                            class="md-primary md-raised non-margin"
+                                            @click="sendEmailMessage"
+                                            :disabled="!emailIsAvailable"
                                         >
                                             Отправить
                                         </md-button>
@@ -388,6 +397,60 @@
                 Ещё раз
             </md-button>
         </md-snackbar>
+
+        <md-snackbar
+            md-position="center"
+            :md-duration="snackbarDuration" 
+            :md-active.sync="showSmsSendedSuccess" 
+            md-persistent
+        >
+            <span>SMS отправлено</span>
+            <md-button class="md-primary" 
+                @click="showSmsSendedSuccess = false"
+            >
+                Скрыть
+            </md-button>
+        </md-snackbar>
+        <md-snackbar
+            md-position="center"
+            :md-duration="snackbarDuration" 
+            :md-active.sync="showSmsSendedFail" 
+            md-persistent
+        >
+            <span>SMS отправлено</span>
+            <md-button class="md-primary" 
+                @click="sendPaymentMessage"
+            >
+                Ещё раз
+            </md-button>
+        </md-snackbar>
+
+        <md-snackbar
+            md-position="center"
+            :md-duration="snackbarDuration" 
+            :md-active.sync="showMailSendedSuccess" 
+            md-persistent
+        >
+            <span>Письмо успешно отправлено</span>
+            <md-button class="md-primary" 
+                @click="showMailSendedSuccess = false"
+            >
+                Скрыть
+            </md-button>
+        </md-snackbar>
+        <md-snackbar
+            md-position="center"
+            :md-duration="snackbarDuration" 
+            :md-active.sync="showMailSendedFail" 
+            md-persistent
+        >
+            <span>Не удалось отправить письмо</span>
+            <md-button class="md-primary" 
+                @click="sendPaymentMessage"
+            >
+                Ещё раз
+            </md-button>
+        </md-snackbar>
     </div>
 </template>
 
@@ -428,6 +491,7 @@
             },
             itemsChanged: false,
             smsText: "",
+            emailTitle: "",
             emailText: "",
             userId: null,
             user: null,
@@ -437,7 +501,13 @@
             showPaymentAddedFailed: false,
             snackbarDuration: 4000,
             payments: [],
-            paymentsTriggered: false
+            paymentsTriggered: false,
+            smsApiURL: "/api/sms/",
+            mailApiURL: "/api/mail/",
+            showSmsSendedSuccess: false,
+            showSmsSendedFail: false,
+            showMailSendedSuccess: false,
+            showMailSendedFail: false
         }),
         created() {
             this.orderId = this.$route.params.id;
@@ -560,8 +630,7 @@
                 }
             },
             emailIsAvailable() {
-                if (this.user )
-                return false
+                return this.order.data.customer.email !== ""
             },
             hasOrders() {
                 if (this.user !== null) {
@@ -576,7 +645,7 @@
                     return `${name} ${surname} (№ ${this.userId})`
                 }
                 return ""
-            }
+            },
         },
         methods: {
             getOrder(orderId) {
@@ -694,8 +763,53 @@
                 this.order.data['cart']['total_price'] = totalPrice;
             },
             sendEmailMessage() {
+                let data = {
+                    "email": this.order.data.customer.email,
+                    "title": this.emailTitle,
+                    "text": this.emailText
+                }
+                this.$http.post(this.mailApiURL, data).then(
+                    response => {
+                        this.handleSuccessfulMailResponse(response);
+                    },
+                    response => {
+                        this.handleFailedMailResponse(response);
+                    }
+                )
             },
             sendSmsMessage() {
+                let data = {
+                    "phone": this.order.data.customer.phone,
+                    "message": this.smsText
+                }
+                this.$http.post(this.smsApiURL, data).then(
+                    response => {
+                        this.handleSuccessfulSmsResponse(response);
+                    },
+                    response => {
+                        this.handleFailedSmsResponse(response);
+                    }
+                )
+            },
+            handleSuccessfulMailResponse(response) {
+                this.emailText = "";
+                this.emailTitle = "";
+                console.log(response);
+                this.showMailSendedSuccess = true;
+            },
+            handleFailedMailResponse(response) {
+                console.log(response);
+                this.showMailSendedFail = true;
+            },
+            handleSuccessfulSmsResponse(response) {
+                this.smsText = "";
+                console.log(response);
+                this.showSmsSendedSuccess = true;
+            },
+            handleFailedSmsResponse(response) {
+                this.smsText = "";
+                console.log(response);
+                this.showSmsSendedFail = true;
             },
             getOrderPayments() {
                 let url = `/api/order/${this.orderId}/payments/`;
@@ -875,7 +989,7 @@
         padding-left: 32px;
     }
     .message-form {
-        margin-bottom: 32px;
+        margin-bottom: 42px;
     }
     .orders__list {
         padding: 16px 0px;
@@ -908,6 +1022,12 @@
     }
     .non-margin {
         margin: 0px !important;
+    }
+    .mail-heading {
+        margin: 0px;
+    }
+    .mail-text {
+        margin: 16px 0px !important;
     }
 
     .fade {
