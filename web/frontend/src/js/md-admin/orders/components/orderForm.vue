@@ -892,6 +892,23 @@
             },
             deletePayment(payment) {
                 console.log(payment);
+                let url = `/api/order/${this.orderId}/payments/${payment.id}`;
+                this.$http.delete(url).then(
+                    response => {
+                        this.handleSuccessfulDeletePaymentResponse(response);
+                    },
+                    response => {
+                        this.handleFailedDeletePaymentResponse(response);
+                    }
+                )
+            },
+            handleSuccessfulDeletePaymentResponse(response) {
+                this.getOrderPayments();
+                console.log(response);
+
+            },
+            handleFailedDeletePaymentResponse(response) {
+                console.log(response);
             }
         },
         filters: {

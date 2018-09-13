@@ -161,7 +161,11 @@ class OrderPaymentsDetailsAPIView(APIView):
 
     def delete(self, request, order_pk, payment_pk, *args, **kwargs):
         instance = self.get_instance(order_pk, payment_pk)
-        instance.delete()
+        if not instance.is_payed:
+            instance.delete()
+            return Response(
+                status=status.HTTP_200_OK
+            )
         return Response(
-            status=status.HTTP_200_OK
+            status=status.HTTP_403_FORBIDDEN
         )

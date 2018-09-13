@@ -3,39 +3,66 @@
         <div class="md-title title">
             Список платежей
         </div>
-        <div class="list__item"
+        <div class="list__item item"
             v-if="showList"
             v-for="item in payments"
             :key="item.id"
         >
-            <div class="row">
-                <div class="row__name">
-                    Дата:
+            <div class="item__content">
+                <div class="item__row">
+                    <div class="item__key">
+                        Дата:
+                    </div>
+                    <div class="item__value">
+                        {{item.pub_date|dataFilter}}
+                    </div>
                 </div>
-                <div class="row__value">
-                    {{item.pub_date|dataFilter}}
+                <div class="item__row">
+                    <div class="item__key">
+                        Статус:
+                    </div>
+                    <div class="item__value">
+                        {{item.status|statusFilter}}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="row__name">
-                    Статус:
-                </div>
-                <div class="row__value">
-                    {{item.status|statusFilter}}
-                </div>
-            </div>
-            <div class="row row_nf">
-                <div class="row__name">
-                    Ссылка:
-                </div>
-                <div class="row__value">
-                    <a class="link"
-                        :href="item.url"
-                        target="_blank"
+                <div class="item__row">
+                    <div class="item__key">
+                        Оплачен:
+                    </div>
+                    <div class="item__value"
+                        v-if="item.is_payed"
+                        v-once
                     >
-                        /cart/payment{{item.uuid}}/
-                    </a>
+                        да
+                    </div>
+                    <div class="item__value"
+                        v-else
+                        v-once
+                    >
+                        нет
+                    </div>
                 </div>
+                <div class="item__row">
+                    <div class="item__key">
+                        Ссылка:
+                    </div>
+                    <div class="item__value">
+                        <a class="link"
+                            :href="item.url"
+                            target="_blank"
+                        >
+                            /cart/payment{{item.uuid}}/
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="item__close">
+                <md-button class="md-icon-button md-accent"
+                    v-if="!item.is_payed"
+                    @click="deleteItem(item)"
+                >
+                    <md-icon>delete</md-icon>
+                </md-button>
             </div>
         </div>
         <div class="list__placeholder"
@@ -98,20 +125,27 @@
         margin-bottom: 32px;
     }
     .list__item {
-        margin-bottom: 24px;
         padding: 8px 0px;
         border-top-color: rgba(0,0,0,.12);
         border-top: 1px solid rgba(0,0,0,.12);
     }
-    .row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-    }
-    .row_nf { 
-        display: block !important;
-    }
     .button {
         margin: 0px !important;
+    }
+    .item {
+        padding: 8px 0px;
+        position: relative;
+        max-width: 500px;
+    }
+    .item__close {
+        position: absolute;
+        top: 8px;
+        right: 0px;
+    }
+    .item__row {
+        display: flex;
+    }
+    .item__key {
+        width: 70px;
     }
 </style>
