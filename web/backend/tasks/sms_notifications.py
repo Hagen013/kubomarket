@@ -8,7 +8,7 @@ from cart.models import Order2
 
 @app.task
 def sms_notify(order_id):
-    instance = Order2.objects.get(id=order_id)
+    instance = Order2.objects.get(public_id=order_id)
     phone_code = "7"
     to = phone_code + instance.data["customer"]["phone"]
     msg = "Ваш заказ № {order_id} поступил в обработку, и в ближайшее время\

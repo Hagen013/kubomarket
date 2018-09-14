@@ -6,7 +6,7 @@ from config.celery import app
 
 @app.task
 def mail_notify(pk):
-    instance = Order2.objects.get(id=pk)
+    instance = Order2.objects.get(public_id=pk)
     email = instance.data['customer']['email']
     MailSender(
         "Спасибо за заявку",
