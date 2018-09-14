@@ -12,7 +12,7 @@
                     {{order.state}}
                 </div>
                 <div class="order__title">
-                    № <span class="bold green">100{{order.id}}</span>
+                    № <span class="bold green">{{order.public_id}}</span>
                 </div>
                 <div class="order__total-price price">
                     {{order.data.cart.total_price}} <i class="icon icon_rouble"></i>

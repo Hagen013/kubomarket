@@ -55,7 +55,7 @@
                                         @click="selectOrder(order.id)"
                                     >
                                         <div class="order__id">
-                                            №{{order.id}}
+                                            №{{order.public}}
                                         </div>
                                         <div class="order__price">
                                             {{order.data.cart.total_price}} ₽

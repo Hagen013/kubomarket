@@ -189,7 +189,7 @@
                         Номер вашего заказа:
                     </div>
                     <div class="aftercheck-value">
-                        {{recievedOrderData.id}}
+                        {{recievedOrderData.public_id}}
                     </div>
                 </div>
 

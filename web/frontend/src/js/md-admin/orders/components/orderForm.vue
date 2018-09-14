@@ -363,7 +363,7 @@
                                         :key="order.id"
                                     >
                                         <div class="order__id">
-                                            №{{order.id}}
+                                            №{{order.public_id}}
                                         </div>
                                         <div class="order__price">
                                             {{order.data.cart.total_price}} ₽
@@ -687,6 +687,8 @@
                 this.order = orderData;
                 this.originalOrder = JSON.parse(JSON.stringify(this.order));
                 this.paymentEmail = this.order.data.customer.email;
+                this.componentTitle = `Заказ № ${this.order.public_id}`;
+                this.$store.commit('admin/changeAppTitle', this.componentTitle);
             },
             handleErrorGETResponse(response) {
                 this.apiError = true;

@@ -95,7 +95,7 @@
                     >
                         <td class="table__cell">
                             <div class="table__cell-container table-cell--colored">
-                                {{order.id}}
+                                {{order.public_id}}
                             </div>
                         </td>
                         <td class="table__cell">
