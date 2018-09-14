@@ -56,6 +56,14 @@
                             </md-select>
                         </md-field>
                         <md-field>
+                            <label for="status">Оплата</label>
+                            <md-select v-model="order.data['payment']['mod']" name="status" id="status">
+                                <md-option value="cash">наличными</md-option>
+                                <md-option value="card_on_receipt">картой при получении</md-option>
+                                <md-option value="card">картой онлайн</md-option>
+                            </md-select>
+                        </md-field>
+                        <md-field>
                             <label>Служебные заметки</label>
                             <md-textarea v-model="order.manager_notes"></md-textarea>
                         </md-field>
@@ -577,6 +585,15 @@
                     return false
                 }
             },
+            paymentMethodChanged() {
+                if (this.order !== null) {
+                    let payment = JSON.stringify(this.order.data['payment']);
+                    let originalPayment = JSON.stringify(this.originalOrder.data['payment']);
+                    return payment !== originalPayment
+                } else {
+                    return false
+                }
+            },
             deliveryStatusServiceChanged() {
                 return this.order.delivery_status['service'] !== this.originalOrder.delivery_status['service']        
             },
@@ -607,7 +624,8 @@
                     this.deliveryChanged ||
                     this.customerChanged ||
                     this.geoChanged ||
-                    this.deliveryStatusChanged
+                    this.deliveryStatusChanged ||
+                    this.paymentMethodChanged
                 )
             },
             cartItems() {

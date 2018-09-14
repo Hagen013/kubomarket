@@ -90,7 +90,7 @@ class Order2(TimeStamped):
                 "properties": {
                     "mod": {
                         "type": "string",
-                        "pattern": "^(cash|card_upon_receipt|card)$"
+                        "pattern": "^(cash|card_on_receipt|card)$"
                     }
                 },
                 "required": ["mod"],

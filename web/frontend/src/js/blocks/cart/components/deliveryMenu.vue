@@ -151,7 +151,7 @@
                             {{[selectedDeliveryPoint.time_min, selectedDeliveryPoint.time_max] | timeFilter}}
                         </div>
                         <div class="cart__selected-point-price green">
-                            {{selectedDeliveryPoint.price | priceFilter}}
+                            {{selectedDeliveryPoint.price | priceFilter}} <i class="icon icon_rouble"></i>
                         </div>
                         <div class="cart__change-point-link_single">
                             <a class="link link_city"

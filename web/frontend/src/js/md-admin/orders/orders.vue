@@ -79,6 +79,13 @@
                                 </div>
                             </div>
                         </th>
+                        <th class="table__head numeric">
+                            <div class="table__head-container">
+                                <div class="table__label">
+                                    ОПЛАТА
+                                </div>
+                            </div>
+                        </th>
                     </tr>
                     <tr class="table__row"
                         v-for="order of orders"
@@ -136,6 +143,15 @@
                                     v-else
                                 >
                                     не выбрано
+                                </div>
+                            </div>
+                        </td>
+                        <td class="table__cell">
+                            <div class="table__cell-container md-caption"
+                                :class="{ success : order.data['payment']['mod'] === 'card' }"
+                            >
+                                <div class="order__payment">
+                                {{order.data['payment']['mod']|paymentFilter}}
                                 </div>
                             </div>
                         </td>
@@ -327,6 +343,16 @@
                 else {
                     return "почта"
                 }
+            },
+            paymentFilter(mode) {
+                if (mode === "cash") {
+                    return "наличными"
+                } else if (mode == "card") {
+                    return "онлайн"
+                }
+                else {
+                    return "картой при получении"
+                }
             }
         }
     }
@@ -415,6 +441,9 @@
             }
         }
     }
+    .success {
+        color: $success;
+    }
     .table-row--err {
         .table-cell--colored {
             color: $accent;
@@ -446,5 +475,8 @@
         max-width: 150px;
         padding: 6px 32px 6px 24px;
         line-height: 1.6;
+    }
+    .order__payment {
+        max-width: 80px;
     }
 </style>

@@ -5,13 +5,13 @@ export default {
             mod: "cash",
             available_mods: [
                 "cash",
-                "card_upon_receipt",
+                "card_on_receipt",
                 "card",
             ]
         }
     },
     mutations: {
-        set_mod(state, payload) {
+        setMethod(state, payload) {
             if (state.available_mods.includes(payload)) {
                 state.mod = payload;
             } else {

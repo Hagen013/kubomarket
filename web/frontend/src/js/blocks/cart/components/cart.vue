@@ -123,6 +123,12 @@
                         :selectedDeliveryPoint="selectedDeliveryPoint"
                     >
                     </delivery-menu>
+                    <payment-menu
+                        :mode="selectedPaymentMode"
+                        v-on:changePaymentMethod="changePaymentMethod"
+                        v-if="isDeliveryModSelected"
+                    >
+                    </payment-menu>
                     <div class="cart__bottom">
                         <div class="cart__order-summary">
                             <div class="cart__order-summary-item">
@@ -261,6 +267,7 @@ import cartItem from './cartItem.vue'
 import deliveryMenu from './deliveryMenu.vue'
 import deliveryPoints from './deliveryPoints.vue'
 import yandexMap from '../../yandexMap/yandexMap.vue'
+import paymentMenu from './paymentMenu.vue'
 
 
 export default {
@@ -281,7 +288,8 @@ export default {
         "cart-item": cartItem,
         "delivery-menu": deliveryMenu,
         "delivery-points": deliveryPoints,
-        "masked-input": MaskedInput
+        "masked-input": MaskedInput,
+        "payment-menu": paymentMenu
     },
     mounted() {
         this.customerPhoneProxy = String(this.customerPhone);
@@ -468,11 +476,9 @@ export default {
         selectedDeliveryPoint(){
             return this.$store.getters["delivery/curentSelectedPoint"];
         },
-        // Вкладка оплаты
-        selectedPaymentMod(){
+        selectedPaymentMode(){
             return this.$store.state.payment.mod;
         },
-        // Заказ
         orderData(){
             return this.$store.getters['orderData']('cart');
         },
@@ -566,6 +572,11 @@ export default {
         },
         handleFailedPostOrderRequest(response) {
             this.isCartSubmissionInProgress = false;
+        },
+        changePaymentMethod(method) {
+            console.log("match");
+            console.log(method);
+            this.$store.commit('payment/setMethod', method)
         }
     },
     watch: {
