@@ -6,6 +6,5 @@ from .views import CartPageView, PaymentPageView, TestView
 urlpatterns = [
     url(r'^$', CartPageView.as_view(), name='details'),
     url(r'^payment/(?P<uuid>[-\w]+)/$', PaymentPageView.as_view(), name='payment'),
-    url(r'^test/$', TestView.as_view(), name='test')
 ]
 

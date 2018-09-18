@@ -52,7 +52,7 @@ class TestView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(TestView, self).get_context_data(**kwargs)
-        instance = Order2.objects.get(public_id="KU1871091465")
+        instance = Order2.objects.get(public_id="KU1894091840")
         context['order'] = instance
         context['date'] = datetime.now().strftime("%d.%m.%Y")
         return context

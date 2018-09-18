@@ -10,8 +10,6 @@ RUN apk add --no-cache uwsgi uwsgi-python3 uwsgi-python uwsgi-http uwsgi-corerou
 RUN apk add --no-cache \
     py3-pillow
 
-RUN apk add --no-cache wkhtmltopdf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
-
 # INSTALL REQUIREMENTS
 COPY  web/requirements/base.txt base.txt
 COPY  web/requirements/production.txt requirements.txt

@@ -1,5 +1,5 @@
 from datetime import datetime
-import pdfkit
+from weasyprint import HTML
 
 from django.conf import settings
 from django.template.loader import get_template
@@ -19,5 +19,6 @@ def generate_receipt(pk):
         path=settings.RECEIPTS_PATH,
         public_id=instance.public_id
     )
-    pdfkit.from_string(html, output_filename)
+    pdf_file = HTML(string=html).write_pdf(output_filename)
     return output_filename
+
