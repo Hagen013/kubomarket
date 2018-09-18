@@ -22,6 +22,12 @@
             >
                 <div class="save-button-wrap">
                     <md-button class="md-primary md-raised"
+                        @click="downloadReceipt"
+                    >
+                        <md-icon>file_download</md-icon>
+                        чек
+                    </md-button>
+                    <md-button class="md-primary md-raised"
                         @click="rollBack"
                         :disabled="!hasChanged"
                     >
@@ -467,6 +473,7 @@
     import debounce from 'debounce'
     import normalizeNumber from '../../../core/normalizeNumber.js'
     import paymentsList from './paymentsList.vue'
+    import downloadFile from '../../../core/downloadFile.js'
 
     var equal = require('fast-deep-equal');
 
@@ -665,6 +672,12 @@
                 }
                 return ""
             },
+            receiptUrl() {
+                if (this.order !== null) {
+                    return `/api/order/${this.order.id}/receipt/`
+                }
+                return ""
+            }
         },
         methods: {
             getOrder(orderId) {
@@ -929,6 +942,9 @@
             },
             handleFailedDeletePaymentResponse(response) {
                 console.log(response);
+            },
+            downloadReceipt() {
+                downloadFile(this.receiptUrl, 'receipt.pdf')
             }
         },
         filters: {

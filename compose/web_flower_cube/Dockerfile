@@ -8,6 +8,8 @@ RUN apk add --no-cache --virtual .pynacl_deps build-base python3-dev libffi-dev
 RUN apk add --no-cache \
     py3-pillow
 
+RUN apk add --no-cache wkhtmltopdf
+
 # INSTALL REQUIREMENTS
 COPY  web/requirements/base.txt base.txt
 COPY  web/requirements/production.txt production.txt

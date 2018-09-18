@@ -1,4 +1,6 @@
-from django.http import Http404
+import os
+
+from django.http import Http404, HttpResponse
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.db import IntegrityError, transaction
 
@@ -14,6 +16,7 @@ from yandex_money.serializers import PaymentSerializer
 from core.utils import MailSender
 from cart.models import Order2
 from cart.serializers import OrderSerializer
+from tasks.receipts import generate_receipt
 
 
 class OrderAPIView(APIView):
@@ -122,15 +125,6 @@ class OrderPaymentsAPIView(APIView):
                 "order": payment.order
             }
         ).send()
-        # MailSender(
-        #     "Оплата заказа",
-        #     "mail_templates/payment.html",
-        #     "zakaz@kubomarket.ru",
-        #     context={
-        #         "BASE_URL": "www.kubomarket.ru",
-        #         "uuid": payment.uuid,
-        #     }
-        # ).send()
 
         serializer = self.serializer_class(instance.payments.all(), many=True)
         return Response(
@@ -169,3 +163,25 @@ class OrderPaymentsDetailsAPIView(APIView):
         return Response(
             status=status.HTTP_403_FORBIDDEN
         )
+
+
+class OrderReceiptAPIView(APIView):
+
+    permission_classes = (IsAdminUser,)
+    model = Order2
+
+    def get_order(self, pk):
+        try:
+            return Order2.objects.get(pk=pk)
+        except ObjectDoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, *args, **kwargs):
+        self.order = self.get_order(pk)
+        filename = generate_receipt(pk)
+        if os.path.exists(filename):
+            with open(filename, 'rb') as fh:
+                response = HttpResponse(fh.read(), content_type="application/pdf")
+                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(filename)
+                return response
+        raise Http404

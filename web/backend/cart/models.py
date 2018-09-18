@@ -270,6 +270,14 @@ class Order2(TimeStamped):
             "postal_service": "Доставка Почтой России",
         }[self.data['delivery']['mod']["type"]]
 
+    @property
+    def payment_method_text(self):
+        return {
+            "cash": "наличными",
+            "card_on_receipt": "картой при получении",
+            "card": "картой"
+        }[self.data['payment']['mod']]
+
     def present_account(self):
         email = self.data.get('customer').get('email')
         if settings.DEBUG:

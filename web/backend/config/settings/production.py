@@ -32,6 +32,7 @@ MEDIA_URL = '/media/'
 
 ADMIN_UPLOADS = MEDIA_ROOT + 'admin/uploads/'
 ADMIN_DOWNLOADS = MEDIA_ROOT + 'admin/downloads/'
+RECEIPTS_PATH = MEDIA_ROOT + 'admin/downloads/receipts/'
 
 LOGS_DIR = MEDIA_ROOT + 'logs/'
 SEARCH_LOGS_DIR = LOGS_DIR + 'search/'

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&amp;subset=cyrillic" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Open Sans', sans-serif;
+                font-size: 14px;
+            }
+            .receipt {
+                margin: 0 auto;
+                max-width: 980px;
+                padding: 64px 0px;
+            }
+            .receipt__logo-wrap {
+                height: 250px;
+            }
+            .receipt__logo {
+                height: 100%;
+                width: auto;
+            }
+            .receipt__header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 64px;
+            }
+            .top-label {
+                padding-right: 8px;
+                padding-bottom: 6px;
+                min-width: 120px;
+            }
+            .top-value {
+                padding-bottom: 6px;
+            }
+            .receipt__left {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                width: 50%;
+            }
+            .receipt__right {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                width: 50%;
+            }
+            .receipt__title {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 32px;
+                font-size: 20px;
+                font-weight: 700;
+            }
+            .receipt__table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 32px;
+            }
+            .table__cell, .table__head {
+                border: 1px solid black;
+            }
+            .table__head {
+                padding: 5px 5px;
+            }
+            .table__cell {
+                padding: 5px 5px;
+            }
+            .text_center {
+                text-align: center;
+            }
+            .text_right {
+                text-align: right;
+            }
+            .receipt__singatures {
+                display: flex;
+                justify-content: flex-end;
+            }
+            .signature {
+                display: flex;
+                padding: 0px 16px;
+            }
+            .receipt__text {
+                margin-bottom: 64px;
+            }
+            .signature__value {
+                display: flex;
+                justify-content: flex-end;
+                min-width: 160px;
+                margin-left: 16px;
+                border-bottom: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="receipt">
+            <div class="receipt__header">
+                <div class="receipt__left">
+                    <div class="receipt__logo-wrap">
+                        <img class="receipt__logo" src="https://www.kubomarket.ru/static/img/logo/logo-big.jpg">
+                    </div>
+                </div>
+                <div class="receipt__right">
+                    <table class="table table__top">
+                        <tr class="top-row">
+                            <td class="top-label">
+                                Продавец:
+                            </td>
+                            <td class="top-value">
+                                ООО «МАЕДА ВОТЧ ГРУПП РУС»
+                            </td>
+                        </tr>
+                        <tr class="top-row">
+                            <td class="top-label">
+                                ИНН:
+                            </td>
+                            <td class="top-value">
+                                7728322052
+                            </td>
+                        </tr>
+                        <tr class="top-row">
+                            <td class="top-label">
+                                Юр. адрес:
+                            </td>
+                            <td class="top-value">
+                                117342, город Москва, улица Введенского, дом 23а стр. 3. эт.4, пом. XIV .ком.62
+                            </td>
+                        </tr class="top-row">
+                        <tr>
+                            <td class="top-label">
+                                Телефон:
+                            </td>
+                            <td class="top-value">
+                                8 (800) 301-2448
+                            </td>
+                        </tr>
+                        <tr class="top-row">
+                            <td class="top-label">
+                                Покупатель:
+                            </td>
+                            <td class="top-value">
+                            {{order.data['customer']['name']}}
+                            </td>
+                        </tr>
+                        <tr class="top-row">
+                            <td class="top-label">
+                                Способ оплаты:
+                            </td>
+                            <td class="top-value">
+                                {{order.payment_method_text}}
+                            </td>
+                        </tr>
+                        <tr class="top-row">
+                            <td class="top-label">
+                                Адрес доставки:
+                            </td>
+                            <td class="top-value">
+                            {{order.data['customer']['address']}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="receipt__content">
+                <div class="receipt__title">
+                    Товарный чек № {{order.public_id}} от {{date}}
+                </div>
+                <table class="table receipt__table">
+                    <tr>
+                        <th class="table__head">№ п/п</th>
+                        <th class="table__head">Товар</th>
+                        <th class="table__head">Ед.</th>
+                        <th class="table__head">Цена</th>
+                        <th class="table__head">Кол-во</th>
+                        <th class="table__head">Сумма, руб.</th>
+                    </tr>
+                    {% for key in order.data['cart']['items'] %}
+                    <tr>
+                        <td class="table__cell text_center">
+                            {{ loop.index }}
+                        </td>
+                        <td class="table__cell">
+                            {{order.data['cart']['items'][key]['name']}}
+                        </td>
+                        <td class="table__cell text_center">
+                            шт.
+                        </td>
+                        <td class="table__cell text_right">
+                            {{order.data['cart']['items'][key]['price']}}
+                        </td>
+                        <td class="table__cell text_center">
+                            {{order.data['cart']['items'][key]['quantity']}}
+                        </td>
+                        <td class="table__cell text_right">
+                            {{order.data['cart']['items'][key]['total_price']}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="5" class="table__cell">
+                            Доставка:
+                        </td>
+                        {% if order.data['delivery']['mod']['price'] is none %}
+                        <td class="table__cell text_right">
+                            0
+                        </td>
+                        {% else %}
+                        <td class="table__cell text_right">
+                            {{order.data['delivery']['mod']['price']}}
+                        </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="table__cell">
+                            <b>Итого:</b>
+                        </td>
+                        <td class="table__cell text_right">
+                            <b>{{order.total_price}}</b>
+                        </td>
+                    </tr>
+                </table>
+                <div class="receipt__text">
+                    <p>
+                        Покупатель вправе отказаться от Товара в любое время до его передачи в 
+                        Почтовую или Курьерскую службу доставки
+                    </p>
+                    <p>
+                        Возврат Товара надлежащего качества возможен в течение 30 дней после получения Товара в случае,
+                        если сохранены его товарный вид, потребительские свойства, а также документ, подтверждающий факт и
+                        условия покупки указанного товара: кассовый чек (при наличном расчете), товарный чек (товарная накладная)
+                        и соблюдены сроки возврата Товара. Качественные товары, не подлежащие обмену и возврату, указаны в Перечне,
+                        утвержденном постановлением Правительства РФ от 19 января 1998 г. № 55
+                    </p>
+                </div>
+                <div class="receipt__singatures">
+                    <div class="signature signature_1">
+                        <div class="signature__label">
+                            Отпустил:
+                        </div>
+                        <div class="signature__value">
+                        </div>
+                    </div>
+                    <div class="signature singature_2">
+                        <div class="signature__label">
+                            Генеральный директор:
+                        </div>
+                        <div class="signature__value">
+                            Болдоков В.Л.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

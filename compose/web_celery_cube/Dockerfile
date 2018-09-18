@@ -3,10 +3,11 @@ RUN apk add --no-cache gcc
 RUN apk add --no-cache libxml2-dev libxslt-dev
 RUN apk add --no-cache --virtual .pynacl_deps build-base python3-dev libffi-dev
 
-
 # INSTALL PILLOW
 RUN apk add --no-cache \
     py3-pillow
+
+RUN apk add --no-cache wkhtmltopdf
  
 # INSTALL REQUIREMENTS
 COPY  web/requirements/base.txt base.txt

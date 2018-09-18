@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.views.generic import TemplateView
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
@@ -43,3 +45,14 @@ class PaymentPageView(TemplateView):
         return context
 
 
+
+class TestView(TemplateView):
+
+    template_name = "receipt.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(TestView, self).get_context_data(**kwargs)
+        instance = Order2.objects.get(public_id="KU1871091465")
+        context['order'] = instance
+        context['date'] = datetime.now().strftime("%d.%m.%Y")
+        return context
