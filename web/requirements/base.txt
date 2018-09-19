@@ -45,5 +45,4 @@ bs4==0.0.1
 zeep==3.1.0
 
 # HTML to PDF converter
-WeasyPrint==0.42.3
-
+pdfkit==0.6.1

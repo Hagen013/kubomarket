@@ -6,6 +6,9 @@ RUN apk add --no-cache --virtual .pynacl_deps build-base python3-dev libffi-dev
 # INSTALL UWSGI
 RUN apk add --no-cache uwsgi uwsgi-python3 uwsgi-python uwsgi-http uwsgi-corerouter uwsgi-stats_pusher_socket
 
+RUN apk add --update --no-cache ttf-liberation
+RUN apk add --no-cache wkhtmltopdf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
+
 # INSTALL PILLOW 
 RUN apk add --no-cache \
     py3-pillow
