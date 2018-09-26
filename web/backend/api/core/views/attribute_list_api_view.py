@@ -12,15 +12,25 @@ class AttributeListAPIView(APIView):
     Для работы необходимо определить не абстрактный класс атрибута и его сериализатор
     """
     model = None
-    serializer = None
+    serializer_class = None
 
     def get(self, request, *args, **kwargs):
         qs = self.model.objects.all()
-        serializer = self.serializer(qs, many=True)
+        serializer = self.serializer_class(qs, many=True)
         return Response(
             serializer.data,
             status=status.HTTP_200_OK
         )
 
-    # def post(self, request, *args, **kwargs):
-    #     return Response({})
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )

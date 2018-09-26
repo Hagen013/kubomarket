@@ -36,8 +36,8 @@
                     <span class="md-list-item-text">Остатки</span>
                 </md-list-item>
 
-                <md-list-item @click="route('/attributes')"
-                    :class="{ 'md-list-item--active' : $router.currentRoute.fullPath=='/attributes' }"
+                <md-list-item @click="route('/attributes-sync')"
+                    :class="{ 'md-list-item--active' : $router.currentRoute.fullPath=='/attributes-sync' }"
                 >
                     <md-icon>format_list_bulleted</md-icon>
                     <span class="md-list-item-text">Атрибуты</span>
@@ -71,6 +71,13 @@
                     <span class="md-list-item-text">Пользователи</span>
                 </md-list-item>
 
+                <md-list-item @click="route('/attributes')"
+                    :class="{ 'md-list-item--active' : $router.currentRoute.fullPath=='/attributes' }"
+                >
+                    <md-icon>edit_attributes</md-icon>
+                    <span class="md-list-item-text">Атрибуты</span>
+                </md-list-item>
+
             </md-list>
 
         </md-app-drawer>
@@ -99,11 +106,13 @@
     import categoryForm from './categories/components/categoryForm.vue'
     import users from './users/users.vue'
     import userProfile from './users/components/userProfile.vue'
+    import attributes from './attributes/attributes.vue'
+    import attributeForm from './attributes/components/attributeForm.vue'
 
     const routes = [
         { path: '/', redirect: "/orders" },
         { path: '/offers', component: syncOffers },
-        { path: '/attributes', component: syncAttributes },
+        { path: '/attributes-sync', component: syncAttributes },
         { path: '/images', component: syncImages },
         { path: '/upload', component: uploadOffers },
         { path: '/orders', component: orders },
@@ -112,7 +121,10 @@
         { path: '/category/', component: categoryForm },
         { path: '/category/:id', component: categoryForm },
         { path: '/users', component: users },
-        { path: '/users/:id', component: userProfile }
+        { path: '/users/:id', component: userProfile },
+        { path: '/attributes', component: attributes },
+        { path: '/attribute/:id', component: attributeForm },
+        { path: '/attribute/', component: attributeForm },
     ]
 
     const router = new VueRouter({

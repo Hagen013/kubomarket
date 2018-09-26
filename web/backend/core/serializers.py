@@ -69,7 +69,7 @@ class CategoryNodeAdditionalRelationSerializer(serializers.Serializer):
 
 class AttributeValueSerializer(DynamicFieldsModelSerializer):
     
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(required=False)
     name = serializers.CharField()
     slug = serializers.CharField()
     attribute = serializers.IntegerField(source='attribute_id')
@@ -85,16 +85,19 @@ class AttributeValueSerializer(DynamicFieldsModelSerializer):
             'attribute_type',
             'value'
         )
+        read_only_fields = (
+            'id',
+        )
 
 
 class AttributeSerializer(DynamicFieldsModelSerializer):
     
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(required=False)
     name = serializers.CharField()
     key = serializers.CharField()
     attribute_type = serializers.IntegerField()
-    values = AttributeValueSerializer(many=True)
-    unit = serializers.CharField()
+    values = AttributeValueSerializer(many=True, read_only=True, required=False)
+    unit = serializers.CharField(allow_blank=True)
     
     class Meta:
         fields = (
@@ -105,6 +108,19 @@ class AttributeSerializer(DynamicFieldsModelSerializer):
             'unit',
             'values'
         )
+        read_only_fields = (
+            'id',
+            'values'
+        )
+
+    def create(self, validated_data):
+        values = validated_data.pop("values")
+        return super(AttributeSerializer, self).create(validated_data)
+
+
+    def update(self, instance, validated_data):
+        values = validated_data.pop("values")
+        return super(AttributeSerializer, self).update(instance, validated_data)
 
 
 class CategoryNodeGroupSerializer(DynamicFieldsModelSerializer):
