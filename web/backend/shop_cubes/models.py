@@ -2,6 +2,7 @@ from math import inf
 
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 from mptt.models import TreeForeignKey
 
@@ -18,7 +19,8 @@ from core.models import (CategoryNodeGroup,
                          CategoryNodeAttributeValueRelation,
                          CategoryNodeOutdatedUrl,
                          ProductCardAttributeValueRelation,
-                         AttributeValueFilterRelation)
+                         AttributeValueFilterRelation,
+                         ProductCardReview)
 
 from core.utils import disallowed_before_creation, DisallowedBeforeCreationException
 
@@ -358,4 +360,23 @@ class CubesProductVideoReview(ProductVideoReview):
         CubesProductCard,
         on_delete=models.CASCADE,
         related_name='video_reviews'
+    )
+
+
+class CubesProductCardReview(ProductCardReview):
+
+    class Meta:
+        ordering = ['-created_at']
+        abstract=False
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='reviews'
+    )
+
+    product = models.ForeignKey(
+        CubesProductCard,
+        on_delete=models.CASCADE,
+        related_name='reviews'
     )

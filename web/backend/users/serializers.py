@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from core.serializers import DynamicFieldsModelSerializer
-from .models import Profile, UserComment
+from .models import Profile
 
 
 class ProfileSerializer(DynamicFieldsModelSerializer):
@@ -45,13 +45,3 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])
         user.save()
         return user
-
-
-class UserCommentSerializer(DynamicFieldsModelSerializer):
-
-    class Meta:
-        model = UserComment
-        fields = (
-            "user",
-            "text",
-        )

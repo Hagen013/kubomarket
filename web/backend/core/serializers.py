@@ -212,3 +212,40 @@ class ProductVideoReviewSerializer(DynamicFieldsModelSerializer):
             'modified_at',
             'url'
         )
+
+
+class PublicProductCardReviewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = (
+            'id',
+            'user',
+            'product',
+            'content',
+            'rating',
+            'status',
+            'created_at'
+        )
+        read_only_fields = (
+            'id',
+            'status',
+            'created_at'
+        )
+
+
+class PrivateProductCardReviewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = (
+            'id',
+            'user',
+            'product',
+            'content',
+            'rating',
+            'status',
+            'created_at'
+        )
+        read_only_fields = (
+            'id',
+            'created_at'
+        )

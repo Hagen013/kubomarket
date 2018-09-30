@@ -14,6 +14,7 @@ from .users.urls import urls_users
 from .payment.urls import urls_payment
 from .sms.urls import urls_sms
 from .mail.urls import urls_mail
+from .reviews.urls import urls_reviews
 from .mywarehouse.urls import urls_mywarehouse
 
 
@@ -31,5 +32,6 @@ urls_api = ([
     url(r'^mail/', include(urls_mail)),
     url(r'^sms/', include(urls_sms)),
     url(r'^yml/', include(urls_yml)),
+    url(r'^reviews/', include(urls_reviews)),
     url(r'^my-warehouse/', include(urls_mywarehouse))
 ], 'api')

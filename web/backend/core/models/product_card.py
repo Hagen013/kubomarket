@@ -355,3 +355,56 @@ class ProductVideoReview(TimeStamped, Orderable):
     @property
     def url(self):
         return "https://www.youtube.com/watch?v={code}".format(self.code)
+
+
+class ProductCardReview(TimeStamped):
+
+    class Meta:
+        abstract = True
+        ordering = ['-created_at']
+
+    user = None
+    product = None
+
+    RATING_CHOICES = (
+        (10, '10'),
+        (9, '9'),
+        (8, '8'),
+        (7, '7'),
+        (6, '6'),
+        (5, '5'),
+        (4, '4'),
+        (3, '3'),
+        (2, '2'),
+        (1, '1'),
+        (0, '0')
+    )
+
+    REVIEW_STATUSES = (
+        ("новый", "Новый"),
+        ("одобрен", "Одобрен"),
+        ("отклонен", "Отклонен"),
+    )
+
+    status = models.CharField(
+        max_length=32,
+        verbose_name='статус отзыва',
+        choices=REVIEW_STATUSES,
+        default=REVIEW_STATUSES[0][0]
+    )
+
+    rating = models.PositiveIntegerField(
+        choices=RATING_CHOICES,
+        default=0
+    )
+
+    content = models.TextField(
+        verbose_name="Review text",
+        blank=False
+    )
+    
+    def __str__(self):
+        return "{0} - User: {1}".format(
+            self.product.id,
+            self.user.id
+        )

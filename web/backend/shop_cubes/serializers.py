@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from django.contrib.auth.models import User
+
 from core.serializers import (ProductCardSerializer,
                               CategoryNodeSerializer,
                               CategoryNodeInputRelationSerializer,
@@ -7,14 +9,19 @@ from core.serializers import (ProductCardSerializer,
                               CategoryNodeGroupSerializer,
                               AttributeSerializer,
                               AttributeValueSerializer,
-                              ProductVideoReviewSerializer)
+                              ProductVideoReviewSerializer,
+                              PublicProductCardReviewSerializer,
+                              PrivateProductCardReviewSerializer)
+
 from shop_cubes.models import (CubesProductCard,
                               CubesCategoryNode,
                               CubesCategoryNodeGroup,
                               CubesAttribute,
                               CubesAttributeValue,
-                              CubesProductVideoReview
+                              CubesProductVideoReview,
+                              CubesProductCardReview
                               )
+from users.serializers import UserSerializer
 
 
 class CubesProductCardSerializer(ProductCardSerializer):
@@ -67,3 +74,26 @@ class CubesProductVideoReviewSerializer(ProductVideoReviewSerializer):
 
     class Meta(ProductVideoReviewSerializer.Meta):
         model = CubesProductVideoReview
+
+
+class PublicCubesProductCardReviewSerializer(PublicProductCardReviewSerializer):
+
+    product = serializers.PrimaryKeyRelatedField(queryset=CubesProductCard.objects.all())
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+
+    class Meta(PublicProductCardReviewSerializer.Meta):
+        model = CubesProductCardReview
+
+
+class PrivateCubesProductCardReviewSerializer(PrivateProductCardReviewSerializer):
+
+    product = CubesProductCardSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
+
+    class Meta(PrivateProductCardReviewSerializer.Meta):
+        model = CubesProductCardReview
+        read_only_fields = (
+            "id",
+            "product",
+            "user"
+        )

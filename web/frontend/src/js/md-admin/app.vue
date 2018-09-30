@@ -78,6 +78,20 @@
                     <span class="md-list-item-text">Атрибуты</span>
                 </md-list-item>
 
+                <md-list-item @click="route('/reviews')"
+                    :class="{ 'md-list-item--active' : $router.currentRoute.fullPath=='/reviews' }"
+                >
+                    <md-icon>feedback</md-icon>
+                    <span class="md-list-item-text">Отзывы</span>
+                </md-list-item>
+
+                <md-list-item @click="route('/payments')"
+                    :class="{ 'md-list-item--active' : $router.currentRoute.fullPath=='/payments' }"
+                >
+                    <md-icon>payment</md-icon>
+                    <span class="md-list-item-text">Оплаты</span>
+                </md-list-item>
+
             </md-list>
 
         </md-app-drawer>
@@ -108,6 +122,8 @@
     import userProfile from './users/components/userProfile.vue'
     import attributes from './attributes/attributes.vue'
     import attributeForm from './attributes/components/attributeForm.vue'
+    import reviews from './reviews/reviews.vue'
+    import reviewForm from './reviews/components/reviewForm.vue'
 
     const routes = [
         { path: '/', redirect: "/orders" },
@@ -125,6 +141,8 @@
         { path: '/attributes', component: attributes },
         { path: '/attribute/:id', component: attributeForm },
         { path: '/attribute/', component: attributeForm },
+        { path: '/reviews/', component: reviews },
+        { path: '/reviews/:id', component: reviewForm }
     ]
 
     const router = new VueRouter({

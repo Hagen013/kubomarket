@@ -51,20 +51,6 @@ class Profile(models.Model):
             return self.user.username
 
 
-class UserComment(models.Model):
-
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        blank=True,
-        verbose_name="юзер"
-    )
-
-    text = models.TextField(
-        verbose_name="текст"
-    )
-
-
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

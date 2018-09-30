@@ -7,7 +7,9 @@ from .views import (ProductCardAPIView,
                     ProductCardModificationsAPIView,
                     ProductCardDescriptionImagesAPIView,
                     ProductReviewListAPIView,
-                    ProductReviewAPIView)
+                    ProductReviewAPIView,
+                    CubesProductCardReviewListAPIView,
+                    CubesProductCardReviewAPIView)
 
 urls_product = ([
     url(r'^(?P<pk>(([\d]+)))/$', ProductCardAPIView.as_view(), name='info'),
@@ -17,5 +19,7 @@ urls_product = ([
     url(r'^(?P<pk>(([\d]+)))/modifications/$', ProductCardModificationsAPIView.as_view(), name="modifications"),
     url(r'^(?P<pk>(([\d]+)))/description/images/$', ProductCardDescriptionImagesAPIView.as_view(), name="description-images"),
     url(r'^(?P<product_pk>(([\d]+)))/video-reviews/$', ProductReviewListAPIView.as_view(), name="video-reviews"),
-    url(r'^(?P<product_pk>(([\d]+)))/video-reviews/(?P<pk>(([\d]+)))/$', ProductReviewAPIView.as_view(), name="video-review")
+    url(r'^(?P<product_pk>(([\d]+)))/video-reviews/(?P<pk>(([\d]+)))/$', ProductReviewAPIView.as_view(), name="video-review"),
+    url(r'^(?P<pk>(([\d]+)))/reviews/$', CubesProductCardReviewListAPIView.as_view(), name="reviews"),
+    url(r'^(?P<product_pk>(([\d]+)))/reviews/(?P<pk>(([\d]+)))/$', CubesProductCardReviewAPIView.as_view(), name="review"),  
 ])

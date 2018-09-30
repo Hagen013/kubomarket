@@ -13,8 +13,8 @@ from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
 from rest_framework.pagination import LimitOffsetPagination
 
-from users.models import Profile, UserComment
-from users.serializers import ProfileSerializer, UserCommentSerializer, UserSerializer
+from users.models import Profile
+from users.serializers import ProfileSerializer, UserSerializer
 from cart.models import Order2
 from cart.serializers import OrderSerializer
 from tasks.users import user_verification
@@ -214,13 +214,3 @@ class UserProfileAPIView(UserContentAPIView):
                 {"detauls": "invalid data provided"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-
-
-class UserCommentsAPIView(UserContentAPIView):
-    
-    model = UserComment
-    serializer = UserCommentSerializer
-
-    def get(self, request, pk, *args, **kwargs):
-        super(UserCommentsAPIView, self).get(request, pk, *args, **kwargs)
-        return Response({})
