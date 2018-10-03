@@ -193,6 +193,18 @@ class CubesProductCard(ProductCard):
     def videos(self):
         return self.video_reviews.all().order_by("-order")
 
+    @property
+    def approved_reviews(self):
+        return self.reviews.filter(status="одобрен")
+
+    @property
+    def approved_reviews_count(self):
+        return self.approved_reviews.count()
+
+    @property
+    def has_approved_reviews(self):
+        return self.approved_reviews.count() > 0
+
     def save(self, update_product_type=True, *args, **kwargs):
         if update_product_type:
             try:

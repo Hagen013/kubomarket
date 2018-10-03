@@ -233,7 +233,9 @@ var productCard = new Vue({
             }
         },
         confirmUserAdminStatus() {
-
+        },
+        showReviewForm() {
+            this.$store.commit('showReviewForm/show');
         }
     }
 })

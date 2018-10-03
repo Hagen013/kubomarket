@@ -393,7 +393,7 @@ class CubesProductCardReviewListAPIView(APIView):
 
     model = CubesProductCardReview
     serializer_class = PublicCubesProductCardReviewSerializer
-    permission_classes = (IsAdminUser, UsersMatch)
+    permission_classes = (UsersMatch,)
 
     def get_queryset(self, pk):
         return self.model.objects.filter(
@@ -417,6 +417,7 @@ class CubesProductCardReviewListAPIView(APIView):
                 status=status.HTTP_201_CREATED
             )
         return Response(
+            serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
 

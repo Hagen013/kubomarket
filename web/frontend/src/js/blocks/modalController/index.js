@@ -12,6 +12,7 @@ import cartInvalidDataModal from '../modals/cartInvalidDataModal.vue';
 
 const productPageEditForm = () => import('./components/productPageEditForm.vue')
 const categoryNodeEditForm = () => import('./components/categoryNodeEditForm.vue')
+const reviewForm = () => import('./components/reviewForm.vue')
 
 var modalController = new Vue({
     name: 'modal-controller',
@@ -28,7 +29,8 @@ var modalController = new Vue({
         'product-page-edit-form': productPageEditForm,
         'callback-modal': callbackModal,
         'category-node-edit-form': categoryNodeEditForm,
-        'cart-invalid-data-modal': cartInvalidDataModal
+        'cart-invalid-data-modal': cartInvalidDataModal,
+        'review-form': reviewForm
     },
     computed: {
         purchaseModalIsActive() {
@@ -55,6 +57,9 @@ var modalController = new Vue({
         },
         cartInvalidDataModalIsActive() {
             return this.$store.state.showCartInvalidData.isShowModal;
+        },
+        reviewFormIsActive() {
+            return this.$store.state.showReviewForm.isShowModal;
         }
     },
     methods: {

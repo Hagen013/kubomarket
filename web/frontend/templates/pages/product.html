@@ -21,6 +21,10 @@
     <div class="content-area_mb product-page__title-area">
         <h1 class="title product-page__title">{{product.name}}</h1>
         <div class="product-page__code">Код товара: {{product.public_id}}</div>
+        {% if product.has_approved_reviews %}
+        {% else %}
+        пока нет отзывов
+        {% endif %}
     </div>
 
     <div class="product-page__content">
@@ -237,6 +241,63 @@
             {% else %}
             {% endif %}
         </div>
+
+        <div class="reviews product-page__reviews">
+            <div class="reviews__top">
+                <h3 class="reviews__title product-page__description-title">
+                    Отзывы покупателей
+                </h3>
+                {% if request.user.is_authenticated %}
+                <button class="button button_ghost"
+                    @click="showReviewForm"
+                >
+                    + Добавить отзыв
+                </button>
+                {% else %}
+                <div class="reviews__buttons-area">
+                    <i class="reviews__button-caption">
+                        Оставлять отзывы могут только зарегестрированные пользователи
+                    </i>
+                    <button class="button" disabled>
+                        + Добавить отзыв
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+            <div class="reviews__content">
+                {% if product.has_approved_reviews %}
+                    {% for review in product.approved_reviews %}
+                        <div class="review">
+                            <div class="review__title">
+                                {% if review.author_unknown %}
+                                <div class="review__author review__author_unknown">
+                                    {{review.author}}
+                                </div>
+                                {% else %}
+                                <div class="review__author">
+                                    {{review.author}}
+                                </div>     
+                                {% endif %}
+                                <div class="review__rating">
+                                    {{rating_stars(review.rating)|safe}}
+                                </div>
+                            </div>
+                            <div class="review__content">
+                                {{review.content}}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                <div class="reviews__placeholder">
+                    <p>
+                    Для данного товара пока нет отзывов, но вы можете оставить свой отзыв,
+                    предварительно <a class="reviews__link link link_blue" href="/u/registration/">зарегистрировавшись</a> на сайте
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
     </div>
 
 </div>
@@ -287,6 +348,17 @@
             v-if="callbackModalIsActive"
         >
         </callback-modal>
+    </transition>
+    <transition name="fade-fast">
+        <review-form
+            :pk="{{product.pk}}"
+            {% if request.user.is_authenticated %}
+            :user="{{request.user.id}}"
+            {% else %}
+            {% endif %}
+            v-if="reviewFormIsActive"
+        >
+        </review-form>
     </transition>
 {% endblock modal %}
 

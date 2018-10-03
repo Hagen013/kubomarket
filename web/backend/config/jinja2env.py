@@ -22,6 +22,20 @@ def to_json(value):
 def escape_quotes(value):
     return value.replace("'", "")
 
+def rating_stars(scoring):
+    template = ""
+    main = int(scoring/2)
+    remain = scoring % 2
+    empty_positions = 5 - main
+    for i in range(main):
+        template += '<div class="star star_full"></div>'
+    if remain > 0.49:
+        empty_positions -= 1
+        template += '<div class="star star_half"></div>'
+    for i in range(empty_positions):
+        template += '<div class="star star_hollow"></div>'
+    return template
+
 
 def environment(**options):
     env = Environment(**options)
@@ -30,7 +44,8 @@ def environment(**options):
         'url': reverse,
         'url_replace': url_replace,
         'to_json': to_json,
-        'escape_quotes': escape_quotes
+        'escape_quotes': escape_quotes,
+        'rating_stars': rating_stars
     })
     return env
 

@@ -390,7 +390,8 @@ class ProductCardReview(TimeStamped):
         max_length=32,
         verbose_name='статус отзыва',
         choices=REVIEW_STATUSES,
-        default=REVIEW_STATUSES[0][0]
+        default=REVIEW_STATUSES[0][0],
+        db_index=True
     )
 
     rating = models.PositiveIntegerField(
@@ -402,9 +403,38 @@ class ProductCardReview(TimeStamped):
         verbose_name="Review text",
         blank=False
     )
+
+    _author = models.CharField(
+        verbose_name="author",
+        max_length=255,
+        blank=True,
+    )
+
+    def get_author(self):
+        fullname = ""
+        if self.user.profile.name != "":
+            fullname += self.user.profile.name
+        if self.user.profile.surname != "":
+            fullname = fullname + " " + self.user.profile.surname
+        if fullname == "":
+            fullname = "(имя не указано)"
+        return fullname
+
+    @property
+    def author(self):
+        return self._author
+
+    @property
+    def author_unknown(self):
+        return self.author == "(имя не указано)"
     
     def __str__(self):
         return "{0} - User: {1}".format(
             self.product.id,
             self.user.id
         )
+
+    def save(self, *args, **kwargs):
+        if self.id is None and self._author == "":
+            self._author = self.get_author()
+        return super(ProductCardReview, self).save(*args, **kwargs)

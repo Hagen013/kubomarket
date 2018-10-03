@@ -466,3 +466,57 @@
     width: 53px;
     background-image: url("../img/icon/play.png");
 }
+
+.icon2 {
+    background-position: center;
+    background-repeat: no-repeat;
+    font-style: normal !important;
+    &:before {
+        font-family: 'fontello2' !important;
+    }
+}
+
+@mixin icon2 {
+    background-position: center;
+    background-repeat: no-repeat;
+    font-style: normal !important;
+    &:before {
+        font-family: 'fontello2' !important;
+    }
+}
+
+.icon_star {
+    &:before {
+        content: $icon-star;
+    }
+}
+
+.icon-star-half {
+    &:before {
+        content: $icon-star-half;
+    }
+}
+
+.icon-star-hollow {
+    &:before {
+        content: $icon-star-hollow;
+    }
+}
+
+@mixin icon-star {
+    &::before {
+        content: $icon-star;
+    }
+}
+
+@mixin icon-star-half {
+    &:before {
+        content: $icon-star-half;
+    }
+}
+
+@mixin icon-star-hollow {
+    &:before {
+        content: $icon-star-hollow;
+    }
+}
