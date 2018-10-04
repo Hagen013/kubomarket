@@ -1,0 +1,93 @@
+.index-content__grey-wrap {
+    background-color: #fcfcfb;
+}
+
+.actions-top {
+    width: 100%;
+    padding: 32px 0px;
+}
+
+.actions-top__title {
+    margin-bottom: 32px;
+    font-size: 24px;
+}
+
+.actions-top__items {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    @include mq($from: tablet) {
+        flex-direction: row;
+    }
+}
+
+.actions-top__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    background: white;
+    font-size: 15px;
+    border: 2px solid $border;
+    margin-bottom: -1px;
+    transition-duration: .2s;
+    transition-property: border, box-shadow;
+    &:hover {
+        border: 2px solid $green;
+        z-index: 1000;
+        box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+    }
+    @include mq($from: tablet) {
+        flex-grow: 1;
+        flex-basis: 0;
+        margin-left: -1px;
+    }
+}
+
+.actions-top__item-caption {
+    width: 140px;
+    color: $text-grey !important;
+    @include mq($from: desktop) {
+        width: 200px;
+    }
+}
+
+.actions-top__item-icon {
+    width: 56px;
+    height: 56px;
+    margin-right: 26px;
+    background-size: 100%;
+}
+
+.vk-group-widget {
+    width: 100%;
+    height: 360px;
+    @include mq($from: tablet) {
+        height: 390px;
+    }
+    @include mq($from: desktop) {
+        height: 440px;
+        width: 352px;
+    }
+}
+
+.index-block {
+    padding: 0px 0px 32px 0px;
+}
+
+.index-block__title {
+    margin-bottom: 32px;
+}
+
+.index-block__content {
+    @include mq($from: desktop) {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.carousel__items {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

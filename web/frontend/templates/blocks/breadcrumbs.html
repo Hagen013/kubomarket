@@ -9,9 +9,9 @@
 <div class="breadcrumbs">
     <div class="content-area_mb">
     <div class="breadcrumbs__wrapper">
-        <a class="link breadcrumbs__item" href="/">Главная</a>
+        <a class="link breadcrumbs__item breadcrumbs__item_first" href="/">Главная</a>
         {% if breadcrumbs %}
-            <span class="breadcrumbs__delimeter">—</span>
+            <span class="breadcrumbs__delimeter breadcrumbs__delimeter_first">—</span>
             {% if view %}
                 {% for crumb in breadcrumbs %}
                     <a class="link breadcrumbs__item" href="{{ url(view, args=[crumb.url]) }}">{{ crumb.title }}</a>
@@ -26,7 +26,7 @@
             {% endif %}
         {% endif %}
         {% if last_crumb %}
-            <span class="breadcrumbs__delimeter">—</span>
+            <span class="breadcrumbs__delimeter breadcrumbs__delimeter_last">—</span>
             <a class="link link_disabled breadcrumbs__item breadcrumbs__item_last">{{ last_crumb }}</a>
         {% endif %}
     </div>
