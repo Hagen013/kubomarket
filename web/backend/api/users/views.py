@@ -13,7 +13,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
 from rest_framework.pagination import LimitOffsetPagination
 
-from users.models import Profile
+from users.models import Profile, Subscribe
 from users.serializers import ProfileSerializer, UserSerializer
 from cart.models import Order2
 from cart.serializers import OrderSerializer
@@ -214,3 +214,27 @@ class UserProfileAPIView(UserContentAPIView):
                 {"detauls": "invalid data provided"},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class SubscribesAPIView(APIView):
+
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email', None)
+        if email is None:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        subscribe = Subscribe(
+            email=email
+        )
+        try:
+            subscribe.full_clean()
+        except ValidationError:
+            print('vali')
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        subscribe.save()
+        return Response(
+            status=status.HTTP_201_CREATED
+        )

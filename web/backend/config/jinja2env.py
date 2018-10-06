@@ -37,6 +37,11 @@ def rating_stars(scoring):
     return template
 
 
+def format_time(date):
+    formated_date = date.strftime("%Y.%m.%d")
+    return formated_date
+
+
 def environment(**options):
     env = Environment(**options)
     env.globals.update({
@@ -45,7 +50,8 @@ def environment(**options):
         'url_replace': url_replace,
         'to_json': to_json,
         'escape_quotes': escape_quotes,
-        'rating_stars': rating_stars
+        'rating_stars': rating_stars,
+        'format_time': format_time
     })
     return env
 

@@ -161,14 +161,27 @@ class CubesProductCard(ProductCard):
                 self.name
             )
         else:
-            return self.meta_description
+            return self._meta_description
 
     def get_meta_keywords(self):
-        return self.name.lower()
+        if len(self._meta_keywords) == 0:
+            return self.name.lower()
+        else:
+            return self._meta_keywords
 
     @disallowed_before_creation
     def get_product_type(self):
         return "CUBE"
+
+    def get_average_rating(self):
+        average = self.reviews.filter(status="одобрен").aggregate(models.Avg('rating'))['rating__avg']
+        if average is None:
+            average = 0
+        return average
+
+    def set_rating(self):
+        self.rating = self.get_average_rating()
+        self.save()
 
     @property
     def yml_product_type(self):
@@ -392,3 +405,13 @@ class CubesProductCardReview(ProductCardReview):
         on_delete=models.CASCADE,
         related_name='reviews'
     )
+
+    def save(self, *args, **kwargs):
+        if self.status == 'одобрен':
+            self.product.set_rating()
+        super(CubesProductCardReview, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        if self.status == 'одобрен':
+            self.product.set_rating()
+        super(CubesProductCardReview, self).delete(*args, **kwargs)

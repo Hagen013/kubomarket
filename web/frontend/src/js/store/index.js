@@ -30,6 +30,7 @@ export default new Vuex.Store({
         showCallbackModal: showModal,
         showCartInvalidData: showModal,
         showReviewForm: showModal,
+        showSubscribeModal: showModal,
         geo: geo,
         cart: cart,
         delivery: delivery,

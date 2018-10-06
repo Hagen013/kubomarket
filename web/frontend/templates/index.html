@@ -12,7 +12,7 @@
 <div class="page-slider__wrap">
     <div class="content-area page-slide__inner">
         <div class="page-slider">
-            <div class="owl-carousel owl-theme">
+            <div class="owl-carousel owl-theme" id="page-slider">
                 <a class="item page-slider__item page-slider__item_1"
                     href="/product/mofangge-3x3-valk-3-power1729/"
                 >
@@ -33,112 +33,311 @@
     </div>
 </div>
 
-<div class="content-area_mb">
-    <div class="product-slider" id="top-items-slider">
-        <div class="product-slider__main">
+<div class="index-content">
+    <div class="index-content__grey-wrap">
+        <div class="content-area_mb content-area_mb-column">
 
-            <h3 class="product-slider__title">Кубы для начинающих спидкуберов</h3>
+            <div class="actions-top">
+                <h1 class="actions-top__title">
+                    Интернет магазин кубиков Рубика
+                </h1>
+                <div class="actions-top__items">
+                    <a class="actions-top__item" href="/i/delivery/">
+                        <div class="actions-top__item-icon icon icon_cashback">
+                        </div>
+                        <div class="actions-top__item-caption">
+                            Оплата при получении после просмотра
+                        </div>
+                    </a>
+                    <a class="actions-top__item" href="/i/cashback/">
+                        <div class="actions-top__item-icon icon icon_sale">
+                        </div>
+                        <div class="actions-top__item-caption">
+                            Скидки и акции
+                        </div>
+                    </a>
+                    <a class="actions-top__item" href="/i/return/">
+                        <div class="actions-top__item-icon icon icon_refund">
+                        </div>
+                        <div class="actions-top__item-caption">
+                            Возврат и обмен в течение 30 дней
+                        </div>
+                    </a>
+                </div>
+            </div>
 
-            <div class="product-slider__main-content">
-                {% for item in top_items %}
-                <div class="product-line_bg"
-                    :class="{ productLine_active_bg : currentItem == {{loop.index}} }"
-                >
-                    <div class="product-line__img-wrap_bg">
-                        <div class="product-slider__control product-slider__control_left"
-                            @click="previous"
-                            :class="{ productSlider__control_disabled : !isPreviousAvailable }"
+            <div class="index-content__main">
+
+                <div class="carousel">
+                    <h2 class="carousel__title">
+                        Популярные товары
+                    </h2>
+                    <div class="carousel__items-wrap">
+                        <div class="carousel__items owl-carousel owl-theme"
+                            id="carousel-1"
                         >
-                            <i class="arrow-icon icon_arrow-left"></i>
-                        </div>
-                        <div class="product-slider__control product-slider__control_right"
-                            @click="next"
-                            :class="{ productSlider__control_disabled : !isNextAvailable }"
-                        >
-                            <i class="arrow-icon icon_arrow-right"></i>
-                        </div>
-                        <img src="{{ item.thumbnail.url }}">
-                    </div>
-                    <div class="product-line__content_bg">
-                        <div class="product-line__purchase_bg">
-                            <div class="product-line__price_bg">
-                                {{item.price}} <i class="icon icon_rouble"></i>
+                            {% for item in bestsellers %}
+                            <div class="carousel__item item product-card">
+                                <div class="product-card__img-wrap">
+                                    <img class="product-card__img" src="{{item.thumbnail.url}}">
+                                    <a class="product-card__link-overlay" href="/product/{{item.slug}}"></a>
+                                </div>
+                                <div class="product-card__content">
+                                    <div class="product-card__price">
+                                        {{item.price}} <i class="icon icon_rouble"></i>
+                                    </div>
+                                    <a class="product-card__name" href="/product/{{item.slug}}">
+                                        {{item.name}}
+                                    </a>
+                                    <div class="product-card__interaction-area">
+                                        <a class="button button_ghost product_card__details"
+                                            href="/product/{{item.slug}}"
+                                        >
+                                            подробнее
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-line__text_bg">
-                            {{item.short_description}}
-                        </div>
-                        <div class="product-line__interaction_bg">
-                            <a class="button button_ghost-green product-line__button_bg"
-                                href="/product/{{item.slug}}"
-                            >
-                                ПОДРОБНЕЕ <div class="arrow-icon icon_arrow-right"></div>
-                            </a>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+
+                <div class="vk-group-widget" id="vk-group-widget-container">
+                    <div id="vk-group-widget">
+                    </div>
+                </div>
+
+                <div class="carousel">
+                    <h2 class="carousel__title">
+                        Мы рекомендуем
+                    </h2>
+                    <div class="carousel__items-wrap">
+                        <div class="carousel__items owl-carousel owl-theme"
+                            id="carousel-2"
+                        >
+                            {% for item in recomended %}
+                            <div class="carousel__item item product-card">
+                                <div class="product-card__img-wrap">
+                                    <img class="product-card__img" src="{{item.thumbnail.url}}">
+                                    <a class="product-card__link-overlay" href="/product/{{item.slug}}"></a>
+                                </div>
+                                <div class="product-card__content">
+                                    <div class="product-card__price">
+                                        {{item.price}} <i class="icon icon_rouble"></i>
+                                    </div>
+                                    <a class="product-card__name" href="/product/{{item.slug}}">
+                                        {{item.name}}
+                                    </a>
+                                    <div class="product-card__interaction-area">
+                                        <a class="button button_ghost product_card__details"
+                                            href="/product/{{item.slug}}"
+                                        >
+                                            подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="youtube-widget">
+                    <div class="youtube-widget__top">
+                        <div class="youtube-widget__icon">
+                        </div>
+                        <div class="youtube-widget__title">
+                            Наш канал на YouTube
+                        </div>
+                    </div>
+                    <div class="youtube-widget__content">
+                        <div class="youtube-widget__item">
+                            <div class="youtube-widget__video">
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src="https://www.youtube.com/embed/kvpngNsf1FY/"
+                                    frameborder="0" allow="autoplay; encrypted-media"
+                                    allowfullscreen
+                                >
+                                </iframe>
+                            </div>
+                        </div>
+                        <div class="youtube-widget__item">
+                            <div class="youtube-widget__video">
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src="https://www.youtube.com/embed/gpDAai8-TjQ/"
+                                    frameborder="0" allow="autoplay; encrypted-media"
+                                    allowfullscreen
+                                >
+                                </iframe>
+                            </div>
+                        </div>
+                        <div class="youtube-widget__item">
+                            <div class="youtube-widget__video">
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src="https://www.youtube.com/embed/v2YVdzDfuj4/"
+                                    frameborder="0" allow="autoplay; encrypted-media"
+                                    allowfullscreen
+                                >
+                                </iframe>
+                            </div>
+                        </div>
+                        <div class="youtube-widget__item">
+                            <div class="youtube-widget__video">
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src="https://www.youtube.com/embed/Gez7dPFKJo8/"
+                                    frameborder="0" allow="autoplay; encrypted-media"
+                                    allowfullscreen
+                                >
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="youtube-widget__controls">
+                        <a class="youtube-widget__button" href="https://www.youtube.com/channel/UCK0U1Kcy1XJbf-vruFXMiHA/videos?sub_confirmation=1">
+                            <span>Подписаться</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="carousel">
+                    <h2 class="carousel__title">
+                        Сегодня купили
+                    </h2>
+                    <div class="carousel__items-wrap">
+                        <div class="carousel__items owl-carousel owl-theme"
+                            id="carousel-3"
+                        >
+                            {% for item in bestsellers %}
+                            <div class="carousel__item item product-card">
+                                <div class="product-card__img-wrap">
+                                    <img class="product-card__img" src="{{item.thumbnail.url}}">
+                                    <a class="product-card__link-overlay" href="/product/{{item.slug}}"></a>
+                                </div>
+                                <div class="product-card__content">
+                                    <div class="product-card__price">
+                                        {{item.price}} <i class="icon icon_rouble"></i>
+                                    </div>
+                                    <a class="product-card__name" href="/product/{{item.slug}}">
+                                        {{item.name}}
+                                    </a>
+                                    <div class="product-card__interaction-area">
+                                        <a class="button button_ghost product_card__details"
+                                            href="/product/{{item.slug}}"
+                                        >
+                                            подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
             </div>
 
         </div>
-        <div class="product-slider__nav">
+    </div>
+</div>
 
-            {% for item in top_items %}
-            <div class="product-slider__nav-item"
-            >
-                <div class="product-line"
-                    @click="setCurrentItem({{loop.index}})"
-                    :class="{ productLine_active : currentItem == {{loop.index}} }"
+<div class="subscribe" id="subscribe">
+    <div class="content-area subscribe__content">
+        <div class="subscribe__title">
+            Подпишись на наши новости и получай специальные предложения!
+        </div>
+        <div class="subscribe__inputs">
+            <div class="subscribe__input-box">
+                <input class="subscribe__input input"
+                    placeholder="Введите вашу почту"
+                    type="email"
+                    v-model="email"
                 >
-                    <div class="product-line__img-wrap">
-                        <img src="{{item.thumbnail.url}}">
+            </div>
+            <div class="subscribe__controls">
+                <button class="subscribe__button button button_yellow"
+                    @click="submit"
+                >
+                    ПОДПИСАТЬСЯ
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-area_mb">
+    <div class="index-reviews">
+        <h2 class="index-reviews__title">
+            Что говорят наши клиенты
+        </h2>
+        {% if reviews|length > 0 %}
+        <div class="index-reviews__list">
+            {% for review in reviews %}
+            <div class="index-review">
+                <div class="index-review__top">
+                    <div class="index-review__data">
+                        <div class="index-review__author">
+                            {{review.author}}
+                        </div>
+                        <div class="index-review__date">
+                            {{format_time(review.created_at)}}
+                        </div>
+                        <div class="index-review__rating">
+                            {{rating_stars(review.rating)|safe}}
+                        </div>
                     </div>
-                    <div class="product-line__text">
-                        {{item.name}}
+                    <div class="index-review__product">
+                        <div class="index-review__product-img-wrap">
+                            <img class="index-review__product-img"
+                                src="{{review.product.thumbnail.url}}"
+                            >
+                        </div>
+                        <a class="link index-review__product-name"
+                            href="/product/{{review.product.slug}}"
+                        >
+                            {{review.product.name}}
+                        </a>
                     </div>
+                </div>
+                <div class="index-review__content">
+                    {{review.content}}
                 </div>
             </div>
             {% endfor %}
-
-            
         </div>
+        {% else %}
+        <div class="index-reviews__placeholder">
+            В данный момент нет новых отзывов
+        </div>
+        {% endif %}
     </div>
 </div>
 
 {% endblock content %}
 
 
+{% block modal %}
+    {{ super() }}
+    <transition name="fade-fast">
+        <subscribe-modal
+            v-if="subscribeModalIsActive"
+        >
+        </subscribe-modal>
+    </transition>
+{% endblock modal %}
+
 {% block script %}
     {{ super() }}
     <script src="{{ static('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ static('js/owl.carousel.min.js') }}"></script>
+    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?159"></script>
     <script src="{{ static('js/indexPage.js') }}"></script>
-    <script type="text/javascript">
-    $('.owl-carousel').owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: false,
-        items: 1,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        responsive: {
-            0: {
-
-            },
-            480: {
-
-            },
-            750: {
-
-            },
-            970: {
-
-            },
-            1170: {
-                
-            }
-        }
-    })
-    </script>
 {% endblock script %}
