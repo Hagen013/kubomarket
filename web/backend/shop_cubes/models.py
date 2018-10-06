@@ -407,11 +407,11 @@ class CubesProductCardReview(ProductCardReview):
     )
 
     def save(self, *args, **kwargs):
+        super(CubesProductCardReview, self).save(*args, **kwargs)
         if self.status == 'одобрен':
             self.product.set_rating()
-        super(CubesProductCardReview, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
+        super(CubesProductCardReview, self).delete(*args, **kwargs)
         if self.status == 'одобрен':
             self.product.set_rating()
-        super(CubesProductCardReview, self).delete(*args, **kwargs)
