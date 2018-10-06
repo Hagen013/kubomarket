@@ -3,6 +3,7 @@
     border: 2px solid #f3f3f3;
     transition-duration: .2s;
     transition-property: box-shadow, border-color;
+    background-color: $white;
     &:hover {
         border-color: #b4c6d2;
         box-shadow: 0px 0px 20px 0px rgba(54,81,104,0.2);
@@ -59,6 +60,7 @@
 
 .product-card__img {
     height: 100%;
+    width: auto !important;
     margin: 0 auto;
 }
 

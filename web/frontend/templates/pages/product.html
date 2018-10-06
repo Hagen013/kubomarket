@@ -19,11 +19,29 @@
 >
 
     <div class="content-area_mb product-page__title-area">
-        <h1 class="title product-page__title">{{product.name}}</h1>
+        <h1 class="product-page__title">{{product.name}}</h1>
         <div class="product-page__code">Код товара: {{product.public_id}}</div>
+        
         {% if product.has_approved_reviews %}
+        <div class="product-card__rating-area">
+            <div class="product-card__rating">
+                {{rating_stars(product.rating)|safe}}
+            </div>
+            <div class="product-card__rating-count">
+                <div class="product-card__rating-count-caption">
+                    Отзывы:
+                </div>
+                <div class="product-card__rating-count-value blue">
+                    {{product.approved_reviews_count}}
+                </div>
+            </div>
+        </div>
         {% else %}
-        пока нет отзывов
+        <div class="product-card__rating-area product-card__rating-area_placeholder">
+            <div class="product-card__rating-placeholder">
+                Нет отзывов
+            </div>
+        </div>
         {% endif %}
     </div>
 
@@ -333,7 +351,13 @@
             :width="{{product.width}}"
             :depth="{{product.length}}"
             is_in_stock="{{product.is_in_stock}}"
+            is_bestseller="{{product.is_bestseller}}"
+            is_recomended="{{product.is_recomended}}"
+            is_displayed_in_selections="{{product.is_displayed_in_selections}}"
             description="{{product.description}}"
+            _meta_title="{{product._meta_title}}"
+            _meta_description="{{product._meta_description}}"
+            _meta_keywords="{{product._meta_keywords}}"
 
             v-if="productPageEditFormIsActive"
         >

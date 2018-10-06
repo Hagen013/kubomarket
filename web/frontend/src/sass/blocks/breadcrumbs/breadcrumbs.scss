@@ -4,14 +4,23 @@
 }
 
 .breadcrumbs__item {
+    display: none;
     color: $text-grey;
     user-select: none;
     &:hover {
         color: $green;
     }
+    @include mq($from: tablet) {
+        display: inline-block;
+    }
+}
+
+.breadcrumbs__item_pre-last {
+    display: inline-block !important;
 }
 
 .breadcrumbs__item_last {
+    display: inline-block !important;
     color: $text-black !important;
     &:hover {
         color: $text-black;
@@ -19,6 +28,24 @@
 }
 
 .breadcrumbs__delimeter {
-    display: inline-block;
+    display: none;
     color: $text-grey;
+    @include mq($from: tablet) {
+        display: inline-block;
+    }
+}
+
+.breadcrumbs__delimeter_last {
+    display: inline-block !important;
+}
+
+.breadcrumbs__delimeter_first {
+    display: inline-block !important;
+}
+
+.breadcrumbs__dots {
+    display: inline-block;
+    @include mq($from: tablet) {
+        display: none;
+    }
 }

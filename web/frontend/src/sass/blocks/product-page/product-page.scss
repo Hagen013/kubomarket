@@ -1,16 +1,21 @@
 .product-page__title {
     text-align: center;
+    font-size: 22px;
     @include mq($from: tablet) {
         text-align: left;
+        font-size: 32px;
+        padding-right: 288px;
     }
 }
 
 .product-page__title-area {
+    position: relative;
     flex-direction: column;
 }
 
 .product-page__code {
-    padding: 0px 0px 16px 0px;
+    padding: 0px 0px 0px 0px;
+    margin-bottom: 8px;
     text-align: center;
     color: $text-grey_dark;
     @include mq($from: tablet) {
@@ -18,6 +23,56 @@
     }
 }
 
+.product-card__rating-area {
+    width: 288px;
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 16px;
+    align-items: center;
+    justify-content: space-between;
+    @include mq($from: tablet) {
+        padding: 0px 16px;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        height: 43px;
+        width: 280px;
+        margin: 0px;
+    }
+}
+
+.product-card__rating-area {
+    justify-content: center !important;
+    @include mq($from: tablet) {
+        justify-content: flex-end !important;
+        padding-right: 50px;
+    }
+}
+
+.product-card__rating-count-caption {
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.product-card__rating-count-value {
+    font-size: 14px;
+    display: inline-block;
+}
+
+.product-card__rating {
+    display: flex;
+    justify-content: center;
+    .star {
+        font-size: 22px;
+        color: $green;
+    }
+}
+
+.product-card__rating-placeholder {
+    color: $text-grey;
+    font-size: 14px;
+}
 
 .product-page__gallery-wrap {
     position: relative;
@@ -505,7 +560,7 @@
 
 .star {
     display: inline-block;
-    color: $yellow;
+    color: $yellow-light;
     margin-left: 7px;
     @include icon2();
     &:first-child {

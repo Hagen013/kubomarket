@@ -9,14 +9,17 @@
 <div class="breadcrumbs">
     <div class="content-area_mb">
     <div class="breadcrumbs__wrapper">
+        <a class="breadcrumbs__dots">...</a>
         <a class="link breadcrumbs__item breadcrumbs__item_first" href="/">Главная</a>
         {% if breadcrumbs %}
             <span class="breadcrumbs__delimeter breadcrumbs__delimeter_first">—</span>
             {% if view %}
                 {% for crumb in breadcrumbs %}
-                    <a class="link breadcrumbs__item" href="{{ url(view, args=[crumb.url]) }}">{{ crumb.title }}</a>
                     {% if loop.index != loop.length %}
+                    <a class="link breadcrumbs__item" href="{{ url(view, args=[crumb.url]) }}">{{ crumb.title }}</a>
                     <span class="breadcrumbs__delimeter">—</span>
+                    {% else %}
+                    <a class="link breadcrumbs__item breadcrumbs__item_pre-last" href="{{ url(view, args=[crumb.url]) }}">{{ crumb.title }}</a>
                     {% endif %}
                 {% endfor %}
             {% else %}

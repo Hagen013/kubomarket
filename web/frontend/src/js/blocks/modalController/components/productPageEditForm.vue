@@ -1,19 +1,6 @@
 <template>
 
     <div class="edit-form edit-form_product">
-        <div class="edit-form__title-area">
-            <div class="edit-form__title">
-            Редактирование товара: {{uuid}}
-            </div>
-            <div class="edit-form__close" @click="hideEditForm">
-                <svg height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path> <path d="M0 0h24v24H0z" fill="none"></path></svg>
-            </div>
-        </div>
-        <div class="edit-form__content-wrap">
-            <el-tabs class="edit-form__nav">
-                <el-tab-pane label="Основное">
-
-        <div class="edit-form__main">
         <div class="edit-form__controls">
             <button class="edit-form__controls-button edit-form__controls-button-accept"
                 :class="{ eidtForm__controlsButton_disabled: !hasChanged }"
@@ -30,6 +17,19 @@
                 Отменить
             </button>
         </div>
+        <div class="edit-form__title-area">
+            <div class="edit-form__title">
+            Редактирование товара: {{uuid}}
+            </div>
+            <div class="edit-form__close" @click="hideEditForm">
+                <svg height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path> <path d="M0 0h24v24H0z" fill="none"></path></svg>
+            </div>
+        </div>
+        <div class="edit-form__content-wrap">
+            <el-tabs class="edit-form__nav">
+                <el-tab-pane label="Основное">
+
+        <div class="edit-form__main">
         <div class="edit-form__content" v-if="apiResponsesRecieved">
             <div class="edit-form__top-content">
                 <div class="edit-form__main-info">
@@ -45,21 +45,20 @@
                         </div>
                     </div>
                     <div class="edit-form__main-content" v-if="mainInfoIsDisplayed">
-                        <div class="field">
-                            <div class="field__label">
-                                Наименование
-                            </div>
-                            <div class="field__value">
-                                {{name}}
-                            </div>
+                        <div class="field__label">
+                            Наименование
                         </div>
+                        <el-input placeholder="Наименование" v-model="productName"
+                            @input="checkChanges"
+                        >
+                        </el-input>
                         <div class="field">
                             <div class="field__label">
                                 vendor_code
                             </div>
-                            <div class="field__value">
-                                {{uuid}}
-                            </div>
+                            <el-input placeholder="Наименование" v-model="uuid" disabled
+                            >
+                            </el-input>
                         </div>
                         <div class="field">
                             <div class="md-checkbox">
@@ -200,6 +199,65 @@
                     >
                     </video-reviews>
                 </el-tab-pane>
+                <el-tab-pane label="SEO инфоормация" class="tab__seo">
+                    <div class="input-box">
+                        <div class="field__label field__label-el">
+                            Title
+                        </div>
+                        <el-input placeholder="meta-title" 
+                            v-model="meta_title"
+                            @input="checkChanges"
+                        >
+                            <template slot="prepend">Title</template>
+                        </el-input>
+                    </div>
+                    <div class="input-box input-box_textarea">
+                        <div class="field__label field__label-el">
+                            Keywords
+                        </div>
+                        <el-input
+                            type="textarea"
+                            placeholder="meta-keywords"
+                            v-model="meta_keywords"
+                            @input="checkChanges"
+                            :rows="4"
+                        >
+                        </el-input>
+                    </div>
+
+                    <div class="input-box input-box_textarea">
+                        <div class="field__label field__label-el">
+                            Description
+                        </div>
+                        <el-input
+                            type="textarea"
+                            placeholder="meta-keywords"
+                            v-model="meta_description"
+                            @input="checkChanges"
+                            :rows="4"
+                        >
+                        </el-input>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="Размещение на главной">
+                    <div class="flags-inputs">
+                        <el-checkbox v-model="isBestSeller"
+                            @change="checkChanges"
+                        >
+                            Хит продаж
+                        </el-checkbox>
+                        <el-checkbox v-model="isRecomended"
+                            @change="checkChanges"
+                        >
+                            Рекомендованный
+                        </el-checkbox>
+                        <el-checkbox v-model="isDisplayedInSelections"
+                            @change="checkChanges"
+                        >
+                            Размещать на главной
+                        </el-checkbox>
+                    </div>
+                </el-tab-pane>
             </el-tabs>
         </div>
     </div>
@@ -237,6 +295,7 @@
         },
         store,
         data: () => ({
+            productName: "",
             attributes: [],
             values: {},
             productAttributes: null,
@@ -264,6 +323,15 @@
             proxyDescription: "",
             isInStockInitial: true,
             isInStock: true,
+            meta_title: "",
+            meta_keywords: "",
+            meta_description: "",
+            isBestSeller: false,
+            isBestSellerInitial: false,
+            isRecomended: false,
+            isRecomendedInitial: false,
+            isDisplayedInSelections: false,
+            isDisplayedInSelectionsInitial: false
         }),
         props: [
             'uuid',
@@ -276,7 +344,13 @@
             'width',
             'depth',
             'description',
-            'is_in_stock'
+            'is_in_stock',
+            '_meta_title',
+            '_meta_keywords',
+            '_meta_description',
+            'is_bestseller',
+            'is_recomended',
+            'is_displayed_in_selections'
         ],
         computed: {
             apiResponsesRecieved() {
@@ -294,6 +368,23 @@
             },
             availabilityChanged() {
                 return (this.isInStockInitial !== this.isInStock)
+            },
+            nameChanged() {
+                return this.productName !== this.name;
+            },
+            metaInfoChanged() {
+                return (
+                    (this.meta_title !== this._meta_title) ||
+                    (this.meta_description !== this._meta_description) ||
+                    (this.meta_keywords !== this._meta_keywords)
+                )
+            },
+            booleanFlagsChanged() {
+                return (
+                    (this.isBestSeller !== this.isBestSellerInitial) ||
+                    (this.isRecomended !== this.isRecomendedInitial) ||
+                    (this.isDisplayedInSelections !== this.isDisplayedInSelectionsInitial)
+                )
             }
         },
         created: function () {
@@ -304,10 +395,31 @@
             this.depthValue = Number(this.depth);
             this.originalDescription = String(this.description);
             this.proxyDescription = String(this.description);
+            this.productName = this.name;
+            this.meta_title = this._meta_title;
+            this.meta_keywords = this._meta_keywords;
+            this.meta_description = this._meta_description;
+
             if (this.is_in_stock === "False") {
                 this.isInStock = false;
                 this.isInStockInitial = false;
             }
+
+            if (this.is_bestseller === "True") {
+                this.isBestSeller = true;
+                this.isBestSellerInitial = true;
+            }
+
+            if (this.is_recomended === "True") {
+                this.isRecomended = true;
+                this.isRecomendedInitial = true;
+            }
+
+            if (this.is_displayed_in_selections === "True") {
+                this.isDisplayedInSelections = true;
+                this.isDisplayedInSelectionsInitial = true;
+            }
+
         },
         methods: {
             hideEditForm() {
@@ -422,14 +534,20 @@
                                    this.dimensionsChanged ||
                                    this.descriptionChanged || 
                                    this.imagesChanged ||
-                                   this.availabilityChanged
+                                   this.availabilityChanged ||
+                                   this.nameChanged ||
+                                   this.metaInfoChanged ||
+                                   this.booleanFlagsChanged
                                    );
             },
             saveChanges() {
                 if (this.attributesChanged ||
                     this.dimensionsChanged ||
                     this.descriptionChanged ||
-                    this.availabilityChanged) {
+                    this.availabilityChanged ||
+                    this.nameChanged ||
+                    this.metaInfoChanged ||
+                    this.booleanFlagsChanged) {
                     this.saveProductChanges();
                 }
                 if (this.imagesChanged) {
@@ -453,7 +571,14 @@
                     'width': this.widthValue,
                     'depth': this.depthValue,
                     'is_in_stock': this.isInStock,
-                    'description': this.proxyDescription
+                    'description': this.proxyDescription,
+                    'name': this.productName,
+                    '_meta_title': this.meta_title,
+                    '_meta_keywords': this.meta_keywords,
+                    '_meta_description': this.meta_description,
+                    'is_bestseller': this.isBestSeller,
+                    'is_recomended': this.isRecomended,
+                    'is_displayed_in_selections': this.isDisplayedInSelections
                 }
                 this.$http.put(this.product_api_url, data).then(
                     response => {
@@ -504,6 +629,7 @@
         height: 100%;
         width: 100%;
         min-width: 1140px;
+        min-height: 3000px;
         z-index: 99000;
         background: white;
     }
@@ -778,4 +904,17 @@
         user-select: none;
     }
 
+    .input-box {
+        display: block;
+        max-width: 750px;
+        margin-bottom: 16px;
+        min-height: 70px;
+    }
+
+    .tab__seo {
+        height: 1000px;
+    }
+    .input-box_textarea {
+        min-height: 126px;
+    }
 </style>

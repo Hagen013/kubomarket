@@ -8,6 +8,7 @@ import searchModal from '../modals/searchModal.vue';
 import pageControls from './components/pageControls.vue';
 import callbackModal from '../modals/callbackModal.vue';
 import cartInvalidDataModal from '../modals/cartInvalidDataModal.vue';
+import subscribeModal from './components/subscribeModal.vue';
 
 
 const productPageEditForm = () => import('./components/productPageEditForm.vue')
@@ -30,7 +31,8 @@ var modalController = new Vue({
         'callback-modal': callbackModal,
         'category-node-edit-form': categoryNodeEditForm,
         'cart-invalid-data-modal': cartInvalidDataModal,
-        'review-form': reviewForm
+        'review-form': reviewForm,
+        'subscribe-modal': subscribeModal
     },
     computed: {
         purchaseModalIsActive() {
@@ -60,6 +62,9 @@ var modalController = new Vue({
         },
         reviewFormIsActive() {
             return this.$store.state.showReviewForm.isShowModal;
+        },
+        subscribeModalIsActive() {
+            return this.$store.state.showSubscribeModal.isShowModal;
         }
     },
     methods: {

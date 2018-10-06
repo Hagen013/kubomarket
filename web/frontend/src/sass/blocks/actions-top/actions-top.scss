@@ -10,6 +10,10 @@
 .actions-top__title {
     margin-bottom: 32px;
     font-size: 24px;
+    text-align: center;
+    @include mq($from: desktop) {
+        text-align: left;
+    }
 }
 
 .actions-top__items {
@@ -60,34 +64,422 @@
 }
 
 .vk-group-widget {
-    width: 100%;
+    width: 288px;
     height: 360px;
+    margin: 0 auto;
+    margin-bottom: 32px;
+    overflow: hidden;
+    @include mq($from: mobile) {
+        width: 448px;
+    }
     @include mq($from: tablet) {
         height: 390px;
+        width: 718px;
     }
     @include mq($from: desktop) {
-        height: 440px;
+        position: absolute;
+        top: 72px;
+        right: 0px;
+        height: 660px;
         width: 352px;
+        margin-bottom: 0px;
     }
 }
 
-.index-block {
-    padding: 0px 0px 32px 0px;
+.index-content__main {
+    position: relative;
+    padding-top: 24px;
+    padding-bottom: 32px;
 }
 
-.index-block__title {
+
+// CAROUSEL
+.carousel {
     margin-bottom: 32px;
+    @include mq($from: tablet, $until: desktop) {
+        width: 718px;
+        margin: 0 auto;
+        margin-bottom: 32px;
+    }
 }
 
-.index-block__content {
+.carousel__title {
+    margin-bottom: 16px;
+    text-align: center;
     @include mq($from: desktop) {
-        display: flex;
-        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+.carousel__items-wrap {
+    height: 444px;
+    width: 288px;
+    margin: 0 auto;
+    @include mq($from: mobile) {
+        width: 448px;
+    }
+    @include mq($from: tablet) {
+        width: 700px;
+    }
+    @include mq($from: desktop) {
+        margin: 0px;
+        width: 558px;
+    }
+    @include mq($from: wide) {
+        width: 758px;
     }
 }
 
 .carousel__items {
+
+}
+
+.carousel__item {
+    width: 288px;
+    @include mq($from: mobile) {
+        width: 100%;
+    }
+    @include mq($from: desktop) {
+        width: 263px;
+    }
+    @include mq($from: wide) {
+        width: 234px;
+    }
+}
+
+// .owl-item {
+//     @include mq($from: )
+// }
+
+.owl-nav {
+    position: absolute;
+    top: 40%;
+    right: 0px;
+    height: 40px;
     width: 100%;
+    color: $grey;
+    user-select: none;
+    @include mq($from: tablet, $until: desktop) {
+        right: -25px;
+        width: 750px;
+    }
+    @include mq($from: desktop) {
+        width: 80px;
+        top: -60px;
+        right: 8px;
+    }
+}
+
+.owl-prev {
+    position: absolute;
+    top: 0px;
+    left: 24px;
+    user-select: none !important;
+    &:hover {
+        color: $blue !important;
+        background: initial !important;
+    }
+    @include mq($from: tablet) {
+        left: 0px;
+    }
+    @include mq($from: desktop) {
+        left: 0px;
+    }
+}
+
+.owl-next {
+    position: absolute;
+    top: 0px;
+    right: 24px;
+    user-select: none !important;
+    &:hover {
+        color: $blue !important;
+        background: initial !important;
+    }
+    @include mq($from: tablet) {
+        right: 0px;
+    }
+    @include mq($from: desktop) {
+        right: 0px;
+    }
+}
+// CAROUSEL
+
+
+// YOUTUBE WIDGET
+.youtube-widget {
+    background: $white;
+    margin: 0 auto;
+    margin-bottom: 32px;
+    width: 288px;
+    @include mq($from: mobile) {
+        width: 448px;
+    }
+    @include mq($from: tablet) {
+        width: 718px;
+    }
+    @include mq($from: desktop) {
+        position: absolute;
+        top: 756px;
+        right: 0px;
+        height: 810px;
+        width: 352px;
+        margin-bottom: 0xp;
+    }
+    border: 2px solid $border;
+}
+
+.youtube-widget__content {
+    padding: 0px 4px 0px 4px;
+    overflow: hidden;
+    height: 314px;
+    @include mq($from: tablet) {
+        height: auto;
+    }
+    @include mq($from: tablet, $until: desktop) {
+        display: flex;
+        flex-wrap:  wrap;
+        padding: 8px 0px 8px 0px;
+    }
+}
+
+.youtube-widget__item {
+    display: block;
+    width: 100%;
+    height: 150px;
+    margin-bottom: 14px;
+    border-radius: 2px;
+    overflow: hidden;
+    @include mq($from: tablet, $until: desktop) {
+        width: 50%;
+        margin-bottom: 0px;
+    }
+}
+
+.youtube-widget__top {
     display: flex;
-    justify-content: space-between;
+    height: 104px;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid $border;
+}
+
+.youtube-widget__icon {
+    height: 62px;
+    width: 62px;
+    background-image: url("../img/logo/logo-round.png");
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+.youtube-widget__title {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.youtube-widget__controls {
+    padding: 10px 10px;
+    width: 100%;
+    @include mq($from: desktop) {
+        padding: 0px 10px;
+    }
+}
+
+.youtube-widget__button {
+    display: block;
+    height: 30px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: $white;
+    line-height: 30px;
+    border-radius: 3px;
+    background: #00a557;
+    &:hover {
+        background: #00aa60;
+    }
+}
+// YOUTUBE WIDGET
+
+// Subscribe
+.subscribe {
+    padding: 16px 0px;
+    color: $white;
+    margin-bottom: 32px;
+    @include mq($from: tablet) {
+        padding: 16px 0px 40px 0px;
+    }
+    background-color: $green;
+    background-image: url("../img/cubes/green-background.jpg")
+}
+
+.subscribe__title {
+    text-align: center;
+    margin-bottom: 10px;
+    @include mq($from: tablet) {
+        margin-bottom: 34px;
+        font-size: 20px;
+    }
+}
+
+.subscribe__content {
+    padding: 0px 15px;
+}
+
+.subscribe__input {
+    height: 50px;
+    border-radius: 25px;
+}
+
+.subscribe__input-box {
+    margin-bottom: 10px;
+    @include mq($from: tablet) {
+        width: 262px;
+        margin-bottom: 0px;
+        margin-right: 30px;
+    }
+}
+
+.subscribe__controls {
+    width: 100%;
+    @include mq($from: tablet) {
+        width: 262px;
+    }
+}
+
+.subscribe__button {
+    height: 50px;
+    width: 100%;
+}
+
+.subscribe__inputs {
+    width: 100%;
+    @include mq($from: tablet) {
+        display: flex;
+        justify-content: center;
+    }
+}
+// Subscribe
+
+.index-reviews {
+    width: 100%;
+    margin-bottom: 32px;
+}
+
+.index-reviews__title {
+    margin-bottom: 16px;
+    text-align: center;
+    @include mq($from: desktop) {
+        text-align: left;
+    }
+}
+
+.index-reviews__list {
+
+}
+
+
+
+.index-review {
+    position: relative;
+    width: 100%;
+    margin-bottom: 32px;
+    border: 2px solid $border;
+}
+
+
+.index-review__top {
+    position: relative;
+    @include mq($from: tablet) {
+        display: flex;
+        height: 92px;
+        border-bottom: 2px solid $border;
+    }
+}
+
+.index-review__data {
+    padding: 15px;
+    @include mq($from: tablet) {
+        width: 300px;
+    }
+}
+
+.index-review__author {
+    color: $green;
+    margin-bottom: 8px;
+}
+
+.index-review__rating {
+    margin-bottom: 8px;
+    @include mq($from: tablet) {
+        display: flex;
+        position: absolute;
+        align-items: center;
+        height: 100%;
+        top: 0px;
+        right: 0px;
+        padding: 0px 15px;
+        border-left: 2px solid $border;
+    }
+    .star {
+        font-size: 20px;
+    }
+}
+
+.index-review__product {
+    display: flex;
+    padding: 10px 10px;
+    align-items: center;
+    border-top: 2px solid $border;
+    border-bottom: 2px solid $border;
+    @include mq($from: tablet) {
+        border-bottom: none;
+        border-top: none;
+        border-left: 2px solid $border;
+        padding: 0px 10px;
+    }
+}
+
+.index-review__date {
+    color: darken($text-grey, 10);
+    margin-bottom: 8px;
+}
+
+.index-review__product-img-wrap {
+    height: 80px;
+    width: 80px;
+}
+
+.index-review__product-img {
+    height: 100%;
+    width: auto;
+}
+
+.index-review__product-name {
+    margin-left: 8px;
+    color: $text-black;
+    &:hover {
+        color: $green;
+    }
+    @include mq($from: tablet) {
+        padding-right: 153px;
+    }
+}
+
+.index-review__content {
+    padding: 16px;
+    color: darken($text-grey, 10);
+    text-align: justify;
+}
+
+.index-review__button {
+    font-size: 14px;
+    @include mq($from: tablet) {
+        width: 263px;
+    }
+    .arrow-icon {
+        margin-left: 8px;
+    }
 }

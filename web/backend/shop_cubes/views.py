@@ -9,6 +9,7 @@ from .models import (CubesCategoryNode,
                      CubesAttributeValue,
                      CubesProductCard,
                      CubesCategoryNodeOutdatedUrl,
+                     CubesProductCardReview
                     )
 
 
@@ -113,8 +114,28 @@ class IndexPage(TemplateView):
     
     template_name = 'index.html'
     product_class = CubesProductCard
+    review_class = CubesProductCardReview
+
+    def get_reviews(self):
+        return self.review_class.objects.filter(
+            status="одобрен",
+        ).order_by('-created_at')
+
+    def get_bestsellers(self):
+        return self.product_class.objects.filter(
+            is_displayed_in_selections=True,
+            is_bestseller=True
+        )[:10]
+
+    def get_recomended(self):
+        return self.product_class.objects.filter(
+            is_displayed_in_selections=True,
+            is_recomended=True
+        )[:10]
 
     def get_context_data(self, *args, **kwargs):
         context = super(IndexPage, self).get_context_data(**kwargs)
-        context['top_items'] = self.product_class.objects.filter(is_bestseller=True)
+        context['reviews'] = self.get_reviews()
+        context['bestsellers'] = self.get_bestsellers()
+        context['recomended'] = self.get_recomended()
         return context

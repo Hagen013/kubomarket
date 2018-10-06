@@ -64,6 +64,14 @@ class BaseOffer(models.Model):
         default=False,
         verbose_name='Бестселлер'
     )
+    is_recomended = models.BooleanField(
+        default=False,
+        verbose_name='Рекомендуемый'
+    )
+    is_displayed_in_selections = models.BooleanField(
+        default=False,
+        verbose_name='Отображаемый в коллекциях'
+    )
     # Возвращает полный адрес офера в Django
 
     @property

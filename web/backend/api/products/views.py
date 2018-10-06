@@ -104,6 +104,14 @@ class ProductCardAttributesAPIView(APIView):
         product.width = int(request.data['width'])
         product.length = int(request.data['depth'])
         product.description = request.data['description']
+        product.name = request.data['name']
+        product._title = request.data['name']
+        product._meta_title = request.data['_meta_title']
+        product._meta_keywords = request.data['_meta_keywords']
+        product._meta_description = request.data['_meta_description']
+        product.is_bestseller = request.data['is_bestseller']
+        product.is_recomended = request.data['is_recomended']
+        product.is_displayed_in_selections = request.data['is_displayed_in_selections']
 
         product.save()
         stored_non_int_values = {value for value in product.attribute_values.all() if value.attribute_type != 3}
@@ -316,7 +324,7 @@ class ProductCardDescriptionImagesAPIView(APIView):
 
 class ProductReviewListAPIView(APIView):
     model = CubesProductVideoReview
-    serializer_class = PublicCubesProductCardReviewSerializer
+    serializer_class = CubesProductVideoReviewSerializer
     permission_classes = (IsAdminUser,)
 
     def get(self, request, product_pk, *args, **kwargs):

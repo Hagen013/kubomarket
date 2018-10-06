@@ -25,6 +25,21 @@ from ..utils import disallowed_before_creation, DisallowedBeforeCreationExceptio
     md5_file_checksum
 
 
+RATING_CHOICES = (
+    (10, '10'),
+    (9, '9'),
+    (8, '8'),
+    (7, '7'),
+    (6, '6'),
+    (5, '5'),
+    (4, '4'),
+    (3, '3'),
+    (2, '2'),
+    (1, '1'),
+    (0, '0')
+)
+
+
 class PublicProductCardManager(Manager):
 
     def get_queryset(self):
@@ -82,6 +97,12 @@ class ProductCard(OfferPage, Image, Weighable, Dimensional):
         ),
         default="",
         blank=True,
+    )
+
+    rating = models.PositiveIntegerField(
+        choices=RATING_CHOICES,
+        default=0,
+        db_index=True
     )
 
     @property
@@ -365,20 +386,6 @@ class ProductCardReview(TimeStamped):
 
     user = None
     product = None
-
-    RATING_CHOICES = (
-        (10, '10'),
-        (9, '9'),
-        (8, '8'),
-        (7, '7'),
-        (6, '6'),
-        (5, '5'),
-        (4, '4'),
-        (3, '3'),
-        (2, '2'),
-        (1, '1'),
-        (0, '0')
-    )
 
     REVIEW_STATUSES = (
         ("новый", "Новый"),

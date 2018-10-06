@@ -43,6 +43,24 @@
     }
 }
 
+.button_yellow {
+    color: $text-black;
+    background: $yellow-light;
+    transition: .2s;
+    &:hover {
+        background: lighten($yellow-light, 10);
+    }
+}
+
+.button_green {
+    color: $white;
+    background-color: $green;
+    transition: .2s;
+    &:hover {
+        background: lighten($green, 5);
+    }
+}
+
 .button_ghost {
     color: #11aff1;
     background: $white;
