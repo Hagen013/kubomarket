@@ -125,4 +125,4 @@ gulp.task('prod_files', function() {
 
 
 // PRODUCTION
-gulp.task('build', ['prod_css', 'prod_img', 'prod_font', 'prod_favicons', 'prod_files']);
+gulp.task('build', ['prod_css', 'prod_img', 'prod_favicons', 'prod_files']);
