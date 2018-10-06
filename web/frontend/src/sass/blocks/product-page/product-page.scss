@@ -41,7 +41,7 @@
     }
 }
 
-.product-card__rating-area-placeholder {
+.product-card__rating-area_placeholder {
     justify-content: center !important;
     @include mq($from: tablet) {
         justify-content: flex-end !important;
