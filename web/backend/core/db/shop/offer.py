@@ -72,6 +72,10 @@ class BaseOffer(models.Model):
         default=False,
         verbose_name='Отображаемый в коллекциях'
     )
+    recently_bought = models.BooleanField(
+        default=False,
+        verbose_name='Куплен недавно'
+    )
     # Возвращает полный адрес офера в Django
 
     @property
