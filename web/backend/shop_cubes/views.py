@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import TemplateView, ListView
 from django.http import Http404
+from django.core.cache import cache
 
 from core.viewmixins import DiggPaginatorViewMixin
 
@@ -121,6 +122,12 @@ class IndexPage(TemplateView):
             status="одобрен",
         ).order_by('-created_at')
 
+    def get_last_bought(self):
+        pks = cache.get('last_bought', [])
+        return self.product_class.objects.filter(
+            id__in=pks
+        )[:10]
+
     def get_bestsellers(self):
         return self.product_class.objects.filter(
             is_displayed_in_selections=True,
@@ -138,4 +145,9 @@ class IndexPage(TemplateView):
         context['reviews'] = self.get_reviews()
         context['bestsellers'] = self.get_bestsellers()
         context['recomended'] = self.get_recomended()
+        last_bought = self.get_last_bought()
+        if len(last_bought) < 6:
+            context['last_bought'] = context['bestsellers']
+        else:
+            context['last_bought'] = last_bought
         return context

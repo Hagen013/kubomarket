@@ -80,6 +80,7 @@
                     </div>
                 </div>
             </div>
+            {% if products|length > 0 %}
             <div class="gallery catalog__gallery">
                 {% for product in products %}
                 <div class="product-card catalog__item">
@@ -105,6 +106,19 @@
                 </div>
                 {% endfor %}
             </div>
+            {% else %}
+            <div class="catalog__placeholder-wrap">
+                <div class="catalog__placeholder">
+                    <div class="catalog__placeholder-img">
+                        <img src="/static/img/icon/monkey.svg">
+                    </div>
+                    <div class="catalog__placeholder-text">
+                        <p>В данный момент товаров нет в наличии, приносим свои извинения.</p> 
+                        <p>Мы регулярно обновляем наш склад продукции, проверьте страницу позже.</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
             
             {% block pagination %}
             {% if is_paginated %}

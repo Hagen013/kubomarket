@@ -219,3 +219,27 @@
 .vue-slider-dot {
     border: 6px solid $green !important;
 }
+
+.catalog__placeholder-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.catalog__placeholder {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    align-items: center;
+}
+
+.catalog__placeholder-img {
+    margin-bottom: 16px;
+}
+
+.catalog__placeholder-text {
+    line-height: 1.8;
+    color: $text-grey;
+    text-align: center;
+}

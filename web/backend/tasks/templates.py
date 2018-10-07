@@ -24,8 +24,6 @@ def generate_static_navigation():
         "childs": node.childs.all().order_by("scoring")
     })
     childs = nav_nodes[-1]["childs"]
-    for child in childs:
-        child.name = "Кубы " + child.name
     childs = [child for child in childs if child.products.filter(is_in_stock=True).count() > 0]
     nav_nodes[-1]["childs"] = childs
 
@@ -44,7 +42,7 @@ def generate_static_navigation():
         "name": "По бренду",
         "id": None,
         "href": None,
-        "childs": Node.objects.filter(attribute_values__in=Attribute.objects.get(name="Бренд").values.all()).order_by("scoring")
+        "childs": Node.objects.filter(attribute_values__in=Attribute.objects.get(name="Бренд").values.all(), _depth=1).order_by("scoring")
     })
     childs = nav_nodes[-1]["childs"]
     childs = [child for child in childs if child.products.filter(is_in_stock=True).count() > 0]

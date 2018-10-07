@@ -197,7 +197,8 @@ CELERY_IMPORTS = (
     'tasks.images',
     'tasks.sms_notifications',
     'tasks.tree',
-    'tasks.delivery_sync'
+    'tasks.delivery_sync',
+    'tasks.inspect'
 )
 
 CELERY_QUEUES = (
