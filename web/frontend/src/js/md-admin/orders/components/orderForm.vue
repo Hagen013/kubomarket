@@ -465,6 +465,14 @@
                 Ещё раз
             </md-button>
         </md-snackbar>
+        <md-snackbar
+            md-position="center"
+            :md-duration="snackbarDuration" 
+            :md-active.sync="showSnackbar" 
+            md-persistent
+        >
+            <span>{{snackbarText}}</span>
+        </md-snackbar>
     </div>
 </template>
 
@@ -514,7 +522,7 @@
             userOrders: [],
             showPaymentAddedSuccess: false,
             showPaymentAddedFailed: false,
-            snackbarDuration: 4000,
+            snackbarDuration: 5000,
             payments: [],
             paymentsTriggered: false,
             smsApiURL: "/api/sms/",
@@ -524,6 +532,8 @@
             showMailSendedSuccess: false,
             showMailSendedFail: false,
             paymentEmail: "",
+            showSnackbar: false,
+            snackbarText: "",
         }),
         created() {
             this.orderId = this.$route.params.id;
@@ -732,7 +742,10 @@
                 )
             },
             handleSuccesfulPUTResponse(response) {
-                this.ordersListRedirect();
+                this.snackbarText = "Заказ успешно сохранён";
+                this.showSnackbar = true;
+                this.order = response.body;
+                this.originalOrder = JSON.parse(JSON.stringify(this.order));
             },
             handleErrorPUTesponse(response) {
 

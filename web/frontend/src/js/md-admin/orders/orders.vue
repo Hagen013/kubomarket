@@ -1,9 +1,38 @@
 <template>
     <md-content class="orders">
+        <div class="orders__loading"
+            v-if="loading"
+        >
+            <md-progress-spinner :md-diameter="50" :md-stroke="4" md-mode="indeterminate">
+            </md-progress-spinner>
+        </div>
         <div class="orders__content"
             v-if="showContent"
         >
             <div class="orders__controls">
+                <div class="orders__inputs">
+                    <div class="input-box">
+                        <input class="input"
+                            placeholder="номер заказа"
+                            v-model="queryParams.public_id"
+                            @input="triggerSearch"
+                        >
+                    </div>
+                    <div class="input-box">
+                        <input class="input"
+                            placeholder="ФИО"
+                            v-model="queryParams.name"
+                            @input="triggerSearch"
+                        >
+                    </div>
+                    <div class="input-box">
+                        <input class="input"
+                            placeholder="телефон"
+                            v-model="queryParams.phone"
+                            @input="triggerSearch"
+                        >
+                    </div>
+                </div>
                 <div class="orders__pagination pagination">
                     <div class="pagination__client-count">
                         {{offset}} - {{ordersCount}}
@@ -88,7 +117,7 @@
                         </th>
                     </tr>
                     <tr class="table__row"
-                        v-for="order of orders"
+                        v-for="order of sortedOrders"
                         :key="order.id"
                         @click="select(order.id)"
                         :class="computeRowStatusClass(order.state)"
@@ -170,6 +199,7 @@
 
 <script>
     import normalizeNumber from '../../core/normalizeNumber'
+    import debounce from 'debounce';
 
     import store from './../../store';
 
@@ -197,10 +227,33 @@
             responseRecieved: false,
             responseError: false,
             refreshing: false,
+            queryParams: {
+                name: "",
+                phone: "",
+                public_id: ""
+            },
+            loading: false
         }),
         computed: {
             listApiUrl() {
-                return `/api/order/list/?limit=${this.limit}&offset=${this.offset}`
+                let url = `/api/order/list/?limit=${this.limit}&offset=${this.offset}`;
+                if (this.queryParams.name !== '') {
+                    url += `&name=${this.queryParams.name}`;
+                }
+                if (this.queryParams.phone !== '') {
+                    url += `&phone=${this.queryParams.phone}`
+                }
+                if (this.queryParams.public_id !== '') {
+                    url += `&public_id=${this.queryParams.public_id}`
+                }
+                return url
+            },
+            searchLock() {
+                return (
+                    (this.name !== "") ||
+                    (this.phone !== "") ||
+                    (this.public_id !== "")
+                )
             },
             showContent() {
                 return (this.responseRecieved && !this.responseError)
@@ -217,6 +270,28 @@
             },
             hasNextPage() {
                 return this.ordersCount < this.count;
+            },
+            sortedOrders() {
+                let newOrders = this.orders.filter(function(item) {
+                    if (item.state === "новый") {
+                        return true
+                    }
+                    return false
+                })
+                let remainingOrders = this.orders.filter(function(item) {
+                    if (item.state !== "новый") {
+                        return true
+                    }
+                    return false
+                })
+                newOrders = newOrders.sort(function(a,b) {
+                    return b.id - a.id
+                })
+                remainingOrders = remainingOrders.sort(function(a,b) {
+                    return b.id - a.id
+                })
+                let orders = remainingOrders + newOrders;
+                return newOrders.concat(remainingOrders)
             }
         },
         created() {
@@ -224,7 +299,7 @@
             this.$store.commit('admin/changeAppTitle', this.componentTitle);
         },
         mounted() {
-            this.refreshTimer = setInterval(this.refresh, 5000);
+            this.refreshTimer = setInterval(this.refresh, 10000);
             Notification.requestPermission();
         },
         methods: {
@@ -232,6 +307,7 @@
                 this.getOrders();
             },
             getOrders() {
+                this.loading = true;
                 this.$http.get(this.listApiUrl).then(
                     response => {
                         this.handleSuccessfulGetResponse(response);
@@ -252,6 +328,7 @@
                 )
             },
             handleSuccessfulGetResponse(response) {
+                this.loading = false;
                 this.orders = response.body.results;
                 this.originalOrders = this.orders.slice();
                 this.count = response.body.count;
@@ -305,7 +382,9 @@
                 return this.orderStatusMap[value]
             },
             refresh() {
-                this.refreshOrders();
+                if (!this.searchLock) {
+                    this.refreshOrders();
+                }
             },
             notify(order) {
                 if (Notification.permission === 'granted') {
@@ -314,7 +393,10 @@
                     }
                     let notification = new Notification('Новый заказ', options);
                 }
-            }
+            },
+            triggerSearch: debounce(function () {
+                this.getOrders();
+            }, 500)
         },
         filters: {
             dataFilter(dataString) {
@@ -417,7 +499,11 @@
         white-space: nowrap;
     }
     .orders__controls {
-        padding: 0px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 32px 0px 0px;
+        margin-bottom: 32px;
     }
     .pagination {
         display: flex;
@@ -478,5 +564,40 @@
     }
     .order__payment {
         max-width: 80px;
+    }
+    .input-box {
+        display: inline-block;
+        margin-right: 16px;
+        height: 30px;
+    }
+    .input {
+        padding: 0px 8px;
+        height: 100%;
+    }
+    .input-box {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 2px;
+        &:focus {
+            border-color: #448aff;
+        }
+    }
+    .orders__pagination {
+        width: 260px;
+    }
+    .orders__loading {
+        display: flex;
+        position: fixed;
+        justify-content: center;
+        align-items: center;
+        top: 0px;
+        left: 0px;
+        height: 100vh;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.4);
+        z-index: 10000;
+    }
+    .orders__content {
+        width: 100%;
+        height: 100%;
     }
 </style>

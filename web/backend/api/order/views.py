@@ -56,6 +56,31 @@ class OrderListAPIView(generics.ListAPIView):
     pagination_class = LimitOffsetPagination
     permission_classes = (IsAdminUser,)
 
+    def filter_queryset(self, qs):
+        params = self.request.query_params
+        phone = params.get('phone', None)
+        name = params.get('name', None)
+        public_id = params.get('public_id', None)
+        if phone is not None:
+            qs = qs.filter(
+                data__customer__phone__icontains=phone,
+            )
+        if name is not None:
+            qs = qs.filter(
+                data__customer__name__icontains=name
+            )
+        if public_id is not None:
+            qs = qs.filter(
+                public_id__icontains=public_id
+            )
+        return qs
+        
+
+    def get_queryset(self):
+        qs = Order2.objects.all()
+        qs = self.filter_queryset(qs)
+        return qs.order_by('-created_at')
+        
 
 class OrderPaymentsAPIView(APIView):
 
