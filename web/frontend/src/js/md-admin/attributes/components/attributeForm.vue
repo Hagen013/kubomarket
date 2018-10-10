@@ -496,10 +496,10 @@
                 this.showSnackbar = true;
             },
             handleNewValueNameInput(name) {
-                this.newValue.slug = transliterate(name).toLowerCase();
+                this.newValue.slug = transliterate(name).toLowerCase().split(" ").join("-");
             },
             handleNewAttributeNameInput(name) {
-                this.attribute.key = transliterate(name).toLowerCase();
+                this.attribute.key = transliterate(name).toLowerCase().split(" ").join("-");
             },
             back() {
                 this.$router.go(-1);

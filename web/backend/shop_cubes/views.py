@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import TemplateView, ListView
 from django.http import Http404
+from django.shortcuts import redirect
 
 from core.viewmixins import DiggPaginatorViewMixin
 
@@ -32,6 +33,8 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
 
     def get(self, request, url, *args, **kwargs):
         self.category = self.get_category(url)
+        if self.category.url != url:
+            return redirect('shop:category', url=self.category.url)
         return super(CubesCategoryPageView, self).get(self, request, *args, **kwargs)
 
     def get_category(self, url):
@@ -39,7 +42,8 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
             category = self.node_class.objects.get(url=url)
         except self.node_class.DoesNotExist:
             try:
-                category = self.outdated_node_class.objects.get(url=url)
+                url = self.outdated_node_class.objects.get(url=url)
+                category = url.node
             except self.outdated_node_class.DoesNotExist:
                 raise Http404
         return category

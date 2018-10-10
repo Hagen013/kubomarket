@@ -38,6 +38,7 @@ class NodeManager(TreeManager):
                     node=node,
                     url=old_url
                 )
+                instance.save()
             node.save()
 
     def get_by_product(self, product_instance):
