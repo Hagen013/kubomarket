@@ -237,7 +237,7 @@ class Payment(models.Model):
             if delivery_price is not None:
                 instance = {
                     "quantity": 1,
-                    "price": delivery_price,
+                    "price": {"amount": delivery_price},
                     "tax": 3,
                     "text": "доставка"
                 }
