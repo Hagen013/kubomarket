@@ -34,6 +34,8 @@ def sync_sdek_orders(pks):
             else:
                 dispatch_number = order['DispatchNumber']
                 order_id = order['Number']
+                if len(order_id) > 4:
+                    order_id = "KU" + order_id
                 status_description = order['Status']['Description']
                 cdek_status_code = int(order['Status']['Code'])
                 status_date = order['Status']['Date']
@@ -75,7 +77,11 @@ def sync_pickpoint_orders(pks):
     client.login()
 
     for pk in pks:
-        info_response = client.get_order_info(pk)
+        invoice_pk = pk
+        if invoice_pk.startswith('KU'):
+            invoice_pk = invoice_pk[2:]
+            
+        info_response = client.get_order_info(invoice_pk)
         if info_response.status_code == 200:
             result = info_response.json()
             if len(result) !=0:
@@ -116,10 +122,11 @@ def sync_pickpoint_orders(pks):
                 empty_pks.append(pk)
         else:
             error_pks.append(pk)
-            
+
+        
     with transaction.atomic():
         for item in orders:
-            instance = Order2.objects.get(pk=item['id'])
+            instance = Order2.objects.get(public_id=item['id'])
             item.pop('id')
             instance.delivery_status = item
             if instance.delivery_status['service_status_code'] == 111:
@@ -181,7 +188,7 @@ def sort_orders_by_delivery_service():
     postal_orders_pks = []
     unknown = []
     
-    qs = Order2.objects.all().order_by('-created_at')[:400]
+    qs = Order2.objects.all().order_by('-created_at')[:500]
     for instance in qs:
         if instance.data['delivery']['is_mod_selected']:
             delivery_type = instance.data['delivery']['mod']['type']

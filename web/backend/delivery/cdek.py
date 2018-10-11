@@ -70,10 +70,13 @@ class Client(object):
     def get_orders_statuses(self, orders, show_history=True):
         status_report_element = Element('StatusReport', ShowHistory=str(int(show_history)))
         for order in orders:
+            order_number = str(order['public_id'])
+            if order_number.startswith('KU'):
+                order_number = order_number[2:]
             SubElement(
                 status_report_element,
                 'Order',
-                Number=str(order['public_id']),
+                Number=order_number,
             )
         xml = self._exec_xml_request(self.ORDER_STATUS_URL, status_report_element)
         return self._xml_to_dict(xml)
