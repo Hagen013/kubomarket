@@ -250,9 +250,9 @@
             },
             searchLock() {
                 return (
-                    (this.name !== "") ||
-                    (this.phone !== "") ||
-                    (this.public_id !== "")
+                    (this.queryParams.name !== "") ||
+                    (this.queryParams.phone !== "") ||
+                    (this.queryParams.public_id !== "")
                 )
             },
             showContent() {

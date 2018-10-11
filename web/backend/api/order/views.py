@@ -145,7 +145,7 @@ class OrderPaymentsAPIView(APIView):
             "mail_templates/payment.html",
             email,
             context={
-                "BASE_URL": "www.kubomarket.ru",
+                "BASE_URL": "https://www.kubomarket.ru",
                 "uuid": payment.uuid,
                 "order": payment.order
             }
