@@ -181,7 +181,7 @@ def sort_orders_by_delivery_service():
     postal_orders_pks = []
     unknown = []
     
-    qs = Order2.objects.all()
+    qs = Order2.objects.all().order_by('-created_at')[:400]
     for instance in qs:
         if instance.data['delivery']['is_mod_selected']:
             delivery_type = instance.data['delivery']['mod']['type']
