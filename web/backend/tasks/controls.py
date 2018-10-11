@@ -383,7 +383,8 @@ def upload_offers(filepath):
         price = row['price']
         purchase_price = row['purchase_price']
         slug_body = name
-        slug = slugify(slug_body) + "/"
+        slug = slugify(slug_body)
+        item_slug = slug + "/"
 
         try:
             product = ProductCard.objects.get(vendor_code=vendor_code)
@@ -397,7 +398,7 @@ def upload_offers(filepath):
                 is_in_stock=is_in_stock,
                 price=price,
                 purchase_price=purchase_price,
-                slug=slug
+                slug=item_slug
             )
             try:
                 instance.save(update_search=True)
@@ -405,7 +406,7 @@ def upload_offers(filepath):
             except IntegrityError:
                 for count in range(1000):
                     try:
-                        instance.slug = slug + '-' + str(count)
+                        instance.slug = slug + '-' + str(count) + '/'
                         instance.save(update_search=True)
                         products_added += 1
                         break
