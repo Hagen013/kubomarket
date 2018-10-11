@@ -233,6 +233,16 @@ class Payment(models.Model):
                 "text": item['name']
             }
             items.append(instance)
+            delivery_price = self.order.data['delivery']['mod']['price']
+            if delivery_price is not None:
+                instance = {
+                    "quantity": 1,
+                    "price": delivery_price,
+                    "tax": 3,
+                    "text": "доставка"
+                }
+                items.append(instance)
+
         data['items'] = items
         return str(data).replace("'", '"')
 
