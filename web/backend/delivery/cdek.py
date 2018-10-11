@@ -73,7 +73,7 @@ class Client(object):
             SubElement(
                 status_report_element,
                 'Order',
-                Number=str(order['id']),
+                Number=str(order['public_id']),
             )
         xml = self._exec_xml_request(self.ORDER_STATUS_URL, status_report_element)
         return self._xml_to_dict(xml)

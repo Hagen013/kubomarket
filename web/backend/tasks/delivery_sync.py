@@ -17,7 +17,7 @@ def sync_sdek_orders(pks):
     errors = []
     invalid = []
     
-    qs = Order2.objects.filter(id__in=pks)
+    qs = Order2.objects.filter(public_id__in=pks)
     client = ClientSDEK(settings.SDEK_USER, settings.SDEK_PASSWORD)
     serializer = OrderSerializer(qs, many=True)
     results = client.get_orders_statuses(serializer.data)['Order']
@@ -38,7 +38,7 @@ def sync_sdek_orders(pks):
                 cdek_status_code = int(order['Status']['Code'])
                 status_date = order['Status']['Date']
                 
-                instance = Order2.objects.get(pk=order_id)
+                instance = Order2.objects.get(public_id=order_id)
                 instance.delivery_status['service'] = "sdek"
                 instance.delivery_status['change_date'] = status_date
                 instance.delivery_status['dispatch_number'] = dispatch_number
@@ -139,7 +139,7 @@ def sync_pickpoint_orders(pks):
 
 @app.task
 def sync_postal_orders(pks):
-    qs = Order2.objects.filter(id__in=pks)
+    qs = Order2.objects.filter(public_id__in=pks)
     client = ClientRupost(settings.RUPOST_USER, settings.RUPOST_PASSWORD)
     for instance in qs:
         service = instance.delivery_status['service']
@@ -186,19 +186,19 @@ def sort_orders_by_delivery_service():
         if instance.data['delivery']['is_mod_selected']:
             delivery_type = instance.data['delivery']['mod']['type']
             if delivery_type == 'curier':
-                sdek_orders_pks.append(instance.id)
+                sdek_orders_pks.append(instance.public_id)
             elif delivery_type == 'postal_service':
-                postal_orders_pks.append(instance.id)
+                postal_orders_pks.append(instance.public_id)
             elif delivery_type == 'delivery_points':
                 code = instance.data['delivery']['mod']['code']
                 if code is not None:
                     if 'sdek' in code:
-                        sdek_orders_pks.append(instance.id)
+                        sdek_orders_pks.append(instance.public_id)
                     else:
-                        pickpoint_orders_pks.append(instance.id)
-                        sdek_orders_pks.append(instance.id)
+                        pickpoint_orders_pks.append(instance.public_id)
+                        sdek_orders_pks.append(instance.public_id)
                 else:
-                    sdek_orders_pks.append(instance.id)
+                    sdek_orders_pks.append(instance.public_id)
             else:
                 # Unknown delivery_type
                 unknown.append(pk)
