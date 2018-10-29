@@ -282,7 +282,7 @@ class CategoryNodeListAPIView(APIView):
     Класс для работы со списком категорий
     """
 
-    default_limit = 100
+    default_limit = 500
     default_offset = 0
     default_ordering = 'level'
 
