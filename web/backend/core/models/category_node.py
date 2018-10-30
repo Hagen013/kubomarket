@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from django.db import models, transaction
+from django.db import models, transaction, IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 from mptt.models import MPTTModel, TreeForeignKey, TreeManager
 
@@ -27,7 +27,21 @@ class NodeManager(TreeManager):
         super(NodeManager, self).rebuild()
         for node in self.get_queryset():
             old_url = node.url
-            node.url = node.get_graph_url()
+            new_url = node.get_graph_url()
+        
+            stored_node_exists = False
+            try:
+                stored_node = self.get_queryset().get(url=new_url)
+                stored_node_exists = True
+            except ObjectDoesNotExist:
+                pass
+
+            if stored_node_exists:
+                node.parent = None
+            else:
+                node.url = new_url
+
+            # Handling old outdated urls
             if old_url != node.url:
                 try:
                     instance = node.outdated_url_class.objects.get(url=node.url)
@@ -39,7 +53,6 @@ class NodeManager(TreeManager):
                     url=old_url
                 )
                 instance.save()
-            node.save()
 
     def get_by_product(self, product_instance):
         if product_instance.pk:
