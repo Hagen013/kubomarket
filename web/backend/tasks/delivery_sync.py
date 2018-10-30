@@ -164,7 +164,7 @@ def sync_postal_orders(pks):
             )
             instance.delivery_status['state_description'] = state_description
             instance.delivery_status['service_status_code'] = oper_type['Id']
-            instance.delivery_status['status_code'] = rupost_to_cdek_code[oper_type['Id']]
+            instance.delivery_status['status_code'] = rupost_to_cdek_code(oper_type['Id'])
             instance.delivery_status['change_date'] = oper_date
             history = []
             for item in tracking_history:

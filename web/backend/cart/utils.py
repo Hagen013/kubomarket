@@ -8,5 +8,8 @@ def pickpoint_to_cdek_code(code):
 
 
 def rupost_to_cdek_code(code):
-    return code
-    #return RUPOST_TO_CDEK_STATUS_CODE_MAPPING[code]
+    cdek_code = RUPOST_TO_CDEK_STATUS_CODE_MAPPING.get(str(code), None)
+    if cdek_code is None:
+        return code
+    return cdek_code
+
