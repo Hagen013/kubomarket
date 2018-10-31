@@ -44,7 +44,9 @@ class NodeManager(TreeManager):
             # Handling old outdated urls
             if old_url != node.url:
                 try:
-                    instance = node.outdated_url_class.objects.get(url=node.url)
+                    instance = node.outdated_url_class.objects.get(
+                        url=old_url
+                    )
                     instance.delete()
                 except ObjectDoesNotExist:
                     pass
