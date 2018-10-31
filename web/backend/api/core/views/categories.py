@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAdminUser
 
 from ..permissions import IsAdminUserOrReadOnly
 
+
 class CategoryFiltersAPIView(APIView):
 
     """
