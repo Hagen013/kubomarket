@@ -37,9 +37,10 @@ class NodeManager(TreeManager):
                 pass
 
             if stored_node_exists:
-                node.parent = None
+                pass
             else:
                 node.url = new_url
+            node.save()
 
             # Handling old outdated urls
             if old_url != node.url:
