@@ -28,6 +28,9 @@ class NodeManager(TreeManager):
         for node in self.get_queryset():
             old_url = node.url
             new_url = node.get_graph_url()
+
+            if node.id == 262:
+                print(new_url)
         
             stored_node_exists = False
             try:
