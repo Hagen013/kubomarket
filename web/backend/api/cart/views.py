@@ -122,8 +122,12 @@ class CartMakeOrderAPIView(BaseCartAPIView):
             data=order_data,
             user=user,
             source=request.data.get('source', ''),
-            client_notes=request.data.get('client_notes', '')
+            client_notes=request.data.get('client_notes', ''),
         )
+
+        cpa = request.data.get('cpa', None)
+        if cpa is not None:
+            order.cpa = cpa
 
         id_unique = False
         for i in range(100):

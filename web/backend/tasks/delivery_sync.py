@@ -87,6 +87,7 @@ def sync_pickpoint_orders(pks):
             if len(result) !=0:
                 result = result[0]
                 invoice_number = result['InvoiceNumber']
+                invoice_sum = float(result['Sum'].replace(',', '.'))
                 track_response = client.track_sending(invoice_number)
                 if track_response.status_code == 200:
                     track_result = track_response.json()
@@ -104,6 +105,7 @@ def sync_pickpoint_orders(pks):
                             "state_description": state_message,
                             "service_status_code": status_code,
                             "status_code": pickpoint_to_cdek_code(status_code),
+                            "sum": invoice_sum,
                             "history": []
                         }
                         for state in track_result:
@@ -153,6 +155,12 @@ def sync_postal_orders(pks):
         if service == "rupost":
             dispatch_number = instance.delivery_status['dispatch_number']
             tracking_history = client.get_operation_history(dispatch_number)
+
+            finance_parameters_list = list(map(lambda x: x['FinanceParameters'], tracking_history))
+            finance_parameters_list = list(filter(lambda x: x['Payment'] is not None, finance_parameters_list))
+            invoice_sum = finance_parameters_list[0]['Payment']
+            invoice_sum = float(str(invoice_sum)[:-2])
+
             last_state = tracking_history[-1]
             operation_parameters = last_state['OperationParameters']
             oper_type = operation_parameters['OperType']
@@ -166,6 +174,8 @@ def sync_postal_orders(pks):
             instance.delivery_status['service_status_code'] = oper_type['Id']
             instance.delivery_status['status_code'] = rupost_to_cdek_code(oper_type['Id'])
             instance.delivery_status['change_date'] = oper_date
+            instance.delivery_status['sum'] = invoice_sum
+
             history = []
             for item in tracking_history:
                 history_state_description = "{0} ({1})".format(
@@ -188,7 +198,7 @@ def sort_orders_by_delivery_service():
     postal_orders_pks = []
     unknown = []
     
-    qs = Order2.objects.all().order_by('-created_at')[:500]
+    qs = Order2.objects.all().order_by('-created_at')
     for instance in qs:
         if instance.data['delivery']['is_mod_selected']:
             delivery_type = instance.data['delivery']['mod']['type']

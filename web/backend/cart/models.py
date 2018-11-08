@@ -138,6 +138,7 @@ class Order2(TimeStamped):
             "state_description": "",
             "service_status_code": None,
             "status_code": None,
+            "sum": 0,
             "history": []
         }
     )
@@ -151,6 +152,7 @@ class Order2(TimeStamped):
             "state_description": {"type": "string"},
             "service_status_code": {"type": ["integer", "null"]},
             "status_code": {"type": ["integer", "null"]},
+            "sum": {"type": "number"},
             "history": {
                 "type": "array",
                 "items": {
@@ -183,6 +185,24 @@ class Order2(TimeStamped):
             }
         },
         "additionalProperties": False
+    }
+
+    cpa = JSONField(
+        default={
+            "networks": []
+        }
+    )
+
+    ORDER_CPA_JSONSCHEMA = {
+        "type": "object",
+        "properties": {
+            "networks": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
     }
 
     manager_notes = models.TextField(
@@ -252,6 +272,7 @@ class Order2(TimeStamped):
         try:
             jsonschema_validate(self.data, self.ORDER_DATA_JSONSCHEMA)
             jsonschema_validate(self.delivery_status, self.DELIVERY_DATA_JSONCHEMA)
+            jsonschema_validate(self.cpa, self.ORDER_CPA_JSONSCHEMA)
         except JsonSchemaValidationError as e:
             raise ValidationError(message=e.message)
 
@@ -277,6 +298,18 @@ class Order2(TimeStamped):
             "card_on_receipt": "картой при получении",
             "card": "картой"
         }[self.data['payment']['mod']]
+
+    @property
+    def cpa_admitad_price(self):
+        pass
+
+    @property
+    def cpa_admitad_status(self):
+        pass
+
+    @property
+    def cpa_admitad_comment(self):
+        pass
 
     def present_account(self):
         email = self.data.get('customer').get('email')

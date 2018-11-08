@@ -260,6 +260,7 @@
 
 <script>
 import MaskedInput from 'vue-text-mask';
+import getCookie from '../../../core/getCookie'
 
 import store from '../../../store'
 
@@ -540,9 +541,14 @@ export default {
             }
         },
         postOrder() {
+            let data = this.orderData;
+            let admitadCookie = getCookie("tagtag_aid");
+            if ( admitadCookie !== undefined) {
+                data['cpa'] = {'networks': ['admitad',]}
+            }
             yaCounter49316458.reachGoal("orderSend");
             dataLayer.push({"event": "orderSend"});
-            this.$http.post('/api/cart/make_order/', this.orderData).then(
+            this.$http.post('/api/cart/make_order/', data).then(
                 response => {
                     this.handleSuccessfulPostOrderRequest(response);
                 },
@@ -553,6 +559,9 @@ export default {
         },
         handleSuccessfulPostOrderRequest(response) {
             this.recievedOrderData = response.body;
+            if (this.recievedOrderData['cpa'] !== undefined) {
+                this.handleCPA(this.recievedOrderData['cpa']);
+            }
             dataLayer.push({"event": "orderConfirmed",
                             "ecommerce": {
                                 "currencyCode": "RUB",
@@ -574,9 +583,37 @@ export default {
             this.isCartSubmissionInProgress = false;
         },
         changePaymentMethod(method) {
-            console.log("match");
-            console.log(method);
             this.$store.commit('payment/setMethod', method)
+        },
+        handleCPA(data) {
+            ADMITAD = window.ADMITAD || {};
+            ADMITAD.Invoice = ADMITAD.Invoice || {};
+            ADMITAD.Invoice.broker = "adm";     // параметр дедупликации (по умолчанию для admitad)
+            ADMITAD.Invoice.category = "1";
+            
+            let orderedItem = [];
+
+            for (let key in this.recievedOrderData.data.cart.items) {
+                let item = this.recievedOrderData.data.cart.items[key];
+                orderedItem.push({
+                    Product: {
+                        productID: item.vendor_code,
+                        category: '1',
+                        price: item.price,
+                        priceCurrency: 'RUB'
+                    },
+                    orderQuantity: item.quantity,
+                    additionalType: 'sale'
+                })
+            }
+
+            ADMITAD.Invoice.referencesOrder = ADMITAD.Invoice.referencesOrder || [];
+
+            ADMITAD.Invoice.referencesOrder.push({
+                orderNumber: this.recievedOrderData.public_id,
+                orderedItem: orderedItem
+            });
+
         }
     },
     watch: {

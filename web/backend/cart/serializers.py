@@ -21,7 +21,8 @@ class OrderSerializer(DynamicFieldsModelSerializer):
             'created_at',
             'modified_at',
             'delivery_status',
-            'user'
+            'user',
+            'cpa'
         )
         read_only_fields = (
             'id',

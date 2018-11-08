@@ -11,6 +11,7 @@ class Client(object):
     
     INTEGRATOR_URL = "https://integration.cdek.ru"
     ORDER_STATUS_URL = INTEGRATOR_URL + "/status_report_h.php"
+    ORDER_INFO_URL = INTEGRATOR_URL + "/info_report.php"
     array_tags = {'State', 'Delay', 'Good', 'Fail', 'Item', 'Package', 'Order'}
     
     def __init__(self, login, password):
@@ -64,7 +65,9 @@ class Client(object):
         payload = {
             'xml_request': self._xml_to_string(xml_element)
         }
+        print(payload['xml_request'])
         response = self._exec_request(url, payload, method='POST')
+        print(response.text)
         return self._parse_xml(response.text)
         
     def get_orders_statuses(self, orders, show_history=True):
@@ -80,3 +83,28 @@ class Client(object):
             )
         xml = self._exec_xml_request(self.ORDER_STATUS_URL, status_report_element)
         return self._xml_to_dict(xml)
+
+    def get_orders_information(self, numbers):
+        # info_request_element = Element('InfoRequest')
+        # for order in orders:
+        #     order_number = str(order['public_id'])
+        #     if order_number.startswith('KU'):
+        #         order_number = order_number[2:]
+        #     SubElement(
+        #         info_request_element,
+        #         'Order',
+        #         Number=order_number,
+        #     )
+        # xml = self._exec_xml_request(self.ORDER_STATUS_URL, info_request_element)
+        # print(xml)
+        # return self._xml_to_dict(xml)
+
+        info_request_element  = Element('InfoRequest')
+        for number in numbers:
+            SubElement(
+                info_request_element,
+                'Order',
+                DispatchNumber=str(number)
+            )
+        xml = self._exec_xml_request(self.ORDER_INFO_URL, info_request_element)
+        return xml
