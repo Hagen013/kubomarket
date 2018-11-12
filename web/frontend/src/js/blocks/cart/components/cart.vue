@@ -614,6 +614,8 @@ export default {
                 orderedItem: orderedItem
             });
 
+            ADMITAD.Tracking.processPositions();
+
         }
     },
     watch: {

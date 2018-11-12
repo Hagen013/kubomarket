@@ -216,6 +216,8 @@ export default {
                 orderedItem: orderedItem
             });
 
+            ADMITAD.Tracking.processPositions();
+
         }
     },
     computed: {

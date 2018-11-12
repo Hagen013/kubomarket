@@ -51,7 +51,7 @@ class Client(object):
         return result
     
     def _xml_to_string(self, xml):
-        return tostring(xml, encoding='utf8', method='xml')
+        return tostring(xml, method='xml')
         
     def _make_secure(self, date):
         raw = ('%s&%s' % (date, self._password)).encode()
@@ -62,10 +62,10 @@ class Client(object):
         xml_element.attrib['Date'] = date
         xml_element.attrib['Account'] = self._login
         xml_element.attrib['Secure'] = self._make_secure(date)
+        text_request = self._xml_to_string(xml_element)
         payload = {
-            'xml_request': self._xml_to_string(xml_element)
+            'xml_request': text_request
         }
-        print(payload['xml_request'])
         response = self._exec_request(url, payload, method='POST')
         print(response.text)
         return self._parse_xml(response.text)
@@ -84,27 +84,15 @@ class Client(object):
         xml = self._exec_xml_request(self.ORDER_STATUS_URL, status_report_element)
         return self._xml_to_dict(xml)
 
-    def get_orders_information(self, numbers):
-        # info_request_element = Element('InfoRequest')
-        # for order in orders:
-        #     order_number = str(order['public_id'])
-        #     if order_number.startswith('KU'):
-        #         order_number = order_number[2:]
-        #     SubElement(
-        #         info_request_element,
-        #         'Order',
-        #         Number=order_number,
-        #     )
-        # xml = self._exec_xml_request(self.ORDER_STATUS_URL, info_request_element)
-        # print(xml)
-        # return self._xml_to_dict(xml)
-
-        info_request_element  = Element('InfoRequest')
-        for number in numbers:
-            SubElement(
-                info_request_element,
-                'Order',
-                DispatchNumber=str(number)
-            )
-        xml = self._exec_xml_request(self.ORDER_INFO_URL, info_request_element)
-        return xml
+    def get_orders_information(self, orders):
+        info_request = Element('InfoRequest')
+        for order in orders:
+            dispatch_number = order['delivery_status']['dispatch_number']
+            if dispatch_number != "":
+                SubElement(
+                    info_request,
+                    'Order',
+                    DispatchNumber=str(dispatch_number)
+                )
+        xml = self._exec_xml_request(self.ORDER_INFO_URL, info_request)
+        return self._xml_to_dict(xml)

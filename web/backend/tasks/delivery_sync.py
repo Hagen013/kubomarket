@@ -213,7 +213,6 @@ def sort_orders_by_delivery_service():
                         sdek_orders_pks.append(instance.public_id)
                     else:
                         pickpoint_orders_pks.append(instance.public_id)
-                        sdek_orders_pks.append(instance.public_id)
                 else:
                     sdek_orders_pks.append(instance.public_id)
             else:
