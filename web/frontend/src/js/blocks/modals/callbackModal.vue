@@ -36,24 +36,22 @@
                 <div class="input-box modal__input-box"
                     v-if="!responseRecieved"
                 >
-                    <masked-input
-                        class="input cart__input"
+                    <input class="input cart__input"
                         type="tel"
-                        id="input-phone"
                         :class="{
-                                    'input_success':customerPhone.length != 0 && isCustomerPhoneValid, 
-                                    'input_failure':customerPhone.length != 0 && !isCustomerPhoneValid
-                                }" 
-                        for="input-phone"
-                        v-model="customerPhone"
+                                    'input_success': cartPhoneIsValid,
+                                    'input_failure': cartPhoneInputFailed
+                                }"
+                        v-model="cartPhone"
+                        v-mask="{mask: '+7 (999) 999-9999', showMaskOnHover: false}"
+                        @click="cartPhoneInitialized=true"
                         @focus="isCustomerPhoneFocused = true"
                         @blur="isCustomerPhoneFocused = false"
-                        :showMask="isCustomerPhoneFocused"
-                        :mask="['+', '7',' ','(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
-                    />
+
+                    >
                     <label class="input-box__placeholder input-box__placeholder_required"
                         for="input-phone"
-                        v-if="customerPhone.length == 0 && !isCustomerPhoneFocused"
+                        v-if="cartPhoneUnmasked.length == 0 && !isCustomerPhoneFocused"
                     >
                         Телефон
                     </label>
@@ -73,6 +71,7 @@
                 <div class="button button_blue"
                     @click="submit"
                     v-if="!responseRecieved"
+                    :class="{ 'button_disabled': !cartPhoneIsValid }"
                 >
                     Оставить заявку
                 </div>
@@ -83,16 +82,12 @@
 </template>
 
 <script>
-import MaskedInput from 'vue-text-mask';
 import getCookie from './../../core/getCookie'
 
 import store from '../../store'
 
 export default {
     name: 'callback-modal',
-    components: {
-        "masked-input": MaskedInput
-    },
     store,
     data: () => ({
         title: "Обратный звонок",
@@ -102,7 +97,9 @@ export default {
         responseAwaiting: false,
         responseRecieved: false,
         responseFailed: false,
-        recievedOrderData: null
+        recievedOrderData: null,
+        cartPhone: "",
+        cartPhoneInitialized: false
     }),
     props: [
         "name",
@@ -112,32 +109,36 @@ export default {
     ],
     methods: {
         submit() {
-            if (!this.responseAwaiting) {
-                this.responseAwaiting = true;
-                let source = this.productData !== undefined ? 'callback' : 'product-page';
-                let data = this.$store.getters['orderData'](source);
-                let admitadCookie = getCookie("tagtag_aid");
-                if ( admitadCookie !== undefined) {
-                    data['cpa'] = {'networks': ['admitad',]}
-                }
-                this.$http.put(`/api/cart/items/${this.productData.id}/`).then(
-                    response => {
-                        this.$http.post(
-                            this.apiUrl,
-                            data
-                        ).then(
-                            response => {
-                                this.handleSuccessfulResponse(response);
-                            },
-                            response => {
-                                this.handleFailedResponse(response);
-                            }
-                        )
-                    },
-                    response => {
-
+            if (this.cartPhoneIsValid) {
+                if (!this.responseAwaiting) {
+                    this.responseAwaiting = true;
+                    let source = this.productData !== undefined ? 'callback' : 'product-page';
+                    let data = this.$store.getters['orderData'](source);
+                    let admitadCookie = getCookie("tagtag_aid");
+                    // Костыль для работы без телефона из Store
+                    data.data.customer.phone = this.cartPhoneUnmasked;
+                    if ( admitadCookie !== undefined) {
+                        data['cpa'] = {'networks': ['admitad',]}
                     }
-                )
+                    this.$http.put(`/api/cart/items/${this.productData.id}/`).then(
+                        response => {
+                            this.$http.post(
+                                this.apiUrl,
+                                data
+                            ).then(
+                                response => {
+                                    this.handleSuccessfulResponse(response);
+                                },
+                                response => {
+                                    this.handleFailedResponse(response);
+                                }
+                            )
+                        },
+                        response => {
+
+                        }
+                    )
+                }
             }
         },
         addToCart() {
@@ -237,8 +238,14 @@ export default {
                 this.$store.commit('customer/maskedPhone', value)
             }
         },
-        isCustomerPhoneValid() {
-            return this.$store.getters["customer/isPhoneValid"];
+        cartPhoneUnmasked() {
+            return this.cartPhone.replace(/\+7|\(|\)|\-|\_/g, '').replace(/\s/g, '')
+        },
+        cartPhoneIsValid() {
+            return this.cartPhoneUnmasked.length === 10;
+        },
+        cartPhoneInputFailed() {
+            return !this.isCustomerPhoneFocused && !this.cartPhoneIsValid && this.cartPhoneInitialized
         },
     },
 }

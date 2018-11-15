@@ -147,6 +147,13 @@ class CubesProductCard(ProductCard):
     def public_id(self):
         return self.get_public_id()
 
+    @property
+    def warehouse_name(self):
+        return "{name} - {code}".format(
+            name=self.name,
+            code=self.public_id
+        )
+
     def get_meta_title(self):
         if len(self._meta_title) == 0:
             return "{0} — купить кубики Рубика недорого в интернет-магазине Kubomarket.Ru".format(

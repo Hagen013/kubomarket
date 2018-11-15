@@ -56,18 +56,13 @@
                             <div class="input-box cart__form-input-box">
                                 <input class="input cart__input"
                                     id="input-name"
+                                    placeholder="Имя"
                                     v-model="customerName" 
                                     :class="{input_success: customerName.length != 0}"
                                     @focus="isCustomerNameFocused = true"
                                     @blur="isCustomerNameFocused = false"
                                     autocomplete="name"
                                 >
-                                <label class="input-box__placeholder"
-                                    for="input-phone"
-                                    v-if="this.customerName.length == 0 && !isCustomerNameFocused"
-                                >
-                                    Имя
-                                </label>
                             </div>
                             <div class="input-box cart__form-input-box">
                                 <input class="input cart__input"
@@ -82,24 +77,21 @@
                                 >
                             </div>
                             <div class="input-box cart__form-input-box">
-                                <masked-input
-                                    class="input cart__input"
+                                <input class="input cart__input"
                                     type="tel"
-                                    id="input-phone"
                                     :class="{
-                                             'input_success':customerPhone.length != 0 && isCustomerPhoneValid, 
-                                             'input_failure':customerPhone.length != 0 && !isCustomerPhoneValid
+                                             'input_success': cartPhoneIsValid,
+                                             'input_failure': cartPhoneInputFailed
                                             }" 
-                                    for="input-phone"
-                                    v-model="customerPhoneProxy"
+                                    v-model="cartPhone"
+                                    v-mask="{mask: '+7 (999) 999-9999', showMaskOnHover: false}"
+                                    @click="cartPhoneInitialized = true"
                                     @focus="isCustomerPhoneFocused = true"
                                     @blur="isCustomerPhoneFocused = false"
-                                    :showMask="isCustomerPhoneFocused"
-                                    :mask="['+', '7',' ','(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
-                                />
-                                <label class="input-box__placeholder input-box__placeholder_required"
+                                >
+                                <label class="input-box__placeholder input-box__placeholder_required input-box__placeholder_masked"
                                     for="input-phone"
-                                    v-if="customerPhone.length == 0 && !isCustomerPhoneFocused"
+                                    v-if="cartPhoneUnmasked.length == 0 && !isCustomerPhoneFocused"
                                 >
                                     Телефон
                                 </label>
@@ -178,8 +170,10 @@
 
         </div>
 
-
+    
         <div class="cart__successful-order" v-else-if="showAftercheck">
+            <transition name="fade-fast">
+                <div>
             <h2>Спасибо за заказ!</h2>
             <p>В ближайшее время (с 10:00 до 20:00) с Вами свяжется оператор интернет-магазина для подверждения заказа</p>
             <div class="aftercheck-list">
@@ -245,6 +239,8 @@
                 </div>
 
             </div>
+                </div>
+            </transition>
         </div>
 
         <div class="cart__placeholder" v-else>
@@ -259,8 +255,7 @@
 </template>
 
 <script>
-import MaskedInput from 'vue-text-mask';
-import getCookie from '../../../core/getCookie'
+import getCookie from '../../../core/getCookie';
 
 import store from '../../../store'
 
@@ -282,18 +277,17 @@ export default {
             isOrderSended: false,
             isCartSubmissionInProgress: false,
             recievedOrderData: null,
-            customerPhoneProxy: ""
+            cartPhone: "",
+            cartPhoneInitialized: false
         }
     },
     components: {
         "cart-item": cartItem,
         "delivery-menu": deliveryMenu,
         "delivery-points": deliveryPoints,
-        "masked-input": MaskedInput,
         "payment-menu": paymentMenu
     },
     mounted() {
-        this.customerPhoneProxy = String(this.customerPhone);
     },
     computed: {
         // Отображаемые формы и данные
@@ -322,6 +316,15 @@ export default {
             set(value) {
                 this.$store.commit('customer/maskedPhone', value)
             }
+        },
+        cartPhoneUnmasked() {
+            return this.cartPhone.replace(/\+7|\(|\)|\-|\_/g, '').replace(/\s/g, '')
+        },
+        cartPhoneIsValid() {
+            return this.cartPhoneUnmasked.length === 10;
+        },
+        cartPhoneInputFailed() {
+            return !this.isCustomerPhoneFocused && !this.cartPhoneIsValid && this.cartPhoneInitialized
         },
         customerEmail: {
             get() {
@@ -451,22 +454,7 @@ export default {
             return this.$store.getters['delivery/isPointsAvailable'];
         },
         isCustomerDataValid() {
-            return (
-                (
-                    // проверка на непустость корзины
-                    !this.$store.getters['cart/isCartEmpty']
-                ) && (
-                    // проверка на валидность и существование телефона
-                    this.$store.getters['customer/isPhoneValid']
-                ) && (
-                    // проверка на валидность мэйла или его отсутствие
-                    (this.$store.state.customer.email.length == 0) ||
-                    (
-                        (this.$store.state.customer.email.length != 0) &&
-                         this.$store.getters['customer/isEmailValid']
-                    )
-                )
-            );
+            return this.cartPhoneIsValid
         },
         customerAddress() {
             return this.$store.state.customer.address;
@@ -531,17 +519,17 @@ export default {
             }
         },
         makeOrder() {
-            if (this.isCustomerDataValid) {
-                if (!this.isCartSubmissionInProgress) {
-                    this.isCartSubmissionInProgress = true;
-                    this.postOrder();
-                };
+            if (!this.isCartSubmissionInProgress) {
+                this.isCartSubmissionInProgress = true;
+                this.postOrder();
             } else {
                 this.isShowNotValidModal = true;
             }
         },
         postOrder() {
             let data = this.orderData;
+            // Костыль для работы корзины вне зависимости от работы store
+            data.data.customer.phone = this.cartPhoneUnmasked;
             let admitadCookie = getCookie("tagtag_aid");
             if ( admitadCookie !== undefined) {
                 data['cpa'] = {'networks': ['admitad',]}
@@ -624,8 +612,8 @@ export default {
                 this.$store.dispatch('delivery/initDelivery');
             }
         },
-        customerPhoneProxy() {
-            this.customerPhone = this.customerPhoneProxy;
+        cartPhone() {
+            this.customerPhone = this.cartPhone;
         }
     }
 }
