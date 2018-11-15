@@ -3,6 +3,9 @@ import Vue from 'vue';
 import VueResource from 'vue-resource';
 import Vuex from 'vuex';
 
+import VueInputMask from './core/vue-inputmask.js'
+Vue.use(VueInputMask);
+
 // Конфигурирование
 
 // Вшивание CSRF-токена в запросы vue-resurs

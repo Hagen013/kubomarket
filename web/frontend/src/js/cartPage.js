@@ -1,6 +1,8 @@
 // Common VUE and store
 import {Vue} from './vue.js'
+import VueInputMask from './core/vue-inputmask.js'
 import store from './store';
+Vue.use(VueInputMask);
 
 // Common
 import header from './blocks/header'

@@ -43,3 +43,15 @@
     }
     cursor: text;
 }
+
+
+.cart__input {
+    position: relative;
+    z-index: 1000;
+    background: transparent;
+}
+
+.input-box__placeholder {
+    position: absolute;
+    z-index: 100;
+}

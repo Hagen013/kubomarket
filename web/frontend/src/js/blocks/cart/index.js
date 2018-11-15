@@ -10,9 +10,10 @@ var Cart = new Vue({
     el: '#cart',
     store,
     data: {
-
     },
     components: {
         "cart": cartComponent,
     },
+    methods: {
+    }
 });
