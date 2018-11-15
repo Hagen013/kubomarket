@@ -124,7 +124,12 @@
                     >
                         <td class="table__cell">
                             <div class="table__cell-container table-cell--colored">
-                                {{order.public_id}}
+                                <div class="public_id">
+                                    {{order.public_id}}
+                                </div>
+                                <div class="admitad_badge" v-if="containsAdmitadCPA(order)" v-once>
+                                    admitad
+                                </div>
                             </div>
                         </td>
                         <td class="table__cell">
@@ -394,6 +399,11 @@
                     let notification = new Notification('Новый заказ', options);
                 }
             },
+            containsAdmitadCPA(order) {
+                return order.cpa.networks.some(function(currentValue, index, array) {
+                    return currentValue === 'admitad'
+                })
+            },
             triggerSearch: debounce(function () {
                 this.getOrders();
             }, 500)
@@ -599,5 +609,17 @@
     .orders__content {
         width: 100%;
         height: 100%;
+    }
+    .public_id {
+
+    }
+    .admitad_badge {
+        width: 60px;
+        background: #6b31bd;
+        color: white;
+        border-radius: 8px;
+        padding: 0px 4px;
+        font-size: 12px;
+        text-align: center;
     }
 </style>
