@@ -189,6 +189,14 @@ export default {
             this.$store.commit("showCallbackModal/hide");
         },
         handleCPA(data) {
+            let hasAdmitad = data['networks'].some(function(currentValue, index, array) {
+                return currentValue === 'admitad'
+            })
+            if (hasAdmitad===true) {
+                this.handleADMITAD();
+            }
+        },
+        handleADMITAD() {
             ADMITAD = window.ADMITAD || {};
             ADMITAD.Invoice = ADMITAD.Invoice || {};
             ADMITAD.Invoice.broker = "adm";     // параметр дедупликации (по умолчанию для admitad)
@@ -218,7 +226,6 @@ export default {
             });
 
             ADMITAD.Tracking.processPositions();
-
         }
     },
     computed: {
