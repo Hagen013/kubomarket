@@ -59,6 +59,7 @@
                                 <md-option value="отменён">Отменён</md-option>
                                 <md-option value="отменён: недозвон">Отменён: недозвон</md-option>
                                 <md-option value="вручен">Вручен</md-option>
+                                <md-option value="отказ">Отказ</md-option>
                             </md-select>
                         </md-field>
                         <md-field>

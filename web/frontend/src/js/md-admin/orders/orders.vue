@@ -223,7 +223,8 @@
                 'согласован': 'table-row--done',
                 'отменён': 'table-row--err',
                 'отменён: недозвон': 'table-row--err',
-                'вручен': 'table-row-success'
+                'вручен': 'table-row-success',
+                'отказ': 'table-row--err'
             },
             refreshTimer: null,
             count: 0,

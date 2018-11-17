@@ -20,9 +20,26 @@ def sync_sdek_orders(pks):
     qs = Order2.objects.filter(public_id__in=pks)
     client = ClientSDEK(settings.SDEK_USER, settings.SDEK_PASSWORD)
     serializer = OrderSerializer(qs, many=True)
-    results = client.get_orders_statuses(serializer.data)['Order']
+    results_tracking = client.get_orders_statuses(serializer.data)['Order']
+    results_info = client.get_orders_information(serializer.data)['Order']
+
+    ## Отсев заказов, вызывающих ошибку
+    error_code = results_info[0].get('ErrorCode', None)
+    if error_code is not None:
+        invalid_dispatch_numbers = list(map(lambda x: x['DispatchNumber'], results_info))
+        fixed_qs = Order2.objects.filter(
+            public_id__in=pks
+        ).exclude(delivery_status__dispatch_number__in=invalid_dispatch_numbers)
+        serializer = OrderSerializer(fixed_qs, many=True)
+        results_info = client.get_orders_information(serializer.data)
+    ## конец
+
+    mapping = {}
+    for result in results_info:
+        mapping[result['DispatchNumber']] = result
+
     with transaction.atomic():
-        for order in results:
+        for order in results_tracking:
             error_code = order.get('ErrorCode', None)
             if error_code is not None:
                 error_item = {
@@ -39,7 +56,7 @@ def sync_sdek_orders(pks):
                 status_description = order['Status']['Description']
                 cdek_status_code = int(order['Status']['Code'])
                 status_date = order['Status']['Date']
-                
+
                 instance = Order2.objects.get(public_id=order_id)
                 instance.delivery_status['service'] = "sdek"
                 instance.delivery_status['change_date'] = status_date
@@ -48,6 +65,14 @@ def sync_sdek_orders(pks):
                 instance.delivery_status['service_status_code'] = cdek_status_code
                 instance.delivery_status['status_code'] = cdek_status_code
                 instance.delivery_status['history'] = []
+
+                information_result = mapping.get(dispatch_number, None)
+                if information_result is not None:
+                    invoice_price = information_result.get('CashOnDelivFact', None)
+                
+                if invoice_price is not None:
+                    instance.delivery_status['sum'] = invoice_price
+
                 for snapshot in order['Status']['State']:
                     item = {
                         "change_date": snapshot['Date'],
@@ -58,6 +83,8 @@ def sync_sdek_orders(pks):
                     instance.delivery_status['history'].append(item)
                 if cdek_status_code == 4:
                     instance.state = "вручен"
+                elif cdek_status_code == 5:
+                    instance.state = "отказ"
                 instance.save()
 
     return errors
@@ -133,6 +160,8 @@ def sync_pickpoint_orders(pks):
             instance.delivery_status = item
             if instance.delivery_status['service_status_code'] == 111:
                 instance.state = 'вручен'
+            elif instance.delivery_status['status_code'] == 5:
+                instance.state = 'отказ'
             instance.save()
             count += 1
             
@@ -189,16 +218,20 @@ def sync_postal_orders(pks):
                 }
                 history.append(history_log_item)
             instance.delivery_status['history'] = history
+
+            if instance.delivery_status['status_code'] == 4:
+                instance.state = 'вручен'
+
             instance.save
 
 
-def sort_orders_by_delivery_service():
+def sort_orders_by_delivery_service(limit=500):
     sdek_orders_pks = []
     pickpoint_orders_pks = []
     postal_orders_pks = []
     unknown = []
     
-    qs = Order2.objects.all().order_by('-created_at')[500]
+    qs = Order2.objects.all().order_by('-created_at')[:limit]
     for instance in qs:
         if instance.data['delivery']['is_mod_selected']:
             delivery_type = instance.data['delivery']['mod']['type']

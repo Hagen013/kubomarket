@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Payments xmlns=”http://admitad.com/payments-revision>
+<Payments xmlns="http://admitad.com/payments-revision">
     {% for instance in orders %}
     <Payment>
         <OrderID>{{instance.public_id}}</OrderID>
-        <Status>2</Status>
-        <OrderAmount>1000</OrderAmount>
-        <Comment>Отказ при получении</Comment>
+        <Status>{{instance.cpa_admitad_status}}</Status>
+        <OrderAmount>{{instance.cpa_admitad_price}}</OrderAmount>
+        {% if instance.cpa_admitad_status == 2 %}
+        <Comment>{{instance.cpa_admitad_comment}}</Comment>
+        {% endif %}
     </Payment>
     {% endfor %}
 </Payments>

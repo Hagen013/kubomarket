@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.template.loader import render_to_string
 from django.utils.timezone import now, pytz
 from django.conf import settings
@@ -8,11 +10,17 @@ from config.celery import app
 from cart.models import Order2
 
 FILEPATH = settings.YML_PATH + "admitad.xml"
+how_many_days = 90
 
 
 @app.task
 def generate_admitad_file():
-    qs = Order2.objects.filter(cpa__contains={'networks': ['admitad',]})[:500]
+    qs = Order2.objects.filter(
+        cpa__contains={'networks': ['admitad',]}
+    ).filter(
+        created_at__gte=now()-timedelta(days=how_many_days)
+    )
+
     context = {
                 'orders': qs,
                }
@@ -27,7 +35,7 @@ def generate_admitad_file():
 
 
 app.add_periodic_task(
-    crontab(minute=0,  hour='*/6'),
+    crontab(minute=0,  hour='*/2'),
     generate_admitad_file.s(),
     name='generate_admitad_file',
 )

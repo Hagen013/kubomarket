@@ -199,7 +199,8 @@ CELERY_IMPORTS = (
     'tasks.tree',
     'tasks.delivery_sync',
     'tasks.inspect',
-    'tasks.warehouse'
+    'tasks.warehouse',
+    'tasks.admitad'
 )
 
 CELERY_QUEUES = (

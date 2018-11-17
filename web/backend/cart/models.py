@@ -138,7 +138,7 @@ class Order2(TimeStamped):
             "state_description": "",
             "service_status_code": None,
             "status_code": None,
-            "sum": 0,
+            "sum": None,
             "history": []
         }
     )
@@ -151,8 +151,9 @@ class Order2(TimeStamped):
             "dispatch_number": {"type": "string"},
             "state_description": {"type": "string"},
             "service_status_code": {"type": ["integer", "null"]},
+            "service_price": {"type": ["integer", "null"]},
             "status_code": {"type": ["integer", "null"]},
-            "sum": {"type": "number"},
+            "sum": {"type": ["number", "null"]},
             "history": {
                 "type": "array",
                 "items": {
@@ -225,8 +226,25 @@ class Order2(TimeStamped):
         ("выполнен", "Выполнен"),
         ("отменён", "Отменён"),
         ("отменён: недозвон", "Отменён: недозвон"),
-        ("вручен", "вручен")
+        ("вручен", "вручен"),
+        ("отказ", "Отказ")
     )
+
+    state_2_admitad_status_mapping = {
+        "вручен": 1,
+        "отменён": 2,
+        "отменён: недозвон": 2,
+        "недозвон": 2,
+        "отказ": 2
+    }
+
+    state_2_admitad_message_mapping = {
+        "отменён": "Отменен клиентом",
+        "отменён: недозвон": "Отменен по причине недозвона",
+        "недозвон": "Не удалось дозвониться",
+        "отказ": "Отказ при получении"
+    }
+
     state = models.CharField(
         max_length=100,
         verbose_name='Состояние заказа',
@@ -301,15 +319,28 @@ class Order2(TimeStamped):
 
     @property
     def cpa_admitad_price(self):
-        pass
+        invoice_price = self.delivery_status['sum']
+        cart_price = self.data['cart']['total_price']
+        if invoice_price is not None and invoice_price != 0:
+            if invoice_price < cart_price:
+                return invoice_price
+            else:
+                return cart_price
+        return cart_price
 
     @property
     def cpa_admitad_status(self):
-        pass
+        return self.state_2_admitad_status_mapping.get(
+            self.state, 0
+        )
+
 
     @property
     def cpa_admitad_comment(self):
-        pass
+        return self.state_2_admitad_message_mapping.get(
+            self.state,
+            ""
+        )
 
     def present_account(self):
         email = self.data.get('customer').get('email')

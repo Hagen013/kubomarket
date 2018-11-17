@@ -67,7 +67,6 @@ class Client(object):
             'xml_request': text_request
         }
         response = self._exec_request(url, payload, method='POST')
-        print(response.text)
         return self._parse_xml(response.text)
         
     def get_orders_statuses(self, orders, show_history=True):
