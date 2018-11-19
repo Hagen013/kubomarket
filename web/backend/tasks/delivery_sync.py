@@ -9,7 +9,9 @@ from delivery.cdek import Client as ClientSDEK
 from delivery.pickpoint import Client as ClientPickpoint
 from delivery.rupost import Client as ClientRupost
 from cart.serializers import OrderSerializer
-from cart.utils import pickpoint_to_cdek_code, rupost_to_cdek_code
+from cart.utils import (pickpoint_to_cdek_code,
+                        rupost_to_cdek_code,
+                        rupost_msg_to_code)
 
 
 @app.task
@@ -200,8 +202,9 @@ def sync_postal_orders(pks):
                 oper_attribute['Name']
             )
             instance.delivery_status['state_description'] = state_description
-            instance.delivery_status['service_status_code'] = oper_type['Id']
-            instance.delivery_status['status_code'] = rupost_to_cdek_code(oper_type['Id'])
+            code = rupost_msg_to_code(oper_attribute['Name'])
+            instance.delivery_status['service_status_code'] = code
+            instance.delivery_status['status_code'] = rupost_to_cdek_code(str(code))
             instance.delivery_status['change_date'] = oper_date
             instance.delivery_status['sum'] = invoice_sum
 
@@ -221,8 +224,10 @@ def sync_postal_orders(pks):
 
             if instance.delivery_status['status_code'] == 4:
                 instance.state = 'вручен'
+            elif instance.delivery_status['status_code'] == 5:
+                instance.state = 'отказ'
 
-            instance.save
+            instance.save()
 
 
 def sort_orders_by_delivery_service(limit=500):

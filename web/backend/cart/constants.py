@@ -7,5 +7,11 @@ PICKPOINT_TO_CDEK_STATUS_CODE_MAPPING = {
 }
 
 RUPOST_TO_CDEK_STATUS_CODE_MAPPING = {
-    "2": 4
+    "1": 4,
+    "2": 5
+}
+
+RUPOST_TEXT_TO_STATUS_MAPPING = {
+    "Вручение адресату": 1,
+    "Вручение отправителю": 2
 }

@@ -1,5 +1,6 @@
 from .constants import (PICKPOINT_TO_CDEK_STATUS_CODE_MAPPING,
-                        RUPOST_TO_CDEK_STATUS_CODE_MAPPING)
+                        RUPOST_TO_CDEK_STATUS_CODE_MAPPING,
+                        RUPOST_TEXT_TO_STATUS_MAPPING)
 
 
 def pickpoint_to_cdek_code(code):
@@ -13,3 +14,6 @@ def rupost_to_cdek_code(code):
         return code
     return cdek_code
 
+
+def rupost_msg_to_code(msg):
+    return RUPOST_TEXT_TO_STATUS_MAPPING.get(msg, 0)
