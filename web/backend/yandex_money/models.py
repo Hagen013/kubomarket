@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from uuid import uuid4
 
 import six
+import json
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -244,7 +245,7 @@ class Payment(models.Model):
                 items.append(instance)
 
         data['items'] = items
-        return str(data).replace("'", '"')
+        return str(json.dumps(data, ensure_ascii=False))
 
     def send_signals(self):
         status = self.status
