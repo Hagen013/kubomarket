@@ -245,11 +245,6 @@ class Payment(models.Model):
             items.append(instance)
 
         data['items'] = items
-        total = 0
-        for value in items:
-            price = value['price']['amount'] * value['quantity']
-            total += price
-            print(total)
         return str(json.dumps(data, ensure_ascii=False))
 
     def send_signals(self):
