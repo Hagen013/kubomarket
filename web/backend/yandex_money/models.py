@@ -234,17 +234,22 @@ class Payment(models.Model):
                 "text": item['name']
             }
             items.append(instance)
-            delivery_price = self.order.data['delivery']['mod']['price']
-            if delivery_price is not None:
-                instance = {
-                    "quantity": 1,
-                    "price": {"amount": delivery_price},
-                    "tax": 3,
-                    "text": "доставка"
-                }
-                items.append(instance)
+        delivery_price = self.order.data['delivery']['mod']['price']
+        if delivery_price is not None:
+            instance = {
+                "quantity": 1,
+                "price": {"amount": delivery_price},
+                "tax": 3,
+                "text": "доставка"
+            }
+            items.append(instance)
 
         data['items'] = items
+        total = 0
+        for value in items:
+            price = value['price']['amount'] * value['quantity']
+            total += price
+            print(total)
         return str(json.dumps(data, ensure_ascii=False))
 
     def send_signals(self):
