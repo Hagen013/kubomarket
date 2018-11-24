@@ -15,13 +15,14 @@ def notify_client(order_id):
     instance = Order2.objects.get(public_id=order_id)
     phone_code = "7"
     phone = phone_code + instance.data["customer"]["phone"]
-    message = "Уважаемый клиент, мы не смогли до вас дозвониться для подверждения заказа {public_id}".format(
+    message = "Уважаемый клиент, мы не смогли до вас дозвониться для подтверждения заказа {public_id}".format(
         public_id=order_id
     )
     sms = SMSMessage(
         phone=phone,
         message=message,
     )
+    sms.send()
 
     email = instance.data['customer']['email']
     if email != "":
