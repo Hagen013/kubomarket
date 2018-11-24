@@ -17,6 +17,7 @@ from core.utils import MailSender
 from cart.models import Order2
 from cart.serializers import OrderSerializer
 from tasks.receipts import generate_receipt
+from tasks.client_not_available import notify_client
 
 
 class OrderAPIView(APIView):
@@ -44,14 +45,22 @@ class OrderAPIView(APIView):
         self.check_user_permissions(request.user, instance)
         serializer = OrderSerializer(instance, data=request.data)
         if serializer.is_valid():
+            if serializer.validated_data['state'] == 'отменён: недозвон' and instance.state != serializer.validated_data['state']:
+                notify_client.delay(instance.public_id)
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     
 class OrderListAPIView(generics.ListAPIView):
 
-    queryset = Order2.objects.all().order_by('-created_at')
+    queryset = Order2.objects.all().order_by('_order', '-created_at')
     serializer_class = OrderSerializer
     pagination_class = LimitOffsetPagination
     permission_classes = (IsAdminUser,)
@@ -77,9 +86,8 @@ class OrderListAPIView(generics.ListAPIView):
         
 
     def get_queryset(self):
-        qs = Order2.objects.all()
-        qs = self.filter_queryset(qs)
-        return qs.order_by('-created_at')
+        qs = self.filter_queryset(self.queryset)
+        return qs
         
 
 class OrderPaymentsAPIView(APIView):

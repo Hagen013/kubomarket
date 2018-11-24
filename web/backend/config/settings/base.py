@@ -200,7 +200,8 @@ CELERY_IMPORTS = (
     'tasks.delivery_sync',
     'tasks.inspect',
     'tasks.warehouse',
-    'tasks.admitad'
+    'tasks.admitad',
+    'tasks.client_not_available'
 )
 
 CELERY_QUEUES = (

@@ -52,12 +52,13 @@
                             <label for="status">Статус</label>
                             <md-select v-model="order.state" name="status" id="status">
                                 <md-option value="новый">Новый</md-option>
-                                <md-option value="недозвон">Недозвон</md-option>
                                 <md-option value="доставка">Доставка</md-option>
+                                <md-option value="недозвон">Недозвон 1</md-option>
+                                <md-option value="недозвон 2">Недозвон 2</md-option>
+                                <md-option value="отменён: недозвон">Отменён: недозвон</md-option>
                                 <md-option value="выполнен">Выполнен</md-option>
                                 <md-option value="согласован">Согласован</md-option>
                                 <md-option value="отменён">Отменён</md-option>
-                                <md-option value="отменён: недозвон">Отменён: недозвон</md-option>
                                 <md-option value="вручен">Вручен</md-option>
                                 <md-option value="отказ">Отказ</md-option>
                             </md-select>
@@ -976,7 +977,7 @@
                 if (!value) return ''
                 value = value.toString()
                 return value.charAt(0).toUpperCase() + value.slice(1)
-            },
+            }
         },
         watch: {
             paymentsTriggered() {

@@ -231,6 +231,12 @@ class Order2(TimeStamped):
         ("отказ", "Отказ")
     )
 
+    STATE_ORDERING = {
+        "новый": 0,
+        "недозвон": 1,
+        "недозвон 2": 2,
+    }
+
     state_2_admitad_status_mapping = {
         "вручен": 1,
         "отменён": 2,
@@ -258,6 +264,7 @@ class Order2(TimeStamped):
         ('callback', 'Обратный звонок'),
         ('product-page', 'Страница товара')
     )
+
     source = models.CharField(
         max_length=128,
         verbose_name='Источник заказа',
@@ -286,6 +293,15 @@ class Order2(TimeStamped):
         blank=True,
         unique=True
     )
+
+    _order = models.IntegerField(
+        default=10,
+        verbose_name='порядок'
+    )
+
+    def get_order(self):
+        default_order = self._meta.get_field('_order').default
+        return self.STATE_ORDERING.get(self.state, default_order)
 
     def clean(self):
         try:
@@ -405,9 +421,7 @@ class Order2(TimeStamped):
         return "Заказ №{0}".format(str(self.public_id))
 
     def save(self, *args, **kwargs):
-        is_new = not self.id
-        if is_new:
-            self.assist_key = "".join((str(randint(0, 9)) for _ in range(128)))
+        self._order = self.get_order()
         super(Order2, self).save(*args, **kwargs)
 
 

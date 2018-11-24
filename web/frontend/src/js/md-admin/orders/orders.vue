@@ -159,7 +159,7 @@
                         <td class="table__cell table-cell--colored">
                             <div class="table__cell-container"
                             >
-                                {{order.state | capitalize}}
+                                {{order.state|stateFilter|capitalize}}
                             </div>
                         </td>
                         <td class="table__cell">
@@ -218,6 +218,7 @@
             orderStatusMap: {
                 'новый': 'table-row--new',
                 'недозвон': 'table-row--err',
+                'недозвон 2': 'table-row--err',
                 'доставка': 'table-row--done',
                 'выполнен': 'table-row--done',
                 'согласован': 'table-row--done',
@@ -278,26 +279,7 @@
                 return this.ordersCount < this.count;
             },
             sortedOrders() {
-                let newOrders = this.orders.filter(function(item) {
-                    if (item.state === "новый") {
-                        return true
-                    }
-                    return false
-                })
-                let remainingOrders = this.orders.filter(function(item) {
-                    if (item.state !== "новый") {
-                        return true
-                    }
-                    return false
-                })
-                newOrders = newOrders.sort(function(a,b) {
-                    return b.id - a.id
-                })
-                remainingOrders = remainingOrders.sort(function(a,b) {
-                    return b.id - a.id
-                })
-                let orders = remainingOrders + newOrders;
-                return newOrders.concat(remainingOrders)
+                return this.orders
             }
         },
         created() {
@@ -446,6 +428,12 @@
                 else {
                     return "картой при получении"
                 }
+            },
+            stateFilter(state) {
+                if (state === 'недозвон') {
+                    return 'недозвон 1'
+                }
+                return state
             }
         }
     }
