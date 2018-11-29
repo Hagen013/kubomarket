@@ -314,7 +314,7 @@
                 let imageOffset = mainImage.offsetTop;
                 let offset = window.pageYOffset;
                 let distance = imageOffset - offset +71;
-                console.log(imageOffset);
+                //console.log(imageOffset);
                 
                 if ( (distance <= 0) && (!this.mainImageFixed) ) {
                     this.mainImageFixed = true;
@@ -351,10 +351,10 @@
                 this.additionalImages.splice(index, 1);
                 this.$http.delete(apiURL).then(
                     response => {
-                        console.log(response);
+                        //console.log(response);
                     },
                     response => {
-                        console.log(response);
+                        //console.log(response);
                     }
                 );
                 this.renderGallery();

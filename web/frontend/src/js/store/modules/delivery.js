@@ -99,13 +99,13 @@ export default {
                     (response) => {
                         commit('getData', response.body);
                         commit('ready');
-                        console.log('Delivery inited');
+                        //console.log('Delivery inited');
                         resolve();
                     },
                     (response) => {
                         commit('clearData');
                         commit('notReady');
-                        console.log('Невозможно получить данные о доставке');
+                        //console.log('Невозможно получить данные о доставке');
                         reject();
                     });
             });

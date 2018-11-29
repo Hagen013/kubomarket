@@ -104,7 +104,7 @@
                 this.reviewCreated = true;
             },
             handleFailedResponse(response) {
-                console.log(response);
+                //console.log(response);
                 this.responseError = true;
             },
             hide() {

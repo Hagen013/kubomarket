@@ -11,7 +11,6 @@ var faqController = new Vue({
     methods: {
         showItemContent() {
             let element = event.target.parentElement;
-            console.log(element);
             element.classList.toggle('accordion__item_active')
         }
     },

@@ -2,6 +2,7 @@ import { Vue } from "../../vue.js"
 
 import store from "../../store"
 import priceFilter from "./components/priceFilter.vue"
+import filterItem from "./components/filterItem.vue"
 
 import getParameterByName from "../../core/getParameterByName"
 import updateQueryString from "../../core/updateQueryString"
@@ -33,7 +34,21 @@ var catalog = new Vue({
         showFilters: false
     },
     components: {
-        "price-filter": priceFilter
+        "price-filter": priceFilter,
+        "filter-item": filterItem
+    },
+    beforeCreate() {
+        let nodeValues = NODE_VALUES.replace(/&#34;/g, '"');
+        nodeValues = JSON.parse(nodeValues);
+        for (let i=0; i<nodeValues.length; i++) {
+            let item = nodeValues[i];
+            let payload = {
+                "key": item.key,
+                "value": item.id
+            }
+            this.$store.commit("facetes/addActiveOption", payload);
+            this.$store.commit("facetes/addBaseOption", payload);
+        }
     },
     created() {
         this.checkUserStatus();

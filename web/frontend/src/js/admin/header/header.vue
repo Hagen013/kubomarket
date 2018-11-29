@@ -19,7 +19,7 @@
         },
         methods: {
             showNavigation() {
-                console.log('Show navigation triggered');
+                //console.log('Show navigation triggered');
             }
         }
     }

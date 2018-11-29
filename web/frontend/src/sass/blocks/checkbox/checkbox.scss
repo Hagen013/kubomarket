@@ -1,0 +1,85 @@
+.checkbox__label {
+    transition: 0.2s
+}
+
+.checkbox,.radio {
+    display: none
+}
+
+.checkbox-custom,.radio-custom {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    position: relative
+}
+
+.checkbox-custom, .radio-custom, .checkbox__label {
+    display: inline-block;
+    vertical-align: middle
+}
+
+.checkbox:checked+.checkbox-custom::before,.radio:checked+.radio-custom::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    bottom: 2px;
+    left: 2px;
+    background: #413548
+}
+
+.checkbox:checked .checkbox-custom {
+    border: none
+}
+
+.checkbox {
+    display: none
+}
+
+.checkbox-custom {
+    position: relative;
+    width: 15px;
+    height: 15px;
+    border: 1px solid  #b4c2cc;
+    background: #fff;
+    cursor: pointer
+}
+
+.checkbox-custom_disabled {
+    background:#eeeeee
+}
+
+.checkbox-custom, .checkbox__label {
+    margin-right: 8px;
+    padding-top: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer
+}
+
+.checkbox:checked+.checkbox-custom::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: -1px;
+    right: 0px;
+    bottom: 0px;
+    left: -1px;
+    width: 14px;
+    height: 14px;
+    background-size: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 10px;
+    background-color: $green;
+    background-image: url("../img/icon/confirm.svg")
+}
+
+.checkbox__wrap:hover {
+    color: $green;
+}
+
+.checkbox__wrap_disabled:hover{
+    color: inherit
+}

@@ -42,11 +42,11 @@ export default {
     actions: {
         initCart({ state, commit, dispatch }, payload) {
             return new Promise((resolve, reject) => {
-                console.log('initCart');
+                //console.log('initCart');
                 if(!state.isDataInited){
                     return dispatch('syncCart').then(resolve, reject);
                 }else{
-                    console.log('Cart already inited');
+                    //console.log('Cart already inited');
                     resolve();
                 }
             });
@@ -60,7 +60,7 @@ export default {
                         //колбэк успеха
                         commit('getData', response.body)
                         commit('ready');
-                        console.log('initCart inited');                        
+                        //console.log('initCart inited');                        
                         resolve();
                     },
                     response => {
