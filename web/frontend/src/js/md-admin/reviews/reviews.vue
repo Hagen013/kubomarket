@@ -166,9 +166,6 @@
                 this.getReviews();
             },
             getReviews() {
-                console.log(this.offset);
-                console.log(this.limit);
-                console.log(this.apiListUrl);
                 this.$http.get(this.apiListUrl).then(
                     response => {
                         this.handleSuccessfulGetListApiResponse(response);
@@ -197,7 +194,6 @@
                 this.getReviews();
             },
             select(review) {
-                console.log(review);
                 let path = `/reviews/${review.id}`;
                 this.$router.push({path: path});
             }

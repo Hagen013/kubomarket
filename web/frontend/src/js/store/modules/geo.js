@@ -52,7 +52,7 @@ export default {
                                 }
                             );
                             commit('ready');
-                            console.log('initCart finish');                                                    
+                            //console.log('initCart finish');                                                    
                             resolve();
                         } else {
                             reject();

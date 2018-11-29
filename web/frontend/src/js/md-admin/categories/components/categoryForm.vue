@@ -366,19 +366,19 @@
                 this.processCategory(response.body);
             },
             handleFailedCreateCategoryResponse(response) {
-                console.log(response);
+                //console.log(response);
             },
             handleSuccessfulUpdateCategoryResponse(response) {
                 this.processCategory(response.body);
             },
             handleFailedUpdateCategoryResponse(response) {
-                console.log(response);
+                //console.log(response);
             },
             handleSuccessfulDeleteCategoryResponse(response) {
                 this.$router.go(-1);
             },
             handleFailedDeleteCategoryResponse(response) {
-                console.log(response);
+                //console.log(response);
             },
         },
         watch: {

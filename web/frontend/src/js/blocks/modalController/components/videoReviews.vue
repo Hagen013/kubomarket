@@ -134,7 +134,7 @@ export default {
             this.getReviews();
         },
         handleFailedPostResponse(response) {
-            console.log(response);
+            //console.log(response);
         },
         handleSuccessfulDeleteResponse(response) {
             this.getReviews();

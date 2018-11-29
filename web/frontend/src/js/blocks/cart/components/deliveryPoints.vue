@@ -38,7 +38,7 @@ export default {
             return delivery_code == this.selectedItemCode;
         },
         pointSelected({code, type}) {
-            console.log(code, type);
+            //console.log(code, type);
             this.$emit('pointSelected', {code, type});
         },
     },
