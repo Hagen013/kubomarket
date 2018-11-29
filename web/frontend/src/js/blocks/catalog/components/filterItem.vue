@@ -145,7 +145,7 @@ export default {
                 let primaryOptions = this.options.filter(function(item) {
                     return self.primarySortedIds.indexOf(item.id) !== -1
                 }).sort(function(a,b) {
-                    return b.count = a.count
+                    return b.count - a.count
                 });
                 let secondaryOptions = this.options.filter(function(item) {
                     return self.primarySortedIds.indexOf(item.id) === -1
@@ -261,15 +261,24 @@ export default {
                     value = 0;
                 }
                 this.options[i]['count'] = value;
+                if (key === 93) {
+                    console.log(value);
+                    console.log(this.options[i]['count']);
+                }
             }
             this.defaultOptions = this.options.slice();
             this.displayPlaceholder = false;
             this.apiResponseReceived = true;
+            for (let i=0; i<this.options.length; i++) {
+                let key = this.options[i]['id'];
+                if (key === 93) {
+                    console.log(this.options[i]['count']);
+                }
+            }
         },
         handleFailedResponse(response) {
             this.apiResponseReceived = true;
             this.displayPlaceholder = true;
-            console.log('request failed');
         },
         handleOptionsChange(option, pk) {
             let payload = {

@@ -29,7 +29,6 @@ export default {
                     state.active[key].push(value);
                 }
             }
-            console.log(state.active['key']);
 
             if (state.removedBase[key] !== undefined) {
                 let index = state.removedBase[key].indexOf(value);

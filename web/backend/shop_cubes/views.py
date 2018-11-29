@@ -171,7 +171,7 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
             queryset=qs
         ).qs
 
-        return qs
+        return qs.distinct()
 
     def get_queryset(self, *args, **kwargs):
         sorting_option = self.request.GET.get('sort_by')
