@@ -18,6 +18,8 @@ import deliveryMap from './modules/deliveryMap.js';
 import mobileMenu from './modules/mobileMenu'
 import mobileCatalog from './modules/mobileCatalog'
 
+import facetes from './modules/facetes'
+
 export default new Vuex.Store({
     modules: {
         showModalCallback: showModal,
@@ -37,7 +39,7 @@ export default new Vuex.Store({
         customer: customer,
         admin: admin,
         payment: payment,
-
+        facetes: facetes,
         mobileMenu: mobileMenu,
         mobileCatalog: mobileCatalog,
         deliveryMap: deliveryMap

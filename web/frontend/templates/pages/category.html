@@ -48,6 +48,24 @@
                             </price-filter>
                         </div>
                     </div>
+
+                    <div class="filters__facetes">
+                        {% for item in filters %}
+                            <div class="filter-item__wrap">
+                                <filter-item
+                                    title="{{item.name}}"
+                                    pk="{{item.name}}"
+                                    slug="{{item.key}}"
+                                    values="{{item.values_json}}"
+                                >
+                                    <div class="filter-item__btn-content">
+                                        {{item.name}}
+                                    </div>
+                                </filter-item>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                 </div>
             </div>
             <div class="catalog__nav">
@@ -80,6 +98,7 @@
                     </div>
                 </div>
             </div>
+
             {% if products|length > 0 %}
             <div class="gallery catalog__gallery">
                 {% for product in products %}
@@ -210,6 +229,7 @@
         var categoryId = {{category.id}};
         var hasBeenFiltered = {{has_been_filtered|lower}};
         var userAdminStatus = {{user_status | lower}};
+        var NODE_VALUES = '{{node_values}}'
     </script>
     <script src="{{ static('js/categoryPage.js') }}"></script>
     <script type="application/ld+json">

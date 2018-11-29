@@ -2,12 +2,15 @@
     display: flex;
     align-items: center;
     height: 70px;
-    margin-bottom: 16px;
     padding: 0px 16px;
     font-size: 14px;
-    border: 2px solid $border;
+    border-top: 2px solid $border;
+    border-bottom: 2px solid $border;
     @include mq($from: tablet) {
         height: 50px;
+    }
+    @include mq($from: desktop) {
+        margin-bottom: 66px;
     }
 }
 

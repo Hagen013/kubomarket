@@ -1,14 +1,16 @@
 from functools import wraps
 from unidecode import unidecode
-
-import requests
+import urllib.parse
 from hashlib import md5
 
-from django.conf import settings
+import requests
 
+from django.conf import settings
+from django.urls import reverse
 from django.template.defaultfilters import slugify as dj_slugify
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+from django.http import HttpResponseRedirect
 
 EMAIL_REPLY_TO = "info@kubomarket.ru"
 
@@ -88,3 +90,16 @@ class SMSMessage():
         }
         response = requests.get(url=settings.SMS_URL, params=payload)
         return response
+
+
+def custom_redirect(url_name, *args, **kwargs):
+    url = reverse(url_name, args=args)
+    params = list(
+        map(lambda x: "{key}={values}".format(
+            key=x,
+            values=",".join([str(i) for i in kwargs[x]])),
+            kwargs.keys()
+        )
+    )
+    params = '&'.join(params)
+    return HttpResponseRedirect(url + "?%s" % params)
