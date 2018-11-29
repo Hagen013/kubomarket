@@ -145,7 +145,7 @@ class CubesCategoryPageView(DiggPaginatorViewMixin, ListView):
 
         if len(fields) > 0:
             for key, values in queryparams.items():
-                if key not in self.nonfilter_options:
+                if key in self.attrs_set:
                     values = values.split(",")
                     values = list(map(lambda x: int(x), values))
                     queryparams[key] = values
