@@ -319,6 +319,8 @@ export default {
                 queryString = removeQueryParameter(queryString, key);
             }
 
+            //queryString = removeQueryParameter(queryString, "page")
+
             for (let key in this.activeFacetesProxy) {
                 let values = [];
                 let self = this;
