@@ -183,14 +183,17 @@ def sync_postal_orders(pks):
     client = ClientRupost(settings.RUPOST_USER, settings.RUPOST_PASSWORD)
     for instance in qs:
         service = instance.delivery_status['service']
-        if service == "rupost":
-            dispatch_number = instance.delivery_status['dispatch_number']
+        # if service == "rupost":
+    
+        dispatch_number = instance.delivery_status['dispatch_number']
+        if len(dispatch_number) > 0:
             tracking_history = client.get_operation_history(dispatch_number)
 
             finance_parameters_list = list(map(lambda x: x['FinanceParameters'], tracking_history))
             finance_parameters_list = list(filter(lambda x: x['Payment'] is not None, finance_parameters_list))
             invoice_sum = finance_parameters_list[0]['Payment']
-            invoice_sum = float(str(invoice_sum)[:-2])
+            if int(invoice_sum) != 0:
+                invoice_sum = float(str(invoice_sum)[:-2])
 
             last_state = tracking_history[-1]
             operation_parameters = last_state['OperationParameters']
@@ -255,6 +258,7 @@ def sort_orders_by_delivery_service(limit=500):
                     sdek_orders_pks.append(instance.public_id)
             else:
                 # Unknown delivery_type
+                postal_orders_pks.append(instance.public_id)
                 unknown.append(pk)
     return {
         "sdek": sdek_orders_pks,
