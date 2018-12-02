@@ -55,7 +55,7 @@ class Attribute(Named, Describable, Orderable):
     )
 
     is_default_filter = models.BooleanField(
-        default=True,
+        default=False,
         db_index=True,
         verbose_name="фильтр по умолчанию"
     )
