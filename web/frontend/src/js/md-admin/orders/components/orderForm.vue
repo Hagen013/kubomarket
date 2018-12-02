@@ -1035,7 +1035,7 @@
                 if (storeItem === undefined) {
                     return false
                 }
-                return storeItem.amount > cartItem['quantity']
+                return storeItem.amount >= cartItem['quantity']
             },
             computedAvailavilityClass(status) {
                 if (this.storeAvailabilityStatus === 0) {
@@ -1252,7 +1252,7 @@
     }
     .availability_some {
         border-color: #FFD600 !important;
-        background-color: #FFFDE7;
+        background-color: #FFF9C4;
     }
     .availability_none {
         border-color: #E53935;
