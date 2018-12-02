@@ -359,13 +359,16 @@ class Order2(TimeStamped):
     @property
     def cpa_admitad_price(self):
         invoice_price = self.delivery_status['sum']
-        cart_price = self.data['cart']['total_price']
-        if invoice_price is not None and invoice_price != 0:
+        cart_price = int(self.data['cart']['total_price'])
+        if invoice_price is not None:
+            invoice_price = int(invoice_price)
             if invoice_price < cart_price:
                 return invoice_price
             else:
                 return cart_price
-        return cart_price
+        else:
+            return cart_price
+
 
     @property
     def cpa_admitad_status(self):
