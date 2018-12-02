@@ -206,6 +206,27 @@ class Order2(TimeStamped):
         }
     }
 
+    store = JSONField(
+        default=[]
+    )
+
+    STORE_JSONSCHEMA = {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "vendor_code": {"type": "string"},
+                "amount": {"type": "integer"},
+                "stored": {"type": "boolean"}
+            },
+            "required": [
+                "vendor_code",
+                "amount",
+                "stored"
+            ]
+        }
+    }
+
     manager_notes = models.TextField(
         max_length=2000,
         verbose_name='Служебные заметки',
@@ -308,6 +329,7 @@ class Order2(TimeStamped):
             jsonschema_validate(self.data, self.ORDER_DATA_JSONSCHEMA)
             jsonschema_validate(self.delivery_status, self.DELIVERY_DATA_JSONCHEMA)
             jsonschema_validate(self.cpa, self.ORDER_CPA_JSONSCHEMA)
+            jsonschema_validate(self.store, self.STORE_JSONSCHEMA)
         except JsonSchemaValidationError as e:
             raise ValidationError(message=e.message)
 

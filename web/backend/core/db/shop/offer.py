@@ -47,6 +47,18 @@ class BaseOffer(models.Model):
         verbose_name='Производитель'
     )
 
+    # хранится ли на складе в принципе
+    stored = models.BooleanField(
+        verbose_name='был закуплен',
+        default=False
+    )
+
+    #
+    amount = models.PositiveIntegerField(
+        verbose_name='количество на складе',
+        default=0
+    )
+
     is_in_stock = models.BooleanField(
         default=False,
         verbose_name='В наличии'

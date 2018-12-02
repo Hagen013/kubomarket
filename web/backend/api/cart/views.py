@@ -12,6 +12,8 @@ from cart.models import Order, OrderItem, Order2
 from core.db.shop import OfferIdentifier
 
 from cart.serializers import OrderSerializer
+from shop_cubes.serializers import CubesProductCardStoreSerializer
+from shop_cubes.models import CubesProductCard
 from tasks.sms_notifications import sms_notify
 from tasks.mail_notifications import mail_notify
 
@@ -91,6 +93,12 @@ class CartDetalItemAPIView(BaseCartAPIView):
 
 class CartMakeOrderAPIView(BaseCartAPIView):
 
+    def get_store_data(self, order):
+        codes = list(map(lambda x: x['vendor_code'], order.data['cart']['items'].values()))
+        qs = CubesProductCard.objects.filter(vendor_code__in=codes)
+        serializer = CubesProductCardStoreSerializer(qs, many=True)
+        return serializer.data
+
     def post(self, request, format=None):
 
         order_data = request.data['data']
@@ -128,6 +136,8 @@ class CartMakeOrderAPIView(BaseCartAPIView):
         cpa = request.data.get('cpa', None)
         if cpa is not None:
             order.cpa = cpa
+        
+        order.store = self.get_store_data(order)
 
         id_unique = False
         for i in range(100):

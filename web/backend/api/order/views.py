@@ -15,12 +15,17 @@ from yandex_money.serializers import PaymentSerializer
 
 from core.utils import MailSender
 from cart.models import Order2
-from cart.serializers import OrderSerializer
+from cart.serializers import OrderSerializer, OrderPrivateSerializer
 from tasks.receipts import generate_receipt
 from tasks.client_not_available import notify_client
 
 
 class OrderAPIView(APIView):
+
+    def get_serializer_class(self):
+        if self.request.user.is_staff:
+            return OrderPrivateSerializer
+        return OrderSerializer
 
     def check_user_permissions(self, user, instance):
         if not user.is_authenticated:
@@ -34,7 +39,8 @@ class OrderAPIView(APIView):
         except Order2.DoesNotExist:
             raise Http404
         self.check_user_permissions(request.user, instance)
-        serializer = OrderSerializer(instance)
+        serializer_class = self.get_serializer_class()
+        serializer = serializer_class(instance)
         return Response(serializer.data)
 
     def put(self, request, uuid, *args, **kwargs):
@@ -43,7 +49,8 @@ class OrderAPIView(APIView):
         except Order2.DoesNotExist:
             raise Http404
         self.check_user_permissions(request.user, instance)
-        serializer = OrderSerializer(instance, data=request.data)
+        serializer_class = self.get_serializer_class()
+        serializer = serializer_class(instance, data=request.data)
         if serializer.is_valid():
             if serializer.validated_data['state'] == 'отменён: недозвон' and instance.state != serializer.validated_data['state']:
                 notify_client.delay(instance.public_id)
@@ -60,10 +67,15 @@ class OrderAPIView(APIView):
     
 class OrderListAPIView(generics.ListAPIView):
 
-    queryset = Order2.objects.all().order_by('_order', '-created_at')
     serializer_class = OrderSerializer
+    private_serializer_class = OrderPrivateSerializer
     pagination_class = LimitOffsetPagination
     permission_classes = (IsAdminUser,)
+
+    def get_serializer_class(self):
+        if self.request.user.is_staff:
+            return self.private_serializer_class
+        return self.serializer_class
 
     def filter_queryset(self, qs):
         params = self.request.query_params
@@ -86,7 +98,8 @@ class OrderListAPIView(generics.ListAPIView):
         
 
     def get_queryset(self):
-        qs = self.filter_queryset(self.queryset)
+        qs = Order2.objects.all().order_by('_order', '-created_at')
+        qs = self.filter_queryset(qs)
         return qs
         
 

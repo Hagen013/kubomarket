@@ -3,6 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 
 from core.serializers import (ProductCardSerializer,
+                              ProductCardStoreSerializer,
                               CategoryNodeSerializer,
                               CategoryNodeInputRelationSerializer,
                               CategoryNodeAdditionalRelationSerializer,
@@ -27,6 +28,12 @@ from users.serializers import UserSerializer
 class CubesProductCardSerializer(ProductCardSerializer):
 
     class Meta(ProductCardSerializer.Meta):
+        model = CubesProductCard
+
+
+class CubesProductCardStoreSerializer(ProductCardStoreSerializer):
+
+    class Meta(ProductCardStoreSerializer.Meta):
         model = CubesProductCard
 
 

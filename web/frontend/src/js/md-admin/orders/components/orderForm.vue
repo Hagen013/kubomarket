@@ -136,28 +136,40 @@
                             v-on:item-selected="addItemToCart"
                         >
                         </search-field>
+                        <div class="availability"
+                            :class="computedAvailavilityClass(storeAvailabilityStatus)"
+                        >
+                            {{availabilityText}}
+                        </div>
                         <md-list>
                             <div class="cart-item md-elevation-2"
                                 v-for="(item, key) of cartItems"
                                 :data="item"
                                 :key="item['url']"
                             >
-                                <div class="cart-item-image">
-                                    <img :src="item['image']">
+                                <div class="cart-item-main">
+                                    <div class="cart-item-image">
+                                        <img :src="item['image']">
+                                    </div>
+                                    <div class="cart-item-content">
+                                        <a class="cart-item-link" :href="item['url']">
+                                            {{item['name']}}
+                                        </a>
+                                        <div class="cart-item-code">
+                                            {{item['vendor_code']}}
+                                        </div>
+                                        <div class="cart-item-price">
+                                            {{item['price']}} ₽ x {{item['quantity']}} = {{item['total_price']}} ₽
+                                        </div>
+                                        <div class="cart-item-quantity">
+                                            {{item['quantity']}} шт.
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="cart-item-content">
-                                    <a class="cart-item-link" :href="item['url']">
-                                        {{item['name']}}
-                                    </a>
-                                    <div class="cart-item-code">
-                                        {{item['vendor_code']}}
-                                    </div>
-                                    <div class="cart-item-price">
-                                        {{item['price']}} ₽ x {{item['quantity']}} = {{item['total_price']}} ₽
-                                    </div>
-                                    <div class="cart-item-quantity">
-                                        {{item['quantity']}} шт.
-                                    </div>
+                                <div class="cart-item-availability"
+                                    :class="cartItemAvailAbility(item)['class']"
+                                >
+                                    {{cartItemAvailAbility(item)['text']}}
                                 </div>
 
                                 <md-button class="md-icon-button md-list-action delete-button"
@@ -671,7 +683,7 @@
                 return this.order.data.customer.email !== ""
             },
             hasOrders() {
-                if (this.user !== null) {
+                if ((this.user !== null) && (this.orders !== undefined)) {
                     return this.orders.length > 0
                 }
                 return false
@@ -689,6 +701,56 @@
                     return `/api/order/${this.order.id}/receipt/`
                 }
                 return ""
+            },
+            storeAvailabilityMapping() {
+                if ( (this.order !== null) && (this.order.store.length > 0) ) {
+                    let mapping = {}
+                    for (let i=0; i<this.order.store.length; i++) {
+                        let item = this.order.store[i];
+                        mapping[item['vendor_code']] = item
+                    }
+                    return mapping
+                }
+                return {}
+            },
+            storeAvailabilityStatus() {
+                if (this.order !== null) {
+                    if (this.order.store.length === 0) {
+                        return 3
+                    } else {
+                        let hasEvery = true;
+                        let hasSome = false;
+                        for (let key in this.cartItems) {
+                            let item = this.cartItems[key];
+                            let isStored = this.isStored(item);
+                            let isEnough = this.isEnoughInStore(item);
+                            if ( isStored && isEnough ) {
+                                hasSome = true;
+                            } else {
+                                hasEvery = false
+                            }
+                        }
+                        if (hasEvery) {
+                            return 0
+                        } else if (hasSome) {
+                            return 1
+                        } else {
+                            return 2
+                        }
+                    }
+                }
+                return 3
+            },
+            availabilityText() {
+                if (this.storeAvailabilityStatus === 0) {
+                    return "Все товары в наличии на складе"
+                } else if (this.storeAvailabilityStatus === 1) {
+                    return "Не все товары в наличии на складе"
+                } else if (this.storeAvailabilityStatus === 2) {
+                    return "Товаров нет на складе"
+                } else {
+                    return "Наличие на складе неизвестно"
+                }
             }
         },
         methods: {
@@ -960,7 +1022,65 @@
             },
             downloadReceipt() {
                 downloadFile(this.receiptUrl, 'receipt.pdf')
-            }
+            },
+            isStored(cartItem) {
+                let storeItem = this.storeAvailabilityMapping[cartItem['vendor_code']];
+                if (storeItem === undefined) {
+                    return false
+                }
+                return storeItem.stored
+            },
+            isEnoughInStore(cartItem) {
+                let storeItem = this.storeAvailabilityMapping[cartItem['vendor_code']];
+                if (storeItem === undefined) {
+                    return false
+                }
+                return storeItem.amount > cartItem['quantity']
+            },
+            computedAvailavilityClass(status) {
+                if (this.storeAvailabilityStatus === 0) {
+                    return "availability_all"
+                } else if (this.storeAvailabilityStatus === 1) {
+                    return "availability_some"
+                } else if (this.storeAvailabilityStatus === 2) {
+                    return "availability_none"
+                } else {
+                    return "availability_unknown"
+                }
+            },
+            cartItemAvailAbility(cartItem) {
+                let statusClass = "availability_unknown";
+                let statusText = "неизвестно";
+                let storeItem = this.storeAvailabilityMapping[cartItem['vendor_code']];
+                if (storeItem !== undefined) {
+                    if (storeItem.stored !== false) {
+                        let storedQuanity = storeItem.amount;
+                        console.log(cartItem);
+                        console.log(requiredQuanity);
+                        let requiredQuanity = cartItem['quantity'];
+                        if (storedQuanity >= requiredQuanity) {
+                            return {
+                                "text": `${requiredQuanity}/${storedQuanity}`,
+                                "class": "availability_all"
+                            }
+                        } else {
+                            return {
+                                "text": `${requiredQuanity}/${storedQuanity}`,
+                                "class": "availability_some"
+                            }
+                        }
+                    } else {
+                        return {
+                            "text": "нет на складе",
+                            "class": "availability_none"
+                        }
+                    }
+                }
+                return {
+                    "text": statusText,
+                    "class": statusClass
+                }
+            },
         },
         filters: {
             dataFilter(dataString) {
@@ -1000,17 +1120,17 @@
     }
     .decrement-button {
         position: absolute;
-        bottom: 8px;
+        bottom: 28px;
         right: 80px;
     }
     .increment-button {
         position: absolute;
-        bottom: 8px;
+        bottom: 28px;
         right: 40px;
     }
     .delete-button {
         position: absolute;
-        bottom: 8px;
+        bottom: 28px;
         right: 0px;
     }
     .total-price {
@@ -1027,11 +1147,14 @@
 
     .cart-item {
         position: relative;
-        display: flex;
-        height: 104px;
-        width: 100%;
-        padding: 8px 0px 6px 8px;
         margin-bottom: 16px;
+    }
+
+    .cart-item-main {
+        display: flex;
+        height: 126px;
+        width: 100%;
+        padding: 8px 0px 8px 8px;
     }
 
     .cart-item-image {
@@ -1043,6 +1166,15 @@
             height: 100%;
             width: auto;
         }
+    }
+
+    .cart-item-availability {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+        font-weight: 900;
     }
 
     .cart-item-content {
@@ -1101,6 +1233,34 @@
     }
     .mail-text {
         margin: 16px 0px !important;
+    }
+    .availability {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 900;
+        font-size: 16px;
+        padding: 24px;
+        width: 100%;
+        border-radius: 6px;
+        border: 3px solid #9E9E9E;
+        background-color: #FAFAFA !important;
+    }
+    .availability_all {
+        border-color:  #69F0AE !important;
+        background-color: #69F0AE;
+    }
+    .availability_some {
+        border-color: #FFD600 !important;
+        background-color: #FFFDE7;
+    }
+    .availability_none {
+        border-color: #E53935;
+        background-color: #FFCDD2;
+    }
+    .availability_unknown {
+        border-color: #9E9E9E;
+        background-color: #FAFAFA;
     }
 
     .fade {

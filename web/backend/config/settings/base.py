@@ -201,7 +201,8 @@ CELERY_IMPORTS = (
     'tasks.inspect',
     'tasks.warehouse',
     'tasks.admitad',
-    'tasks.client_not_available'
+    'tasks.client_not_available',
+    'tasks.store'
 )
 
 CELERY_QUEUES = (
@@ -320,3 +321,9 @@ YANDEX_MONEY_SHOP_PASSWORD=env('YANDEX_MONEY_SHOP_PASSWORD')
 YANDEX_MONEY_FAIL_URL=env('YANDEX_MONEY_FAIL_URL')
 YANDEX_MONEY_SUCCESS_URL=env('YANDEX_MONEY_SUCCESS_URL')
 YANDEX_MONEY_MAIL_ADMINS_ON_PAYMENT_ERROR=env('YANDEX_MONEY_MAIL_ADMINS_ON_PAYMENT_ERROR')
+
+
+# SMS NOTIFICATIONS
+# ------------------------------------------------------------------------------
+STORE_LOGIN = env("DJANGO_STORE_LOGIN")
+STORE_PASSWORD = env("DJANGO_STORE_PASSWORD")

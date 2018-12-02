@@ -55,6 +55,17 @@ class ProductCardSerializer(DynamicFieldsModelSerializer):
         )
 
 
+class ProductCardStoreSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ProductCard
+        fields = (
+            'vendor_code',
+            'amount',
+            'stored'
+        )
+
+
 class CategoryNodeInputRelationSerializer(serializers.Serializer):
 
     input_node = serializers.IntegerField(source='input_node.id')
