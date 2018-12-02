@@ -4,7 +4,7 @@ from django.db import models, transaction, IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 from mptt.models import MPTTModel, TreeForeignKey, TreeManager
 
-from ..db import WebPage, DisplayableManager, Named, Describable, TimeStamped
+from ..db import WebPage, DisplayableManager, Named, Describable, TimeStamped, Orderable
 from ..db.base.fields import DisplayableURLField
 from ..utils import disallowed_before_creation, DisallowedBeforeCreationException
 
@@ -29,9 +29,6 @@ class NodeManager(TreeManager):
             old_url = node.url
             new_url = node.get_graph_url()
 
-            if node.id == 262:
-                print(new_url)
-        
             stored_node_exists = False
             try:
                 stored_node = self.get_queryset().get(url=new_url)
@@ -113,7 +110,7 @@ class NodePublicManager(NodeManager, DisplayableManager):
         raise Exception('NodePublicManager has no permission to use rebuild() method')
 
 
-class CategoryNode(MPTTModel, WebPage, Named):
+class CategoryNode(MPTTModel, WebPage, Named, Orderable):
 
     class Meta:
         abstract = True

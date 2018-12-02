@@ -12,6 +12,4 @@ class UsersMatch(permissions.BasePermission):
     def has_permission(self, request, view):
         data = request.data
         user = request.user
-        print(data)
-        print(user)
         return True

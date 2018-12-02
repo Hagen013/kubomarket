@@ -260,7 +260,6 @@ class IndexPage(TemplateView):
         context['bestsellers'] = self.get_bestsellers()
         context['recomended'] = self.get_recomended()
         last_bought = self.get_recently_bought()
-        print(last_bought)
         if len(last_bought) < 6:
             context['last_bought'] = context['bestsellers']
         else:

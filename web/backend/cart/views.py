@@ -22,7 +22,6 @@ class PaymentPageView(TemplateView):
     model = Payment
 
     def get_payment(self, uuid):
-        print(uuid)
         try:
             instance = self.model.objects.get(uuid=uuid)
             if instance.is_expired:

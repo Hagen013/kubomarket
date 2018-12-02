@@ -230,7 +230,6 @@ class SubscribesAPIView(APIView):
         try:
             subscribe.full_clean()
         except ValidationError:
-            print('vali')
             return Response(
                 status=status.HTTP_400_BAD_REQUEST
             )
