@@ -10,6 +10,9 @@
         height: 50px;
     }
     @include mq($from: desktop) {
+        margin-bottom: 104px;
+    }
+    @include mq($from: wide) {
         margin-bottom: 66px;
     }
 }

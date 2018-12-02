@@ -21,7 +21,7 @@ def generate_static_navigation():
         "name": "Стандартные кубы",
         "id": node.id,
         "href": node.url,
-        "childs": node.childs.all().order_by("scoring")
+        "childs": node.childs.all().order_by("order")
     })
     childs = nav_nodes[-1]["childs"]
     childs = [child for child in childs if child.products.filter(is_in_stock=True).count() > 0]
