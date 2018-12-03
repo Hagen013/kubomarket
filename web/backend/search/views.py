@@ -140,9 +140,7 @@ class SearchResultsView(ElastiListView):
     def get_search_body(self):
         if self.request.user.is_staff:
             return generate_from_private_pattern(self.client_query)
-        print('non staff')
         pattern = generate_from_pattern(self.client_query)
-        print(pattern)
         return generate_from_pattern(self.client_query)
 
 
