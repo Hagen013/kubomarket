@@ -17,7 +17,7 @@ from core.utils import MailSender
 from cart.models import Order2
 from cart.serializers import OrderSerializer, OrderPrivateSerializer
 from tasks.receipts import generate_receipt
-from tasks.client_not_available import notify_client
+from tasks.client_not_available import notify_client, send_rupost_id
 
 
 class OrderAPIView(APIView):
@@ -52,8 +52,21 @@ class OrderAPIView(APIView):
         serializer_class = self.get_serializer_class()
         serializer = serializer_class(instance, data=request.data)
         if serializer.is_valid():
+            
+            # Уведомление о недозвоне:
             if serializer.validated_data['state'] == 'отменён: недозвон' and instance.state != serializer.validated_data['state']:
                 notify_client.delay(instance.public_id)
+            # --
+
+            # Уведомление о почтовом идентификаторе:
+            service = instance.data['delivery']['mod']['type']
+            dispatch_number = serializer.validated_data['delivery_status']['dispatch_number']
+            stored_dispatch_number = instance.delivery_status['dispatch_number']
+            if service == 'postal_service':
+                if (dispatch_number != stored_dispatch_number) and (len(dispatch_number) > 0):
+                    send_rupost_id.delay(instance.public_id, dispatch_number)
+            # --
+
             serializer.save()
             return Response(
                 serializer.data,
