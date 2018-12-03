@@ -28,8 +28,8 @@ class SearchAPIView(APIView):
     def get(self, request):
         query = request.GET.get('line', '')
         is_safe_mode = request.GET.get('safe', None)
-        if settings.DEBUG is False:
-            write_search_record(query, "SearchAPIView")
+        # if settings.DEBUG is False:
+        #     write_search_record(query, "SearchAPIView")
 
         search_body_standard = {
             'from': 0,
@@ -105,8 +105,8 @@ class SearchByCodeAPIView(APIView):
 
     def get(self, request):
         query = request.GET.get('line') or ''
-        if settings.DEBUG is False:
-            write_search_record.delay(query, "SearchByCodeAPIView")
+        # if settings.DEBUG is False:
+        #     write_search_record.delay(query, "SearchByCodeAPIView")
 
         product = self.get_product(query)
         if product:

@@ -60,8 +60,8 @@ class ElastiListView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         self.client_query = kwargs.get('line') or request.GET.get(self.query_kwarg) or ''
-        if settings.DEBUG is False:
-            write_search_record.delay(self.client_query, "ElastiListView")
+        # if settings.DEBUG is False:
+        #     write_search_record.delay(self.client_query, "ElastiListView")
         self.search_body = self.get_search_body()
         self.query = ElasticSearchQuery(
             self.search_body, self.index, self.doc_type, es_client, self.paginate_by)
@@ -152,8 +152,8 @@ class SearchByCodeView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         client_query = kwargs.get('line') or request.GET.get(self.query_kwarg) or ''
-        if settings.DEBUG is False:
-            write_search_record.delay(client_query, "SearchByCodeView")
+        # if settings.DEBUG is False:
+        #     write_search_record.delay(client_query, "SearchByCodeView")
         product = self.get_product(client_query)
         if product:
             return redirect('shop:product', slug=product.slug)
