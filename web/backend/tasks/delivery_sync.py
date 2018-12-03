@@ -1,5 +1,8 @@
+from datetime import datetime, timedelta
+
 from django.conf import settings
 from django.db import transaction
+from django.utils.timezone import now, pytz
 
 from config.celery import app
 from celery.schedules import crontab
@@ -33,7 +36,7 @@ def sync_sdek_orders(pks):
             public_id__in=pks
         ).exclude(delivery_status__dispatch_number__in=invalid_dispatch_numbers)
         serializer = OrderSerializer(fixed_qs, many=True)
-        results_info = client.get_orders_information(serializer.data)
+        results_info = client.get_orders_information(serializer.data)['Order']
     ## конец
 
     mapping = {}
@@ -182,7 +185,7 @@ def sync_postal_orders(pks):
     qs = Order2.objects.filter(public_id__in=pks)
     client = ClientRupost(settings.RUPOST_USER, settings.RUPOST_PASSWORD)
     for instance in qs:
-        service = instance.delivery_status['service']
+        # service = instance.delivery_status['service']
         # if service == "rupost":
     
         dispatch_number = instance.delivery_status['dispatch_number']
@@ -239,7 +242,10 @@ def sort_orders_by_delivery_service(limit=500):
     postal_orders_pks = []
     unknown = []
     
-    qs = Order2.objects.all().order_by('-created_at')[:limit]
+    qs = Order2.objects.filter(
+        created_at__gte=now()-timedelta(days=90)
+    )
+
     for instance in qs:
         if instance.data['delivery']['is_mod_selected']:
             delivery_type = instance.data['delivery']['mod']['type']

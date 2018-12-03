@@ -32,6 +32,13 @@
                             @input="triggerSearch"
                         >
                     </div>
+                    <div class="orders__cpa">
+                        <md-checkbox v-model="queryParams.admitad" class="md-primary"
+                            @change="triggerSearch"
+                        >
+                            Admitad
+                        </md-checkbox>
+                    </div>
                 </div>
                 <div class="orders__pagination pagination">
                     <div class="pagination__client-count">
@@ -237,7 +244,8 @@
             queryParams: {
                 name: "",
                 phone: "",
-                public_id: ""
+                public_id: "",
+                admitad: false
             },
             loading: false
         }),
@@ -253,6 +261,9 @@
                 if (this.queryParams.public_id !== '') {
                     url += `&public_id=${this.queryParams.public_id}`
                 }
+                if (this.queryParams.admitad === true) {
+                    url += `&show_cpa=${this.queryParams.admitad}`
+                } 
                 return url
             },
             searchLock() {
@@ -610,5 +621,12 @@
         padding: 0px 4px;
         font-size: 12px;
         text-align: center;
+    }
+    .orders__inputs {
+        display: flex;
+        align-items: center;
+    }
+    .orders__cpa {
+        display: inline-block;
     }
 </style>

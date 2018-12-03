@@ -95,6 +95,7 @@ class OrderListAPIView(generics.ListAPIView):
         phone = params.get('phone', None)
         name = params.get('name', None)
         public_id = params.get('public_id', None)
+        show_cpa = params.get('show_cpa', None)
         if phone is not None:
             qs = qs.filter(
                 data__customer__phone__icontains=phone,
@@ -106,6 +107,10 @@ class OrderListAPIView(generics.ListAPIView):
         if public_id is not None:
             qs = qs.filter(
                 public_id__icontains=public_id
+            )
+        if show_cpa is not None:
+            qs = qs.filter(
+                cpa__networks__contains="admitad"
             )
         return qs
         
