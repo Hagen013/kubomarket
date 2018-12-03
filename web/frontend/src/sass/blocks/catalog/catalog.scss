@@ -34,6 +34,27 @@
     }
 }
 
+.gallery {
+    flex-wrap: wrap;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.gallery_search {
+    &:after {
+        content: '';
+        display: block;
+        margin-left: 294px;
+    }
+    @include mq($from: wide) {
+        &:after {
+            margin-left: 550px;
+        }
+    }
+}
+
 .catalog__left {
     display: block;
     @include mq($from: desktop) {
