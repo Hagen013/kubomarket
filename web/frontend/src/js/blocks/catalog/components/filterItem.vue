@@ -1,5 +1,6 @@
 <template>
-    <div class="filter-item">
+    <div class="filter-item"
+    >
         <div class="filter-item__btn"
             @click="showDropdown"
         >

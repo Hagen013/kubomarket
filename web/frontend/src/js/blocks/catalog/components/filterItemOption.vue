@@ -1,5 +1,7 @@
 <template>
-    <li class="filter-item__value">
+    <li class="filter-item__value"
+        @click="manualChange"
+    >
 
         <div class="checkbox coloured">
             <label>
@@ -69,6 +71,10 @@ export default {
     methods: {
         triggeredOptionChange() {
             this.$emit('option-changed', this.selected, this.id);
+        },
+        manualChange() {
+            this.selected = !this.selected;
+            this.triggeredOptionChange();
         }
     }
 }
