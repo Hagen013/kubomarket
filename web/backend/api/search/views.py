@@ -9,7 +9,7 @@ from rest_framework import status
 from elasticsearch_dsl import Search
 
 from config.es_client import es_client
-from config.search_patterns import generate_from_pattern
+from config.search_patterns import generate_from_pattern, generate_from_private_pattern
 from core.models import ProductCard
 from shop_cubes.serializers import CubesProductCardSerializer
 from shop_cubes.models import CubesProductCard
@@ -35,12 +35,24 @@ class SearchAPIView(APIView):
             'from': 0,
             'size': self.block_size_standard,
             'query': {
-                "match": {
-                    "name.autocomplete": query
+                'bool': {
+                    'must': {
+                        'match': {
+                            'name.autocomplete': query
+                        }
+                    },
+                    'filter': {
+                        'term': {
+                            'is_in_stock': 'true'
+                        }
+                    } 
                 }
             }
         }
-        search_body_advanced = generate_from_pattern(query)
+        if request.user.is_staff:
+            search_body_advanced = generate_from_private_pattern(query)
+        else:
+            search_body_advanced = generate_from_pattern(query)
 
         search_standard = Search(index='product_card', doc_type='product_card_index') \
             .from_dict(search_body_standard) \
