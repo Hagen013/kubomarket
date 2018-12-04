@@ -10,6 +10,7 @@ class Client(object):
     LOGOUT_URL = API_URL + '/logout'
     STATES_URL = API_URL + '/getstates'
     TRACK_URL = API_URL + '/tracksending'
+    MULTIPLE_TRACKS_URL = API_URL + '/tracksendings'
     SENDING_INFO_URL = API_URL + '/sendinginfo'
     
     def __init__(self, login, password, session_id=None):
@@ -61,6 +62,15 @@ class Client(object):
             'SenderInvoiceNumber': str(public_code)
         }
         response = self._exec_request(self.TRACK_URL, payload, method='POST')
+        return response
+
+    def track_sendings(self, invoices):
+        self.check_auth()
+        payload = {
+            'SessionId': self._session_id,
+            'Invoices': invoices
+        }
+        response = self._exec_request(self.MULTIPLE_TRACKS_URL, payload, method='POST')
         return response
     
     def get_order_info(self, invoice_number):

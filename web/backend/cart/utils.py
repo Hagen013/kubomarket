@@ -4,8 +4,7 @@ from .constants import (PICKPOINT_TO_CDEK_STATUS_CODE_MAPPING,
 
 
 def pickpoint_to_cdek_code(code):
-    return code
-    #return PICKPOINT_TO_CDEK_STATUS_CODE_MAPPING[code]
+    return PICKPOINT_TO_CDEK_STATUS_CODE_MAPPING.get(code, code)
 
 
 def rupost_to_cdek_code(code):

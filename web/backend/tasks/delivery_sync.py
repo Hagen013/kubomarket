@@ -17,6 +17,12 @@ from cart.utils import (pickpoint_to_cdek_code,
                         rupost_msg_to_code)
 
 
+def format_pk(pk):
+    if pk.startswith('KU'):
+        return pk[2:]
+    return pk
+
+
 @app.task
 def sync_sdek_orders(pks):
     errors = []
@@ -97,86 +103,56 @@ def sync_sdek_orders(pks):
 
 @app.task
 def sync_pickpoint_orders(pks):
-    error_pks = []
-    empty_pks = []
-    error_tracking_pks = []
-    empty_tracking_pks = []
-    invalid = []
-    orders = []
+    success = []
     count = 0
-
+    
+    pks = list(map(format_pk, pks))
     client = ClientPickpoint(settings.PICKPOINT_USER, settings.PICKPOINT_PASSWORD)
     client.login()
-
-    for pk in pks:
-        invoice_pk = pk
-        if invoice_pk.startswith('KU'):
-            invoice_pk = invoice_pk[2:]
-            
-        info_response = client.get_order_info(invoice_pk)
-        if info_response.status_code == 200:
-            result = info_response.json()
-            if len(result) !=0:
-                result = result[0]
-                invoice_number = result['InvoiceNumber']
-                invoice_sum = float(result['Sum'].replace(',', '.'))
-                track_response = client.track_sending(invoice_number)
-                if track_response.status_code == 200:
-                    track_result = track_response.json()
-                    if len(track_result) != 0:
-                        last_status = track_result[-1]
-                        last_status = track_result[-1]
-                        change_date = last_status['ChangeDT']
-                        state_message = last_status['StateMessage']
-                        status_code = int(last_status['State'])
-                        instance = {
-                            "id": pk,
-                            "service": "pickpoint",
-                            "change_date": change_date,
-                            "dispatch_number": invoice_number,
-                            "state_description": state_message,
-                            "service_status_code": status_code,
-                            "status_code": pickpoint_to_cdek_code(status_code),
-                            "sum": invoice_sum,
-                            "history": []
-                        }
-                        for state in track_result:
-                            history_state = {
-                                "change_date": state['ChangeDT'],
-                                "state_description": state['StateMessage'],
-                                "service_status_code": state['State'],
-                            }
-                            instance['history'].append(history_state)
-                        orders.append(instance)
-                    else:
-                        empty_tracking_pks.append(pk)
-                else:
-                    error_tracking_pks.append(pk)
-            else:
-                empty_pks.append(pk)
-        else:
-            error_pks.append(pk)
-
-        
+    response = client.track_sendings(pks)
+    data = response.json()
+    invoices = data['Invoices']
     with transaction.atomic():
-        for item in orders:
-            instance = Order2.objects.get(public_id=item['id'])
-            item.pop('id')
+        for invoice in invoices:
+            public_id = invoice['SenderInvoiceNumber']
+            if len(public_id) > 5:
+                public_id = "KU" + public_id
+            invoice_number = invoice['InvoiceNumber']
+            invoice_sum = float(invoice['RefundInfo']['Sum'])
+            states = invoice['States']
+            last_status = states[-1]
+            change_date = last_status['ChangeDT']
+            state_message = last_status['StateMessage']
+            status_code = int(last_status['State'])
+            item = {
+                "service": "pickpoint",
+                "change_date": change_date,
+                "dispatch_number": invoice_number,
+                "state_description": state_message,
+                "service_status_code": status_code,
+                "status_code": pickpoint_to_cdek_code(str(status_code)),
+                "sum": invoice_sum,
+                "history": []
+            }
+            for state in states:
+                history_state = {
+                    "change_date": state['ChangeDT'],
+                    "state_description": state['StateMessage'],
+                    "service_status_code": state['State'],
+                }
+                item['history'].append(history_state)
+            instance = Order2.objects.get(public_id=public_id)
             instance.delivery_status = item
             if instance.delivery_status['service_status_code'] == 111:
                 instance.state = 'вручен'
             elif instance.delivery_status['status_code'] == 5:
                 instance.state = 'отказ'
             instance.save()
+            success.append(public_id)
             count += 1
-            
     return {
-        "error_pks": error_pks,
-        "empty_pks": empty_pks,
-        "error_tracking_pks": error_tracking_pks,
-        "empty_tracking_pks": empty_tracking_pks,
-        "invalid": invalid,
-        "count": count
+        'count': count,
+        'success': success
     }
 
 

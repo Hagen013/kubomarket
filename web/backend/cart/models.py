@@ -362,7 +362,7 @@ class Order2(TimeStamped):
         cart_price = int(self.data['cart']['total_price'])
         if invoice_price is not None:
             invoice_price = int(invoice_price)
-            if invoice_price < cart_price:
+            if (invoice_price != 0) and (invoice_price < cart_price):
                 return invoice_price
             else:
                 return cart_price
