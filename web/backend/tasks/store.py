@@ -55,7 +55,10 @@ def sync_store():
                 pass
             if instance_found:
                 instance.stored = True
-                instance.amount = int(quantity)
+                quantity = int(quantity)
+                if quantity < 0:
+                    quantity = 0
+                instance.amount = quantity
                 instance.save()
 
 
