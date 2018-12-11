@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 from django.db import transaction
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 
 
 import asyncio
@@ -50,16 +52,21 @@ def sync_pick_point():
     with transaction.atomic():
         DeliveryPickPoint.objects.all().delete()
         for _, row in pvz_df.iterrows():
+            zone_found = False
             try:
                 code = row["CitiId"]
                 city = PickPointCityList.objects.get(city_id=code)
                 try:
                     zone = zone_df[(zone_df["ToPT"] == row["Number"]) & (
                         zone_df["DeliveryMode"] == "Standard")].iloc[0]
+                    zone_found = True
                     tariff_type = DeliveryPickPoint.TYPE_STANDART
                 except IndexError:
                     zone = zone_df[(zone_df["ToPT"] == row["Number"]) & (
-                        zone_df["DeliveryMode"] == "Priority")].iloc[0]
+                        zone_df["DeliveryMode"] == "Priority")]
+                    if zone.shape[0] > 0:
+                        zone = zone.iloc[0]
+                        zone_found = True
                     tariff_type = DeliveryPickPoint.TYPE_PRIORITY
 
                 pvz_type = {
@@ -67,25 +74,29 @@ def sync_pick_point():
                     "АПТ": DeliveryPickPoint.APT,
                 }.get(row["TypeTitle"])
 
-                delivery_pick_point = DeliveryPickPoint(
-                    kladr=city.kladr,
-                    city=city,
-                    name=row["Name"],
-                    latitude=row["Latitude"],
-                    longitude=row["Longitude"],
-                    address=row["Address"],
-                    description=row["InDescription"] + ";" + row["InDescription"] + ";" + row["WorkTime"],
-                    code=row["Number"],
-                    pvz_type=pvz_type,
-                    max_box_size=row["MaxBoxSize"],
-                    zone=zone["Zone"],
-                    coefficient=zone["Koeff"],
-                    tariff_type=tariff_type,
-                    time_min=zone["DeliveryMin"],
-                    time_max=zone["DeliveryMax"]
-                )
-                delivery_pick_point.full_clean()
-                delivery_pick_point.save()
+                if zone_found:
+
+                    delivery_pick_point = DeliveryPickPoint(
+                        kladr=city.kladr,
+                        city=city,
+                        name=row["Name"],
+                        latitude=row["Latitude"],
+                        longitude=row["Longitude"],
+                        address=row["Address"],
+                        description=row["InDescription"] + ";" + row["InDescription"] + ";" + row["WorkTime"],
+                        code=row["Number"],
+                        pvz_type=pvz_type,
+                        max_box_size=row["MaxBoxSize"],
+                        zone=zone["Zone"],
+                        coefficient=zone["Koeff"],
+                        tariff_type=tariff_type,
+                        time_min=zone["DeliveryMin"],
+                        time_max=zone["DeliveryMax"]
+                    )
+                    delivery_pick_point.full_clean()
+                    delivery_pick_point.save()
+
+
             except (PickPointCityList.DoesNotExist, IntegrityError, ValidationError) as e:
                 pass
                 # print(e)
