@@ -340,9 +340,9 @@ class DeliveryController():
         for key, value in result.items():
             if value:
                 if result[key]['time_min'] is not None:
-                    result[key]['time_min'] = (result[key]['time_min'] or 0) + dt
+                    result[key]['time_min'] = (result[key]['time_min'] or 0) + dt + 1
                 if result[key]['time_max'] is not None:
-                    result[key]['time_max'] += dt
+                    result[key]['time_max'] += (dt + 1)
         return result
 
 
@@ -490,17 +490,17 @@ class MultiDeliveryController():
             value = result[key]
             if value:
                 if result[key]['time_min'] is not None:
-                    result[key]['time_min'] = (result[key]['time_min'] or 0) + dt
+                    result[key]['time_min'] = (result[key]['time_min'] or 0) + (dt + 1)
                 if result[key]['time_max'] is not None:
-                    result[key]['time_max'] += dt
+                    result[key]['time_max'] += (dt + 1)
 
         for key in {"sdek_delivery_data", "pick_point_delivery_data"}:
             value = result["points"]["delivery_data"]
             if value:
                 if result["points"]["delivery_data"][key] is not None:
                     result["points"]["delivery_data"][key]['time_min'] = (
-                        result["points"]["delivery_data"][key]['time_min'] or 0) + dt
+                        result["points"]["delivery_data"][key]['time_min'] or 0) + (dt + 1)
                 if result["points"]["delivery_data"][key] is not None:
-                    result["points"]["delivery_data"][key]['time_max'] += dt
+                    result["points"]["delivery_data"][key]['time_max'] += (dt + 1)
 
         return result
