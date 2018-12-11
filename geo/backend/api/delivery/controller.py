@@ -18,7 +18,7 @@ from delivery.models import (SdekCityList,
 
 class DeliveryController():
     PRODUCT_TYPES = [
-        "CUBE",
+        "BACKPACK",
         "BAG",
         "SUITCASE",
         "PURSE"
@@ -181,7 +181,7 @@ class DeliveryController():
     @property
     def pick_point_points(self):
         if self.pick_point_city:
-            if self.product_type in {"CUBE", "BAG", "PURSE"}:
+            if self.product_type in {"BAG", "BACKPACK", "PURSE"}:
                 return DeliveryPickPoint.objects.filter(city=self.pick_point_city)
             elif self.product_type in {"SUITCASE"}:
                 if self.dimensions:
@@ -248,9 +248,15 @@ class DeliveryController():
 
         # ЕСЛИ НЕТ СДЕКА ТО НЕТ
         # СУМКИ, РЮКЗАКИ, КОШЕЛЬКИ
-        if self.product_type in {"CUBE", "BAG", "PURSE"}:
-            # БЕРЁМ СДЕК
-            return delivery_data_getter(weigh=1)
+        if self.product_type in {"BAG", "BACKPACK", "PURSE"}:
+            if self.margin >= 2000:
+                # СДЕК И БЕСПЛАТНО
+                result = delivery_data_getter(weigh=1)
+                result['price'] = 0
+                return result
+            else:
+                # БЕРЁМ СДЕК
+                return delivery_data_getter(weigh=1)
         # ЧЕМОДАНЫ
         elif self.product_type in {"SUITCASE"}:
             # ЕСЛИ ЗАДАН ОБЪЁМНЫЙ ВЕС
@@ -273,7 +279,7 @@ class DeliveryController():
     def _get_pick_point_delivery_data(self, one_pick_point_point=None):
         if one_pick_point_point is None:
             one_pick_point_point = self.pick_point_points[0]
-        if self.product_type in {"CUBE", "BAG", "PURSE", }:
+        if self.product_type in {"BAG", "BACKPACK", "PURSE", }:
             return one_pick_point_point.get_delivery_data(weigh=self.weigh or 1)
         elif self.product_type in {"SUITCASE", }:
             if self.weigh:
@@ -299,8 +305,14 @@ class DeliveryController():
             'time_max': 7,
         }
         # СУМКИ, РЮКЗАКИ, КОШЕЛЬКИ, ЧЕМОДАНЫ
-        if self.product_type in {"CUBE", "BAG", "PURSE", "SUITCASE"}:
-            return result
+        if self.product_type in {"BAG", "BACKPACK", "PURSE", "SUITCASE"}:
+            if self.margin >= 2000:
+                # СТАНДАРТНЫЙ И БЕСПЛАТНО
+                result['price'] = 0
+                return result
+            else:
+                # СТАНДАРТНЫЙ
+                return result
         else:
             return None
 
@@ -323,6 +335,9 @@ class DeliveryController():
         if pick_point_points:
             pick_point_result = self._get_pick_point_delivery_data(one_pick_point_point=pick_point_points[0])
 
+        # print('sdek_result', sdek_result)
+        # print('pick_point_result', pick_point_result)
+
         results = list(filter(lambda x: x is not None, (pick_point_result, sdek_result)))
         if results:
             return min(results,
@@ -340,9 +355,9 @@ class DeliveryController():
         for key, value in result.items():
             if value:
                 if result[key]['time_min'] is not None:
-                    result[key]['time_min'] = (result[key]['time_min'] or 0) + dt + 1
+                    result[key]['time_min'] = (result[key]['time_min'] or 0) + dt
                 if result[key]['time_max'] is not None:
-                    result[key]['time_max'] += (dt + 1)
+                    result[key]['time_max'] += dt
         return result
 
 
@@ -416,6 +431,7 @@ class MultiDeliveryController():
             return None
 
     def get_curier_data(self):
+        # print(self.products[1].dimensions)
         return max([product.get_curier_data() for product in self.products],
                    key=lambda x: inf if (x is None or x['price'] is None) else x['price'],
                    )
@@ -490,17 +506,17 @@ class MultiDeliveryController():
             value = result[key]
             if value:
                 if result[key]['time_min'] is not None:
-                    result[key]['time_min'] = (result[key]['time_min'] or 0) + (dt + 1)
+                    result[key]['time_min'] = (result[key]['time_min'] or 0) + dt
                 if result[key]['time_max'] is not None:
-                    result[key]['time_max'] += (dt + 1)
+                    result[key]['time_max'] += dt
 
         for key in {"sdek_delivery_data", "pick_point_delivery_data"}:
             value = result["points"]["delivery_data"]
             if value:
-                if result["points"]["delivery_data"][key] is not None:
+                if result["points"]["delivery_data"][key]['time_min'] is not None:
                     result["points"]["delivery_data"][key]['time_min'] = (
-                        result["points"]["delivery_data"][key]['time_min'] or 0) + (dt + 1)
-                if result["points"]["delivery_data"][key] is not None:
-                    result["points"]["delivery_data"][key]['time_max'] += (dt + 1)
+                        result["points"]["delivery_data"][key]['time_min'] or 0) + dt
+                if result["points"]["delivery_data"][key]['time_max'] is not None:
+                    result["points"]["delivery_data"][key]['time_max'] += dt
 
         return result
