@@ -19,7 +19,7 @@ from core.utils import slugify
 from shop_cubes.models import CubesProductCard as ProductCard
 from shop_cubes.models import CubesAttribute as Attribute
 from shop_cubes.models import CubesAttributeValue as AttributeValue
-from yandex_market import generate_yml_file
+from tasks.yandex_market import generate_yml_file
 
 
 @app.task
