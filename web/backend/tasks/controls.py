@@ -19,6 +19,7 @@ from core.utils import slugify
 from shop_cubes.models import CubesProductCard as ProductCard
 from shop_cubes.models import CubesAttribute as Attribute
 from shop_cubes.models import CubesAttributeValue as AttributeValue
+from yandex_market import generate_yml_file
 
 
 @app.task
@@ -176,6 +177,7 @@ def process_uploaded_file(path):
             cache.set('controls_proceeding_upload_file_progress', progress)
             test = cache.get('controls_proceeding_upload_file_progress')
 
+    generate_yml_file.delay()
     report_filename = settings.ADMIN_DOWNLOADS + 'report.txt'
 
     short_report = """
