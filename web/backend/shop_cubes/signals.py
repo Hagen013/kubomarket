@@ -7,7 +7,7 @@ from tasks.yandex_market import generate_yml_file
 
 def product_on_save(sender, instance, **kwargs):
     update_index = instance.update_search
-    generate_yml_file.delay()
+    #generate_yml_file.delay()
     if update_index:
         update_es_product(instance.id)
 

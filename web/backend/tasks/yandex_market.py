@@ -30,7 +30,7 @@ def generate_yml_file():
 
 
 app.add_periodic_task(
-    crontab(minute=0,  hour='*/1'),
+    crontab(minute="*/30"),
     generate_yml_file.s(),
     name='generate_yml_file',
 )
