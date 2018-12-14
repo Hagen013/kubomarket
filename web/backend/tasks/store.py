@@ -42,6 +42,10 @@ def sync_store():
         offset += page_size
         
     with transaction.atomic():
+        Product.objects.all().update(
+            stored=False,
+            amount=0
+        )
         for row in rows:
             code = get_full_code(row['code'])
             quantity = row['quantity']
