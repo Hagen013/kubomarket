@@ -10,7 +10,7 @@
 *.ipynb
 *.xlsx
 *.csv
-*.json
+*web/frontend/package-lock.json
 
 *demo
 *newdemo
