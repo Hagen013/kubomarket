@@ -230,6 +230,8 @@ export default {
       "selectedDeliveryMod",
       "selectedDeliveryPoint"
   ],
+  created() {
+  },
   computed: {
     priceCurier() {
         return this.deliveryData.curier.price
@@ -276,6 +278,9 @@ export default {
             return this.$store.state.customer.address
         },
         set(value) {
+            if (typeof(value) !== String) {
+                value = '';
+            }
             this.$store.commit('customer/setData', {address:value});
         }
     },

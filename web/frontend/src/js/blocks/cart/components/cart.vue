@@ -287,6 +287,11 @@ export default {
         "delivery-points": deliveryPoints,
         "payment-menu": paymentMenu
     },
+    created() {
+        if (typeof(this.customerAddress) !== String) {
+            this.customerAddress = '';
+        }
+    },
     mounted() {
     },
     computed: {
@@ -339,6 +344,9 @@ export default {
                 return this.$store.state.customer.address
             },
             set(value) {
+                if (typeof(value) !== String) {
+                    value = '';
+                }
                 this.$store.commit('customer/setData', {address:value})
             }
         },
@@ -455,9 +463,6 @@ export default {
         },
         isCustomerDataValid() {
             return this.cartPhoneIsValid
-        },
-        customerAddress() {
-            return this.$store.state.customer.address;
         },
         selectedDeliveryMod() {
             return this.$store.state.delivery.mod;
