@@ -278,10 +278,10 @@ export default {
             return this.$store.state.customer.address
         },
         set(value) {
-            if (typeof(value) !== String) {
-                value = '';
-            }
-            this.$store.commit('customer/setData', {address:value});
+                if (typeof(value) !== 'string') {
+                    value = '';
+                }
+                this.$store.commit('customer/setData', {address:value})
         }
     },
     customerNotes: {

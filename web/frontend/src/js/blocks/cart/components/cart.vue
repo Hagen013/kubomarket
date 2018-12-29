@@ -344,7 +344,7 @@ export default {
                 return this.$store.state.customer.address
             },
             set(value) {
-                if (typeof(value) !== String) {
+                if (typeof(value) !== 'string') {
                     value = '';
                 }
                 this.$store.commit('customer/setData', {address:value})

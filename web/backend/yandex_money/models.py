@@ -231,7 +231,9 @@ class Payment(models.Model):
                 "quantity": item['quantity'],
                 "price": {"amount": item['price']},
                 "tax": 3,
-                "text": item['name']
+                "text": item['name'],
+                "payment_mode": "full_prepayment",
+                "payment_subject": "commodity"
             }
             items.append(instance)
         delivery_price = self.order.data['delivery']['mod']['price']
@@ -240,7 +242,9 @@ class Payment(models.Model):
                 "quantity": 1,
                 "price": {"amount": delivery_price},
                 "tax": 3,
-                "text": "доставка"
+                "text": "доставка",
+                "payment_mode": "full_prepayment",
+                "payment_subject": "service"
             }
             items.append(instance)
 
