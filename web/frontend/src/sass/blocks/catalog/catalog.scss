@@ -13,33 +13,46 @@
 }
 
 .catalog__gallery {
-    flex-wrap: wrap;
-    flex-direction: row;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
+    // flex-wrap: wrap;
+    // flex-direction: row;
+    // display: flex;
+    // justify-content: space-between;
+    // margin: 0 auto;
+    // width: 290px;
+    // @include mq($from: mobile) {
+    //     width: 100%;
+    // }
+    // &:after {
+    //     content: '';
+    //     display: block;
+    //     margin-left: 294px;
+    // }
+    // @include mq($from: wide) {
+    //     &:after {
+    //         margin-left: 264px;
+    //     }
+    // }
+}
+
+.catalog__gallery {
     width: 290px;
+    padding-top: 16px;
+    margin: 0 auto;
     @include mq($from: mobile) {
+        margin-left: -8px;
         width: 100%;
     }
-    &:after {
-        content: '';
-        display: block;
-        margin-left: 294px;
-    }
-    @include mq($from: wide) {
-        &:after {
-            margin-left: 264px;
-        }
+    @include mq($from: desktop) {
+        margin-left: -8px;
     }
 }
 
 .gallery {
-    flex-wrap: wrap;
-    flex-direction: row;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
+    // flex-wrap: wrap;
+    // flex-direction: row;
+    // display: flex;
+    // justify-content: space-between;
+    // margin: 0 auto;
 }
 
 .gallery_search {
@@ -72,6 +85,7 @@
 .catalog__right {
     width: 100%;
     margin: 0 auto;
+    overflow: hidden;
     @include mq($from: desktop, $until: wide) {
         width: 616px;
     }
@@ -81,14 +95,22 @@
 }
 
 .catalog__item {
+    float: left;
     height: 440px;
     width: 290px;
     margin-bottom: 8px;
+    @include mq($from: mobile) {
+        margin-left: 8px;
+    }
+    @include mq($from: desktop) {
+        margin-left: 8x;
+    }
     @include mq($from: mobile, $until: wide) {
-        width: 49%;
+        width: 48%;
     }
     @include mq($from: wide) {
         width: 262px;
+        margin-left: 16px;
     }
 }
 
