@@ -164,14 +164,14 @@ services:
     image: postgres:latest
     restart: unless-stopped
     volumes:
-      - /var/postgresql_web/data:/var/postgresql_web/data
+      - /var/postgresql_web2/data:/var/postgresql_web2/data
     env_file:
       - env/postgres_web
   postgres_geo:
     image: postgres:latest
     restart: unless-stopped
     volumes:
-      - /var/postgresql_geo/data:/var/postgresql_geo/data
+      - /var/postgresql_geo2/data:/var/postgresql_geo2/data
     env_file:
       - env/postgres_geo
 
