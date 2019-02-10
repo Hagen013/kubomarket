@@ -11,7 +11,6 @@ COPY  compose/web_cube/uwsgi.ini uwsgi.ini
 COPY  compose/web_cube/entrypoint.sh entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-RUN apk del --no-cache .build-deps
 
 EXPOSE 8001
 

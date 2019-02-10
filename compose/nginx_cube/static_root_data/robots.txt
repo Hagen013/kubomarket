@@ -1,7 +1,16 @@
 User-agent: *
 
 Disallow: /api
+Disallow: /cart/
+Disallow: /search/
+Disallow: /*?dimension=*
+Disallow: /*?tip-kubika=*
+Disallow: /*?brend=*
+Disallow: /*?osobennosty=*
+Disallow: /*?&kollekcii=*
+Disallow: /*?sort_by=*
+Disallow: /*?price__gte=*
+Disallow: /*?price__lte=*
 Disallow: /u
 
-Sitemap: https://kubomarket.ru/sitemap.xml
-Host: https://kubomarket.ru
+Sitemap: https://www.kubomarket.ru/sitemap.xml

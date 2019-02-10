@@ -5,7 +5,15 @@
         <style>
             body {
                 font-family: 'Liberation Sans';
-                font-size: 14px;
+                font-size: 12px;
+            }
+            .clearfix {
+                visibility: hidden;
+                display: block;
+                font-size: 0;
+                content: " ";
+                clear: both;
+                height: 0;
             }
             .receipt {
                 margin: 0 auto;
@@ -13,15 +21,14 @@
                 padding: 64px 0px;
             }
             .receipt__logo-wrap {
-                height: 250px;
+                height: 220px;
+                padding-right: 32px;
             }
             .receipt__logo {
                 height: 100%;
                 width: auto;
             }
             .receipt__header {
-                display: flex;
-                justify-content: space-between;
                 margin-bottom: 64px;
             }
             .top-label {
@@ -33,20 +40,16 @@
                 padding-bottom: 6px;
             }
             .receipt__left {
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
-                width: 50%;
+                float: left;
+                width: 40%;
             }
             .receipt__right {
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
+                float: left;
                 width: 50%;
+                margin-left: 48px;
             }
             .receipt__title {
-                display: flex;
-                justify-content: center;
+                text-align: center;
                 margin-bottom: 32px;
                 font-size: 20px;
                 font-weight: 700;
@@ -72,22 +75,27 @@
                 text-align: right;
             }
             .receipt__singatures {
-                display: flex;
-                justify-content: flex-end;
+                float: right;
             }
             .signature {
-                display: flex;
+                float: left;
                 padding: 0px 16px;
             }
             .receipt__text {
+                text-align: justify;
                 margin-bottom: 64px;
             }
+            .signature__label {
+                float: left;
+            }
             .signature__value {
-                display: flex;
-                justify-content: flex-end;
+                float: left;
                 min-width: 160px;
                 margin-left: 16px;
                 border-bottom: 1px solid black;
+            }
+            .signature__value_1 {
+                margin-top: 14px;
             }
         </style>
     </head>
@@ -159,6 +167,7 @@
                         </tr>
                     </table>
                 </div>
+                <div class="clearfix"></div>
             </div>
             <div class="receipt__content">
                 <div class="receipt__title">
@@ -236,8 +245,9 @@
                         <div class="signature__label">
                             Отпустил:
                         </div>
-                        <div class="signature__value">
+                        <div class="signature__value signature__value_1">
                         </div>
+                        <div class="clearfix>"></div>
                     </div>
                     <div class="signature singature_2">
                         <div class="signature__label">
@@ -246,7 +256,9 @@
                         <div class="signature__value">
                             Болдоков В.Л.
                         </div>
+                        <div class="clearfix>"></div>
                     </div>
+                    <div class="clearfix>"></div>
                 </div>
             </div>
         </div>
