@@ -101,5 +101,7 @@ def custom_redirect(url_name, *args, **kwargs):
             kwargs.keys()
         )
     )
+    if len(params) == 0:
+        return HttpResponseRedirect(url)
     params = '&'.join(params)
     return HttpResponseRedirect(url + "?%s" % params)

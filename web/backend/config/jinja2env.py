@@ -15,6 +15,18 @@ def url_replace(querystring, kwargs):
     return urlencode(query)
 
 
+def update_pagination(querystring, kwargs):
+    query = querystring.dict()
+    page = kwargs.get('page')
+    if page == 1:
+        kwargs.pop('page')
+        query.pop('page')
+    query.update(kwargs)
+    if len(query.keys()) > 0:
+        return "?" + urlencode(query)
+    return ""
+
+
 def to_json(value):
     return json.dumps(value)
 
@@ -41,7 +53,6 @@ def format_time(date):
     formated_date = date.strftime("%Y.%m.%d")
     return formated_date
 
-
 def environment(**options):
     env = Environment(**options)
     env.globals.update({
@@ -51,7 +62,8 @@ def environment(**options):
         'to_json': to_json,
         'escape_quotes': escape_quotes,
         'rating_stars': rating_stars,
-        'format_time': format_time
+        'format_time': format_time,
+        'update_pagination': update_pagination
     })
     return env
 

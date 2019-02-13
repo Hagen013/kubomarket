@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block meta_title %}{% if category._meta_title|length > 0 %}{{category._meta_title}}{% else %}{{ super() }}{% endif %}{% endblock %}
-{% block meta_description %}{% if category._meta_description|length > 0 %}{{category._meta_description}}{% else %}{% endif %}{% endblock %}
+{% block meta_title %}{% if meta_title|length > 0 %}{{meta_title}}{% else %}{{ super() }}{% endif %}{% endblock %}
+{% block meta_description %}{% if meta_description|length > 0 %}{{meta_description}}{% else %}{% endif %}{% endblock %}
 {% block meta_keywords %}{{category._meta_keywords}}{% endblock %}
 
 {% block content %}
@@ -146,7 +146,7 @@
                 <div class="pagination__pages">
                     {% if page_obj.has_previous()  %}
                         <div class="pagination__item pagination__arrow pagination__arrow_left">
-                            <a href="./?{{ url_replace(querystring=request.GET, kwargs={'page':page_obj.previous_page_number()}) }}">
+                            <a href="{{request.path}}{{ update_pagination(querystring=request.GET, kwargs={'page':page_obj.previous_page_number()}) }}">
                                 <i class="icon icon_chevron-left"></i>
                             </a>
                         </div>
@@ -167,14 +167,14 @@
                             </div>
                             {% else %}
                             <div class="pagination__item pagination__page">
-                                <a href="./?{{ url_replace(querystring=request.GET, kwargs={'page':num}) }}">{{ num }}</a>
+                                <a href="{{request.path}}{{ update_pagination(querystring=request.GET, kwargs={'page':num}) }}">{{ num }}</a>
                             </div>
                             {% endif %}
                         {% endif %}
                     {% endfor %}
                     {% if page_obj.has_next() %}
                         <div class="pagination__item pagination__arrow pagination__arrow_right">
-                            <a href="./?{{ url_replace(querystring=request.GET, kwargs={'page':page_obj.next_page_number()}) }}">
+                            <a href="{{request.path}}{{ update_pagination(querystring=request.GET, kwargs={'page':page_obj.next_page_number()}) }}">
                                 <i class="icon icon_chevron-right"></i>
                             </a>
                         </div>
