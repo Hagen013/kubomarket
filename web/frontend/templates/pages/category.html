@@ -11,7 +11,10 @@
 {% endwith %}
 
 <div class="content-area_mb">
-    <h1 class="title title_catalog">{{category.title}}</h1>
+    <div class="title_wrap">
+        <h1 class="title title_catalog">{{category.title}}</h1>
+        <span class="catalog-count">({{page_obj.paginator.count}})</span>
+    </div>
 </div>
 
 <div class="content-area_mb">
@@ -109,7 +112,7 @@
                     </div>
                     <div class="product-card__content">
                         <div class="product-card__price">
-                            {{product.price}} <i class="icon icon_rouble"></i>
+                            {{product.price}} руб.
                         </div>
                         <a class="product-card__name" href="/product/{{product.slug}}">
                             {{product.name}}
@@ -118,7 +121,7 @@
                             <a class="button button_ghost product_card__details"
                                 href="/product/{{product.slug}}"
                             >
-                                подробнее
+                                КУПИТЬ
                             </a>
                         </div>
                     </div>

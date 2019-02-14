@@ -497,3 +497,15 @@
     text-align: center;
 }
 
+.catalog-count {
+    display: block;
+    height: 43px;
+    line-height: 43px;
+    font-size: 2em;
+    float: left;
+    width: 100%;
+    text-align: center;
+    @include mq($from: mobile) {
+        width: auto;
+    }
+}

@@ -14,12 +14,20 @@
 
 .title_catalog {
     height: auto !important;
+    width: auto !important;
     text-align: center;
     white-space: normal !important;
     line-height: normal;
+    float: left;
+    margin-bottom: 0px !important;
+    margin-right: 16px;
     @include mq($from: mobile) {
         text-align: left;
     }
+}
+
+.title_wrap {
+    margin-bottom: 15px;
 }
 
 .subtitle {
