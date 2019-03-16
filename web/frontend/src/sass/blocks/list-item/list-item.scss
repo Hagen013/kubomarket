@@ -13,6 +13,10 @@
 .list-item__value {
     color: $text-black;
     @include bold();
+    a {
+        color: $text-black;
+        text-decoration: underline;
+    }
 }
 
 .list-item__delimeter {

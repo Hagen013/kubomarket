@@ -7,6 +7,7 @@ from urllib.parse import urlencode
 from jinja2 import Environment
 
 from shop_cubes.models import CubesCategoryNode
+from .constants import links_mapping
 
 
 def url_replace(querystring, kwargs):
@@ -53,6 +54,31 @@ def format_time(date):
     formated_date = date.strftime("%Y.%m.%d")
     return formated_date
 
+def check_inclusion(item_values, node_values):
+    return len(node_values.difference(set(item_values))) == 0
+
+
+def values_filter(values):
+    output = ""
+    keys = links_mapping.keys()
+    length = len(values)
+    count = 1
+    for value in values:
+        if value.name in keys:
+            item = "<a href={url}>{text}</a>".format(
+                url=links_mapping[value.name],
+                text=value.name
+            )
+        else:
+            item = "{text}".format(text=value.name)
+        if count == length:
+            pass
+        else:
+            item += ', '
+        count += 1
+        output += item
+    return output
+
 def environment(**options):
     env = Environment(**options)
     env.globals.update({
@@ -63,10 +89,7 @@ def environment(**options):
         'escape_quotes': escape_quotes,
         'rating_stars': rating_stars,
         'format_time': format_time,
-        'update_pagination': update_pagination
+        'update_pagination': update_pagination,
+        'values_filter': values_filter
     })
     return env
-
-
-def check_inclusion(item_values, node_values):
-    return len(node_values.difference(set(item_values))) == 0

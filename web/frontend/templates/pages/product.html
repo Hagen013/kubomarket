@@ -219,7 +219,7 @@
                     <div class="list-item__delimeter">
                     </div>
                     <div class="list-item__value">
-                        {{ values|map(attribute='name')|join(', ') }}
+                        {{ values_filter(values)|safe }}
                     </div>
                 </li>
                 {% endfor %}
