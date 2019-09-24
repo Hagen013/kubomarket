@@ -27,14 +27,13 @@
                 </div>
             </div>
             <div class="payment-menu__option"
-                @click="changePaymentMethod('card')"
                 :class="{ paymentMenu__option_active : mode == 'card' }"
             >
                 <div>
-                    Картой
+                    Картой онлайн
                 </div>
-                <div class="green bold">
-                    онлайн
+                <div class="bold">
+                    недоступно
                 </div>
             </div>
         </div>

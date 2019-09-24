@@ -68,7 +68,6 @@
                             <md-select v-model="order.data['payment']['mod']" name="status" id="status">
                                 <md-option value="cash">наличными</md-option>
                                 <md-option value="card_on_receipt">картой при получении</md-option>
-                                <md-option value="card">картой онлайн</md-option>
                             </md-select>
                         </md-field>
                         <md-field>
