@@ -49,6 +49,6 @@ class GeoIpCoordinatesAPIView(APIView):
                 
                 city = GeoIp.objects.filter(kladr_code=kladr_code)[0]
                 serializer = GeoIpExtendedSerializer(city)
-                retur Response(serializer.data)
+                return Response(serializer.data)
             except (IndexError, ObjectDoesNotExist):
                 raise Http404
