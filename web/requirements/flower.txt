@@ -1,3 +1,5 @@
 -r production.txt
 
 flower==0.9.2
+nbconvert==5.3.1
+tornado>=4.2.0,<6.0.0

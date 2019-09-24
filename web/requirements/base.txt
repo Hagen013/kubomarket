@@ -46,3 +46,6 @@ zeep==3.1.0
 
 # HTML to PDF converter
 pdfkit==0.6.1
+
+tornado>=4.2.0,<6.0.0
+nbconvert==5.3.1
