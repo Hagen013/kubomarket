@@ -205,39 +205,6 @@
                 </div>
             </md-tab>
             <md-tab
-                id="tab-payment"
-                md-label="Оплата"
-                @click="paymentsTriggered=true"
-            >
-                <div class="md-layout tab__content">
-                    <div class="md-layout-item payment md-size-30">
-                        <div class="md-title payment__title">
-                            Выслать ссылку для оплаты
-                        </div>
-                        <div class="payment__col-1-content">
-                            <div class="payment__email-form">
-                                <md-field>
-                                    <label>Используемый email</label>
-                                    <md-input v-model="paymentEmail"></md-input>
-                                </md-field>
-                                <md-button class="md-primary md-raised non-margin"
-                                    @click="sendPaymentMessage"
-                                >
-                                    Отправить
-                                </md-button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="md-layout-item">
-                        <payments-list
-                            :payments="payments"
-                            v-on:deleteItem="deletePayment"
-                        >
-                        </payments-list>
-                    </div>
-                </div>
-            </md-tab>
-            <md-tab
                 id="tab-delivery"
                 md-label="Доставка"
             >
